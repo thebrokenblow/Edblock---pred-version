@@ -21,8 +21,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfActionBlock = new ActionBlockForMovements();
-
+                var instanceOfActionBlock = new ActionBlockForMovements(sender);
                 var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
             }
@@ -57,11 +56,16 @@ namespace Flowchart_Editor
             canvasOfActionBlock = null;
         }
     }
-
+    
     public class ActionBlockForMovements
     {
         private Canvas? canvasOfActionBlock = null;
         private TextBox? textOfActionBlock = null;
+        public object test = null;
+        public ActionBlockForMovements(object sender) 
+        {
+            test = sender;
+        }
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -109,11 +113,10 @@ namespace Flowchart_Editor
 
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfActionBlock = new ActionBlock();
-                var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
+                var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock); //Занесениие информации в DataObject зачем?
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
@@ -123,21 +126,15 @@ namespace Flowchart_Editor
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
-                var position = e.GetPosition(destination);
-                var featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
+                var position = e.GetPosition(destination); //Зачем получаем координаты у поля а не у блока переносимого 
+                var featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement(); 
                 Canvas.SetLeft(featuresOfActionBlock, position.X);
                 Canvas.SetTop(featuresOfActionBlock, position.Y);
             }
-            if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
-            {
-                var position = e.GetPosition(destination);
-                var featuresOfActionBlock = ((ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements))).GetUIElement();
-                Canvas.SetLeft(featuresOfActionBlock, position.X);
-                Canvas.SetTop(featuresOfActionBlock, position.Y);
-            }
+            
         }
 
-        private void destination_DragOver(object sender, DragEventArgs e)
+        private void destination_DragOver(object sender, DragEventArgs e) //Метод обрабатывает что можем переносить только блоки и ничего лишнего
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
@@ -163,6 +160,7 @@ namespace Flowchart_Editor
                 var position = e.GetPosition(destination);
                 var dataInformationOfActionBlock = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
                 UIElement actionBlockOfUIElement;
+
                 if (dataInformationOfActionBlock.GetUIElementWithoutCreate() == null)
                 {
                     actionBlockOfUIElement = ((ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements))).GetUIElement();
@@ -172,8 +170,11 @@ namespace Flowchart_Editor
                 {
                     actionBlockOfUIElement = ((ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements))).GetUIElement();
                 }
-                Canvas.SetLeft(actionBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(actionBlockOfUIElement, position.Y + 1);
+                var test = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
+                
+
+                Canvas.SetLeft((UIElement)test.test, position.X + 1);
+                Canvas.SetTop((UIElement)test.test, position.Y + 1);
             }
             else
                 e.Effects = DragDropEffects.None;
@@ -185,18 +186,10 @@ namespace Flowchart_Editor
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
                 var actionBlockOfUIElement = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
-                destination.Children.Remove(actionBlockOfUIElement);
+                destination.Children.Remove(actionBlockOfUIElement); //Удаление, если блок уехал за canvas
                 var dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
-                dataInformationOfActionBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
-            {
-                var actionBlockOfUIElement = ((ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements))).GetUIElement();
-                destination.Children.Remove(actionBlockOfUIElement);
-                var dataInformationOfActionBlock = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
-                dataInformationOfActionBlock.Reset();
-            }
-            e.Handled = true;
+                dataInformationOfActionBlock.Reset(); //Востановление блока 
+            } 
         }
     }
 }
