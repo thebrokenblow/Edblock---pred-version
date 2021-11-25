@@ -26,8 +26,12 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+          
+            
+
 
             <Canvas Width="140" 
                     Height="60"
@@ -49,6 +53,33 @@
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Left"
                        Grid.Column="1" />
+
+            <Canvas Name="startEndBlock"  
+                            MouseMove="startEndBlock_MouseMove"  
+                            Grid.Row="2">
+
+                <Rectangle Width="140" 
+                               Height="60" 
+                               Fill="#FFF25252" 
+                               RadiusX="25" 
+                               RadiusY="25" 
+                               Grid.Row="2" 
+                               Canvas.Top="10">
+                </Rectangle>
+                <Label FontSize="12" 
+                               Foreground="White" 
+                               Canvas.Left="30" 
+                               Canvas.Top="28">
+                    <TextBlock Text="Начало/Конец" TextWrapping="Wrap"/>
+                </Label>
+            </Canvas>
+
+            <TextBlock Text="Начало / Конец (3)" 
+                               FontSize="10" 
+                               Grid.Column="1" 
+                               Grid.Row="2" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left"/>
 
         </Grid>
     </Grid>
