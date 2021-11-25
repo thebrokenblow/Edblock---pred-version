@@ -54,6 +54,36 @@
                        HorizontalAlignment="Left"
                        Grid.Column="1" />
 
+            <Canvas Name="conditionBlock" MouseMove="conditionBlock_MouseMove" Grid.Row="1">
+
+                <Polygon Fill="#FF60B2D3" 
+                                 Points="55 120 120 90 190 120" 
+                                 Grid.Row="1" 
+                                 Canvas.Top="-85" 
+                                 Canvas.Left="-50"/>
+
+                <Polygon Fill="#FF60B2D3" 
+                                 Points="190 120 55 120 120 150" 
+                                 Grid.Row="1" 
+                                 Canvas.Top="-85" 
+                                 Canvas.Left="-50"/>
+
+                <Label   FontSize="12" 
+                                 Foreground="White" 
+                                 Canvas.Left="43" 
+                                 Canvas.Top="22"
+                                 Width="100">
+                    <TextBlock Text="Условие" TextWrapping="Wrap"/>
+                </Label>
+            </Canvas>
+
+            <TextBlock Text="Условие (2)" 
+                               FontSize="10" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left"
+                               Grid.Column="1" 
+                               Grid.Row="1"/>
+
             <Canvas Name="startEndBlock"  
                             MouseMove="startEndBlock_MouseMove"  
                             Grid.Row="2">

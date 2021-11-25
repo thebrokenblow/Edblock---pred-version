@@ -102,6 +102,151 @@ namespace Flowchart_Editor
         }
     }
 
+    public class ConditionBlock
+    {
+        private Canvas canvasConditionBlock = null;
+        private Polygon upperPartOfPolygonConditionBlock = null;
+        private Polygon lowerPartOfPolygonConditionBlock = null;
+        private TextBox textOfConditionBlockBox = null;
+        public UIElement GetUIElementWithoutCreate()
+        {
+            return canvasConditionBlock;
+        }
+
+        private void conditionBlock_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfConditionBlock = new ConditionBlockForMovements(sender);
+                var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlockForMovements), instanceOfConditionBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
+
+        public UIElement GetUIElement()
+        {
+            if (canvasConditionBlock == null)
+            {
+                canvasConditionBlock = new Canvas();
+                upperPartOfPolygonConditionBlock = new Polygon();
+                lowerPartOfPolygonConditionBlock = new Polygon();
+                textOfConditionBlockBox = new TextBox();
+
+                var backgroundColor = new BrushConverter();
+                upperPartOfPolygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
+                Point Point1 = new Point(55, 120);
+                Point Point2 = new Point(120, 90);
+                Point Point3 = new Point(190, 120);
+                PointCollection myPointCollection1 = new PointCollection();
+                myPointCollection1.Add(Point1);
+                myPointCollection1.Add(Point2);
+                myPointCollection1.Add(Point3);
+                upperPartOfPolygonConditionBlock.Points = myPointCollection1;
+                Canvas.SetTop(upperPartOfPolygonConditionBlock, -85.5);
+                Canvas.SetLeft(upperPartOfPolygonConditionBlock, -50);
+                canvasConditionBlock.Children.Add(upperPartOfPolygonConditionBlock);
+
+                lowerPartOfPolygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
+                Point Point4 = new Point(190, 120);
+                Point Point5 = new Point(55, 120);
+                Point Point6 = new Point(120, 150);
+                PointCollection myPointCollection2 = new PointCollection();
+                myPointCollection2.Add(Point4);
+                myPointCollection2.Add(Point5);
+                myPointCollection2.Add(Point6);
+                lowerPartOfPolygonConditionBlock.Points = myPointCollection2;
+                Canvas.SetTop(lowerPartOfPolygonConditionBlock, -86);
+                Canvas.SetLeft(lowerPartOfPolygonConditionBlock, -50);
+                canvasConditionBlock.Children.Add(lowerPartOfPolygonConditionBlock);
+
+                textOfConditionBlockBox.Text = "Условие";
+                textOfConditionBlockBox.FontSize = 12;
+                textOfConditionBlockBox.Foreground = Brushes.Black;
+                Canvas.SetLeft(textOfConditionBlockBox, 47);
+                Canvas.SetTop(textOfConditionBlockBox, 21);
+                canvasConditionBlock.Children.Add(textOfConditionBlockBox);
+                canvasConditionBlock.MouseMove += conditionBlock_MouseMove;
+            }
+            return canvasConditionBlock;
+        }
+
+        internal void Reset()
+        {
+            canvasConditionBlock = null;
+        }
+    }
+
+    public class ConditionBlockForMovements
+    {
+        private Canvas canvasConditionBlock = null;
+        private Polygon upperPartOfPolygonConditionBlock = null;
+        private Polygon lowerPartOfPolygonConditionBlock = null;
+        private TextBox textOfConditionBlockBox = null;
+        public object transferInformation = null;
+        public UIElement GetUIElementWithoutCreate()
+        {
+            return canvasConditionBlock;
+        }
+
+        public ConditionBlockForMovements(object sender)
+        {
+            transferInformation = sender;
+        }
+
+        public UIElement GetUIElement()
+        {
+            if (canvasConditionBlock == null)
+            {
+                canvasConditionBlock = new Canvas();
+                upperPartOfPolygonConditionBlock = new Polygon();
+                lowerPartOfPolygonConditionBlock = new Polygon();
+                textOfConditionBlockBox = new TextBox();
+
+                var backgroundColor = new BrushConverter();
+                upperPartOfPolygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
+                Point Point1 = new Point(55, 120);
+                Point Point2 = new Point(120, 90);
+                Point Point3 = new Point(190, 120);
+                PointCollection myPointCollection1 = new PointCollection();
+                myPointCollection1.Add(Point1);
+                myPointCollection1.Add(Point2);
+                myPointCollection1.Add(Point3);
+                upperPartOfPolygonConditionBlock.Points = myPointCollection1;
+                Canvas.SetTop(upperPartOfPolygonConditionBlock, -85.5);
+                Canvas.SetLeft(upperPartOfPolygonConditionBlock, -50);
+                canvasConditionBlock.Children.Add(upperPartOfPolygonConditionBlock);
+
+                lowerPartOfPolygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
+                Point Point4 = new Point(190, 120);
+                Point Point5 = new Point(55, 120);
+                Point Point6 = new Point(120, 150);
+                PointCollection myPointCollection2 = new PointCollection();
+                myPointCollection2.Add(Point4);
+                myPointCollection2.Add(Point5);
+                myPointCollection2.Add(Point6);
+                lowerPartOfPolygonConditionBlock.Points = myPointCollection2;
+                Canvas.SetTop(lowerPartOfPolygonConditionBlock, -86);
+                Canvas.SetLeft(lowerPartOfPolygonConditionBlock, -50);
+                canvasConditionBlock.Children.Add(lowerPartOfPolygonConditionBlock);
+
+                textOfConditionBlockBox.Text = "Условие";
+                textOfConditionBlockBox.FontSize = 12;
+                textOfConditionBlockBox.Foreground = Brushes.Black;
+                Canvas.SetLeft(textOfConditionBlockBox, 47);
+                Canvas.SetTop(textOfConditionBlockBox, 21);
+                canvasConditionBlock.Children.Add(textOfConditionBlockBox);
+            }
+            return canvasConditionBlock;
+        }
+
+        internal void Reset()
+        {
+            canvasConditionBlock = null;
+        }
+    }
+
+
     public class StartEndBlock
     {
         private Canvas? canvasStartEndBlock = null;
@@ -230,6 +375,16 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        private void conditionBlock_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfConditionBlock = new ConditionBlock();
+                var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlock), instanceOfConditionBlock);
+                DragDrop.DoDragDrop(conditionBlock, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
         private void startEndBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -249,7 +404,15 @@ namespace Flowchart_Editor
                 var featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement(); 
                 Canvas.SetLeft(featuresOfActionBlock, position.X);
                 Canvas.SetTop(featuresOfActionBlock, position.Y);
-            } else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
+            }
+            else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
+            {
+                var position = e.GetPosition(destination);
+                var featuresOfStartEndBlock = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                Canvas.SetLeft(featuresOfStartEndBlock, position.X);
+                Canvas.SetTop(featuresOfStartEndBlock, position.Y);
+            }
+            else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
             {
                 var position = e.GetPosition(destination);
                 var featuresOfStartEndBlock = ((StartEndBlock)e.Data.GetData(typeof(StartEndBlock))).GetUIElement();
@@ -285,6 +448,34 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+
+            }
+            else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var dataInformationOfStartEndBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock)); 
+                UIElement startEndBlockOfUIElement;
+                if (dataInformationOfStartEndBlock.GetUIElementWithoutCreate() == null)
+                {
+                    startEndBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                    destination.Children.Add(startEndBlockOfUIElement);
+                }
+                else
+                {
+                    startEndBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                }
+                Canvas.SetLeft(startEndBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(startEndBlockOfUIElement, position.Y + 1);
+
+            }
+            else if (e.Data.GetDataPresent(typeof(ConditionBlockForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements));
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
 
@@ -332,6 +523,13 @@ namespace Flowchart_Editor
                 destination.Children.Remove(actionBlockOfUIElement); //Удаление, если блок уехал за canvas
                 var dataInformationOfActionBlock = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
                 dataInformationOfActionBlock.Reset(); //Востановление блока 
+            }
+            else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
+            {
+                var startEndBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                destination.Children.Remove(startEndBlockOfUIElement);
+                var dataInformationOfStartEndBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock));
+                dataInformationOfStartEndBlock.Reset();
             }
             else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
             {
