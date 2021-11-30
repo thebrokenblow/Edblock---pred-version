@@ -139,6 +139,43 @@
                                VerticalAlignment="Center" 
                                HorizontalAlignment="Left"/>
 
+            <Canvas Width="140" 
+                            Height="60"
+                            Background="#FFBA64C8"
+                            Grid.Row="4" 
+                            Name="subroutineBlock"  
+                            MouseMove="subroutineBlock_MouseMove">
+                <Border BorderBrush="Black" 
+                                Height="60" 
+                                Width="140" 
+                                BorderThickness="1" 
+                                CornerRadius="1">
+                    <Canvas>
+                        <Border BorderBrush="Black" 
+                                        Height="60" 
+                                        Width="100" 
+                                        BorderThickness="1" 
+                                        CornerRadius="1" 
+                                        Canvas.Left="20" 
+                                        Canvas.Top="-1">
+                        </Border>
+                    </Canvas>
+                </Border>
+                <Label FontSize="12" 
+                               Foreground="White" 
+                               Canvas.Left="28"
+                               Canvas.Top="17">
+                    <TextBlock Text="Подпрограмма" TextWrapping="Wrap"/>
+                </Label>
+            </Canvas>
+
+            <TextBlock Text="Подпрограмма (5)" 
+                               FontSize="10" 
+                               Grid.Column="1" 
+                               Grid.Row="4" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left"/>
+
         </Grid>
     </Grid>
 </Window>

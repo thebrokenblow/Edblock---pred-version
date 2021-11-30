@@ -403,6 +403,65 @@ namespace Flowchart_Editor
         }
     }
 
+    public class SubroutineBlock
+    {
+        private Canvas canvasSubroutineBlock = null;
+        private Border borderSubroutineBlock = null;
+        private Border internalBorderSubroutineBlock = null;
+        private TextBox textOfSubroutineBlockBox = null;
+
+        public UIElement GetUIElementWithoutCreate()
+        {
+            return canvasSubroutineBlock;
+        }
+
+        public UIElement GetUIElement()
+        {
+            if (canvasSubroutineBlock == null)
+            {
+                canvasSubroutineBlock = new Canvas();
+                borderSubroutineBlock = new Border();
+                internalBorderSubroutineBlock = new Border();
+                textOfSubroutineBlockBox = new TextBox();
+
+                canvasSubroutineBlock.Width = 140;
+                canvasSubroutineBlock.Height = 60;
+                var backgroundColor = new BrushConverter();
+                canvasSubroutineBlock.Background = (Brush)backgroundColor.ConvertFrom("#FFBA64C8");
+
+                borderSubroutineBlock.BorderBrush = Brushes.Black;
+                borderSubroutineBlock.Height = 60;
+                borderSubroutineBlock.Width = 140;
+                borderSubroutineBlock.BorderThickness = new Thickness(1);
+                borderSubroutineBlock.CornerRadius = new CornerRadius(1);
+
+                internalBorderSubroutineBlock.BorderBrush = Brushes.Black;
+                internalBorderSubroutineBlock.Height = 60;
+                internalBorderSubroutineBlock.Width = 100;
+                internalBorderSubroutineBlock.BorderThickness = new Thickness(1);
+                internalBorderSubroutineBlock.CornerRadius = new CornerRadius(1);
+                Canvas.SetTop(internalBorderSubroutineBlock, 0);
+                Canvas.SetLeft(internalBorderSubroutineBlock, 20);
+
+                textOfSubroutineBlockBox.Text = "Подпрограмма";
+                textOfSubroutineBlockBox.FontSize = 12;
+                textOfSubroutineBlockBox.Foreground = Brushes.White;
+                Canvas.SetTop(textOfSubroutineBlockBox, 15);
+                Canvas.SetLeft(textOfSubroutineBlockBox, 25);
+
+                canvasSubroutineBlock.Children.Add(borderSubroutineBlock);
+                canvasSubroutineBlock.Children.Add(internalBorderSubroutineBlock);
+                canvasSubroutineBlock.Children.Add(textOfSubroutineBlockBox);
+            }
+            return canvasSubroutineBlock;
+        }
+
+        internal void Reset()
+        {
+            canvasSubroutineBlock = null;
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -453,13 +512,23 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        private void subroutineBlock_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceSubroutineBlock = new SubroutineBlock();
+                var dataObjectInformationOfSubroutineBlock = new DataObject(typeof(SubroutineBlock), instanceSubroutineBlock);
+                DragDrop.DoDragDrop(subroutineBlock, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
 
         private void destination_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
-                var position = e.GetPosition(destination); //Зачем получаем координаты у поля а не у блока переносимого 
-                var featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement(); 
+                var position = e.GetPosition(destination);
+                var featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
                 Canvas.SetLeft(featuresOfActionBlock, position.X);
                 Canvas.SetTop(featuresOfActionBlock, position.Y);
             }
@@ -483,6 +552,13 @@ namespace Flowchart_Editor
                 var featuresOfInputOutputBlock = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
                 Canvas.SetLeft(featuresOfInputOutputBlock, position.X);
                 Canvas.SetTop(featuresOfInputOutputBlock, position.Y);
+            }
+            else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
+            {
+                var position = e.GetPosition(destination);
+                var featuresOfSubroutineBlock = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
+                Canvas.SetLeft(featuresOfSubroutineBlock, position.X);
+                Canvas.SetTop(featuresOfSubroutineBlock, position.Y);
             }
             e.Handled = true;
         }
@@ -521,19 +597,19 @@ namespace Flowchart_Editor
             {
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
-                var dataInformationOfStartEndBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock)); 
-                UIElement startEndBlockOfUIElement;
-                if (dataInformationOfStartEndBlock.GetUIElementWithoutCreate() == null)
+                var dataInformationConditionBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock)); 
+                UIElement conditionBlockOfUIElement;
+                if (dataInformationConditionBlock.GetUIElementWithoutCreate() == null)
                 {
-                    startEndBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
-                    destination.Children.Add(startEndBlockOfUIElement);
+                    conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                    destination.Children.Add(conditionBlockOfUIElement);
                 }
                 else
                 {
-                    startEndBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                    conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
                 }
-                Canvas.SetLeft(startEndBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(startEndBlockOfUIElement, position.Y + 1);
+                Canvas.SetLeft(conditionBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(conditionBlockOfUIElement, position.Y + 1);
 
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlockForMovements)))
@@ -576,21 +652,40 @@ namespace Flowchart_Editor
             {
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
-                var dataInformationOfStartEndBlock = (InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock)); 
-                UIElement startEndBlockOfUIElement;
-                if (dataInformationOfStartEndBlock.GetUIElementWithoutCreate() == null)
+                var dataInformationOfInputOutputBlock = (InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock)); 
+                UIElement inputOutputBlockOfUIElement;
+                if (dataInformationOfInputOutputBlock.GetUIElementWithoutCreate() == null)
                 {
-                    startEndBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
-                    destination.Children.Add(startEndBlockOfUIElement);
+                    inputOutputBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
+                    destination.Children.Add(inputOutputBlockOfUIElement);
                 }
                 else
                 {
-                    startEndBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
+                    inputOutputBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
                 }
-                Canvas.SetLeft(startEndBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(startEndBlockOfUIElement, position.Y + 1);
+                Canvas.SetLeft(inputOutputBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(inputOutputBlockOfUIElement, position.Y + 1);
 
             } 
+            else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var dataInformationOfSubroutineBlock = (SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock));
+                UIElement subroutineBlockOfUIElement;
+                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
+                {
+                    subroutineBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
+                    destination.Children.Add(subroutineBlockOfUIElement);
+                }
+                else
+                {
+                    subroutineBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
+                }
+                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
+
+            }
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
@@ -600,15 +695,15 @@ namespace Flowchart_Editor
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
                 var actionBlockOfUIElement = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
-                destination.Children.Remove(actionBlockOfUIElement); //Удаление, если блок уехал за canvas
+                destination.Children.Remove(actionBlockOfUIElement);
                 var dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
-                dataInformationOfActionBlock.Reset(); //Востановление блока 
+                dataInformationOfActionBlock.Reset();
             } else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
             {
                 var actionBlockOfUIElement = ((ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements))).GetUIElement();
-                destination.Children.Remove(actionBlockOfUIElement); //Удаление, если блок уехал за canvas
+                destination.Children.Remove(actionBlockOfUIElement); 
                 var dataInformationOfActionBlock = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
-                dataInformationOfActionBlock.Reset(); //Востановление блока 
+                dataInformationOfActionBlock.Reset();
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
             {
@@ -623,11 +718,19 @@ namespace Flowchart_Editor
                 destination.Children.Remove(startEndBlockOfUIElement);
                 var dataInformationOfStartEndBlock = (StartEndBlock)e.Data.GetData(typeof(StartEndBlock));
                 dataInformationOfStartEndBlock.Reset();
-            } else if(e.Data.GetDataPresent(typeof(StartEndBlockForMovements)))
+            } 
+            else if(e.Data.GetDataPresent(typeof(StartEndBlockForMovements)))
             {
                 var startEndBlockOfUIElement = ((StartEndBlockForMovements)e.Data.GetData(typeof(StartEndBlockForMovements))).GetUIElement();
                 destination.Children.Remove(startEndBlockOfUIElement);
                 var dataInformationOfStartEndBlock = (StartEndBlockForMovements)e.Data.GetData(typeof(StartEndBlockForMovements));
+                dataInformationOfStartEndBlock.Reset();
+            }
+            else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
+            {
+                var startEndBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
+                destination.Children.Remove(startEndBlockOfUIElement);
+                var dataInformationOfStartEndBlock = (SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock));
                 dataInformationOfStartEndBlock.Reset();
             }
             e.Handled = true;
