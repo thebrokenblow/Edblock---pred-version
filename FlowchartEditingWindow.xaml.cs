@@ -480,6 +480,81 @@ namespace Flowchart_Editor
             return canvasSubroutineBlock;
         }
 
+        private void subroutineBlock_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfInputOutputBlock = new SubroutineBlockForMovements(sender);
+                var dataObjectInformationOfStartEndBlock = new DataObject(typeof(SubroutineBlockForMovements), instanceOfInputOutputBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
+
+        public UIElement GetUIElement()
+        {
+            if (canvasSubroutineBlock == null)
+            {
+                canvasSubroutineBlock = new Canvas();
+                borderSubroutineBlock = new Border();
+                internalBorderSubroutineBlock = new Border();
+                textOfSubroutineBlockBox = new TextBox();
+
+                canvasSubroutineBlock.Width = 140;
+                canvasSubroutineBlock.Height = 60;
+                var backgroundColor = new BrushConverter();
+                canvasSubroutineBlock.Background = (Brush)backgroundColor.ConvertFrom("#FFBA64C8");
+
+                borderSubroutineBlock.BorderBrush = Brushes.Black;
+                borderSubroutineBlock.Height = 60;
+                borderSubroutineBlock.Width = 140;
+                borderSubroutineBlock.BorderThickness = new Thickness(1);
+                borderSubroutineBlock.CornerRadius = new CornerRadius(1);
+
+                internalBorderSubroutineBlock.BorderBrush = Brushes.Black;
+                internalBorderSubroutineBlock.Height = 60;
+                internalBorderSubroutineBlock.Width = 100;
+                internalBorderSubroutineBlock.BorderThickness = new Thickness(1);
+                internalBorderSubroutineBlock.CornerRadius = new CornerRadius(1);
+                Canvas.SetTop(internalBorderSubroutineBlock, 0);
+                Canvas.SetLeft(internalBorderSubroutineBlock, 20);
+
+                textOfSubroutineBlockBox.Text = "Подпрограмма";
+                textOfSubroutineBlockBox.FontSize = 12;
+                textOfSubroutineBlockBox.Foreground = Brushes.White;
+                Canvas.SetTop(textOfSubroutineBlockBox, 15);
+                Canvas.SetLeft(textOfSubroutineBlockBox, 25);
+
+                canvasSubroutineBlock.Children.Add(borderSubroutineBlock);
+                canvasSubroutineBlock.Children.Add(internalBorderSubroutineBlock);
+                canvasSubroutineBlock.Children.Add(textOfSubroutineBlockBox);
+                canvasSubroutineBlock.MouseMove += subroutineBlock_MouseMove;
+            }
+            return canvasSubroutineBlock;
+        }
+
+        internal void Reset()
+        {
+            canvasSubroutineBlock = null;
+        }
+    }
+
+    public class SubroutineBlockForMovements
+    {
+        private Canvas canvasSubroutineBlock = null;
+        private Border borderSubroutineBlock = null;
+        private Border internalBorderSubroutineBlock = null;
+        private TextBox textOfSubroutineBlockBox = null;
+        public object transferInformation = null;
+        public SubroutineBlockForMovements(object sender)
+        {
+            transferInformation = sender;
+        }
+        public UIElement GetUIElementWithoutCreate()
+        {
+            return canvasSubroutineBlock;
+        }
+
         public UIElement GetUIElement()
         {
             if (canvasSubroutineBlock == null)
@@ -758,6 +833,14 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
+            }
+            else if (e.Data.GetDataPresent(typeof(SubroutineBlockForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (SubroutineBlockForMovements)e.Data.GetData(typeof(SubroutineBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
             }
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
