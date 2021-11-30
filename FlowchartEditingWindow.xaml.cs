@@ -365,6 +365,71 @@ namespace Flowchart_Editor
             return canvasInputOutputBlock;
         }
 
+        private void inputOutputBlock_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfInputOutputBlock = new InputOutputBlockForMovements(sender);
+                var dataObjectInformationOfStartEndBlock = new DataObject(typeof(InputOutputBlockForMovements), instanceOfInputOutputBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
+
+        public UIElement GetUIElement()
+        {
+            if (canvasInputOutputBlock == null)
+            {
+                canvasInputOutputBlock = new Canvas();
+                rectangleInputOutputBlock = new Rectangle();
+                textInputOutputkBox = new TextBox();
+
+                var backgroundColor = new BrushConverter();
+                rectangleInputOutputBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF05273C");
+                rectangleInputOutputBlock.Width = 102;
+                rectangleInputOutputBlock.Height = 30;
+
+                MatrixTransform matrix1 = new MatrixTransform(1, 0, 1, 2, 1, -3);
+                Matrix matrix = new Matrix(1, 0, 1, 2, 1, -3);
+                rectangleInputOutputBlock.RenderTransform = matrix1;
+
+                Canvas.SetTop(rectangleInputOutputBlock, 11);
+                Canvas.SetLeft(rectangleInputOutputBlock, 5);
+
+                textInputOutputkBox.Text = "Ввод/Вывод";
+                textInputOutputkBox.FontSize = 12;
+                textInputOutputkBox.Foreground = Brushes.White;
+                Canvas.SetTop(textInputOutputkBox, 25);
+                Canvas.SetLeft(textInputOutputkBox, 37);
+
+                canvasInputOutputBlock.Children.Add(rectangleInputOutputBlock);
+                canvasInputOutputBlock.Children.Add(textInputOutputkBox);
+                canvasInputOutputBlock.MouseMove += inputOutputBlock_MouseMove;
+            }
+            return canvasInputOutputBlock;
+        }
+
+        internal void Reset()
+        {
+            canvasInputOutputBlock = null;
+        }
+    }
+
+    public class InputOutputBlockForMovements
+    {
+        private Canvas canvasInputOutputBlock = null;
+        private Rectangle rectangleInputOutputBlock = null;
+        private TextBox textInputOutputkBox = null;
+        public object transferInformation = null;
+        public InputOutputBlockForMovements(object sender)
+        {
+            transferInformation = sender;
+        }
+        public UIElement GetUIElementWithoutCreate()
+        {
+            return canvasInputOutputBlock;
+        }
+
         public UIElement GetUIElement()
         {
             if (canvasInputOutputBlock == null)
@@ -563,7 +628,7 @@ namespace Flowchart_Editor
             e.Handled = true;
         }
 
-        private void destination_DragOver(object sender, DragEventArgs e) //Метод обрабатывает что можем переносить только блоки и ничего лишнего
+        private void destination_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
@@ -666,7 +731,15 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(inputOutputBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(inputOutputBlockOfUIElement, position.Y + 1);
 
-            } 
+            }
+            else if (e.Data.GetDataPresent(typeof(InputOutputBlockForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (InputOutputBlockForMovements)e.Data.GetData(typeof(InputOutputBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+            }
             else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
