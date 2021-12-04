@@ -15,9 +15,6 @@ namespace Flowchart_Editor
         private Ellipse? thirdPointToConnect = null;
         private Ellipse? fourthPointToConnect = null;
        
-
-        
-
         public UIElement GetUIElementWithoutCreate()
         {
             #pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
@@ -327,6 +324,7 @@ namespace Flowchart_Editor
         private Ellipse secondPointToConnect = null;
         private Ellipse thirdPointToConnect = null;
         private Ellipse fourthPointToConnect = null;
+       
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -371,23 +369,23 @@ namespace Flowchart_Editor
                 firstPointToConnect.Fill = Brushes.Black;
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
-                firstPointToConnect.Margin = new Thickness(65, 7, 0, 0);
+                firstPointToConnect.Margin = new Thickness(65, -4, 0, 0);
 
                 secondPointToConnect.Fill = Brushes.Black;
                 secondPointToConnect.Height = 6;
                 secondPointToConnect.Width = 6;
-                secondPointToConnect.Margin = new Thickness(-4, 35, 0, 0);
+                secondPointToConnect.Margin = new Thickness(-3, 25, 0, 0);
 
 
                 thirdPointToConnect.Fill = Brushes.Black;
                 thirdPointToConnect.Height = 6;
                 thirdPointToConnect.Width = 6;
-                thirdPointToConnect.Margin = new Thickness(65, 66, 0, 0);
+                thirdPointToConnect.Margin = new Thickness(65, 56, 0, 0);
 
                 fourthPointToConnect.Fill = Brushes.Black;
                 fourthPointToConnect.Height = 6;
                 fourthPointToConnect.Width = 6;
-                fourthPointToConnect.Margin = new Thickness(137, 35, 0, 0);
+                fourthPointToConnect.Margin = new Thickness(137, 25, 0, 0);
 
                 Canvas.SetLeft(textOfStartEndBox, 47);
                 Canvas.SetTop(textOfStartEndBox, 17);
@@ -463,6 +461,10 @@ namespace Flowchart_Editor
         private Canvas canvasInputOutputBlock = null;
         private Rectangle rectangleInputOutputBlock = null;
         private TextBox textInputOutputkBox = null;
+        private Ellipse? firstPointToConnect = null;
+        private Ellipse? secondPointToConnect = null;
+        private Ellipse? thirdPointToConnect = null;
+        private Ellipse? fourthPointToConnect = null;
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -487,6 +489,10 @@ namespace Flowchart_Editor
                 canvasInputOutputBlock = new Canvas();
                 rectangleInputOutputBlock = new Rectangle();
                 textInputOutputkBox = new TextBox();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
 
                 var backgroundColor = new BrushConverter();
                 rectangleInputOutputBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF05273C");
@@ -505,9 +511,34 @@ namespace Flowchart_Editor
                 textInputOutputkBox.Foreground = Brushes.White;
                 Canvas.SetTop(textInputOutputkBox, 25);
                 Canvas.SetLeft(textInputOutputkBox, 37);
+             
+                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                firstPointToConnect.Margin = new Thickness(60, 5, 0, 0);
+
+                secondPointToConnect.Fill = Brushes.Black;
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                secondPointToConnect.Margin = new Thickness(18, 35, 0, 0);
+
+
+                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Margin = new Thickness(80, 66, 0, 0);
+
+                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Margin = new Thickness(120, 35, 0, 0);
 
                 canvasInputOutputBlock.Children.Add(rectangleInputOutputBlock);
                 canvasInputOutputBlock.Children.Add(textInputOutputkBox);
+                canvasInputOutputBlock.Children.Add(firstPointToConnect);
+                canvasInputOutputBlock.Children.Add(secondPointToConnect);
+                canvasInputOutputBlock.Children.Add(thirdPointToConnect);
+                canvasInputOutputBlock.Children.Add(fourthPointToConnect);
                 canvasInputOutputBlock.MouseMove += inputOutputBlock_MouseMove;
             }
             return canvasInputOutputBlock;
@@ -578,6 +609,10 @@ namespace Flowchart_Editor
         private Border borderSubroutineBlock = null;
         private Border internalBorderSubroutineBlock = null;
         private TextBox textOfSubroutineBlockBox = null;
+        private Ellipse? firstPointToConnect = null;
+        private Ellipse? secondPointToConnect = null;
+        private Ellipse? thirdPointToConnect = null;
+        private Ellipse? fourthPointToConnect = null;
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -603,6 +638,11 @@ namespace Flowchart_Editor
                 borderSubroutineBlock = new Border();
                 internalBorderSubroutineBlock = new Border();
                 textOfSubroutineBlockBox = new TextBox();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
+
 
                 canvasSubroutineBlock.Width = 140;
                 canvasSubroutineBlock.Height = 60;
@@ -628,10 +668,36 @@ namespace Flowchart_Editor
                 textOfSubroutineBlockBox.Foreground = Brushes.White;
                 Canvas.SetTop(textOfSubroutineBlockBox, 15);
                 Canvas.SetLeft(textOfSubroutineBlockBox, 25);
+             
+                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                firstPointToConnect.Margin = new Thickness(65, -3, 0, 0);
+
+                secondPointToConnect.Fill = Brushes.Black;
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                secondPointToConnect.Margin = new Thickness(-3, 27, 0, 0);
+
+
+                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Margin = new Thickness(65, 57, 0, 0);
+
+                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Margin = new Thickness(136, 27, 0, 0);
+
 
                 canvasSubroutineBlock.Children.Add(borderSubroutineBlock);
                 canvasSubroutineBlock.Children.Add(internalBorderSubroutineBlock);
                 canvasSubroutineBlock.Children.Add(textOfSubroutineBlockBox);
+                canvasSubroutineBlock.Children.Add(firstPointToConnect);
+                canvasSubroutineBlock.Children.Add(secondPointToConnect);
+                canvasSubroutineBlock.Children.Add(thirdPointToConnect);
+                canvasSubroutineBlock.Children.Add(fourthPointToConnect);
                 canvasSubroutineBlock.MouseMove += subroutineBlock_MouseMove;
             }
             return canvasSubroutineBlock;
@@ -712,6 +778,10 @@ namespace Flowchart_Editor
         private Canvas canvasLinkBlock = null;
         private Ellipse eliposLinkBlock = null;
         private TextBox textOfLinkBlockBox = null;
+        private Ellipse? firstPointToConnect = null;
+        private Ellipse? secondPointToConnect = null;
+        private Ellipse? thirdPointToConnect = null;
+        private Ellipse? fourthPointToConnect = null;
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -736,6 +806,10 @@ namespace Flowchart_Editor
                 canvasLinkBlock = new Canvas();
                 eliposLinkBlock = new Ellipse();
                 textOfLinkBlockBox = new TextBox();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
 
                 eliposLinkBlock.Width = 75;
                 eliposLinkBlock.Height = 75;
@@ -747,9 +821,34 @@ namespace Flowchart_Editor
                 textOfLinkBlockBox.Foreground = Brushes.White;
                 Canvas.SetTop(textOfLinkBlockBox, 15);
                 Canvas.SetLeft(textOfLinkBlockBox, 25);
+              
+                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                firstPointToConnect.Margin = new Thickness(35, -3, 0, 0);
+
+                secondPointToConnect.Fill = Brushes.Black;
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                secondPointToConnect.Margin = new Thickness(-3, 35, 0, 0);
+
+
+                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Margin = new Thickness(35, 72, 0, 0);
+
+                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Margin = new Thickness(72, 35, 0, 0);
 
                 canvasLinkBlock.Children.Add(eliposLinkBlock);
                 canvasLinkBlock.Children.Add(textOfLinkBlockBox);
+                canvasLinkBlock.Children.Add(firstPointToConnect);
+                canvasLinkBlock.Children.Add(secondPointToConnect);
+                canvasLinkBlock.Children.Add(thirdPointToConnect);
+                canvasLinkBlock.Children.Add(fourthPointToConnect);
                 canvasLinkBlock.MouseMove += linkBlock_MouseMove;
             }
             return canvasLinkBlock;
