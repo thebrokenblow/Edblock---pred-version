@@ -3,19 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Flowchart_Editor"
         mc:Ignorable="d"
         Title="Flowchart Editor" Height="450" Width="800">
     <Grid Background="White">
 
         <Canvas Background="White" 
-               Grid.Column="2"
                 AllowDrop="True" 
                 DragOver="destination_DragOver" 
                 DragLeave="destination_DragLeave" 
                 Drop="destination_Drop" 
                 Name="destination" />
-
 
         <Grid>
             <Grid.RowDefinitions>
@@ -33,23 +32,24 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-           
 
             <Canvas Width="140" 
                     Height="60"
                     Background="#FF52C0AA"
                     MouseMove="actionBlock_MouseMove" 
                     Name="actionBlock">
-
                 <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="40" 
-                           Canvas.Top="18"
+                           Canvas.Top="17"
                            Width="100">
                     <TextBlock Text="Действие"
                                TextWrapping="Wrap"/>
                 </Label>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="65 -3 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="-3 25 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="65 57 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="136 25 0 0"/>
             </Canvas>
 
             <TextBlock Text="Блок (1)" 
@@ -79,6 +79,10 @@
                                  Width="100">
                     <TextBlock Text="Условие" TextWrapping="Wrap"/>
                 </Label>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="68 1 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="3 32 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="67 62 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="135 32 0 0"/>
             </Canvas>
 
             <TextBlock Text="Условие (2)" 
@@ -106,6 +110,11 @@
                                Canvas.Top="28">
                     <TextBlock Text="Начало/Конец" TextWrapping="Wrap"/>
                 </Label>
+                
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="65 7 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="-4 35 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="65 66 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="137 35 0 0"/>
             </Canvas>
 
             <TextBlock Text="Начало / Конец (3)" 
@@ -134,6 +143,10 @@
                                Canvas.Top="25">
                     <TextBlock Text="Ввод/Вывод" TextWrapping="Wrap"/>
                 </Label>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="60 5 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="18 35 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="80 66 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="120 35 0 0"/>
             </Canvas>
 
             <TextBlock Text="Ввод / Вывод (4)" 
@@ -171,6 +184,10 @@
                                Canvas.Top="17">
                     <TextBlock Text="Подпрограмма" TextWrapping="Wrap"/>
                 </Label>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="65 -3 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="-3 27 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="65 57 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="136 27 0 0"/>
             </Canvas>
 
             <TextBlock Text="Подпрограмма (5)" 
@@ -200,6 +217,10 @@
                     <TextBlock Text="Ссылка" 
                                TextWrapping="Wrap"/>
                 </Label>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="35 -3 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="-3 35 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="35 72 0 0"/>
+                <Ellipse Height="6" Width="6" Fill="Black" Margin="72 35 0 0"/>
             </Canvas>
 
             <TextBlock Text="Ссылка (7)" 

@@ -10,6 +10,13 @@ namespace Flowchart_Editor
     {
         private Canvas? canvasOfActionBlock = null;
         private TextBox? textOfActionBlock = null;
+        private Ellipse? firstPointToConnect = null;
+        private Ellipse? secondPointToConnect = null;
+        private Ellipse? thirdPointToConnect = null;
+        private Ellipse? fourthPointToConnect = null;
+       
+
+        
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -35,9 +42,13 @@ namespace Flowchart_Editor
             {
                 canvasOfActionBlock = new Canvas();
                 textOfActionBlock = new TextBox();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
 
                 textOfActionBlock.Text = "Действие";
-                textOfActionBlock.Foreground = Brushes.Black;
+                textOfActionBlock.Foreground = Brushes.White;
 
                 var backgroundColor = new BrushConverter();
                 canvasOfActionBlock.Background = (Brush)backgroundColor.ConvertFrom("#FF52C0AA");
@@ -46,7 +57,33 @@ namespace Flowchart_Editor
 
                 Canvas.SetLeft(textOfActionBlock, 40);
                 Canvas.SetTop(textOfActionBlock, 15);
+
+                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                firstPointToConnect.Margin = new Thickness(65, - 3, 0, 0);
+
+                secondPointToConnect.Fill= Brushes.Black;
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                secondPointToConnect.Margin = new Thickness(-3, 25, 0, 0);
+
+
+                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Margin = new Thickness(65, 57, 0, 0);
+
+                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Margin = new Thickness(136, 25, 0, 0);
+
                 canvasOfActionBlock.Children.Add(textOfActionBlock);
+                canvasOfActionBlock.Children.Add(firstPointToConnect);
+                canvasOfActionBlock.Children.Add(secondPointToConnect);
+                canvasOfActionBlock.Children.Add(thirdPointToConnect);
+                canvasOfActionBlock.Children.Add(fourthPointToConnect);
                 canvasOfActionBlock.MouseMove += actionBlockForMovements_MouseMove;
             }
             return canvasOfActionBlock;
@@ -83,7 +120,7 @@ namespace Flowchart_Editor
                 textOfActionBlock = new TextBox();
 
                 textOfActionBlock.Text = "Действие";
-                textOfActionBlock.Foreground = Brushes.Black;
+                textOfActionBlock.Foreground = Brushes.White;
 
                 var backgroundColor = new BrushConverter();
                 canvasOfActionBlock.Background = (Brush)backgroundColor.ConvertFrom("#FF52C0AA");
@@ -108,6 +145,11 @@ namespace Flowchart_Editor
         private Polygon upperPartOfPolygonConditionBlock = null;
         private Polygon lowerPartOfPolygonConditionBlock = null;
         private TextBox textOfConditionBlockBox = null;
+        private Ellipse firstPointToConnect = null;
+        private Ellipse secondPointToConnect = null;
+        private Ellipse thirdPointToConnect = null;
+        private Ellipse fourthPointToConnect = null;
+
         public UIElement GetUIElementWithoutCreate()
         {
             return canvasConditionBlock;
@@ -128,6 +170,10 @@ namespace Flowchart_Editor
         {
             if (canvasConditionBlock == null)
             {
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
                 canvasConditionBlock = new Canvas();
                 upperPartOfPolygonConditionBlock = new Polygon();
                 lowerPartOfPolygonConditionBlock = new Polygon();
@@ -160,12 +206,37 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(lowerPartOfPolygonConditionBlock, -50);
                 canvasConditionBlock.Children.Add(lowerPartOfPolygonConditionBlock);
 
+                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                firstPointToConnect.Margin = new Thickness(68, 1, 0, 0);
+
+                secondPointToConnect.Fill = Brushes.Black;
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                secondPointToConnect.Margin = new Thickness(3, 32, 0, 0);
+
+
+                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Margin = new Thickness(67, 62, 0, 0);
+
+                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Margin = new Thickness(135, 32, 0, 0);
+
                 textOfConditionBlockBox.Text = "Условие";
                 textOfConditionBlockBox.FontSize = 12;
-                textOfConditionBlockBox.Foreground = Brushes.Black;
+                textOfConditionBlockBox.Foreground = Brushes.White;
                 Canvas.SetLeft(textOfConditionBlockBox, 47);
                 Canvas.SetTop(textOfConditionBlockBox, 21);
                 canvasConditionBlock.Children.Add(textOfConditionBlockBox);
+                canvasConditionBlock.Children.Add(firstPointToConnect);
+                canvasConditionBlock.Children.Add(secondPointToConnect);
+                canvasConditionBlock.Children.Add(thirdPointToConnect);
+                canvasConditionBlock.Children.Add(fourthPointToConnect);
                 canvasConditionBlock.MouseMove += conditionBlock_MouseMove;
             }
             return canvasConditionBlock;
@@ -232,7 +303,7 @@ namespace Flowchart_Editor
 
                 textOfConditionBlockBox.Text = "Условие";
                 textOfConditionBlockBox.FontSize = 12;
-                textOfConditionBlockBox.Foreground = Brushes.Black;
+                textOfConditionBlockBox.Foreground = Brushes.White;
                 Canvas.SetLeft(textOfConditionBlockBox, 47);
                 Canvas.SetTop(textOfConditionBlockBox, 21);
                 canvasConditionBlock.Children.Add(textOfConditionBlockBox);
@@ -252,6 +323,10 @@ namespace Flowchart_Editor
         private Canvas? canvasStartEndBlock = null;
         private Rectangle? rectangleStartEndBlock = null;
         private TextBox? textOfStartEndBox = null;
+        private Ellipse firstPointToConnect = null;
+        private Ellipse secondPointToConnect = null;
+        private Ellipse thirdPointToConnect = null;
+        private Ellipse fourthPointToConnect = null;
 
         public UIElement GetUIElementWithoutCreate()
         {
@@ -278,6 +353,10 @@ namespace Flowchart_Editor
                 canvasStartEndBlock = new Canvas();
                 rectangleStartEndBlock = new Rectangle();
                 textOfStartEndBox = new TextBox();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
 
                 var backgroundColor = new BrushConverter();
                 rectangleStartEndBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FFF25252");
@@ -287,12 +366,37 @@ namespace Flowchart_Editor
                 rectangleStartEndBlock.Height = 60;
 
                 textOfStartEndBox.Text = "Начало";
-                textOfStartEndBox.Foreground = Brushes.Black;
+                textOfStartEndBox.Foreground = Brushes.White;
+
+                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                firstPointToConnect.Margin = new Thickness(65, 7, 0, 0);
+
+                secondPointToConnect.Fill = Brushes.Black;
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                secondPointToConnect.Margin = new Thickness(-4, 35, 0, 0);
+
+
+                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Margin = new Thickness(65, 66, 0, 0);
+
+                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Margin = new Thickness(137, 35, 0, 0);
 
                 Canvas.SetLeft(textOfStartEndBox, 47);
                 Canvas.SetTop(textOfStartEndBox, 17);
                 canvasStartEndBlock.Children.Add(rectangleStartEndBlock);
                 canvasStartEndBlock.Children.Add(textOfStartEndBox);
+                canvasStartEndBlock.Children.Add(firstPointToConnect);
+                canvasStartEndBlock.Children.Add(secondPointToConnect);
+                canvasStartEndBlock.Children.Add(thirdPointToConnect);
+                canvasStartEndBlock.Children.Add(fourthPointToConnect);
                 canvasStartEndBlock.MouseMove += startEndBlock_MouseMove;
             }
             return canvasStartEndBlock;
@@ -339,7 +443,7 @@ namespace Flowchart_Editor
                 rectangleStartEndBlock.Height = 60;
 
                 textOfStartEndBox.Text = "Начало";
-                textOfStartEndBox.Foreground = Brushes.Black;
+                textOfStartEndBox.Foreground = Brushes.White;
 
                 Canvas.SetLeft(textOfStartEndBox, 47);
                 Canvas.SetTop(textOfStartEndBox, 17);
@@ -638,7 +742,7 @@ namespace Flowchart_Editor
                 var backgroundColor = new BrushConverter();
                 eliposLinkBlock.Fill = (Brush)backgroundColor.ConvertFrom("#5761A8");
 
-                textOfLinkBlockBox.Text = "Подпрограмма";
+                textOfLinkBlockBox.Text = "Ссылка";
                 textOfLinkBlockBox.FontSize = 12;
                 textOfLinkBlockBox.Foreground = Brushes.White;
                 Canvas.SetTop(textOfLinkBlockBox, 15);
@@ -721,7 +825,7 @@ namespace Flowchart_Editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfActionBlock = new ActionBlock();
-                var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock); //Занесениие информации в DataObject зачем?
+                var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
@@ -1018,9 +1122,9 @@ namespace Flowchart_Editor
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlockForMovements)))
             {
-                var startEndBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
+                var startEndBlockOfUIElement = ((ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements))).GetUIElement();
                 destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock));
+                var dataInformationOfStartEndBlock = (ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements));
                 dataInformationOfStartEndBlock.Reset();
             }
             else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
