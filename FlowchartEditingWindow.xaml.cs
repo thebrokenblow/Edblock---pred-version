@@ -54,7 +54,8 @@ namespace Flowchart_Editor
 
                 Canvas.SetLeft(textOfActionBlock, 40);
                 Canvas.SetTop(textOfActionBlock, 15);
-
+                //делегат, который обрабатывает click 
+                //firstPointToConnect.Mo
                 firstPointToConnect.Fill = Brushes.Black;
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
@@ -93,46 +94,11 @@ namespace Flowchart_Editor
     }
 
     public class ActionBlockForMovements
-    {
-        private Canvas? canvasOfActionBlock = null;
-        private TextBox? textOfActionBlock = null;
+    {      
         public object transferInformationActionBlock = null;
         public ActionBlockForMovements(object sender) 
         {
             transferInformationActionBlock = sender;
-        }
-
-        public UIElement GetUIElementWithoutCreate()
-        {
-            #pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
-            return canvasOfActionBlock;
-            #pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
-        }
-
-        public UIElement GetUIElement()
-        {
-            if (canvasOfActionBlock == null)
-            {
-                canvasOfActionBlock = new Canvas();
-                textOfActionBlock = new TextBox();
-
-                textOfActionBlock.Text = "Действие";
-                textOfActionBlock.Foreground = Brushes.White;
-
-                var backgroundColor = new BrushConverter();
-                canvasOfActionBlock.Background = (Brush)backgroundColor.ConvertFrom("#FF52C0AA");
-                canvasOfActionBlock.Width = 140;
-                canvasOfActionBlock.Height = 60;
-
-                Canvas.SetLeft(textOfActionBlock, 40);
-                Canvas.SetTop(textOfActionBlock, 15);
-                canvasOfActionBlock.Children.Add(textOfActionBlock);
-            }
-            return canvasOfActionBlock;
-        }
-        internal void Reset()
-        {
-            canvasOfActionBlock = null;
         }
     }
 
@@ -247,70 +213,11 @@ namespace Flowchart_Editor
 
     public class ConditionBlockForMovements
     {
-        private Canvas canvasConditionBlock = null;
-        private Polygon upperPartOfPolygonConditionBlock = null;
-        private Polygon lowerPartOfPolygonConditionBlock = null;
-        private TextBox textOfConditionBlockBox = null;
         public object transferInformation = null;
-        public UIElement GetUIElementWithoutCreate()
-        {
-            return canvasConditionBlock;
-        }
 
         public ConditionBlockForMovements(object sender)
         {
             transferInformation = sender;
-        }
-
-        public UIElement GetUIElement()
-        {
-            if (canvasConditionBlock == null)
-            {
-                canvasConditionBlock = new Canvas();
-                upperPartOfPolygonConditionBlock = new Polygon();
-                lowerPartOfPolygonConditionBlock = new Polygon();
-                textOfConditionBlockBox = new TextBox();
-
-                var backgroundColor = new BrushConverter();
-                upperPartOfPolygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
-                Point Point1 = new Point(55, 120);
-                Point Point2 = new Point(120, 90);
-                Point Point3 = new Point(190, 120);
-                PointCollection myPointCollection1 = new PointCollection();
-                myPointCollection1.Add(Point1);
-                myPointCollection1.Add(Point2);
-                myPointCollection1.Add(Point3);
-                upperPartOfPolygonConditionBlock.Points = myPointCollection1;
-                Canvas.SetTop(upperPartOfPolygonConditionBlock, -85.5);
-                Canvas.SetLeft(upperPartOfPolygonConditionBlock, -50);
-                canvasConditionBlock.Children.Add(upperPartOfPolygonConditionBlock);
-
-                lowerPartOfPolygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
-                Point Point4 = new Point(190, 120);
-                Point Point5 = new Point(55, 120);
-                Point Point6 = new Point(120, 150);
-                PointCollection myPointCollection2 = new PointCollection();
-                myPointCollection2.Add(Point4);
-                myPointCollection2.Add(Point5);
-                myPointCollection2.Add(Point6);
-                lowerPartOfPolygonConditionBlock.Points = myPointCollection2;
-                Canvas.SetTop(lowerPartOfPolygonConditionBlock, -86);
-                Canvas.SetLeft(lowerPartOfPolygonConditionBlock, -50);
-                canvasConditionBlock.Children.Add(lowerPartOfPolygonConditionBlock);
-
-                textOfConditionBlockBox.Text = "Условие";
-                textOfConditionBlockBox.FontSize = 12;
-                textOfConditionBlockBox.Foreground = Brushes.White;
-                Canvas.SetLeft(textOfConditionBlockBox, 47);
-                Canvas.SetTop(textOfConditionBlockBox, 21);
-                canvasConditionBlock.Children.Add(textOfConditionBlockBox);
-            }
-            return canvasConditionBlock;
-        }
-
-        internal void Reset()
-        {
-            canvasConditionBlock = null;
         }
     }
 
@@ -408,54 +315,14 @@ namespace Flowchart_Editor
 
     public class StartEndBlockForMovements
     {
-        private Canvas? canvasStartEndBlock = null;
-        private Rectangle? rectangleStartEndBlock = null;
-        private TextBox? textOfStartEndBox = null;
         public object transferInformation = null;
 
         public StartEndBlockForMovements(object sender)
         {
             transferInformation = sender;
         }
-
-        public UIElement GetUIElementWithoutCreate()
-        {
-            #pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
-            return canvasStartEndBlock;
-            #pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
-        }
-
-        public UIElement GetUIElement()
-        {
-            if (canvasStartEndBlock == null)
-            {
-                canvasStartEndBlock = new Canvas();
-                rectangleStartEndBlock = new Rectangle();
-                textOfStartEndBox = new TextBox();
-
-                var backgroundColor = new BrushConverter();
-                rectangleStartEndBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FFF25252");
-                rectangleStartEndBlock.RadiusX = 25;
-                rectangleStartEndBlock.RadiusY = 25;
-                rectangleStartEndBlock.Width = 140;
-                rectangleStartEndBlock.Height = 60;
-
-                textOfStartEndBox.Text = "Начало";
-                textOfStartEndBox.Foreground = Brushes.White;
-
-                Canvas.SetLeft(textOfStartEndBox, 47);
-                Canvas.SetTop(textOfStartEndBox, 17);
-                canvasStartEndBlock.Children.Add(rectangleStartEndBlock);
-                canvasStartEndBlock.Children.Add(textOfStartEndBox);
-            }
-            return canvasStartEndBlock;
-        }
-
-        internal void Reset()
-        {
-            canvasStartEndBlock = null;
-        }
     }
+
     public class InputOutputBlock
     {
         private Canvas canvasInputOutputBlock = null;
@@ -552,54 +419,10 @@ namespace Flowchart_Editor
 
     public class InputOutputBlockForMovements
     {
-        private Canvas canvasInputOutputBlock = null;
-        private Rectangle rectangleInputOutputBlock = null;
-        private TextBox textInputOutputkBox = null;
         public object transferInformation = null;
         public InputOutputBlockForMovements(object sender)
         {
             transferInformation = sender;
-        }
-        public UIElement GetUIElementWithoutCreate()
-        {
-            return canvasInputOutputBlock;
-        }
-
-        public UIElement GetUIElement()
-        {
-            if (canvasInputOutputBlock == null)
-            {
-                canvasInputOutputBlock = new Canvas();
-                rectangleInputOutputBlock = new Rectangle();
-                textInputOutputkBox = new TextBox();
-
-                var backgroundColor = new BrushConverter();
-                rectangleInputOutputBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF05273C");
-                rectangleInputOutputBlock.Width = 102;
-                rectangleInputOutputBlock.Height = 30;
-
-                MatrixTransform matrix1 = new MatrixTransform(1, 0, 1, 2, 1, -3);
-                Matrix matrix = new Matrix(1, 0, 1, 2, 1, -3);
-                rectangleInputOutputBlock.RenderTransform = matrix1;
-
-                Canvas.SetTop(rectangleInputOutputBlock, 11);
-                Canvas.SetLeft(rectangleInputOutputBlock, 5);
-
-                textInputOutputkBox.Text = "Ввод/Вывод";
-                textInputOutputkBox.FontSize = 12;
-                textInputOutputkBox.Foreground = Brushes.White;
-                Canvas.SetTop(textInputOutputkBox, 25);
-                Canvas.SetLeft(textInputOutputkBox, 37);
-
-                canvasInputOutputBlock.Children.Add(rectangleInputOutputBlock);
-                canvasInputOutputBlock.Children.Add(textInputOutputkBox);
-            }
-            return canvasInputOutputBlock;
-        }
-
-        internal void Reset()
-        {
-            canvasInputOutputBlock = null;
         }
     }
 
@@ -711,64 +534,10 @@ namespace Flowchart_Editor
 
     public class SubroutineBlockForMovements
     {
-        private Canvas canvasSubroutineBlock = null;
-        private Border borderSubroutineBlock = null;
-        private Border internalBorderSubroutineBlock = null;
-        private TextBox textOfSubroutineBlockBox = null;
         public object transferInformation = null;
         public SubroutineBlockForMovements(object sender)
         {
             transferInformation = sender;
-        }
-        public UIElement GetUIElementWithoutCreate()
-        {
-            return canvasSubroutineBlock;
-        }
-
-        public UIElement GetUIElement()
-        {
-            if (canvasSubroutineBlock == null)
-            {
-                canvasSubroutineBlock = new Canvas();
-                borderSubroutineBlock = new Border();
-                internalBorderSubroutineBlock = new Border();
-                textOfSubroutineBlockBox = new TextBox();
-
-                canvasSubroutineBlock.Width = 140;
-                canvasSubroutineBlock.Height = 60;
-                var backgroundColor = new BrushConverter();
-                canvasSubroutineBlock.Background = (Brush)backgroundColor.ConvertFrom("#FFBA64C8");
-
-                borderSubroutineBlock.BorderBrush = Brushes.Black;
-                borderSubroutineBlock.Height = 60;
-                borderSubroutineBlock.Width = 140;
-                borderSubroutineBlock.BorderThickness = new Thickness(1);
-                borderSubroutineBlock.CornerRadius = new CornerRadius(1);
-
-                internalBorderSubroutineBlock.BorderBrush = Brushes.Black;
-                internalBorderSubroutineBlock.Height = 60;
-                internalBorderSubroutineBlock.Width = 100;
-                internalBorderSubroutineBlock.BorderThickness = new Thickness(1);
-                internalBorderSubroutineBlock.CornerRadius = new CornerRadius(1);
-                Canvas.SetTop(internalBorderSubroutineBlock, 0);
-                Canvas.SetLeft(internalBorderSubroutineBlock, 20);
-
-                textOfSubroutineBlockBox.Text = "Подпрограмма";
-                textOfSubroutineBlockBox.FontSize = 12;
-                textOfSubroutineBlockBox.Foreground = Brushes.White;
-                Canvas.SetTop(textOfSubroutineBlockBox, 15);
-                Canvas.SetLeft(textOfSubroutineBlockBox, 25);
-
-                canvasSubroutineBlock.Children.Add(borderSubroutineBlock);
-                canvasSubroutineBlock.Children.Add(internalBorderSubroutineBlock);
-                canvasSubroutineBlock.Children.Add(textOfSubroutineBlockBox);
-            }
-            return canvasSubroutineBlock;
-        }
-
-        internal void Reset()
-        {
-            canvasSubroutineBlock = null;
         }
     }
 
@@ -863,49 +632,11 @@ namespace Flowchart_Editor
 
     public class LinkBlockForMovements
     {
-        private Canvas canvasLinkBlock = null;
-        private Ellipse eliposLinkBlock = null;
-        private TextBox textOfLinkBlockBox = null;
         public object transferInformation = null;
 
         public LinkBlockForMovements(object sender)
         {
             transferInformation = sender;
-        }
-
-        public UIElement GetUIElementWithoutCreate()
-        {
-            return canvasLinkBlock;
-        }
-
-        public UIElement GetUIElement()
-        {
-            if (canvasLinkBlock == null)
-            {
-                canvasLinkBlock = new Canvas();
-                eliposLinkBlock = new Ellipse();
-                textOfLinkBlockBox = new TextBox();
-
-                eliposLinkBlock.Width = 75;
-                eliposLinkBlock.Height = 75;
-                var backgroundColor = new BrushConverter();
-                eliposLinkBlock.Fill = (Brush)backgroundColor.ConvertFrom("#5761A8");
-
-                textOfLinkBlockBox.Text = "Ссылка";
-                textOfLinkBlockBox.FontSize = 12;
-                textOfLinkBlockBox.Foreground = Brushes.White;
-                Canvas.SetTop(textOfLinkBlockBox, 15);
-                Canvas.SetLeft(textOfLinkBlockBox, 25);
-
-                canvasLinkBlock.Children.Add(eliposLinkBlock);
-                canvasLinkBlock.Children.Add(textOfLinkBlockBox);
-            }
-            return canvasLinkBlock;
-        }
-
-        internal void Reset()
-        {
-            canvasLinkBlock = null;
         }
     }
 
@@ -1205,26 +936,13 @@ namespace Flowchart_Editor
                 destination.Children.Remove(actionBlockOfUIElement);
                 var dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
                 dataInformationOfActionBlock.Reset();
-            } else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
-            {
-                var actionBlockForMovementsOfUIElement = ((ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements))).GetUIElement();
-                destination.Children.Remove(actionBlockForMovementsOfUIElement); 
-                var dataInformationOfActionBlockForMovements = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
-                dataInformationOfActionBlockForMovements.Reset();
-            }
+            } 
             else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
             {
                 var conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
                 destination.Children.Remove(conditionBlockOfUIElement);
                 var dataInformationOfconditionBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock));
                 dataInformationOfconditionBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(ConditionBlockForMovements)))
-            {
-                var startEndBlockOfUIElement = ((ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements));
-                dataInformationOfStartEndBlock.Reset();
             }
             else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
             {
@@ -1233,13 +951,6 @@ namespace Flowchart_Editor
                 var dataInformationOfStartEndBlock = (StartEndBlock)e.Data.GetData(typeof(StartEndBlock));
                 dataInformationOfStartEndBlock.Reset();
             } 
-            else if(e.Data.GetDataPresent(typeof(StartEndBlockForMovements)))
-            {
-                var startEndBlockOfUIElement = ((StartEndBlockForMovements)e.Data.GetData(typeof(StartEndBlockForMovements))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (StartEndBlockForMovements)e.Data.GetData(typeof(StartEndBlockForMovements));
-                dataInformationOfStartEndBlock.Reset();
-            }
             else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
             {
                 var startEndBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
@@ -1247,25 +958,11 @@ namespace Flowchart_Editor
                 var dataInformationOfStartEndBlock = (SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock));
                 dataInformationOfStartEndBlock.Reset();
             }
-            else if (e.Data.GetDataPresent(typeof(SubroutineBlockForMovements)))
-            {
-                var startEndBlockOfUIElement = ((SubroutineBlockForMovements)e.Data.GetData(typeof(SubroutineBlockForMovements))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (SubroutineBlockForMovements)e.Data.GetData(typeof(SubroutineBlockForMovements));
-                dataInformationOfStartEndBlock.Reset();
-            }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
                 var startEndBlockOfUIElement = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
                 destination.Children.Remove(startEndBlockOfUIElement);
                 var dataInformationOfStartEndBlock = (LinkBlock)e.Data.GetData(typeof(LinkBlock));
-                dataInformationOfStartEndBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(LinkBlockForMovements)))
-            {
-                var startEndBlockOfUIElement = ((LinkBlockForMovements)e.Data.GetData(typeof(LinkBlockForMovements))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (LinkBlockForMovements)e.Data.GetData(typeof(LinkBlockForMovements));
                 dataInformationOfStartEndBlock.Reset();
             }
             e.Handled = true;
