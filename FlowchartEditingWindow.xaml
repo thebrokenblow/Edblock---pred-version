@@ -208,7 +208,9 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                <Canvas Grid.Row="6">
+                <Canvas Grid.Row="6"
+                        Name="cycleBlockWhileBegin"
+                        MouseMove="cycleBlockWhileBegin_MouseMove">
 
                 <Polygon Fill="#CCCCFF" 
                          Points="10 70 10 20 20 10 140 10 150 20 150 70" 
@@ -229,11 +231,13 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                <Canvas Grid.Row="7">
+                <Canvas Grid.Row="7"
+                        Name="cycleBlockWhileEnd"
+                        MouseMove="cycleBlockWhileEnd_MouseMove">
                     <Polygon Fill="#CCCCFF" 
                              Points="10 10 10 60 20 70 140 70 150 60 150 10" 
                              Margin="-5 0 0 0"/>
-                <Label FontSize="12" 
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="17"
                            Canvas.Top="26">

@@ -74,9 +74,29 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfcycleBlockFor = new CycleForBlock();
-                var dataObjectInstanceOfcycleBlockFor = new DataObject(typeof(CycleForBlock), instanceOfcycleBlockFor);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfcycleBlockFor, DragDropEffects.Copy);
+                var instanceOfCycleForBlock = new CycleForBlock();
+                var dataObjectInstanceOfCycleForBlock = new DataObject(typeof(CycleForBlock), instanceOfCycleForBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleForBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
+        private void cycleBlockWhileBegin_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfCycleWhileBlock = new CycleWhileBeginBlock();
+                var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileBeginBlock), instanceOfCycleWhileBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
+        private void cycleBlockWhileEnd_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfCycleWhileBlock = new CycleWhileEndBlock();
+                var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileEndBlock), instanceOfCycleWhileBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
@@ -90,7 +110,6 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-
 
         private void destination_Drop(object sender, DragEventArgs e)
         {
@@ -135,6 +154,20 @@ namespace Flowchart_Editor
                 var featuresOfCycleForBlock = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
                 Canvas.SetLeft(featuresOfCycleForBlock, position.X);
                 Canvas.SetTop(featuresOfCycleForBlock, position.Y);
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
+            {
+                var position = e.GetPosition(destination);
+                var featuresOfCycleForBlock = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
+                Canvas.SetLeft(featuresOfCycleForBlock, position.X);
+                Canvas.SetTop(featuresOfCycleForBlock, position.Y);
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
+            {
+                var position = e.GetPosition(destination);
+                var featuresOfCycleWhileBlock = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
+                Canvas.SetLeft(featuresOfCycleWhileBlock, position.X);
+                Canvas.SetTop(featuresOfCycleWhileBlock, position.Y);
             }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
@@ -312,6 +345,60 @@ namespace Flowchart_Editor
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
             }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var dataInformationOfSubroutineBlock = (CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock));
+                UIElement subroutineBlockOfUIElement;
+                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
+                {
+                    subroutineBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
+                    destination.Children.Add(subroutineBlockOfUIElement);
+                }
+                else
+                {
+                    subroutineBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
+                }
+                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
+
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlockForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (CycleWhileBeginBlockForMovements)e.Data.GetData(typeof(CycleWhileBeginBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var dataInformationOfSubroutineBlock = (CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock));
+                UIElement subroutineBlockOfUIElement;
+                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
+                {
+                    subroutineBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
+                    destination.Children.Add(subroutineBlockOfUIElement);
+                }
+                else
+                {
+                    subroutineBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
+                }
+                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
+
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlockForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (CycleWhileEndBlockForMovements)e.Data.GetData(typeof(CycleWhileEndBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+            }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -378,6 +465,20 @@ namespace Flowchart_Editor
                 var startEndBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
                 destination.Children.Remove(startEndBlockOfUIElement);
                 var dataInformationOfStartEndBlock = (CycleForBlock)e.Data.GetData(typeof(CycleForBlock));
+                dataInformationOfStartEndBlock.Reset();
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
+            {
+                var startEndBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
+                destination.Children.Remove(startEndBlockOfUIElement);
+                var dataInformationOfStartEndBlock = (CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock));
+                dataInformationOfStartEndBlock.Reset();
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
+            {
+                var startEndBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
+                destination.Children.Remove(startEndBlockOfUIElement);
+                var dataInformationOfStartEndBlock = (CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock));
                 dataInformationOfStartEndBlock.Reset();
             }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
