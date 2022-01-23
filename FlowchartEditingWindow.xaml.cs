@@ -2,14 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Flowchart_Editor
 {
 
     public delegate void Action(object sender, RoutedEventArgs e);
-
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -73,22 +70,32 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        private void cycleBlockFor_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfcycleBlockFor = new CycleForBlock();
+                var dataObjectInstanceOfcycleBlockFor = new DataObject(typeof(CycleForBlock), instanceOfcycleBlockFor);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfcycleBlockFor, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
         private void linkBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfLinkBlockBlock = new LinkBlock();
-                var dataObjectInformationOfLinkBlock = new DataObject(typeof(LinkBlock), instanceOfLinkBlockBlock);
+                var instanceOfLinkBlock = new LinkBlock();
+                var dataObjectInformationOfLinkBlock = new DataObject(typeof(LinkBlock), instanceOfLinkBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
 
+
         private void destination_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
-               
                 var position = e.GetPosition(destination);
                 var featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
                 Canvas.SetLeft(featuresOfActionBlock, position.X);
@@ -121,6 +128,13 @@ namespace Flowchart_Editor
                 var featuresOfSubroutineBlock = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
                 Canvas.SetLeft(featuresOfSubroutineBlock, position.X);
                 Canvas.SetTop(featuresOfSubroutineBlock, position.Y);
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
+            {
+                var position = e.GetPosition(destination);
+                var featuresOfCycleForBlock = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
+                Canvas.SetLeft(featuresOfCycleForBlock, position.X);
+                Canvas.SetTop(featuresOfCycleForBlock, position.Y);
             }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
@@ -271,6 +285,33 @@ namespace Flowchart_Editor
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
             }
+            else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var dataInformationOfSubroutineBlock = (CycleForBlock)e.Data.GetData(typeof(CycleForBlock));
+                UIElement subroutineBlockOfUIElement;
+                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
+                {
+                    subroutineBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
+                    destination.Children.Add(subroutineBlockOfUIElement);
+                }
+                else
+                {
+                    subroutineBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
+                }
+                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
+                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
+
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleForBlockForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (CycleForBlockForMovements)e.Data.GetData(typeof(CycleForBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+            }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -330,6 +371,13 @@ namespace Flowchart_Editor
                 var startEndBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
                 destination.Children.Remove(startEndBlockOfUIElement);
                 var dataInformationOfStartEndBlock = (SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock));
+                dataInformationOfStartEndBlock.Reset();
+            }
+            else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
+            {
+                var startEndBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
+                destination.Children.Remove(startEndBlockOfUIElement);
+                var dataInformationOfStartEndBlock = (CycleForBlock)e.Data.GetData(typeof(CycleForBlock));
                 dataInformationOfStartEndBlock.Reset();
             }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))

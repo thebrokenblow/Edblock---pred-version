@@ -186,13 +186,20 @@
                            HorizontalAlignment="Left"/>
 
             <Canvas Grid.Row="5"
-                    Name="cycleBlockFor">
+                    Name="cycleBlockFor"
+                    MouseMove="cycleBlockFor_MouseMove">
 
                 <Polygon Fill="#FFC618" 
                          Points="20 10 10 20 10 60 20 70 140 70 150 60 150 20 140 10" 
                          Margin="-5"/>
-
-                </Canvas>
+                <Label FontSize="12" 
+                           Foreground="White" 
+                           Canvas.Left="45"
+                           Canvas.Top="22">
+                    <TextBlock Text="Цикл for" 
+                                   TextWrapping="Wrap"/>
+                </Label>
+            </Canvas>
 
                 <TextBlock Text="Цикл (6) for" 
                            FontSize="10" 
@@ -206,8 +213,14 @@
                 <Polygon Fill="#CCCCFF" 
                          Points="10 70 10 20 20 10 140 10 150 20 150 70" 
                          Margin="-5"/>
-
-                </Canvas>
+                <Label FontSize="12" 
+                           Foreground="White" 
+                           Canvas.Left="17"
+                           Canvas.Top="23">
+                    <TextBlock Text="Цикл do while, while" 
+                                   TextWrapping="Wrap"/>
+                </Label>
+            </Canvas>
 
                 <TextBlock Text="Цикл (7) do while, while (Начало)" 
                            FontSize="10" 
@@ -220,7 +233,14 @@
                     <Polygon Fill="#CCCCFF" 
                              Points="10 10 10 60 20 70 140 70 150 60 150 10" 
                              Margin="-5 0 0 0"/>
-                </Canvas>
+                <Label FontSize="12" 
+                           Foreground="White" 
+                           Canvas.Left="17"
+                           Canvas.Top="26">
+                    <TextBlock Text="Цикл do while, while" 
+                                   TextWrapping="Wrap"/>
+                </Label>
+            </Canvas>
 
                 <TextBlock Text="Цикл (8) do while, while (Конец)" 
                            FontSize="10" 
@@ -250,7 +270,7 @@
                            Grid.Column="1" 
                            Grid.Row="8" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                            HorizontalAlignment="Left"/>
 
         </Grid>
     </Grid>
