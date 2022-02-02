@@ -10,7 +10,7 @@ namespace Flowchart_Editor.Models
     {
         private Canvas? canvasOfActionBlock = null;
         private TextBox? textOfActionBlock = null;
-        private Button? firstPointToConnect = null;
+        private Ellipse? firstPointToConnect = null;
         private Ellipse? secondPointToConnect = null;
         private Ellipse? thirdPointToConnect = null;
         private Ellipse? fourthPointToConnect = null;
@@ -34,7 +34,7 @@ namespace Flowchart_Editor.Models
             {
                 canvasOfActionBlock = new Canvas();
                 textOfActionBlock = new TextBox();
-                firstPointToConnect = new Button();
+                firstPointToConnect = new Ellipse();
                 secondPointToConnect = new Ellipse();
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
@@ -50,34 +50,30 @@ namespace Flowchart_Editor.Models
 
                 Canvas.SetLeft(textOfActionBlock, 40);
                 Canvas.SetTop(textOfActionBlock, 15);
-
-                //делегат, который обрабатывает click 
-                firstPointToConnect.Background = Brushes.Red;
+                
+                firstPointToConnect.Fill = Brushes.Red;
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
                 firstPointToConnect.Margin = new Thickness(65, -3, 0, 0);
-
-                //ButtonAutomationPeer peer = new ButtonAutomationPeer(firstPointToConnect);
-                //Action? invokeProv = peer.GetPattern(PatternInterface.Invoke) as Action;
-                //invokeProv += drawLine();
-                //invokeProv.Invoke();
+                firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 secondPointToConnect.Fill = Brushes.Black;
                 secondPointToConnect.Height = 6;
                 secondPointToConnect.Width = 6;
                 secondPointToConnect.Margin = new Thickness(-3, 25, 0, 0);
-
+                secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 thirdPointToConnect.Fill = Brushes.Black;
                 thirdPointToConnect.Height = 6;
                 thirdPointToConnect.Width = 6;
                 thirdPointToConnect.Margin = new Thickness(65, 57, 0, 0);
+                thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 fourthPointToConnect.Fill = Brushes.Black;
-
                 fourthPointToConnect.Height = 6;
                 fourthPointToConnect.Width = 6;
                 fourthPointToConnect.Margin = new Thickness(136, 25, 0, 0);
+                fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 canvasOfActionBlock.Children.Add(textOfActionBlock);
                 canvasOfActionBlock.Children.Add(firstPointToConnect);
@@ -87,6 +83,40 @@ namespace Flowchart_Editor.Models
                 canvasOfActionBlock.MouseMove += actionBlockForMovements_MouseMove;
             }
             return canvasOfActionBlock;
+        }
+
+        private void getСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (CoordinatesBlock.coordinatesBlockX != null && CoordinatesBlock.coordinatesBlockY != null)
+                {
+                    if (canvasOfActionBlock != null)
+                    {
+                        double? coordinatesBlockStartPointX = CoordinatesBlock.coordinatesBlockX;
+                        double? coordinatesBlockStartPointY = CoordinatesBlock.coordinatesBlockY;
+
+                        double coordinatesBlockEndPointX = e.GetPosition((Canvas)sender).X;
+                        double coordinatesBlockEndPointY = e.GetPosition((Canvas)sender).Y;
+
+                        Line connectionLine = new Line();
+                        connectionLine.X1 = (double)coordinatesBlockStartPointX;
+                        connectionLine.Y1 = (double)coordinatesBlockStartPointY;
+                        connectionLine.X2 = coordinatesBlockEndPointX;
+                        connectionLine.Y2 = coordinatesBlockEndPointY;
+                        connectionLine.Stroke = Brushes.Black;
+                        canvasOfActionBlock.Children.Add(connectionLine);
+
+                        CoordinatesBlock.coordinatesBlockX = null;
+                        CoordinatesBlock.coordinatesBlockY = null;
+                    }
+                }
+                else
+                {
+                    CoordinatesBlock.coordinatesBlockX = e.GetPosition((Ellipse)sender).X;
+                    CoordinatesBlock.coordinatesBlockY = e.GetPosition((Ellipse)sender).Y;
+                }
+            }
         }
 
         public void Reset()

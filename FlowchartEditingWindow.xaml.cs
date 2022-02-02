@@ -2,12 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Flowchart_Editor
 {
-
-    public delegate void Action(object sender, RoutedEventArgs e);
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -16,10 +14,11 @@ namespace Flowchart_Editor
         public MainWindow()
         {
             InitializeComponent();
-            MinWidth = 1280;
-            MinHeight = 720;
+            MinHeight = 760;
+            MinWidth = 1024;
+           
         }
-
+        
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -109,7 +108,7 @@ namespace Flowchart_Editor
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
-        }
+        } 
 
         private void destination_Drop(object sender, DragEventArgs e)
         {
@@ -489,6 +488,42 @@ namespace Flowchart_Editor
                 dataInformationOfStartEndBlock.Reset();
             }
             e.Handled = true;
+        }
+
+        private void listViewItem_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonOpenMenu.Visibility = Visibility.Collapsed;
+            ButtonCloseMenu.Visibility = Visibility.Visible;
+        }
+
+        private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonOpenMenu.Visibility = Visibility.Visible;
+            ButtonCloseMenu.Visibility = Visibility.Collapsed;
+        }
+
+        private void toggleButtonStyleTheme_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)toggleButtonStyleTheme.IsChecked)
+            {
+                topicName.Text = "Tёмная тема";
+                var backgroundColor = new BrushConverter();
+                GridPanelMenu.Background = (Brush)backgroundColor.ConvertFrom("#FF040205");
+                destination.Background = (Brush)backgroundColor.ConvertFrom("#FF262427");
+                GridMain.Background = (Brush)backgroundColor.ConvertFrom("#FF262427");
+            }
+            else
+            {
+                topicName.Text = "Светлая тема";
+                var backgroundColor = new BrushConverter();
+                GridPanelMenu.Background = (Brush)backgroundColor.ConvertFrom("#FFFDFBFE");
+                destination.Background = (Brush)backgroundColor.ConvertFrom("#FFF9F9FB");  
+            }
         }
     }
 }

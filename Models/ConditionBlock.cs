@@ -70,32 +70,39 @@ namespace Flowchart_Editor.Models
                 Canvas.SetLeft(lowerPartOfPolygonConditionBlock, -50);
                 canvasConditionBlock.Children.Add(lowerPartOfPolygonConditionBlock);
 
-                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Fill = Brushes.Red;
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
                 firstPointToConnect.Margin = new Thickness(68, 1, 0, 0);
+                firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 secondPointToConnect.Fill = Brushes.Black;
                 secondPointToConnect.Height = 6;
                 secondPointToConnect.Width = 6;
                 secondPointToConnect.Margin = new Thickness(3, 32, 0, 0);
+                secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
 
                 thirdPointToConnect.Fill = Brushes.Black;
                 thirdPointToConnect.Height = 6;
                 thirdPointToConnect.Width = 6;
                 thirdPointToConnect.Margin = new Thickness(67, 62, 0, 0);
+                thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+
 
                 fourthPointToConnect.Fill = Brushes.Black;
                 fourthPointToConnect.Height = 6;
                 fourthPointToConnect.Width = 6;
                 fourthPointToConnect.Margin = new Thickness(135, 32, 0, 0);
+                fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 textOfConditionBlockBox.Text = "Условие";
                 textOfConditionBlockBox.FontSize = 12;
                 textOfConditionBlockBox.Foreground = Brushes.White;
+
                 Canvas.SetLeft(textOfConditionBlockBox, 47);
                 Canvas.SetTop(textOfConditionBlockBox, 21);
+
                 canvasConditionBlock.Children.Add(textOfConditionBlockBox);
                 canvasConditionBlock.Children.Add(firstPointToConnect);
                 canvasConditionBlock.Children.Add(secondPointToConnect);
@@ -106,6 +113,34 @@ namespace Flowchart_Editor.Models
             return canvasConditionBlock;
         }
 
+        private void getСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (CoordinatesBlock.coordinatesBlockX != null && CoordinatesBlock.coordinatesBlockY != null)
+                {
+                    if (canvasConditionBlock != null)
+                    {
+                     
+                        Line connectionLine = new Line();
+                        connectionLine.X1 = (double)CoordinatesBlock.coordinatesBlockX; ;
+                        connectionLine.Y1 = (double)CoordinatesBlock.coordinatesBlockY;
+                        connectionLine.X2 = e.GetPosition((Ellipse)sender).X;
+                        connectionLine.Y2 = e.GetPosition((Ellipse)sender).Y;
+                        connectionLine.Stroke = Brushes.Black;
+                        
+                        canvasConditionBlock.Children.Add(connectionLine);
+                        CoordinatesBlock.coordinatesBlockX = null;
+                        CoordinatesBlock.coordinatesBlockY = null;
+                    }
+                }
+                else
+                {
+                    CoordinatesBlock.coordinatesBlockX = e.GetPosition((Ellipse)sender).X;
+                    CoordinatesBlock.coordinatesBlockY = e.GetPosition((Ellipse)sender).Y;
+                }
+            }
+        }
         public void Reset()
         {
             canvasConditionBlock = null;
