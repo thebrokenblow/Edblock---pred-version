@@ -10,6 +10,7 @@ namespace Flowchart_Editor.Models
     {
         private Canvas? canvasOfActionBlock = null;
         private TextBox? textOfActionBlock = null;
+        private TextBlock? textBlockOfActionBlock = null;
         private Ellipse? firstPointToConnect = null;
         private Ellipse? secondPointToConnect = null;
         private Ellipse? thirdPointToConnect = null;
@@ -21,9 +22,12 @@ namespace Flowchart_Editor.Models
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfActionBlock = new ActionBlockForMovements(sender);
-                var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
+                if (TextChangeStatus.textChangeStatus == false)
+                {
+                    var instanceOfActionBlock = new ActionBlockForMovements(sender);
+                    var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlock);
+                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
+                }
             }
             e.Handled = true;
         }
@@ -34,6 +38,7 @@ namespace Flowchart_Editor.Models
             {
                 canvasOfActionBlock = new Canvas();
                 textOfActionBlock = new TextBox();
+                textBlockOfActionBlock = new TextBlock();
                 firstPointToConnect = new Ellipse();
                 secondPointToConnect = new Ellipse();
                 thirdPointToConnect = new Ellipse();
@@ -42,6 +47,9 @@ namespace Flowchart_Editor.Models
 
                 textOfActionBlock.Text = "Действие";
                 textOfActionBlock.Foreground = Brushes.White;
+                textOfActionBlock.MouseDoubleClick += changeTextBoxToLabel;
+
+                textBlockOfActionBlock.MouseDown += changeTextBoxToLabel;
 
                 var backgroundColor = new BrushConverter();
                 canvasOfActionBlock.Background = (Brush)backgroundColor.ConvertFrom("#FF52C0AA");
@@ -113,10 +121,44 @@ namespace Flowchart_Editor.Models
                 }
                 else
                 {
+                    
                     CoordinatesBlock.coordinatesBlockX = e.GetPosition((Ellipse)sender).X;
                     CoordinatesBlock.coordinatesBlockY = e.GetPosition((Ellipse)sender).Y;
                 }
             }
+        }
+        private void changeTextBoxToLabel(object sender, MouseEventArgs e)
+        {
+            if (TextChangeStatus.textChangeStatus)
+            {
+                textBlockOfActionBlock.Text = textOfActionBlock.Text;
+                textBlockOfActionBlock.Foreground = Brushes.White;
+
+                canvasOfActionBlock.Children.Remove(textOfActionBlock);
+                canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
+
+                Canvas.SetLeft(textBlockOfActionBlock, 40);
+                Canvas.SetTop(textBlockOfActionBlock, 15);
+
+                canvasOfActionBlock.Children.Add(textBlockOfActionBlock);
+
+                TextChangeStatus.textChangeStatus = false;
+            }
+            else
+            {
+                canvasOfActionBlock.Children.Remove(textOfActionBlock);
+                canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
+               
+                textOfActionBlock.Foreground = Brushes.White;
+                textOfActionBlock.Text = textBlockOfActionBlock.Text;
+
+                Canvas.SetLeft(textBlockOfActionBlock, 40);
+                Canvas.SetTop(textBlockOfActionBlock, 15);
+
+                canvasOfActionBlock.Children.Add(textOfActionBlock);
+                TextChangeStatus.textChangeStatus = true;
+            }
+            
         }
 
         public void Reset()

@@ -17,6 +17,7 @@ namespace Flowchart_Editor
             MinHeight = 760;
             MinWidth = 1024;
            
+           
         }
         
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
@@ -522,7 +523,8 @@ namespace Flowchart_Editor
                 topicName.Text = "Светлая тема";
                 var backgroundColor = new BrushConverter();
                 GridPanelMenu.Background = (Brush)backgroundColor.ConvertFrom("#FFFDFBFE");
-                destination.Background = (Brush)backgroundColor.ConvertFrom("#FFF9F9FB");  
+                destination.Background = (Brush)backgroundColor.ConvertFrom("#FFF9F9FB");
+                GridMain.Background = (Brush)backgroundColor.ConvertFrom("#FFF9F9FB");
             }
         }
     }
