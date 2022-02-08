@@ -1,6 +1,8 @@
 ﻿using Flowchart_Editor.Models;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -11,20 +13,31 @@ namespace Flowchart_Editor
     /// </summary>
     public partial class MainWindow : Window
     {
+        const int minHeight = 760;
+        const int minWidth = 1024; 
         public MainWindow()
         {
             InitializeComponent();
-            MinHeight = 760;
-            MinWidth = 1024;
-           
-           
+            MinHeight = minHeight;
+            MinWidth = minWidth;     
         }
-        
+        List<AllApplicationBlocks> listAllApplicationBlocks = new List<AllApplicationBlocks>();
+        private void test()
+        {
+            foreach (AllApplicationBlocks allApplicationBlocks in listAllApplicationBlocks) {
+                allApplicationBlocks.actionBlok.textOfActionBlock.Text = "";
+
+                
+                    }
+
+        }
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfActionBlock = new ActionBlock();
+                var allApplicationBlocks = new AllApplicationBlocks(instanceOfActionBlock);
+                listAllApplicationBlocks.Add(allApplicationBlocks);
                 var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
             }
@@ -512,19 +525,85 @@ namespace Flowchart_Editor
         {
             if ((bool)toggleButtonStyleTheme.IsChecked)
             {
+                BrushConverter color = new BrushConverter();
+
+                homeIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                homeText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                instagramIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                instagramText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                facebookIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                facebookText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                twitterIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                twitterText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                
+                toggleButtonStyleTheme.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
+                topicName.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
                 topicName.Text = "Tёмная тема";
-                var backgroundColor = new BrushConverter();
-                GridPanelMenu.Background = (Brush)backgroundColor.ConvertFrom("#FF040205");
-                destination.Background = (Brush)backgroundColor.ConvertFrom("#FF262427");
-                GridMain.Background = (Brush)backgroundColor.ConvertFrom("#FF262427");
+
+                GridPanelMenu.Background = (Brush)color.ConvertFrom("#FF040205");
+
+                ButtonOpenMenu.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                ButtonCloseMenu.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                GridMain.Background = (Brush)color.ConvertFrom("#FF262427");
+
+                lineSeparatingLocationOfBlocksAndField.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                destination.Background = (Brush)color.ConvertFrom("#FF262427");
+
+                actionBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                conditionBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                startEndBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                inputOutputBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                subroutineBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                cycleBlockForText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                linkBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
             }
             else
             {
+                BrushConverter color = new BrushConverter();
+
+                homeIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                homeText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+
+                instagramIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                instagramText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+
+                facebookIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                facebookText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+
+                twitterIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                twitterText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+               
+                topicName.Foreground = (Brush)color.ConvertFrom("#FF040205");
                 topicName.Text = "Светлая тема";
-                var backgroundColor = new BrushConverter();
-                GridPanelMenu.Background = (Brush)backgroundColor.ConvertFrom("#FFFDFBFE");
-                destination.Background = (Brush)backgroundColor.ConvertFrom("#FFF9F9FB");
-                GridMain.Background = (Brush)backgroundColor.ConvertFrom("#FFF9F9FB");
+
+                GridPanelMenu.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                ButtonOpenMenu.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                ButtonCloseMenu.Foreground = (Brush)color.ConvertFrom("#FF040205");
+
+                GridMain.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                lineSeparatingLocationOfBlocksAndField.Background = (Brush)color.ConvertFrom("#FF040205");
+
+                destination.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
+
+                actionBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                conditionBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                startEndBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                inputOutputBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                subroutineBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                cycleBlockForText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+                linkBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
             }
         }
     }
