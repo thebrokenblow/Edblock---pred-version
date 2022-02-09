@@ -1,4 +1,5 @@
 ﻿using Flowchart_Editor.Models;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,23 +22,14 @@ namespace Flowchart_Editor
             MinHeight = minHeight;
             MinWidth = minWidth;     
         }
-        List<AllApplicationBlocks> listAllApplicationBlocks = new List<AllApplicationBlocks>();
-        private void test()
-        {
-            foreach (AllApplicationBlocks allApplicationBlocks in listAllApplicationBlocks) {
-                allApplicationBlocks.actionBlok.textOfActionBlock.Text = "";
-
-                
-                    }
-
-        }
+        List<ActionBlock> listActionBlock = new List<ActionBlock>();
+     
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfActionBlock = new ActionBlock();
-                var allApplicationBlocks = new AllApplicationBlocks(instanceOfActionBlock);
-                listAllApplicationBlocks.Add(allApplicationBlocks);
+                listActionBlock.Add(instanceOfActionBlock);
                 var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
             }
@@ -511,99 +503,145 @@ namespace Flowchart_Editor
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
-            ButtonOpenMenu.Visibility = Visibility.Collapsed;
-            ButtonCloseMenu.Visibility = Visibility.Visible;
+            buttonOpenMenu.Visibility = Visibility.Collapsed;
+            buttonCloseMenu.Visibility = Visibility.Visible;
         }
 
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
-            ButtonOpenMenu.Visibility = Visibility.Visible;
-            ButtonCloseMenu.Visibility = Visibility.Collapsed;
+            buttonOpenMenu.Visibility = Visibility.Visible;
+            buttonCloseMenu.Visibility = Visibility.Collapsed;
         }
+
+        const string darkWhite = "#FFF9F9FB";
+        const string darkBlack = "#FF040205";
+        const string lightBlack = "#FF262427";
+        const string darkTheme = "Тёмная тема";
+        const string lightThene = "светлая тема";
 
         private void toggleButtonStyleTheme_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)toggleButtonStyleTheme.IsChecked)
+            if (toggleButtonStyleTheme.IsChecked != null)
             {
-                BrushConverter color = new BrushConverter();
+                if ((bool)toggleButtonStyleTheme.IsChecked)
+                {
+                    BrushConverter color = new BrushConverter();
 
-                homeIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                homeText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    homeIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    homeText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                instagramIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                instagramText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    instagramIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    instagramText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                facebookIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                facebookText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    facebookIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    facebookText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                twitterIcon.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                twitterText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    twitterIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    twitterText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                
-                toggleButtonStyleTheme.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
-                topicName.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                topicName.Text = "Tёмная тема";
 
-                GridPanelMenu.Background = (Brush)color.ConvertFrom("#FF040205");
+                    toggleButtonStyleTheme.Background = (Brush)color.ConvertFrom(darkWhite);
+                    topicName.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    topicName.Text = darkTheme;
 
-                ButtonOpenMenu.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                ButtonCloseMenu.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    navigationMenu.Background = (Brush)color.ConvertFrom(darkBlack);
 
-                GridMain.Background = (Brush)color.ConvertFrom("#FF262427");
+                    buttonOpenMenu.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    buttonCloseMenu.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                lineSeparatingLocationOfBlocksAndField.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    blockLayoutMenu.Background = (Brush)color.ConvertFrom(lightBlack);
 
-                destination.Background = (Brush)color.ConvertFrom("#FF262427");
+                    lineSeparatingLocationOfBlocksAndField.Background = (Brush)color.ConvertFrom(darkWhite);
 
-                actionBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                conditionBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                startEndBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                inputOutputBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                subroutineBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                cycleBlockForText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
-                linkBlockText.Foreground = (Brush)color.ConvertFrom("#FFF9F9FB");
+                    destination.Background = (Brush)color.ConvertFrom(lightBlack);
+
+                    actionBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    conditionBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    startEndBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    inputOutputBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    subroutineBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    cycleBlockForText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    linkBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                }
+                else
+                {
+                    BrushConverter color = new BrushConverter();
+
+                    homeIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    homeText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    instagramIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    instagramText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    facebookIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    facebookText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    twitterIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    twitterText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    topicName.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    topicName.Text = lightThene;
+
+                    navigationMenu.Background = (Brush)color.ConvertFrom(darkWhite);
+
+                    buttonOpenMenu.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    buttonCloseMenu.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    blockLayoutMenu.Background = (Brush)color.ConvertFrom(darkWhite);
+
+                    lineSeparatingLocationOfBlocksAndField.Background = (Brush)color.ConvertFrom(darkBlack);
+
+                    destination.Background = (Brush)color.ConvertFrom(darkWhite);
+
+                    actionBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    conditionBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    startEndBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    inputOutputBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    subroutineBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    cycleBlockForText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    linkBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                }
             }
-            else
+        }
+
+        private void listOfFontsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)listOfFontsComboBox.SelectedItem;
+            FontFamily fontFamily = new FontFamily(typeItem.Content.ToString());
+            foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                BrushConverter color = new BrushConverter();
+                listActionBlock.textOfActionBlock.FontFamily = fontFamily;
+            }
+        }
 
-                homeIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                homeText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+        private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)fontSizeComboBox.SelectedItem;
+            foreach (ActionBlock listActionBlock in listActionBlock)
+            {
+                listActionBlock.textOfActionBlock.FontSize = Convert.ToDouble(typeItem.Content.ToString());
+            }
+        }
 
-                instagramIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                instagramText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+        private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)blockWidthComboBox.SelectedItem;
+            foreach (ActionBlock listActionBlock in listActionBlock)
+            {
+                listActionBlock.canvasOfActionBlock.Width = Convert.ToDouble(typeItem.Content.ToString());
+            }
+        }
 
-                facebookIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                facebookText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-
-                twitterIcon.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                twitterText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-               
-                topicName.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                topicName.Text = "Светлая тема";
-
-                GridPanelMenu.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
-
-                ButtonOpenMenu.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                ButtonCloseMenu.Foreground = (Brush)color.ConvertFrom("#FF040205");
-
-                GridMain.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
-
-                lineSeparatingLocationOfBlocksAndField.Background = (Brush)color.ConvertFrom("#FF040205");
-
-                destination.Background = (Brush)color.ConvertFrom("#FFF9F9FB");
-
-                actionBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                conditionBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                startEndBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                inputOutputBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                subroutineBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                cycleBlockForText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom("#FF040205");
-                linkBlockText.Foreground = (Brush)color.ConvertFrom("#FF040205");
+        private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)blockHeightComboBox.SelectedItem;
+            foreach (ActionBlock listActionBlock in listActionBlock)
+            {
+                listActionBlock.canvasOfActionBlock.Height = Convert.ToDouble(typeItem.Content.ToString());
             }
         }
     }

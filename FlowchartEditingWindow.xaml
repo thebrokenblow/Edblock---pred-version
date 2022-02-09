@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Flowchart Editor" Height="850" Width="1280">
+        Title="Flowchart Editor" Height="850" Width="1480">
     <Window.Resources>
         <Storyboard x:Key="OpenMenu">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMain">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="blockLayoutMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="250"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridMain">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="blockLayoutMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="50"/>
             </DoubleAnimationUsingKeyFrames>
@@ -47,11 +47,11 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="CloseMenu">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMain">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="blockLayoutMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridMain">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="blockLayoutMenu">
                 <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
@@ -62,14 +62,14 @@
         </Storyboard>
     </Window.Resources>
     <Window.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="buttonOpenMenu">
             <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="buttonCloseMenu">
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </Window.Triggers>
-    <Grid Name="GridPanelMenu" Background="#FFF9F9FB">
+    <Grid Name="navigationMenu" Background="#FFF9F9FB">
         <StackPanel x:Name="StackPanelMenu" Width="250" HorizontalAlignment="Left" Margin="-250 0 0 0" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
                 <TransformGroup>
@@ -152,7 +152,7 @@
                 </ListViewItem>
             </ListView>
         </StackPanel>
-        <Grid Name="GridMain" Background="#FFF9F9FB" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="blockLayoutMenu" Background="#FFF9F9FB" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -182,11 +182,28 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="1"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-               
-                    <Canvas Grid.Row="1"
+
+                <Canvas Background="#FFF9F9FB" 
+                        AllowDrop="True" 
+                        DragOver="destination_DragOver" 
+                        DragLeave="destination_DragLeave" 
+                        Drop="destination_Drop"
+                        Name="destination" 
+                        Grid.ColumnSpan="13"
+                        Grid.RowSpan="11"/>
+
+                <Canvas Grid.Row="1"
                         Grid.Column="1"
                         Width="140" 
                         Height="60"
@@ -458,22 +475,123 @@
                         Grid.Column="3"
                         Background="#FF040205"/>
 
-                <Canvas Background="#FFF9F9FB" 
-                        AllowDrop="True" 
-                        DragOver="destination_DragOver" 
-                        DragLeave="destination_DragLeave" 
-                        Drop="destination_Drop"
-                        Name="destination" 
-                        Grid.Column="4"
-                        Grid.RowSpan="11"/>
-                
-                
 
-                <Button Name="ButtonCloseMenu" Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Click="ButtonCloseMenu_Click" Visibility="Collapsed">
-                    <materialDesign:PackIcon Kind="Menu"/>
+                <TextBlock 
+                    Text="Шрифт:" 
+                    Grid.Row="0" 
+                    Grid.Column="4" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+               
+                <ComboBox 
+                    Name="listOfFontsComboBox" 
+                    SelectionChanged="listOfFontsComboBox_SelectionChanged" 
+                    Foreground="Black" 
+                    Grid.Row="0" 
+                    Grid.Column="5" 
+                    Width="150" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+                    <ComboBoxItem>Times New Roman</ComboBoxItem>
+                    <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock 
+                    Text="Размер текста:" 
+                    Grid.Row="0" 
+                    Grid.Column="6" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"/>
+
+                <ComboBox 
+                    Name="fontSizeComboBox" 
+                    SelectionChanged="fontSizeComboBox_SelectionChanged"
+                    Foreground="Black" 
+                    Grid.Row="0" 
+                    Grid.Column="7" 
+                    Width="60" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+                    <ComboBoxItem>8</ComboBoxItem>
+                    <ComboBoxItem>9</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock 
+                    Text="Ширина:"
+                    Grid.Row="0" 
+                    Grid.Column="8"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"/>
+                
+                <ComboBox 
+                    Name="blockWidthComboBox" 
+                    SelectionChanged="blockWidthComboBox_SelectionChanged"
+                    Foreground="Black" 
+                    Grid.Row="0" 
+                    Grid.Column="9" 
+                    Width="60" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+                    <ComboBoxItem>100</ComboBoxItem>
+                    <ComboBoxItem>150</ComboBoxItem>
+                    <ComboBoxItem>200</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock 
+                    Text="Высота:"
+                    Grid.Row="0" 
+                    Grid.Column="10"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"/>
+
+                <ComboBox 
+                    Name="blockHeightComboBox" 
+                    SelectionChanged="blockHeightComboBox_SelectionChanged"
+                    Foreground="Black" 
+                    Grid.Row="0" 
+                    Grid.Column="11" 
+                    Width="60" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+                    <ComboBoxItem>100</ComboBoxItem>
+                    <ComboBoxItem>150</ComboBoxItem>
+                    <ComboBoxItem>200</ComboBoxItem>
+                </ComboBox>
+
+                <Button 
+                    Name="buttonCloseMenu"
+                    Grid.Row="0" 
+                    Grid.Column="1" 
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                    Width="30" 
+                    Height="30"
+                    Padding="0"
+                    Background="{x:Null}" 
+                    BorderBrush="{x:Null}" 
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Left" 
+                    Margin="5"
+                    Click="ButtonCloseMenu_Click"
+                    Visibility="Collapsed">
+                    <materialDesign:PackIcon
+                        Kind="Menu"/>
                 </Button>
-                <Button Name="ButtonOpenMenu" Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Click="ButtonOpenMenu_Click">
-                    <materialDesign:PackIcon Kind="Menu"/>
+                <Button Name="buttonOpenMenu" 
+                        Grid.Row="0" 
+                        Grid.Column="1"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                        Width="30" 
+                        Height="30" 
+                        Padding="0" 
+                        Background="{x:Null}" 
+                        BorderBrush="{x:Null}"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        Margin="5"
+                        Click="ButtonOpenMenu_Click">
+                    <materialDesign:PackIcon 
+                        Kind="Menu"/>
                 </Button>
             </Grid>
         </Grid>
