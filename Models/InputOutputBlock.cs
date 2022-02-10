@@ -9,7 +9,7 @@ namespace Flowchart_Editor.Models
     public class InputOutputBlock
     {
         private Canvas? canvasInputOutputBlock = null;
-        private Rectangle? rectangleInputOutputBlock = null;
+        private Polygon? polygonInputOutputBlock = null;
         private TextBox? textInputOutputkBox = null;
         private Ellipse? firstPointToConnect = null;
         private Ellipse? secondPointToConnect = null;
@@ -35,7 +35,7 @@ namespace Flowchart_Editor.Models
             if (canvasInputOutputBlock == null)
             {
                 canvasInputOutputBlock = new Canvas();
-                rectangleInputOutputBlock = new Rectangle();
+                polygonInputOutputBlock = new Polygon();
                 textInputOutputkBox = new TextBox();
                 firstPointToConnect = new Ellipse();
                 secondPointToConnect = new Ellipse();
@@ -43,16 +43,21 @@ namespace Flowchart_Editor.Models
                 fourthPointToConnect = new Ellipse();
 
                 var backgroundColor = new BrushConverter();
-                rectangleInputOutputBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF05273C");
-                rectangleInputOutputBlock.Width = 102;
-                rectangleInputOutputBlock.Height = 30;
+                polygonInputOutputBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF05273C");
 
-                MatrixTransform matrix1 = new MatrixTransform(1, 0, 1, 2, 1, -3);
-                Matrix matrix = new Matrix(1, 0, 1, 2, 1, -3);
-                rectangleInputOutputBlock.RenderTransform = matrix1;
+                Point Point1 = new Point(30, 10);
+                Point Point2 = new Point(10, 60);
+                Point Point3 = new Point(120, 60);
+                Point Point4 = new Point(140, 10);
 
-                Canvas.SetTop(rectangleInputOutputBlock, 11);
-                Canvas.SetLeft(rectangleInputOutputBlock, 5);
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+
+                polygonInputOutputBlock.Points = myPointCollection;
+                
 
                 textInputOutputkBox.Text = "Ввод/Вывод";
                 textInputOutputkBox.FontSize = 12;
@@ -81,7 +86,7 @@ namespace Flowchart_Editor.Models
                 fourthPointToConnect.Width = 6;
                 fourthPointToConnect.Margin = new Thickness(120, 35, 0, 0);
 
-                canvasInputOutputBlock.Children.Add(rectangleInputOutputBlock);
+                canvasInputOutputBlock.Children.Add(polygonInputOutputBlock);
                 canvasInputOutputBlock.Children.Add(textInputOutputkBox);
                 canvasInputOutputBlock.Children.Add(firstPointToConnect);
                 canvasInputOutputBlock.Children.Add(secondPointToConnect);

@@ -236,19 +236,14 @@
                         Grid.Row="2"
                         Grid.Column="1">
 
-                        <Polygon Fill="#FF60B2D3" 
-                             Points="55 120.4 120 90 190 120.4" 
-                             Canvas.Top="-85" 
-                             Canvas.Left="-50"/>
+                    <Polygon Fill="#FF60B2D3"
+                             Points="10 30 70 60 140 30 70 0 10 30" 
+                             Canvas.Top="5"
+                             Canvas.Left="-5"/>
 
-                        <Polygon Fill="#FF60B2D3" 
-                             Points="190 120 55 120 120 150" 
-                             Canvas.Top="-85" 
-                             Canvas.Left="-50"/>
-
-                        <Label FontSize="12" 
+                    <Label FontSize="12" 
                            Foreground="White" 
-                           Canvas.Left="43" 
+                           Canvas.Left="40" 
                            Canvas.Top="22"
                            Width="100">
                             <TextBlock Text="Условие" 
@@ -270,12 +265,13 @@
                         Grid.Row="3"
                         Grid.Column="1">
 
-                        <Rectangle Width="140" 
-                               Height="60" 
+                        <Rectangle 
+                               Width="140" 
+                               Height="30" 
                                Fill="#FFF25252" 
-                               RadiusX="25" 
-                               RadiusY="25" 
-                               Canvas.Top="10">
+                               RadiusX="20" 
+                               RadiusY="20" 
+                               Canvas.Top="25">
                         </Rectangle>
                         <Label FontSize="12" 
                            Foreground="White" 
@@ -299,20 +295,14 @@
                         MouseMove="inputOutputBlock_MouseMove"  
                         Grid.Row="4"
                         Grid.Column="1">
-                        <Rectangle Width="102" 
-                               Height="30" 
-                               Fill="#FF05273C" 
-                               Canvas.Top="11" 
-                               Canvas.Left="5">
-                            <Rectangle.RenderTransform>
-                                <MatrixTransform Matrix="1 0 1 2 1 -3"/>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-
-                        <Label FontSize="12" 
+                    <Polygon 
+                         Fill="#FF05273C" 
+                         Points="30 0 10 60 120 60 140 0"
+                         Canvas.Top="5"/>
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="37" 
-                           Canvas.Top="25">
+                           Canvas.Top="23">
                             <TextBlock Text="Ввод/Вывод"
                                    TextWrapping="Wrap"/>
                         </Label>
@@ -452,7 +442,7 @@
                              Height="75"/>
                         <Label FontSize="12" 
                            Foreground="White" 
-                           Canvas.Left="13"
+                           Canvas.Left="14"
                            Canvas.Top="25">
                             <TextBlock Text="Ссылка" 
                                    TextWrapping="Wrap"/>
@@ -477,6 +467,7 @@
 
 
                 <TextBlock 
+                    Name="textFont"
                     Text="Шрифт:" 
                     Grid.Row="0" 
                     Grid.Column="4" 
@@ -497,6 +488,7 @@
                 </ComboBox>
 
                 <TextBlock 
+                    Name="textFontSize"
                     Text="Размер текста:" 
                     Grid.Row="0" 
                     Grid.Column="6" 
@@ -511,19 +503,16 @@
                     Grid.Column="7" 
                     Width="60" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
-                    <ComboBoxItem>8</ComboBoxItem>
-                    <ComboBoxItem>9</ComboBoxItem>
-                    <ComboBoxItem>10</ComboBoxItem>
-                </ComboBox>
+                    VerticalAlignment="Center" />
 
                 <TextBlock 
+                    Name="textWidth"
                     Text="Ширина:"
                     Grid.Row="0" 
                     Grid.Column="8"
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Center"/>
-                
+
                 <ComboBox 
                     Name="blockWidthComboBox" 
                     SelectionChanged="blockWidthComboBox_SelectionChanged"
@@ -532,13 +521,10 @@
                     Grid.Column="9" 
                     Width="60" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
-                    <ComboBoxItem>100</ComboBoxItem>
-                    <ComboBoxItem>150</ComboBoxItem>
-                    <ComboBoxItem>200</ComboBoxItem>
-                </ComboBox>
+                    VerticalAlignment="Center"/>
 
                 <TextBlock 
+                    Name="textHeight"
                     Text="Высота:"
                     Grid.Row="0" 
                     Grid.Column="10"
@@ -553,11 +539,7 @@
                     Grid.Column="11" 
                     Width="60" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
-                    <ComboBoxItem>100</ComboBoxItem>
-                    <ComboBoxItem>150</ComboBoxItem>
-                    <ComboBoxItem>200</ComboBoxItem>
-                </ComboBox>
+                    VerticalAlignment="Center"/>
 
                 <Button 
                     Name="buttonCloseMenu"

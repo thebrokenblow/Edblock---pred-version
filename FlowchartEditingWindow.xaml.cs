@@ -1,11 +1,10 @@
-﻿using Flowchart_Editor.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Flowchart_Editor.Models;
 
 namespace Flowchart_Editor
 {
@@ -15,12 +14,20 @@ namespace Flowchart_Editor
     public partial class MainWindow : Window
     {
         const int minHeight = 760;
-        const int minWidth = 1024; 
+        const int minWidth = 1380; 
         public MainWindow()
         {
             InitializeComponent();
             MinHeight = minHeight;
-            MinWidth = minWidth;     
+            MinWidth = minWidth;
+            for (int i = 8; i <= 36; i += 2)
+                fontSizeComboBox.Items.Add(i);
+
+            for (int i = 50; i <= 250; i += 10)
+                blockWidthComboBox.Items.Add(i);
+
+            for (int i = 50; i <= 250; i += 10)
+                blockHeightComboBox.Items.Add(i);
         }
         List<ActionBlock> listActionBlock = new List<ActionBlock>();
      
@@ -564,6 +571,11 @@ namespace Flowchart_Editor
                     cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     linkBlockText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+
+                    textFont.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    textFontSize.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    textWidth.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    textHeight.Foreground = (Brush)color.ConvertFrom(darkWhite);
                 }
                 else
                 {
@@ -604,6 +616,13 @@ namespace Flowchart_Editor
                     cycleBlockWhileBeginText.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     linkBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    
+
+                    textFont.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    textFontSize.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    textWidth.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    textHeight.Foreground = (Brush)color.ConvertFrom(darkBlack);
                 }
             }
         }
@@ -615,33 +634,32 @@ namespace Flowchart_Editor
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
                 listActionBlock.textOfActionBlock.FontFamily = fontFamily;
+                listActionBlock.textBlockOfActionBlock.FontFamily = fontFamily;
             }
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem typeItem = (ComboBoxItem)fontSizeComboBox.SelectedItem;
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.textOfActionBlock.FontSize = Convert.ToDouble(typeItem.Content.ToString());
+                listActionBlock.textOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
+                listActionBlock.textBlockOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
             }
         }
 
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem typeItem = (ComboBoxItem)blockWidthComboBox.SelectedItem;
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.canvasOfActionBlock.Width = Convert.ToDouble(typeItem.Content.ToString());
+                listActionBlock.canvasOfActionBlock.Width = Convert.ToInt32(blockWidthComboBox.SelectedItem);
             }
         }
 
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem typeItem = (ComboBoxItem)blockHeightComboBox.SelectedItem;
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.canvasOfActionBlock.Height = Convert.ToDouble(typeItem.Content.ToString());
+                listActionBlock.canvasOfActionBlock.Height = Convert.ToDouble(blockHeightComboBox.SelectedItem);
             }
         }
     }
