@@ -633,7 +633,7 @@ namespace Flowchart_Editor
             FontFamily fontFamily = new FontFamily(typeItem.Content.ToString());
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.textOfActionBlock.FontFamily = fontFamily;
+                listActionBlock.textBoxOfActionBlock.FontFamily = fontFamily;
                 listActionBlock.textBlockOfActionBlock.FontFamily = fontFamily;
             }
         }
@@ -642,24 +642,35 @@ namespace Flowchart_Editor
         {
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.textOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
+                listActionBlock.textBoxOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
                 listActionBlock.textBlockOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
             }
         }
 
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            double valueBlokWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.canvasOfActionBlock.Width = Convert.ToInt32(blockWidthComboBox.SelectedItem);
+                listActionBlock.canvasOfActionBlock.Width = valueBlokWidth;
+                listActionBlock.textBoxOfActionBlock.Width = valueBlokWidth;
+                Canvas.SetLeft(listActionBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(listActionBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(listActionBlock.fourthPointToConnect, valueBlokWidth - 4);
+               
             }
         }
 
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            double valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
-                listActionBlock.canvasOfActionBlock.Height = Convert.ToDouble(blockHeightComboBox.SelectedItem);
+                listActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
+                listActionBlock.textBoxOfActionBlock.Height = valueBlokHeight;
+                Canvas.SetTop(listActionBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
+                Canvas.SetTop(listActionBlock.thirdPointToConnect, valueBlokHeight - 3);
+                Canvas.SetTop(listActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
         }
     }

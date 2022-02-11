@@ -9,13 +9,16 @@ namespace Flowchart_Editor.Models
     public class ActionBlock
     {
         public Canvas? canvasOfActionBlock = null;
-        public TextBox? textOfActionBlock = null;
-        private TextBlock? textBlockOfActionBlock = null;
-        private Ellipse? firstPointToConnect = null;
-        private Ellipse? secondPointToConnect = null;
-        private Ellipse? thirdPointToConnect = null;
-        private Ellipse? fourthPointToConnect = null;
+        public TextBox? textBoxOfActionBlock = null;
+        public TextBlock? textBlockOfActionBlock = null;
+        public Ellipse? firstPointToConnect = null;
+        public Ellipse? secondPointToConnect = null;
+        public Ellipse? thirdPointToConnect = null;
+        public Ellipse? fourthPointToConnect = null;
         private bool textChangeStatus = true;
+        private int defaultWidth = 140;
+        private int defaulHeight = 60;
+        private int valueOfClicksOnTextBlock = 0;
 
         public UIElement GetUIElementWithoutCreate() => canvasOfActionBlock;
 
@@ -38,7 +41,7 @@ namespace Flowchart_Editor.Models
             if (canvasOfActionBlock == null)
             {
                 canvasOfActionBlock = new Canvas();
-                textOfActionBlock = new TextBox();
+                textBoxOfActionBlock = new TextBox();
                 textBlockOfActionBlock = new TextBlock();
                 firstPointToConnect = new Ellipse();
                 secondPointToConnect = new Ellipse();
@@ -46,46 +49,60 @@ namespace Flowchart_Editor.Models
                 fourthPointToConnect = new Ellipse();
 
 
-                textOfActionBlock.Text = "Действие";
-                textOfActionBlock.Foreground = Brushes.White;
-                textOfActionBlock.MouseDoubleClick += changeTextBoxToLabel;
+                textBoxOfActionBlock.Text = "Действие";
+                textBoxOfActionBlock.Width = defaultWidth;
+                textBoxOfActionBlock.Height = defaulHeight;
+                textBoxOfActionBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBoxOfActionBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBoxOfActionBlock.TextAlignment = TextAlignment.Center;
+                textBoxOfActionBlock.Foreground = Brushes.White;
+                textBoxOfActionBlock.TextWrapping = TextWrapping.Wrap;
+                textBoxOfActionBlock.MouseDoubleClick += changeTextBoxToLabel;
 
+                textBlockOfActionBlock.Width = defaultWidth;
+                textBlockOfActionBlock.Height = defaulHeight;
+                textBlockOfActionBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlockOfActionBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlockOfActionBlock.TextAlignment = TextAlignment.Center;
+                textBlockOfActionBlock.Foreground = Brushes.White;
+                textBlockOfActionBlock.TextWrapping = TextWrapping.Wrap;
                 textBlockOfActionBlock.MouseDown += changeTextBoxToLabel;
 
                 var backgroundColor = new BrushConverter();
                 canvasOfActionBlock.Background = (Brush)backgroundColor.ConvertFrom("#FF52C0AA");
-                canvasOfActionBlock.Width = 140;
-                canvasOfActionBlock.Height = 60;
+                canvasOfActionBlock.Width = defaultWidth;
+                canvasOfActionBlock.Height = defaulHeight;
 
-                Canvas.SetLeft(textOfActionBlock, 40);
-                Canvas.SetTop(textOfActionBlock, 15);
-                
-                firstPointToConnect.Fill = Brushes.Red;
+                firstPointToConnect.Fill = Brushes.Black;
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
-                Canvas.SetTop(firstPointToConnect, 65);
-                Canvas.SetTop(firstPointToConnect, -3);
+                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
+                Canvas.SetTop(firstPointToConnect,  -2);
                 firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 secondPointToConnect.Fill = Brushes.Black;
                 secondPointToConnect.Height = 6;
                 secondPointToConnect.Width = 6;
-                secondPointToConnect.Margin = new Thickness(-3, 25, 0, 0);
+                Canvas.SetLeft(secondPointToConnect, -2);
+                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
+               
                 secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 thirdPointToConnect.Fill = Brushes.Black;
                 thirdPointToConnect.Height = 6;
                 thirdPointToConnect.Width = 6;
-                thirdPointToConnect.Margin = new Thickness(65, 57, 0, 0);
+                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
+                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 fourthPointToConnect.Fill = Brushes.Black;
                 fourthPointToConnect.Height = 6;
                 fourthPointToConnect.Width = 6;
-                fourthPointToConnect.Margin = new Thickness(136, 25, 0, 0);
+                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
+                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 -2);
                 fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                canvasOfActionBlock.Children.Add(textOfActionBlock);
+                canvasOfActionBlock.Children.Add(textBoxOfActionBlock);
                 canvasOfActionBlock.Children.Add(firstPointToConnect);
                 canvasOfActionBlock.Children.Add(secondPointToConnect);
                 canvasOfActionBlock.Children.Add(thirdPointToConnect);
@@ -132,32 +149,26 @@ namespace Flowchart_Editor.Models
         {
             if (textChangeStatus)
             {
-                textBlockOfActionBlock.Text = textOfActionBlock.Text;
-                textBlockOfActionBlock.Foreground = Brushes.White;
-
-                canvasOfActionBlock.Children.Remove(textOfActionBlock);
+                canvasOfActionBlock.Children.Remove(textBoxOfActionBlock);
                 canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
-
-                Canvas.SetLeft(textBlockOfActionBlock, 40);
-                Canvas.SetTop(textBlockOfActionBlock, 15);
-
+                textBlockOfActionBlock.Text = textBoxOfActionBlock.Text;
+                Canvas.SetTop(textBlockOfActionBlock, 3.5);
                 canvasOfActionBlock.Children.Add(textBlockOfActionBlock);
-
                 textChangeStatus = false;
             }
             else
             {
-                canvasOfActionBlock.Children.Remove(textOfActionBlock);
-                canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
-               
-                textOfActionBlock.Foreground = Brushes.White;
-                textOfActionBlock.Text = textBlockOfActionBlock.Text;
+                valueOfClicksOnTextBlock++;
+                if (valueOfClicksOnTextBlock == 2)
+                {
 
-                Canvas.SetLeft(textBlockOfActionBlock, 40);
-                Canvas.SetTop(textBlockOfActionBlock, 15);
-
-                canvasOfActionBlock.Children.Add(textOfActionBlock);
-                textChangeStatus = true;
+                    canvasOfActionBlock.Children.Remove(textBoxOfActionBlock);
+                    canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
+                    textBoxOfActionBlock.Text = textBlockOfActionBlock.Text;
+                    canvasOfActionBlock.Children.Add(textBoxOfActionBlock);
+                    textChangeStatus = true;
+                    valueOfClicksOnTextBlock = 0;
+                }
             }
         }
 

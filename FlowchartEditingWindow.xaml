@@ -210,17 +210,14 @@
                         Background="#FF52C0AA" 
                         Name="actionBlock"
                         MouseMove="actionBlock_MouseMove">
-                        <Label FontSize="12" 
-                               Foreground="White"
-                               Height="60"
+
+                    <TextBlock TextAlignment="Center" FontSize="12" 
+                               Foreground="White" HorizontalAlignment="Center" Text="Действие"
+                                   TextWrapping="Wrap" Width="140" Canvas.Top="20" Height="60"
                                MaxHeight="60"
-                               MaxWidth="140"
-                               Width="140" 
-                               Canvas.Top="15">
-                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center" Text="Действие"
-                                   TextWrapping="Wrap" Width="130"/>
-                        </Label>
-                    </Canvas>
+                               MaxWidth="140"/>
+
+                </Canvas>
 
                     <TextBlock 
                            Name="actionBlockText"
@@ -238,13 +235,13 @@
 
                     <Polygon Fill="#FF60B2D3"
                              Points="10 30 70 60 140 30 70 0 10 30" 
-                             Canvas.Top="5"
+                             Canvas.Top="10"
                              Canvas.Left="-5"/>
 
                     <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="40" 
-                           Canvas.Top="22"
+                           Canvas.Top="25"
                            Width="100">
                             <TextBlock Text="Условие" 
                                    TextWrapping="Wrap"/>
