@@ -23,10 +23,10 @@ namespace Flowchart_Editor
             for (int i = 8; i <= 36; i += 2)
                 fontSizeComboBox.Items.Add(i);
 
-            for (int i = 50; i <= 250; i += 10)
+            for (int i = 90; i <= 250; i += 10)
                 blockWidthComboBox.Items.Add(i);
 
-            for (int i = 50; i <= 250; i += 10)
+            for (int i = 60; i <= 250; i += 10)
                 blockHeightComboBox.Items.Add(i);
         }
         List<ActionBlock> listActionBlock = new List<ActionBlock>();
@@ -42,11 +42,13 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        List<ConditionBlock> listConditionBlock = new List<ConditionBlock>();
         private void conditionBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfConditionBlock = new ConditionBlock();
+                listConditionBlock.Add(instanceOfConditionBlock);
                 var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlock), instanceOfConditionBlock);
                 DragDrop.DoDragDrop(conditionBlock, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
             }
@@ -122,7 +124,6 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         } 
-
         private void destination_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -190,7 +191,6 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-
         private void destination_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -441,7 +441,6 @@ namespace Flowchart_Editor
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
-
         private void destination_DragLeave(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -576,6 +575,16 @@ namespace Flowchart_Editor
                     textFontSize.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     textWidth.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkWhite);
+
+                    ActionBlockDefaultProperty.colorPoint = darkWhite;
+                    foreach (ActionBlock listActionBlock in listActionBlock)
+                    {
+                        listActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        listActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        listActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        listActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+
+                    }
                 }
                 else
                 {
@@ -617,12 +626,19 @@ namespace Flowchart_Editor
                     cycleBlockWhileEndText.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     linkBlockText.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
-                    
-
                     textFont.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textFontSize.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textWidth.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    ActionBlockDefaultProperty.colorPoint = darkBlack;
+                    foreach (ActionBlock listActionBlock in listActionBlock)
+                    {
+                        listActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        listActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        listActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        listActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
                 }
             }
         }
@@ -649,21 +665,44 @@ namespace Flowchart_Editor
 
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            double valueBlokWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
-            foreach (ActionBlock listActionBlock in listActionBlock)
+            int valueBlokWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
+            ActionBlockDefaultProperty.Width = (int)valueBlokWidth;
+            foreach (ActionBlock itemListActionBlock in listActionBlock)
             {
-                listActionBlock.canvasOfActionBlock.Width = valueBlokWidth;
-                listActionBlock.textBoxOfActionBlock.Width = valueBlokWidth;
-                Canvas.SetLeft(listActionBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(listActionBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(listActionBlock.fourthPointToConnect, valueBlokWidth - 4);
-               
+                itemListActionBlock.canvasOfActionBlock.Width = valueBlokWidth;
+                itemListActionBlock.textBoxOfActionBlock.Width = valueBlokWidth;
+                itemListActionBlock.textBlockOfActionBlock.Width = valueBlokWidth;
+                Canvas.SetLeft(itemListActionBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(itemListActionBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(itemListActionBlock.fourthPointToConnect, valueBlokWidth - 4);
+                
+            }
+            ConditionBlockDefaultProperty.Width = (int)valueBlokWidth;
+            int valueBlokHeight = ConditionBlockDefaultProperty.Height;
+            foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
+            {
+                Point Point1 = new Point(0, valueBlokHeight / 2);
+                Point Point2 = new Point(valueBlokWidth / 2, valueBlokHeight);
+                Point Point3 = new Point(valueBlokWidth, valueBlokHeight / 2);
+                Point Point4 = new Point(valueBlokWidth / 2, 0);
+                Point Point5 = new Point(0, valueBlokHeight / 2);
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+                myPointCollection.Add(Point5);
+                itemListConditionBlock.polygonConditionBlock.Points = myPointCollection;
+                itemListConditionBlock.textBoxOfConditionBlock.Width = valueBlokWidth / 2;
+                itemListConditionBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
+                Canvas.SetLeft(itemListConditionBlock.textBlocOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
+                Canvas.SetLeft(itemListConditionBlock.textBoxOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
             }
         }
-
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            double valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
+            int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
+            ActionBlockDefaultProperty.Height = (int)valueBlokHeight;
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
                 listActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
@@ -671,6 +710,25 @@ namespace Flowchart_Editor
                 Canvas.SetTop(listActionBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
                 Canvas.SetTop(listActionBlock.thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(listActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
+            }
+            ConditionBlockDefaultProperty.Height = (int)valueBlokHeight;
+            int valueBlokWidth = ConditionBlockDefaultProperty.Width;
+            foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
+            {
+                Point Point1 = new Point(0, valueBlokHeight / 2);
+                Point Point2 = new Point(valueBlokWidth / 2, valueBlokHeight);
+                Point Point3 = new Point(valueBlokWidth, valueBlokHeight / 2);
+                Point Point4 = new Point(valueBlokWidth / 2, 0);
+                Point Point5 = new Point(0, valueBlokHeight / 2);
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+                myPointCollection.Add(Point5);
+                itemListConditionBlock.polygonConditionBlock.Points = myPointCollection;
+                Canvas.SetTop(itemListConditionBlock.textBoxOfConditionBlock, valueBlokHeight / 4);
+                Canvas.SetTop(itemListConditionBlock.textBlocOfConditionBlock, valueBlokHeight / 4);
             }
         }
     }

@@ -211,16 +211,19 @@
                         Name="actionBlock"
                         MouseMove="actionBlock_MouseMove">
 
-                    <TextBlock TextAlignment="Center" FontSize="12" 
-                               Foreground="White" HorizontalAlignment="Center" Text="Действие"
-                                   TextWrapping="Wrap" Width="140" Canvas.Top="20" Height="60"
-                               MaxHeight="60"
-                               MaxWidth="140"/>
-
+                    <TextBlock 
+                        Canvas.Top="20"
+                        Text="Действие"
+                        FontSize="12"
+                        Foreground="White"
+                        TextAlignment="Center"  
+                        HorizontalAlignment="Center" 
+                        TextWrapping="Wrap" 
+                        Width="140" 
+                        Height="20" />
                 </Canvas>
 
-                    <TextBlock 
-                           Name="actionBlockText"
+                <TextBlock Name="actionBlockText"
                            Text="Блок (1)" 
                            FontSize="10" 
                            VerticalAlignment="Center" 
@@ -229,23 +232,24 @@
                            Grid.Column="2" />
 
                     <Canvas Name="conditionBlock" 
-                        MouseMove="conditionBlock_MouseMove" 
-                        Grid.Row="2"
-                        Grid.Column="1">
+                            MouseMove="conditionBlock_MouseMove" 
+                            Grid.Row="2"
+                            Grid.Column="1" >
 
                     <Polygon Fill="#FF60B2D3"
-                             Points="10 30 70 60 140 30 70 0 10 30" 
-                             Canvas.Top="10"
-                             Canvas.Left="-5"/>
+                             Points="0 30 70 60 140 30 70 0 0 30" 
+                             Canvas.Top="10" />
 
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="40" 
-                           Canvas.Top="25"
-                           Width="100">
-                            <TextBlock Text="Условие" 
-                                   TextWrapping="Wrap"/>
-                        </Label>
+                    <TextBlock Text="Условие"
+                               FontSize="12" 
+                               Foreground="White" 
+                               Width="70"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center"
+                               Canvas.Top="30"
+                               Canvas.Left="35" />
                     </Canvas>
 
                     <TextBlock 
