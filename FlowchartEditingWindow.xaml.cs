@@ -523,7 +523,7 @@ namespace Flowchart_Editor
         const string darkBlack = "#FF040205";
         const string lightBlack = "#FF262427";
         const string darkTheme = "Тёмная тема";
-        const string lightThene = "светлая тема";
+        const string lightThene = "Светлая тема";
 
         private void toggleButtonStyleTheme_Click(object sender, RoutedEventArgs e)
         {
@@ -576,7 +576,7 @@ namespace Flowchart_Editor
                     textWidth.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                    ActionBlockDefaultProperty.colorPoint = darkWhite;
+                    DefaultPropertyForBlock.colorPoint = darkWhite;
                     foreach (ActionBlock listActionBlock in listActionBlock)
                     {
                         listActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
@@ -584,6 +584,13 @@ namespace Flowchart_Editor
                         listActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         listActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
 
+                    }
+                    foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
+                    {
+                        itemListConditionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListConditionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListConditionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListConditionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                     }
                 }
                 else
@@ -631,13 +638,20 @@ namespace Flowchart_Editor
                     textWidth.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
-                    ActionBlockDefaultProperty.colorPoint = darkBlack;
-                    foreach (ActionBlock listActionBlock in listActionBlock)
+                    DefaultPropertyForBlock.colorPoint = darkBlack;
+                    foreach (ActionBlock itemListActionBlock in listActionBlock)
                     {
-                        listActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        listActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        listActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        listActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
+                    foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
+                    {
+                        itemListConditionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListConditionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListConditionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListConditionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                     }
                 }
             }
@@ -666,7 +680,7 @@ namespace Flowchart_Editor
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
-            ActionBlockDefaultProperty.Width = (int)valueBlokWidth;
+            DefaultPropertyForBlock.Width = (int)valueBlokWidth;
             foreach (ActionBlock itemListActionBlock in listActionBlock)
             {
                 itemListActionBlock.canvasOfActionBlock.Width = valueBlokWidth;
@@ -697,12 +711,17 @@ namespace Flowchart_Editor
                 itemListConditionBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
                 Canvas.SetLeft(itemListConditionBlock.textBlocOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
                 Canvas.SetLeft(itemListConditionBlock.textBoxOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
+                Canvas.SetLeft(itemListConditionBlock.firstPointToConnect, valueBlokWidth / 2 - 3);
+                Canvas.SetLeft(itemListConditionBlock.secondPointToConnect, -2 + 2);
+                Canvas.SetLeft(itemListConditionBlock.thirdPointToConnect, valueBlokWidth / 2 - 3);
+                Canvas.SetLeft(itemListConditionBlock.fourthPointToConnect, valueBlokWidth - 6);
+                
             }
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
-            ActionBlockDefaultProperty.Height = (int)valueBlokHeight;
+            DefaultPropertyForBlock.Height = (int)valueBlokHeight;
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
                 listActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
@@ -729,6 +748,10 @@ namespace Flowchart_Editor
                 itemListConditionBlock.polygonConditionBlock.Points = myPointCollection;
                 Canvas.SetTop(itemListConditionBlock.textBoxOfConditionBlock, valueBlokHeight / 4);
                 Canvas.SetTop(itemListConditionBlock.textBlocOfConditionBlock, valueBlokHeight / 4);
+                Canvas.SetTop(itemListConditionBlock.firstPointToConnect, -2);
+                Canvas.SetTop(itemListConditionBlock.secondPointToConnect, valueBlokHeight / 2 - 3);
+                Canvas.SetTop(itemListConditionBlock.thirdPointToConnect, valueBlokHeight - 3);
+                Canvas.SetTop(itemListConditionBlock.fourthPointToConnect, valueBlokHeight / 2 - 3);
             }
         }
     }

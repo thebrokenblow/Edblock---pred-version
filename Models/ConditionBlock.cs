@@ -16,12 +16,11 @@ namespace Flowchart_Editor.Models
         public Ellipse? secondPointToConnect = null;
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
-        private int defaultWidth = ActionBlockDefaultProperty.Width;
-        private int defaulHeight = ActionBlockDefaultProperty.Height;
-        private string defaulColorPoint = ActionBlockDefaultProperty.colorPoint;
+        private int defaultWidth = DefaultPropertyForBlock.Width;
+        private int defaulHeight = DefaultPropertyForBlock.Height;
+        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
         private bool textChangeStatus = true;
         private int valueOfClicksOnTextBlock = 0;
-        private bool firstChangeOfTextBoxToTextBlock = false;
 
         public UIElement GetUIElementWithoutCreate() => canvasConditionBlock;
 
@@ -70,31 +69,34 @@ namespace Flowchart_Editor.Models
                 polygonConditionBlock.Points = myPointCollection;
                 canvasConditionBlock.Children.Add(polygonConditionBlock);
 
-                //firstPointToConnect.Fill = Brushes.Red;
-                //firstPointToConnect.Height = 6;
-                //firstPointToConnect.Width = 6;
-                //firstPointToConnect.Margin = new Thickness(68, 1, 0, 0); //Переделать под setLeft setTop
-                //firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                //secondPointToConnect.Fill = Brushes.Black;
-                //secondPointToConnect.Height = 6;
-                //secondPointToConnect.Width = 6;
-                //secondPointToConnect.Margin = new Thickness(3, 32, 0, 0);
-                //secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 3);
+                Canvas.SetTop(firstPointToConnect, -2);
+                firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
+                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                Canvas.SetLeft(secondPointToConnect, -2 + 2);
+                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 3);
+                secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                //thirdPointToConnect.Fill = Brushes.Black;
-                //thirdPointToConnect.Height = 6;
-                //thirdPointToConnect.Width = 6;
-                //thirdPointToConnect.Margin = new Thickness(67, 62, 0, 0);
-                //thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 3);
+                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
+                thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-
-                //fourthPointToConnect.Fill = Brushes.Black;
-                //fourthPointToConnect.Height = 6;
-                //fourthPointToConnect.Width = 6;
-                //fourthPointToConnect.Margin = new Thickness(135, 32, 0, 0);
-                //fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 6);
+                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 3);
+                fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 textBoxOfConditionBlock.Text = "Условие";
                 textBoxOfConditionBlock.FontSize = 12;
