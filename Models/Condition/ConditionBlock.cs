@@ -69,7 +69,6 @@ namespace Flowchart_Editor.Models
                 polygonConditionBlock.Points = myPointCollection;
                 canvasConditionBlock.Children.Add(polygonConditionBlock);
 
-
                 firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;

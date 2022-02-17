@@ -16,8 +16,9 @@ namespace Flowchart_Editor.Models
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
         private bool textChangeStatus = true;
-        private int defaultWidth = 140;
-        private int defaulHeight = 60;
+        private int defaultWidth = DefaultPropertyForBlock.Width;
+        private int defaulHeight = DefaultPropertyForBlock.Height;
+        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
         private int valueOfClicksOnTextBlock = 0;
 
         public UIElement GetUIElementWithoutCreate() => canvasOfActionBlock;
@@ -48,7 +49,6 @@ namespace Flowchart_Editor.Models
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-
                 textBoxOfActionBlock.Text = "Действие";
                 textBoxOfActionBlock.Width = defaultWidth;
                 textBoxOfActionBlock.Height = defaulHeight;
@@ -73,14 +73,14 @@ namespace Flowchart_Editor.Models
                 canvasOfActionBlock.Width = defaultWidth;
                 canvasOfActionBlock.Height = defaulHeight;
 
-                firstPointToConnect.Fill = Brushes.Black;
+                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint); 
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
                 Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
                 Canvas.SetTop(firstPointToConnect,  -2);
                 firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                secondPointToConnect.Fill = Brushes.Black;
+                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 secondPointToConnect.Height = 6;
                 secondPointToConnect.Width = 6;
                 Canvas.SetLeft(secondPointToConnect, -2);
@@ -88,14 +88,14 @@ namespace Flowchart_Editor.Models
                
                 secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                thirdPointToConnect.Fill = Brushes.Black;
+                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 thirdPointToConnect.Height = 6;
                 thirdPointToConnect.Width = 6;
                 Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
                 Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                fourthPointToConnect.Fill = Brushes.Black;
+                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 fourthPointToConnect.Height = 6;
                 fourthPointToConnect.Width = 6;
                 Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
@@ -161,7 +161,6 @@ namespace Flowchart_Editor.Models
                 valueOfClicksOnTextBlock++;
                 if (valueOfClicksOnTextBlock == 2)
                 {
-
                     canvasOfActionBlock.Children.Remove(textBoxOfActionBlock);
                     canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
                     textBoxOfActionBlock.Text = textBlockOfActionBlock.Text;

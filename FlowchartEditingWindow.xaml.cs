@@ -30,7 +30,6 @@ namespace Flowchart_Editor
                 blockHeightComboBox.Items.Add(i);
         }
         List<ActionBlock> listActionBlock = new List<ActionBlock>();
-     
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -54,21 +53,25 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        List<StartEndBlock> listStartEndBlock = new List<StartEndBlock>();
         private void startEndBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfStartEndBlock = new StartEndBlock();
+                listStartEndBlock.Add(instanceOfStartEndBlock);
                 var dataObjectInformationOfStartEndBlock = new DataObject(typeof(StartEndBlock), instanceOfStartEndBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
+        List<InputOutputBlock> listInputOutputBlock = new List<InputOutputBlock>();
         private void inputOutputBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfInputOutputBlock = new InputOutputBlock();
+                listInputOutputBlock.Add(instanceOfInputOutputBlock);
                 var dataObjectInformationOfInputOutputBlock = new DataObject(typeof(InputOutputBlock), instanceOfInputOutputBlock);
                 DragDrop.DoDragDrop(inputOutputBlock, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
             }
@@ -691,8 +694,7 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListActionBlock.fourthPointToConnect, valueBlokWidth - 4);
                 
             }
-            ConditionBlockDefaultProperty.Width = (int)valueBlokWidth;
-            int valueBlokHeight = ConditionBlockDefaultProperty.Height;
+            int valueBlokHeight = DefaultPropertyForBlock.Height;
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
             {
                 Point Point1 = new Point(0, valueBlokHeight / 2);
@@ -715,8 +717,32 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListConditionBlock.secondPointToConnect, -2 + 2);
                 Canvas.SetLeft(itemListConditionBlock.thirdPointToConnect, valueBlokWidth / 2 - 3);
                 Canvas.SetLeft(itemListConditionBlock.fourthPointToConnect, valueBlokWidth - 6);
-                
             }
+            foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+            {
+                itemListStartEndBlock.canvasStartEndBlock.Width = valueBlokWidth;
+                itemListStartEndBlock.rectangleStartEndBlock.Width = valueBlokWidth;
+                itemListStartEndBlock.textBlockOfStartEnd.Width = valueBlokWidth;
+            }
+            foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
+            {
+                Point Point1 = new Point(20, 0);
+                Point Point2 = new Point(0, valueBlokHeight);
+                Point Point3 = new Point(valueBlokWidth - 20, valueBlokHeight);
+                Point Point4 = new Point(valueBlokWidth, 0);
+
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+
+                itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
+                itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
+                //itemListInputOutputBlock.textBoxOfConditionBlock.Width = valueBlokWidth / 2;
+                //itemListInputOutputBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
+            }
+            
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -730,8 +756,7 @@ namespace Flowchart_Editor
                 Canvas.SetTop(listActionBlock.thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(listActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
-            ConditionBlockDefaultProperty.Height = (int)valueBlokHeight;
-            int valueBlokWidth = ConditionBlockDefaultProperty.Width;
+            int valueBlokWidth = DefaultPropertyForBlock.Width;
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
             {
                 Point Point1 = new Point(0, valueBlokHeight / 2);
@@ -752,6 +777,30 @@ namespace Flowchart_Editor
                 Canvas.SetTop(itemListConditionBlock.secondPointToConnect, valueBlokHeight / 2 - 3);
                 Canvas.SetTop(itemListConditionBlock.thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(itemListConditionBlock.fourthPointToConnect, valueBlokHeight / 2 - 3);
+            }
+            foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+            {
+                itemListStartEndBlock.canvasStartEndBlock.Height = valueBlokHeight / 2;
+                itemListStartEndBlock.rectangleStartEndBlock.Height = valueBlokHeight / 2;
+                itemListStartEndBlock.textBlockOfStartEnd.VerticalAlignment = VerticalAlignment.Center;
+            }
+            foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
+            {
+                Point Point1 = new Point(20, 0);
+                Point Point2 = new Point(0, valueBlokHeight);
+                Point Point3 = new Point(valueBlokWidth - 20, valueBlokHeight);
+                Point Point4 = new Point(valueBlokWidth, 0);
+
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+
+                itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
+                itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
+                //itemListInputOutputBlock.textBoxOfConditionBlock.Width = valueBlokWidth / 2;
+                //itemListInputOutputBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
             }
         }
     }

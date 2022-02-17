@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,13 +8,18 @@ namespace Flowchart_Editor.Models
 {
     public class CycleForBlock
     {
-        private Canvas? canvasCycleForBlock = null;
-        private Polygon? polygonCycleForBlock = null;
-        private TextBox? textOfCycleForBlock = null;
-        private Ellipse? firstPointToConnect = null;
-        private Ellipse? secondPointToConnect = null;
-        private Ellipse? thirdPointToConnect = null;
-        private Ellipse? fourthPointToConnect = null;
+        public Canvas? canvasCycleForBlock = null;
+        public Polygon? polygonCycleForBlock = null;
+        public TextBox? textOfCycleForBlock = null;
+        public Ellipse? firstPointToConnect = null;
+        public Ellipse? secondPointToConnect = null;
+        public Ellipse? thirdPointToConnect = null;
+        public Ellipse? fourthPointToConnect = null;
+        private int defaultWidth = DefaultPropertyForBlock.Width;
+        private int defaulHeight = DefaultPropertyForBlock.Height / 2;
+        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private bool textChangeStatus = true;
+        private int valueOfClicksOnTextBlock = 0;
 
         public UIElement GetUIElementWithoutCreate() => canvasCycleForBlock;
 
@@ -27,9 +27,12 @@ namespace Flowchart_Editor.Models
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfConditionBlock = new CycleForBlockForMovements(sender);
-                var dataObjectInformationOConditionBlock = new DataObject(typeof(CycleForBlockForMovements), instanceOfConditionBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+                if (!textChangeStatus)
+                {
+                    var instanceOfConditionBlock = new CycleForBlockForMovements(sender);
+                    var dataObjectInformationOConditionBlock = new DataObject(typeof(CycleForBlockForMovements), instanceOfConditionBlock);
+                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+                }
             }
             e.Handled = true;
         }
@@ -44,7 +47,7 @@ namespace Flowchart_Editor.Models
 
                 var backgroundColor = new BrushConverter();
                 polygonCycleForBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FFFFC618");
-                Point Point1 = new Point(20, 10); 
+                Point Point1 = new Point(20, 10);
                 Point Point2 = new Point(10, 20);
                 Point Point3 = new Point(10, 60);
                 Point Point4 = new Point(20, 70);
@@ -69,6 +72,7 @@ namespace Flowchart_Editor.Models
                 textOfCycleForBlock.Foreground = Brushes.White;
                 Canvas.SetLeft(textOfCycleForBlock, 50);
                 Canvas.SetTop(textOfCycleForBlock, 24);
+
                 canvasCycleForBlock.Children.Add(textOfCycleForBlock);
 
                 canvasCycleForBlock.MouseMove += cycleForBlock_MouseMove;

@@ -45,6 +45,16 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem5">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.7" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem6">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="blockLayoutMenu">
@@ -91,7 +101,7 @@
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Name="homeIcon" Kind="Home" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="homeText" Text="Home" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <TextBlock Name="homeText" Text="Главная" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem1" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -104,8 +114,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="instagramIcon" Kind="Instagram" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="instagramText" Text="Instagram" Margin="10" Foreground="#FF040205" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Name="instagramIcon" Kind="User" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Name="instagramText" Text="Авторизация" Margin="10" Foreground="#FF040205" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -118,8 +128,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="facebookIcon" Kind="Facebook" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="facebookText" Text="Facebook" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Name="facebookIcon" Kind="UserAdd" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Name="facebookText" Text="Регистрация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -132,11 +142,39 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="twitterIcon" Kind="Twitter" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Name="twitterText" Text="Twitter" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Name="twitterIcon" Kind="Assignment" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <TextBlock Name="twitterText" Text="Список проектов" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem4" Height="60" RenderTransformOrigin="0.5,0.5">
+                    <ListViewItem.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ListViewItem.RenderTransform>
+                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                        <materialDesign:PackIcon  Kind="Information" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <TextBlock  Text="Информация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="listViewItem5" Height="60" RenderTransformOrigin="0.5,0.5">
+                    <ListViewItem.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ListViewItem.RenderTransform>
+                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                        <materialDesign:PackIcon Kind="Chat" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <TextBlock Text="Поддержка" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="listViewItem6" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -231,16 +269,16 @@
                            Grid.Row="1"
                            Grid.Column="2" />
 
-                    <Canvas Name="conditionBlock" 
-                            MouseMove="conditionBlock_MouseMove" 
-                            Grid.Row="2"
-                            Grid.Column="1" >
+                <Canvas Name="conditionBlock" 
+                        MouseMove="conditionBlock_MouseMove" 
+                        Grid.Row="2"
+                        Grid.Column="1" >
 
-                    <Polygon Fill="#FF60B2D3"
-                             Points="0 30 70 60 140 30 70 0 0 30" 
-                             Canvas.Top="10" />
+                    <Polygon Points="0 30 70 60 140 30 70 0 0 30" 
+                             Canvas.Top="10"
+                             Fill="#FF60B2D3" />
 
-                    <TextBlock Text="Условие"
+                <TextBlock Text="Условие"
                                FontSize="12" 
                                Foreground="White" 
                                Width="70"
@@ -252,36 +290,34 @@
                                Canvas.Left="35" />
                     </Canvas>
 
-                    <TextBlock 
-                           Name="conditionBlockText"
-                           Text="Условие (2)" 
-                           FontSize="10" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Grid.Column="2" 
-                           Grid.Row="2"/>
+                    <TextBlock Name="conditionBlockText"
+                               Text="Условие (2)" 
+                               FontSize="10" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left"
+                               Grid.Column="2" 
+                               Grid.Row="2"/>
 
                     <Canvas Name="startEndBlock"  
                         MouseMove="startEndBlock_MouseMove"  
                         Grid.Row="3"
                         Grid.Column="1">
 
-                        <Rectangle 
-                               Width="140" 
+                    <Rectangle Width="140" 
                                Height="30" 
                                Fill="#FFF25252" 
                                RadiusX="20" 
                                RadiusY="20" 
-                               Canvas.Top="25">
-                        </Rectangle>
-                        <Label FontSize="12" 
+                               Canvas.Top="25" />
+
+                    <TextBlock FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="30" 
-                           Canvas.Top="28">
-                            <TextBlock Text="Начало/Конец" 
-                                   TextWrapping="Wrap"/>
-                        </Label>
-                    </Canvas>
+                           Canvas.Top="30"
+                           Text="Начало/Конец" 
+                           TextWrapping="Wrap" />
+
+                </Canvas>
 
                     <TextBlock
                            Name="startEndBlockText"
@@ -293,20 +329,24 @@
                            HorizontalAlignment="Left"/>
 
                     <Canvas Name="inputOutputBlock"  
-                        MouseMove="inputOutputBlock_MouseMove"  
-                        Grid.Row="4"
-                        Grid.Column="1">
-                    <Polygon 
-                         Fill="#FF05273C" 
-                         Points="30 0 10 60 120 60 140 0"
-                         Canvas.Top="5"/>
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="37" 
-                           Canvas.Top="23">
-                            <TextBlock Text="Ввод/Вывод"
-                                   TextWrapping="Wrap"/>
-                        </Label>
+                            MouseMove="inputOutputBlock_MouseMove"  
+                            Grid.Row="4"
+                            Grid.Column="1">
+                        
+                    <Polygon Fill="#FF05273C" 
+                             Points="20 0 0 60 120 60 140 0"
+                             Canvas.Top="5"/>
+                   
+                    <TextBlock Text="Ввод/Вывод" 
+                                   FontSize="12" 
+                                   Foreground="White" 
+                                   Width="140" 
+                                   Height="20" 
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" 
+                                   TextWrapping="Wrap" 
+                                   Canvas.Top="25" />
+                      
                     </Canvas>
 
                     <TextBlock
