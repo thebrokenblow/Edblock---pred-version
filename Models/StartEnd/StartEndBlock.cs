@@ -19,7 +19,7 @@ namespace Flowchart_Editor.Models
         private int defaultWidth = DefaultPropertyForBlock.Width;
         private int defaulHeight = DefaultPropertyForBlock.Height / 2;
         private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
-        private bool textChangeStatus = true;
+        private bool textChangeStatus = false;
         private int valueOfClicksOnTextBlock = 0;
         private const int radiusOfRectangleStartEndBlock = 20;
 
@@ -29,7 +29,7 @@ namespace Flowchart_Editor.Models
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (!textChangeStatus)
+                if (textChangeStatus)
                 {
                     var instanceOfStartEndBlock = new StartEndBlockForMovements(sender);
                     var dataObjectInformationOfStartEndBlock = new DataObject(typeof(StartEndBlockForMovements), instanceOfStartEndBlock);
@@ -58,7 +58,17 @@ namespace Flowchart_Editor.Models
                 rectangleStartEndBlock.Width = defaultWidth;
                 rectangleStartEndBlock.Height = defaulHeight;
 
-                textBlockOfStartEnd.Text = "Начало";
+                textBoxOfStartEnd.Text = "Начало";
+                textBoxOfStartEnd.Foreground = Brushes.White;
+                textBoxOfStartEnd.Width = defaultWidth;
+                textBoxOfStartEnd.Height = defaulHeight;
+                textBoxOfStartEnd.VerticalAlignment = VerticalAlignment.Center;
+                textBoxOfStartEnd.HorizontalAlignment = HorizontalAlignment.Center;
+                textBoxOfStartEnd.TextAlignment = TextAlignment.Center;
+                textBoxOfStartEnd.Foreground = Brushes.White;
+                textBoxOfStartEnd.MouseDoubleClick += changeTextBoxToTextBlock;
+                Canvas.SetTop(textBlockOfStartEnd, 3.5);
+
                 textBlockOfStartEnd.Foreground = Brushes.White;
                 textBlockOfStartEnd.Width = defaultWidth;
                 textBlockOfStartEnd.Height = defaulHeight;
@@ -66,39 +76,35 @@ namespace Flowchart_Editor.Models
                 textBlockOfStartEnd.HorizontalAlignment = HorizontalAlignment.Center;
                 textBlockOfStartEnd.TextAlignment = TextAlignment.Center;
                 textBlockOfStartEnd.Foreground = Brushes.White;
+                textBlockOfStartEnd.MouseDown += changeTextBoxToTextBlock;
                 Canvas.SetTop(textBlockOfStartEnd, 3.5);
 
-                //Canvas.SetLeft(textBoxOfStartEnd, 50); //47
+                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                firstPointToConnect.Height = 6;
+                firstPointToConnect.Width = 6;
+                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2.5);
+                Canvas.SetTop(firstPointToConnect, -2);
+              
+                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                secondPointToConnect.Height = 6;
+                secondPointToConnect.Width = 6;
+                Canvas.SetLeft(secondPointToConnect, -2);
+                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2.5);
 
+                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                thirdPointToConnect.Height = 6;
+                thirdPointToConnect.Width = 6;
+                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2.5);
+                Canvas.SetTop(thirdPointToConnect, defaulHeight - 2.5);
 
-                //textBlockOfStartEnd.Text = "Начало";
-                //textBlockOfStartEnd.Foreground = Brushes.White;
-                //Canvas.SetLeft(textBlockOfStartEnd, defaultWidth / 2 + defaultWidth / 4 + 5);
-                //Canvas.SetTop(textBlockOfStartEnd, 17);
-
-                //firstPointToConnect.Fill = Brushes.Black;
-                //firstPointToConnect.Height = 6;
-                //firstPointToConnect.Width = 6;
-                //firstPointToConnect.Margin = new Thickness(65, -4, 0, 0);
-
-                //secondPointToConnect.Fill = Brushes.Black;
-                //secondPointToConnect.Height = 6;
-                //secondPointToConnect.Width = 6;
-                //secondPointToConnect.Margin = new Thickness(-3, 25, 0, 0);
-
-
-                //thirdPointToConnect.Fill = Brushes.Black;
-                //thirdPointToConnect.Height = 6;
-                //thirdPointToConnect.Width = 6;
-                //thirdPointToConnect.Margin = new Thickness(65, 56, 0, 0);
-
-                //fourthPointToConnect.Fill = Brushes.Black;
-                //fourthPointToConnect.Height = 6;
-                //fourthPointToConnect.Width = 6;
-                //fourthPointToConnect.Margin = new Thickness(137, 25, 0, 0);
+                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                fourthPointToConnect.Height = 6;
+                fourthPointToConnect.Width = 6;
+                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 2.5);
+                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2.5);
 
                 canvasStartEndBlock.Children.Add(rectangleStartEndBlock);
-                canvasStartEndBlock.Children.Add(textBlockOfStartEnd);
+                canvasStartEndBlock.Children.Add(textBoxOfStartEnd);
                 canvasStartEndBlock.Children.Add(firstPointToConnect);
                 canvasStartEndBlock.Children.Add(secondPointToConnect);
                 canvasStartEndBlock.Children.Add(thirdPointToConnect);
@@ -106,6 +112,30 @@ namespace Flowchart_Editor.Models
                 canvasStartEndBlock.MouseMove += startEndBlock_MouseMove;
             }
             return canvasStartEndBlock;
+        }
+        private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
+        {
+            if (!textChangeStatus)
+            {
+                canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
+                canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
+                textBlockOfStartEnd.Text = textBoxOfStartEnd.Text;
+                canvasStartEndBlock.Children.Add(textBlockOfStartEnd);
+                textChangeStatus = true;
+            }
+            else
+            {
+                valueOfClicksOnTextBlock++;
+                if (valueOfClicksOnTextBlock == 2)
+                {
+                    canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
+                    canvasStartEndBlock.Children.Remove(textBlockOfStartEnd);
+                    textBoxOfStartEnd.Text = textBlockOfStartEnd.Text;
+                    canvasStartEndBlock.Children.Add(textBoxOfStartEnd);
+                    textChangeStatus = false;
+                    valueOfClicksOnTextBlock = 0;
+                }
+            }
         }
         public void Reset()
         {

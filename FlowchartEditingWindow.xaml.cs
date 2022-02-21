@@ -595,6 +595,13 @@ namespace Flowchart_Editor
                         itemListConditionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         itemListConditionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                     }
+                    foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+                    {
+                        itemListStartEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListStartEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                    }
                 }
                 else
                 {
@@ -656,6 +663,13 @@ namespace Flowchart_Editor
                         itemListConditionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                         itemListConditionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                     }
+                    foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+                    {
+                        itemListStartEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListStartEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
                 }
             }
         }
@@ -714,7 +728,7 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListConditionBlock.textBlocOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
                 Canvas.SetLeft(itemListConditionBlock.textBoxOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
                 Canvas.SetLeft(itemListConditionBlock.firstPointToConnect, valueBlokWidth / 2 - 3);
-                Canvas.SetLeft(itemListConditionBlock.secondPointToConnect, -2 + 2);
+                Canvas.SetLeft(itemListConditionBlock.secondPointToConnect, 0);
                 Canvas.SetLeft(itemListConditionBlock.thirdPointToConnect, valueBlokWidth / 2 - 3);
                 Canvas.SetLeft(itemListConditionBlock.fourthPointToConnect, valueBlokWidth - 6);
             }
@@ -723,6 +737,10 @@ namespace Flowchart_Editor
                 itemListStartEndBlock.canvasStartEndBlock.Width = valueBlokWidth;
                 itemListStartEndBlock.rectangleStartEndBlock.Width = valueBlokWidth;
                 itemListStartEndBlock.textBlockOfStartEnd.Width = valueBlokWidth;
+                itemListStartEndBlock.textBoxOfStartEnd.Width = valueBlokWidth;
+                Canvas.SetLeft(itemListStartEndBlock.firstPointToConnect, valueBlokWidth / 2 - 2.5);
+                Canvas.SetLeft(itemListStartEndBlock.thirdPointToConnect, valueBlokWidth / 2 - 2.5);
+                Canvas.SetLeft(itemListStartEndBlock.fourthPointToConnect, valueBlokWidth - 2.5);
             }
             foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
             {
@@ -739,10 +757,7 @@ namespace Flowchart_Editor
 
                 itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
                 itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
-                //itemListInputOutputBlock.textBoxOfConditionBlock.Width = valueBlokWidth / 2;
-                //itemListInputOutputBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
             }
-            
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -782,7 +797,9 @@ namespace Flowchart_Editor
             {
                 itemListStartEndBlock.canvasStartEndBlock.Height = valueBlokHeight / 2;
                 itemListStartEndBlock.rectangleStartEndBlock.Height = valueBlokHeight / 2;
-                itemListStartEndBlock.textBlockOfStartEnd.VerticalAlignment = VerticalAlignment.Center;
+                Canvas.SetTop(itemListStartEndBlock.secondPointToConnect, valueBlokHeight / 4 - 2.5);
+                Canvas.SetTop(itemListStartEndBlock.thirdPointToConnect, valueBlokHeight / 2 - 2.5);
+                Canvas.SetTop(itemListStartEndBlock.fourthPointToConnect, valueBlokHeight / 4 - 2.5);
             }
             foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
             {
@@ -799,9 +816,7 @@ namespace Flowchart_Editor
 
                 itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
                 itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
-                //itemListInputOutputBlock.textBoxOfConditionBlock.Width = valueBlokWidth / 2;
-                //itemListInputOutputBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
             }
-        }
+        }   
     }
 }

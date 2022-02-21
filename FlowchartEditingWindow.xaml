@@ -278,7 +278,7 @@
                              Canvas.Top="10"
                              Fill="#FF60B2D3" />
 
-                <TextBlock Text="Условие"
+                    <TextBlock Text="Условие"
                                FontSize="12" 
                                Foreground="White" 
                                Width="70"
@@ -288,9 +288,9 @@
                                TextAlignment="Center"
                                Canvas.Top="30"
                                Canvas.Left="35" />
-                    </Canvas>
+                </Canvas>
 
-                    <TextBlock Name="conditionBlockText"
+                <TextBlock Name="conditionBlockText"
                                Text="Условие (2)" 
                                FontSize="10" 
                                VerticalAlignment="Center" 
@@ -298,7 +298,7 @@
                                Grid.Column="2" 
                                Grid.Row="2"/>
 
-                    <Canvas Name="startEndBlock"  
+                <Canvas Name="startEndBlock"  
                         MouseMove="startEndBlock_MouseMove"  
                         Grid.Row="3"
                         Grid.Column="1">
@@ -319,7 +319,7 @@
 
                 </Canvas>
 
-                    <TextBlock
+                <TextBlock
                            Name="startEndBlockText"
                            Text="Начало / Конец (3)" 
                            FontSize="10" 
@@ -328,15 +328,15 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                    <Canvas Name="inputOutputBlock"  
+                <Canvas Name="inputOutputBlock"  
                             MouseMove="inputOutputBlock_MouseMove"  
                             Grid.Row="4"
                             Grid.Column="1">
-                        
+
                     <Polygon Fill="#FF05273C" 
                              Points="20 0 0 60 120 60 140 0"
                              Canvas.Top="5"/>
-                   
+
                     <TextBlock Text="Ввод/Вывод" 
                                    FontSize="12" 
                                    Foreground="White" 
@@ -346,10 +346,10 @@
                                    HorizontalAlignment="Center" 
                                    TextWrapping="Wrap" 
                                    Canvas.Top="25" />
-                      
-                    </Canvas>
 
-                    <TextBlock
+                </Canvas>
+
+                <TextBlock
                            Name="inputOutputBlockText"
                            Text="Ввод / Вывод (4)" 
                            FontSize="10" 
@@ -358,39 +358,39 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                    <Canvas Width="140" 
+                <Canvas Width="140" 
                         Height="60"
                         Background="#FFBA64C8"
                         Grid.Row="5"
                         Grid.Column="1"
                         Name="subroutineBlock"  
                         MouseMove="subroutineBlock_MouseMove">
-                        <Border BorderBrush="Black" 
+                    <Border BorderBrush="Black" 
                             Height="60" 
                             Width="140" 
                             BorderThickness="1" 
                             CornerRadius="1">
-                            <Canvas>
-                                <Border BorderBrush="Black" 
+                        <Canvas>
+                            <Border BorderBrush="Black" 
                                     Height="60" 
                                     Width="100" 
                                     BorderThickness="1" 
                                     CornerRadius="1" 
                                     Canvas.Left="20" 
                                     Canvas.Top="-1">
-                                </Border>
-                            </Canvas>
-                        </Border>
-                        <Label FontSize="12" 
+                            </Border>
+                        </Canvas>
+                    </Border>
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="24"
                            Canvas.Top="17">
-                            <TextBlock Text="Подпрограмма" 
+                        <TextBlock Text="Подпрограмма" 
                                    TextWrapping="Wrap"/>
-                        </Label>
-                    </Canvas>
+                    </Label>
+                </Canvas>
 
-                    <TextBlock
+                <TextBlock
                            Name="subroutineBlockText"
                            Text="Подпрограмма (5)" 
                            FontSize="10" 
@@ -399,23 +399,23 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                    <Canvas Grid.Row="6" Grid.Column="1"
+                <Canvas Grid.Row="6" Grid.Column="1"
                     Name="cycleBlockFor"
                     MouseMove="cycleBlockFor_MouseMove">
 
-                        <Polygon Fill="#FFC618" 
+                    <Polygon Fill="#FFC618" 
                          Points="20 10 10 20 10 60 20 70 140 70 150 60 150 20 140 10" 
                          Margin="-5"/>
-                        <Label FontSize="12" 
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="45"
                            Canvas.Top="22">
-                            <TextBlock Text="Цикл for" 
+                        <TextBlock Text="Цикл for" 
                                    TextWrapping="Wrap"/>
-                        </Label>
-                    </Canvas>
+                    </Label>
+                </Canvas>
 
-                    <TextBlock
+                <TextBlock
                            Name="cycleBlockForText"
                            Text="Цикл (6) for" 
                            FontSize="10" 
@@ -424,23 +424,23 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                    <Canvas Grid.Row="7" Grid.Column="1" 
+                <Canvas Grid.Row="7" Grid.Column="1" 
                         Name="cycleBlockWhileBegin"
                         MouseMove="cycleBlockWhileBegin_MouseMove">
 
-                        <Polygon Fill="#CCCCFF" 
+                    <Polygon Fill="#CCCCFF" 
                          Points="10 70 10 20 20 10 140 10 150 20 150 70" 
                          Margin="-5"/>
-                        <Label FontSize="12" 
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="17"
                            Canvas.Top="23">
-                            <TextBlock Text="Цикл do while, while" 
+                        <TextBlock Text="Цикл do while, while" 
                                    TextWrapping="Wrap"/>
-                        </Label>
-                    </Canvas>
+                    </Label>
+                </Canvas>
 
-                    <TextBlock 
+                <TextBlock 
                            Name="cycleBlockWhileBeginText"
                            Text="Цикл (7) do while, while (Начало)" 
                            FontSize="10" 
@@ -449,22 +449,22 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                    <Canvas Grid.Row="8" Grid.Column="1"
+                <Canvas Grid.Row="8" Grid.Column="1"
                         Name="cycleBlockWhileEnd"
                         MouseMove="cycleBlockWhileEnd_MouseMove">
-                        <Polygon Fill="#CCCCFF" 
+                    <Polygon Fill="#CCCCFF" 
                              Points="10 10 10 60 20 70 140 70 150 60 150 10" 
                              Margin="-5 0 0 0"/>
-                        <Label FontSize="12" 
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="17"
                            Canvas.Top="26">
-                            <TextBlock Text="Цикл do while, while" 
+                        <TextBlock Text="Цикл do while, while" 
                                    TextWrapping="Wrap"/>
-                        </Label>
-                    </Canvas>
+                    </Label>
+                </Canvas>
 
-                    <TextBlock 
+                <TextBlock 
                            Name="cycleBlockWhileEndText"
                            Text="Цикл (8) do while, while (Конец)" 
                            FontSize="10" 
@@ -473,23 +473,23 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                    <Canvas Grid.Row="9" 
+                <Canvas Grid.Row="9" 
                         Grid.Column="1"
                         Margin="40 5 0 0"
                         Name="linkBlock"  
                         MouseMove="linkBlock_MouseMove">
-                        <Ellipse Fill="#5761A8"
+                    <Ellipse Fill="#5761A8"
                              Width="75" 
                              Height="75"/>
-                        <Label FontSize="12" 
+                    <Label FontSize="12" 
                            Foreground="White" 
                            Canvas.Left="14"
                            Canvas.Top="25">
-                            <TextBlock Text="Ссылка" 
+                        <TextBlock Text="Ссылка" 
                                    TextWrapping="Wrap"/>
-                        </Label>
-                    </Canvas>
-              
+                    </Label>
+                </Canvas>
+
 
                 <TextBlock 
                            Name="linkBlockText" 
@@ -514,7 +514,7 @@
                     Grid.Column="4" 
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"/>
-               
+
                 <ComboBox 
                     Name="listOfFontsComboBox" 
                     SelectionChanged="listOfFontsComboBox_SelectionChanged" 
@@ -616,6 +616,7 @@
                     <materialDesign:PackIcon 
                         Kind="Menu"/>
                 </Button>
+
             </Grid>
         </Grid>
     </Grid>
