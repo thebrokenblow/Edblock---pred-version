@@ -156,16 +156,7 @@ namespace Flowchart_Editor.Models
         }
         private void changeTextBoxToLabel(object sender, MouseEventArgs e)
         {
-            if (!textChangeStatus)
-            {
-                canvasOfActionBlock.Children.Remove(textBoxOfActionBlock);
-                canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
-                textBlockOfActionBlock.Text = textBoxOfActionBlock.Text;
-                Canvas.SetTop(textBlockOfActionBlock, 3.5);
-                canvasOfActionBlock.Children.Add(textBlockOfActionBlock);
-                textChangeStatus = true;
-            }
-            else
+            if (textChangeStatus)
             {
                 valueOfClicksOnTextBlock++;
                 if (valueOfClicksOnTextBlock == 2)
@@ -177,6 +168,15 @@ namespace Flowchart_Editor.Models
                     textChangeStatus = false;
                     valueOfClicksOnTextBlock = 0;
                 }
+            }
+            else
+            {
+                canvasOfActionBlock.Children.Remove(textBoxOfActionBlock);
+                canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
+                textBlockOfActionBlock.Text = textBoxOfActionBlock.Text;
+                Canvas.SetTop(textBlockOfActionBlock, 3.5);
+                canvasOfActionBlock.Children.Add(textBlockOfActionBlock);
+                textChangeStatus = true;
             }
         }
 

@@ -693,6 +693,11 @@ namespace Flowchart_Editor
                 itemListStartEndBlock.textBoxOfStartEnd.FontFamily = fontFamily;
                 itemListStartEndBlock.textBlockOfStartEnd.FontFamily = fontFamily;
             }
+            foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
+            {
+                itemListInputOutputBlock.textBoxInputOutputBlock.FontFamily = fontFamily;
+                itemListInputOutputBlock.textBlockInputOutputBlock.FontFamily = fontFamily;
+            }
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -713,6 +718,11 @@ namespace Flowchart_Editor
             {
                 itemListStartEndBlock.textBoxOfStartEnd.FontSize = valueFontSize;
                 itemListStartEndBlock.textBlockOfStartEnd.FontSize = valueFontSize;
+            }
+            foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
+            {
+                itemListInputOutputBlock.textBoxInputOutputBlock.FontSize = valueFontSize;
+                itemListInputOutputBlock.textBlockInputOutputBlock.FontSize = valueFontSize;
             }
         }
 
@@ -779,6 +789,11 @@ namespace Flowchart_Editor
 
                 itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
                 itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
+                itemListInputOutputBlock.textBoxInputOutputBlock.Width = valueBlokWidth;
+                itemListInputOutputBlock.textBlockInputOutputBlock.Width = valueBlokWidth;
+                Canvas.SetLeft(itemListInputOutputBlock.firstPointToConnect, valueBlokWidth / 2);
+                Canvas.SetLeft(itemListInputOutputBlock.thirdPointToConnect, valueBlokWidth / 2);
+                Canvas.SetLeft(itemListInputOutputBlock.fourthPointToConnect, valueBlokWidth - 13);
             }
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -838,6 +853,10 @@ namespace Flowchart_Editor
 
                 itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
                 itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
+                itemListInputOutputBlock.textBoxInputOutputBlock.Height = valueBlokHeight;
+                Canvas.SetTop(itemListInputOutputBlock.secondPointToConnect, valueBlokHeight / 2 - 5);
+                Canvas.SetTop(itemListInputOutputBlock.thirdPointToConnect, valueBlokHeight - 3);                
+                Canvas.SetTop(itemListInputOutputBlock.fourthPointToConnect, valueBlokHeight / 2 - 5);
             }
         }   
     }

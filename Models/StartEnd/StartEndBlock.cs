@@ -121,15 +121,7 @@ namespace Flowchart_Editor.Models
         }
         private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (!textChangeStatus)
-            {
-                canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
-                canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
-                textBlockOfStartEnd.Text = textBoxOfStartEnd.Text;
-                canvasStartEndBlock.Children.Add(textBlockOfStartEnd);
-                textChangeStatus = true;
-            }
-            else
+            if (textChangeStatus)
             {
                 valueOfClicksOnTextBlock++;
                 if (valueOfClicksOnTextBlock == 2)
@@ -141,6 +133,14 @@ namespace Flowchart_Editor.Models
                     textChangeStatus = false;
                     valueOfClicksOnTextBlock = 0;
                 }
+            }
+            else
+            {
+                canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
+                canvasStartEndBlock.Children.Remove(textBoxOfStartEnd);
+                textBlockOfStartEnd.Text = textBoxOfStartEnd.Text;
+                canvasStartEndBlock.Children.Add(textBlockOfStartEnd);
+                textChangeStatus = true;
             }
         }
         public void Reset()

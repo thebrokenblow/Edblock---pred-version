@@ -333,7 +333,7 @@
                             Grid.Row="4"
                             Grid.Column="1">
 
-                    <Polygon Fill="#FF05273C" 
+                    <Polygon Fill="#FF008080" 
                              Points="20 0 0 60 120 60 140 0"
                              Canvas.Top="5"/>
 
@@ -381,13 +381,16 @@
                             </Border>
                         </Canvas>
                     </Border>
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="24"
-                           Canvas.Top="17">
-                        <TextBlock Text="Подпрограмма" 
-                                   TextWrapping="Wrap"/>
-                    </Label>
+                    <TextBlock 
+                        Canvas.Top="20"
+                        Text="Подпрограмма"
+                        FontSize="12"
+                        Foreground="White"
+                        TextAlignment="Center"  
+                        HorizontalAlignment="Center" 
+                        TextWrapping="Wrap" 
+                        Width="140" 
+                        Height="20" />
                 </Canvas>
 
                 <TextBlock
