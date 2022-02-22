@@ -676,28 +676,50 @@ namespace Flowchart_Editor
 
         private void listOfFontsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem typeItem = (ComboBoxItem)listOfFontsComboBox.SelectedItem;
-            FontFamily fontFamily = new FontFamily(typeItem.Content.ToString());
-            foreach (ActionBlock listActionBlock in listActionBlock)
+            FontFamily fontFamily = new FontFamily(((ComboBoxItem)listOfFontsComboBox.SelectedItem).Content.ToString());
+            DefaultPropertyForBlock.fontFamily = fontFamily;
+            foreach (ActionBlock itemListActionBlock in listActionBlock)
             {
-                listActionBlock.textBoxOfActionBlock.FontFamily = fontFamily;
-                listActionBlock.textBlockOfActionBlock.FontFamily = fontFamily;
+                itemListActionBlock.textBoxOfActionBlock.FontFamily = fontFamily;
+                itemListActionBlock.textBlockOfActionBlock.FontFamily = fontFamily;
+            }
+            foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
+            {
+                itemListConditionBlock.textBoxOfConditionBlock.FontFamily = fontFamily;
+                itemListConditionBlock.textBlocOfConditionBlock.FontFamily = fontFamily;
+            }
+            foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+            {
+                itemListStartEndBlock.textBoxOfStartEnd.FontFamily = fontFamily;
+                itemListStartEndBlock.textBlockOfStartEnd.FontFamily = fontFamily;
             }
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (ActionBlock listActionBlock in listActionBlock)
+            int valueFontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
+            DefaultPropertyForBlock.fontSize = valueFontSize;
+            foreach (ActionBlock itemListActionBlock in listActionBlock)
             {
-                listActionBlock.textBoxOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
-                listActionBlock.textBlockOfActionBlock.FontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
+                itemListActionBlock.textBoxOfActionBlock.FontSize = valueFontSize;
+                itemListActionBlock.textBlockOfActionBlock.FontSize = valueFontSize;
+            }
+            foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
+            {
+                itemListConditionBlock.textBoxOfConditionBlock.FontSize = valueFontSize;
+                itemListConditionBlock.textBlocOfConditionBlock.FontSize = valueFontSize;
+            }
+            foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+            {
+                itemListStartEndBlock.textBoxOfStartEnd.FontSize = valueFontSize;
+                itemListStartEndBlock.textBlockOfStartEnd.FontSize = valueFontSize;
             }
         }
 
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
-            DefaultPropertyForBlock.Width = (int)valueBlokWidth;
+            DefaultPropertyForBlock.width = (int)valueBlokWidth;
             foreach (ActionBlock itemListActionBlock in listActionBlock)
             {
                 itemListActionBlock.canvasOfActionBlock.Width = valueBlokWidth;
@@ -708,7 +730,7 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListActionBlock.fourthPointToConnect, valueBlokWidth - 4);
                 
             }
-            int valueBlokHeight = DefaultPropertyForBlock.Height;
+            int valueBlokHeight = DefaultPropertyForBlock.height;
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
             {
                 Point Point1 = new Point(0, valueBlokHeight / 2);
@@ -762,7 +784,7 @@ namespace Flowchart_Editor
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
-            DefaultPropertyForBlock.Height = (int)valueBlokHeight;
+            DefaultPropertyForBlock.height = (int)valueBlokHeight;
             foreach (ActionBlock listActionBlock in listActionBlock)
             {
                 listActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
@@ -771,7 +793,7 @@ namespace Flowchart_Editor
                 Canvas.SetTop(listActionBlock.thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(listActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
-            int valueBlokWidth = DefaultPropertyForBlock.Width;
+            int valueBlokWidth = DefaultPropertyForBlock.width;
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
             {
                 Point Point1 = new Point(0, valueBlokHeight / 2);

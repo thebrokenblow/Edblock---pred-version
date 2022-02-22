@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
-    public class ActionBlock
+    public class ActionBlock : Window
     {
         public Canvas? canvasOfActionBlock = null;
         public TextBox? textBoxOfActionBlock = null;
@@ -15,10 +15,12 @@ namespace Flowchart_Editor.Models
         public Ellipse? secondPointToConnect = null;
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
-        private bool textChangeStatus = true;
-        private int defaultWidth = DefaultPropertyForBlock.Width;
-        private int defaulHeight = DefaultPropertyForBlock.Height;
+        private bool textChangeStatus = false;
+        private int defaultWidth = DefaultPropertyForBlock.width;
+        private int defaulHeight = DefaultPropertyForBlock.height;
         private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private int valueOfClicksOnTextBlock = 0;
 
         public UIElement GetUIElementWithoutCreate() => canvasOfActionBlock;
@@ -27,7 +29,7 @@ namespace Flowchart_Editor.Models
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (!textChangeStatus)
+                if (textChangeStatus)
                 {
                     var instanceOfActionBlock = new ActionBlockForMovements(sender);
                     var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlock);
@@ -52,6 +54,8 @@ namespace Flowchart_Editor.Models
                 textBoxOfActionBlock.Text = "Действие";
                 textBoxOfActionBlock.Width = defaultWidth;
                 textBoxOfActionBlock.Height = defaulHeight;
+                textBoxOfActionBlock.FontSize = defaulFontSize;
+                textBoxOfActionBlock.FontFamily = defaultFontFamily;
                 textBoxOfActionBlock.VerticalAlignment = VerticalAlignment.Center;
                 textBoxOfActionBlock.HorizontalAlignment = HorizontalAlignment.Center;
                 textBoxOfActionBlock.TextAlignment = TextAlignment.Center;
@@ -61,6 +65,8 @@ namespace Flowchart_Editor.Models
 
                 textBlockOfActionBlock.Width = defaultWidth;
                 textBlockOfActionBlock.Height = defaulHeight;
+                textBlockOfActionBlock.FontSize = defaulFontSize;
+                textBlockOfActionBlock.FontFamily = defaultFontFamily;
                 textBlockOfActionBlock.VerticalAlignment = VerticalAlignment.Center;
                 textBlockOfActionBlock.HorizontalAlignment = HorizontalAlignment.Center;
                 textBlockOfActionBlock.TextAlignment = TextAlignment.Center;
@@ -85,7 +91,6 @@ namespace Flowchart_Editor.Models
                 secondPointToConnect.Width = 6;
                 Canvas.SetLeft(secondPointToConnect, -2);
                 Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
-               
                 secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
@@ -111,17 +116,16 @@ namespace Flowchart_Editor.Models
             }
             return canvasOfActionBlock;
         }
-
         private void getСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (CoordinatesBlock.coordinatesBlockX != null && CoordinatesBlock.coordinatesBlockY != null)
+                if (CoordinatesBlock.coordinatesBlockPointX != 0 && CoordinatesBlock.coordinatesBlockPointX != 0)
                 {
                     if (canvasOfActionBlock != null)
                     {
-                        double? coordinatesBlockStartPointX = CoordinatesBlock.coordinatesBlockX;
-                        double? coordinatesBlockStartPointY = CoordinatesBlock.coordinatesBlockY;
+                        double coordinatesBlockStartPointX = CoordinatesBlock.coordinatesBlockX;
+                        double coordinatesBlockStartPointY = CoordinatesBlock.coordinatesBlockY;
 
                         double coordinatesBlockEndPointX = e.GetPosition((Canvas)sender).X + e.GetPosition((Ellipse)sender).X;
                         double coordinatesBlockEndPointY = e.GetPosition((Canvas)sender).Y + e.GetPosition((Ellipse)sender).Y;
@@ -134,27 +138,32 @@ namespace Flowchart_Editor.Models
                         connectionLine.Stroke = Brushes.Black;
                         canvasOfActionBlock.Children.Add(connectionLine);
 
-                        CoordinatesBlock.coordinatesBlockX = null;
-                        CoordinatesBlock.coordinatesBlockY = null;
+                        CoordinatesBlock.coordinatesBlockX = 0;
+                        CoordinatesBlock.coordinatesBlockY = 0;
                     }
                 }
                 else
                 {
-                    CoordinatesBlock.coordinatesBlockX = e.GetPosition((Canvas)sender).X;
-                    CoordinatesBlock.coordinatesBlockY = e.GetPosition((Canvas)sender).Y;
+                    CoordinatesBlock.coordinatesBlockPointX = e.GetPosition(thirdPointToConnect).X + e.GetPosition(canvasOfActionBlock).X;
+                    CoordinatesBlock.coordinatesBlockPointY = e.GetPosition(thirdPointToConnect).Y + e.GetPosition(canvasOfActionBlock).Y;
+                    Line connectionLine = new Line();
+                    
+                   
+                    connectionLine.Stroke = Brushes.Red;
+                    //canvasOfActionBlock.Children.Add(connectionLine);
                 }
             }
         }
         private void changeTextBoxToLabel(object sender, MouseEventArgs e)
         {
-            if (textChangeStatus)
+            if (!textChangeStatus)
             {
                 canvasOfActionBlock.Children.Remove(textBoxOfActionBlock);
                 canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
                 textBlockOfActionBlock.Text = textBoxOfActionBlock.Text;
                 Canvas.SetTop(textBlockOfActionBlock, 3.5);
                 canvasOfActionBlock.Children.Add(textBlockOfActionBlock);
-                textChangeStatus = false;
+                textChangeStatus = true;
             }
             else
             {
@@ -165,7 +174,7 @@ namespace Flowchart_Editor.Models
                     canvasOfActionBlock.Children.Remove(textBlockOfActionBlock);
                     textBoxOfActionBlock.Text = textBlockOfActionBlock.Text;
                     canvasOfActionBlock.Children.Add(textBoxOfActionBlock);
-                    textChangeStatus = true;
+                    textChangeStatus = false;
                     valueOfClicksOnTextBlock = 0;
                 }
             }

@@ -16,9 +16,11 @@ namespace Flowchart_Editor.Models
         public Ellipse? secondPointToConnect = null;
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
-        private int defaultWidth = DefaultPropertyForBlock.Width;
-        private int defaulHeight = DefaultPropertyForBlock.Height / 2;
+        private int defaultWidth = DefaultPropertyForBlock.width;
+        private int defaulHeight = DefaultPropertyForBlock.height / 2;
         private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private bool textChangeStatus = false;
         private int valueOfClicksOnTextBlock = 0;
         private const int radiusOfRectangleStartEndBlock = 20;
@@ -62,6 +64,8 @@ namespace Flowchart_Editor.Models
                 textBoxOfStartEnd.Foreground = Brushes.White;
                 textBoxOfStartEnd.Width = defaultWidth;
                 textBoxOfStartEnd.Height = defaulHeight;
+                textBoxOfStartEnd.FontSize = defaulFontSize;
+                textBoxOfStartEnd.FontFamily = defaultFontFamily;
                 textBoxOfStartEnd.VerticalAlignment = VerticalAlignment.Center;
                 textBoxOfStartEnd.HorizontalAlignment = HorizontalAlignment.Center;
                 textBoxOfStartEnd.TextAlignment = TextAlignment.Center;
@@ -72,6 +76,8 @@ namespace Flowchart_Editor.Models
                 textBlockOfStartEnd.Foreground = Brushes.White;
                 textBlockOfStartEnd.Width = defaultWidth;
                 textBlockOfStartEnd.Height = defaulHeight;
+                textBlockOfStartEnd.FontSize = defaulFontSize;
+                textBlockOfStartEnd.FontFamily = defaultFontFamily;
                 textBlockOfStartEnd.VerticalAlignment = VerticalAlignment.Center;
                 textBlockOfStartEnd.HorizontalAlignment = HorizontalAlignment.Center;
                 textBlockOfStartEnd.TextAlignment = TextAlignment.Center;

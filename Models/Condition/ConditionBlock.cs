@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
-    public class ConditionBlock
+    public class ConditionBlock : Window
     {
         public Canvas? canvasConditionBlock = null;
         public Polygon? polygonConditionBlock = null;
@@ -16,10 +16,12 @@ namespace Flowchart_Editor.Models
         public Ellipse? secondPointToConnect = null;
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
-        private int defaultWidth = DefaultPropertyForBlock.Width;
-        private int defaulHeight = DefaultPropertyForBlock.Height;
+        private int defaultWidth = DefaultPropertyForBlock.width;
+        private int defaulHeight = DefaultPropertyForBlock.height;
         private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
-        private bool textChangeStatus = true;
+        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
+        private bool textChangeStatus = false;
         private int valueOfClicksOnTextBlock = 0;
 
         public UIElement GetUIElementWithoutCreate() => canvasConditionBlock;
@@ -28,7 +30,7 @@ namespace Flowchart_Editor.Models
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (!textChangeStatus)
+                if (textChangeStatus)
                 {
                     var instanceOfConditionBlock = new ConditionBlockForMovements(sender);
                     var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlockForMovements), instanceOfConditionBlock);
@@ -69,6 +71,31 @@ namespace Flowchart_Editor.Models
                 polygonConditionBlock.Points = myPointCollection;
                 canvasConditionBlock.Children.Add(polygonConditionBlock);
 
+                textBoxOfConditionBlock.Text = "Условие";
+                textBoxOfConditionBlock.FontSize = defaulFontSize;
+                textBoxOfConditionBlock.Width = defaultWidth / 2;
+                textBoxOfConditionBlock.Foreground = Brushes.White;
+                textBoxOfConditionBlock.FontFamily = defaultFontFamily;
+                textBoxOfConditionBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBoxOfConditionBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBoxOfConditionBlock.TextAlignment = TextAlignment.Center;
+                textBoxOfConditionBlock.TextWrapping = TextWrapping.Wrap;
+                textBoxOfConditionBlock.MouseDoubleClick += changeTextBoxToTextBlock;
+                Canvas.SetLeft(textBoxOfConditionBlock, defaultWidth / 2 - (defaultWidth / 4));
+                Canvas.SetTop(textBoxOfConditionBlock, defaulHeight / 4);
+
+                textBlocOfConditionBlock.FontSize = defaulFontSize;
+                textBlocOfConditionBlock.Width = defaultWidth / 2;
+                textBlocOfConditionBlock.Foreground = Brushes.White;
+                textBlocOfConditionBlock.FontFamily = defaultFontFamily;
+                textBlocOfConditionBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlocOfConditionBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlocOfConditionBlock.TextAlignment = TextAlignment.Center;
+                textBlocOfConditionBlock.TextWrapping = TextWrapping.Wrap;
+                textBlocOfConditionBlock.MouseDown += changeTextBoxToTextBlock;
+                Canvas.SetLeft(textBlocOfConditionBlock, defaultWidth / 2 - (defaultWidth / 4));
+                Canvas.SetTop(textBlocOfConditionBlock, defaulHeight / 4);
+
                 firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 firstPointToConnect.Height = 6;
                 firstPointToConnect.Width = 6;
@@ -97,29 +124,6 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 3);
                 fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
-                textBoxOfConditionBlock.Text = "Условие";
-                textBoxOfConditionBlock.FontSize = 12;
-                textBoxOfConditionBlock.Width = defaultWidth / 2;
-                textBoxOfConditionBlock.Foreground = Brushes.White;
-                textBoxOfConditionBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textBoxOfConditionBlock.VerticalAlignment = VerticalAlignment.Center;
-                textBoxOfConditionBlock.TextAlignment = TextAlignment.Center;
-                textBoxOfConditionBlock.TextWrapping = TextWrapping.Wrap;
-                textBoxOfConditionBlock.MouseDoubleClick += changeTextBoxToTextBlock;
-                Canvas.SetLeft(textBoxOfConditionBlock, defaultWidth / 2 - (defaultWidth / 4));
-                Canvas.SetTop(textBoxOfConditionBlock, defaulHeight / 4);
-
-                textBlocOfConditionBlock.FontSize = 12;
-                textBlocOfConditionBlock.Foreground = Brushes.White;
-                textBlocOfConditionBlock.Width = defaultWidth / 2;
-                textBlocOfConditionBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlocOfConditionBlock.VerticalAlignment = VerticalAlignment.Center;
-                textBlocOfConditionBlock.TextAlignment = TextAlignment.Center;
-                textBlocOfConditionBlock.TextWrapping = TextWrapping.Wrap;
-                textBlocOfConditionBlock.MouseDown += changeTextBoxToTextBlock;
-                Canvas.SetLeft(textBlocOfConditionBlock, defaultWidth / 2 - (defaultWidth / 4));
-                Canvas.SetTop(textBlocOfConditionBlock, defaulHeight / 4);
-
                 canvasConditionBlock.Children.Add(textBoxOfConditionBlock);
                 canvasConditionBlock.Children.Add(firstPointToConnect);
                 canvasConditionBlock.Children.Add(secondPointToConnect);
@@ -129,25 +133,25 @@ namespace Flowchart_Editor.Models
             }
             return canvasConditionBlock;
         }
-
         private void getСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (CoordinatesBlock.coordinatesBlockX != null && CoordinatesBlock.coordinatesBlockY != null)
+                if (CoordinatesBlock.coordinatesBlockX != 0 && CoordinatesBlock.coordinatesBlockY != 0)
                 {
                     if (canvasConditionBlock != null)
-                    {       
+                    {      
                         Line connectionLine = new Line();
-                        connectionLine.X2 = (double)CoordinatesBlock.coordinatesBlockX; 
-                        connectionLine.Y2 = (double)CoordinatesBlock.coordinatesBlockY;
-                        connectionLine.X1 = e.GetPosition((Ellipse)sender).X;
-                        connectionLine.Y1 = e.GetPosition((Ellipse)sender).Y;
+
+                        connectionLine.X1 = CoordinatesBlock.coordinatesBlockPointX; 
+                        connectionLine.Y1 = CoordinatesBlock.coordinatesBlockPointY;
+                        connectionLine.X2 = CoordinatesBlock.coordinatesBlockPointX;
+                        connectionLine.Y2 = e.GetPosition(firstPointToConnect).Y + e.GetPosition(canvasConditionBlock).Y;
                         connectionLine.Stroke = Brushes.Black;
-                        
                         canvasConditionBlock.Children.Add(connectionLine);
-                        CoordinatesBlock.coordinatesBlockX = null;
-                        CoordinatesBlock.coordinatesBlockY = null;
+                        
+                        CoordinatesBlock.coordinatesBlockX = 0;
+                        CoordinatesBlock.coordinatesBlockY = 0;
                     }
                 }
                 else
@@ -159,13 +163,13 @@ namespace Flowchart_Editor.Models
         }
         private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (textChangeStatus)
+            if (!textChangeStatus)
             {
                 canvasConditionBlock.Children.Remove(textBoxOfConditionBlock);
                 canvasConditionBlock.Children.Remove(textBlocOfConditionBlock);
                 textBlocOfConditionBlock.Text = textBoxOfConditionBlock.Text;
                 canvasConditionBlock.Children.Add(textBlocOfConditionBlock);
-                textChangeStatus = false;
+                textChangeStatus = true;
             }
             else
             {
@@ -176,7 +180,7 @@ namespace Flowchart_Editor.Models
                     canvasConditionBlock.Children.Remove(textBlocOfConditionBlock);
                     textBoxOfConditionBlock.Text = textBlocOfConditionBlock.Text;
                     canvasConditionBlock.Children.Add(textBoxOfConditionBlock);
-                    textChangeStatus = true;
+                    textChangeStatus = false;
                     valueOfClicksOnTextBlock = 0;
                 }
             }
