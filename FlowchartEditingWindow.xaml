@@ -220,26 +220,8 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="1"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/> 
                 </Grid.ColumnDefinitions>
-
-
-                <Canvas Background="#FFF9F9FB" 
-                        AllowDrop="True" 
-                        DragOver="destination_DragOver" 
-                        DragLeave="destination_DragLeave" 
-                        Drop="destination_Drop"
-                        Name="destination" 
-                        Grid.ColumnSpan="13"
-                        Grid.RowSpan="11"/>
 
                 <Canvas Grid.Row="1"
                         Grid.Column="1"
@@ -379,18 +361,18 @@
                                     Canvas.Left="20" 
                                     Canvas.Top="-1">
                             </Border>
+                            <TextBlock 
+                                Canvas.Top="20"
+                                Text="Подпрограмма"
+                                FontSize="12"
+                                Foreground="White"
+                                TextAlignment="Center"  
+                                HorizontalAlignment="Center" 
+                                TextWrapping="Wrap" 
+                                Width="140" 
+                                Height="20" />
                         </Canvas>
                     </Border>
-                    <TextBlock 
-                        Canvas.Top="20"
-                        Text="Подпрограмма"
-                        FontSize="12"
-                        Foreground="White"
-                        TextAlignment="Center"  
-                        HorizontalAlignment="Center" 
-                        TextWrapping="Wrap" 
-                        Width="140" 
-                        Height="20" />
                 </Canvas>
 
                 <TextBlock
@@ -503,92 +485,120 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-
+            
                 <Canvas Name="lineSeparatingLocationOfBlocksAndField"
                         Grid.RowSpan="11" 
                         Grid.Column="3"
                         Background="#FF040205"/>
 
+                <Grid Grid.Column="4" Grid.RowSpan="11">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="1000"/>
+                    </Grid.RowDefinitions>
+                   
+                    <Canvas 
+                        Background="#FFF9F9FB" 
+                        AllowDrop="True" 
+                        DragOver="destination_DragOver" 
+                        DragLeave="destination_DragLeave" 
+                        Drop="destination_Drop"
+                        Name="destination" 
+                        Grid.ColumnSpan="9"
+                        Grid.Row="2" />
+                    
+                    <TextBlock 
+                        Name="textFont"
+                        Text="Шрифт:" 
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center" />
 
-                <TextBlock 
-                    Name="textFont"
-                    Text="Шрифт:" 
-                    Grid.Row="0" 
-                    Grid.Column="4" 
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"/>
-
-                <ComboBox 
+                    <ComboBox 
                     Name="listOfFontsComboBox" 
                     SelectionChanged="listOfFontsComboBox_SelectionChanged" 
                     Foreground="Black" 
                     Grid.Row="0" 
-                    Grid.Column="5" 
+                    Grid.Column="1" 
                     Width="150" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center">
-                    <ComboBoxItem>Times New Roman</ComboBoxItem>
-                    <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
-                </ComboBox>
+                        <ComboBoxItem>Times New Roman</ComboBoxItem>
+                        <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
+                    </ComboBox>
 
-                <TextBlock 
+                    <TextBlock 
                     Name="textFontSize"
                     Text="Размер текста:" 
                     Grid.Row="0" 
-                    Grid.Column="6" 
+                    Grid.Column="2" 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Center"/>
 
-                <ComboBox 
+                    <ComboBox 
                     Name="fontSizeComboBox" 
                     SelectionChanged="fontSizeComboBox_SelectionChanged"
+                    Foreground="Black" 
+                    Grid.Row="0" 
+                    Grid.Column="3" 
+                    Width="60" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" />
+
+                    <TextBlock 
+                    Name="textWidth"
+                    Text="Ширина:"
+                    Grid.Row="0" 
+                    Grid.Column="4"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"/>
+
+                    <ComboBox 
+                    Name="blockWidthComboBox" 
+                    SelectionChanged="blockWidthComboBox_SelectionChanged"
+                    Foreground="Black" 
+                    Grid.Row="0" 
+                    Grid.Column="5" 
+                    Width="60" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
+
+                    <TextBlock 
+                    Name="textHeight"
+                    Text="Высота:"
+                    Grid.Row="0" 
+                    Grid.Column="6"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"/>
+
+                    <ComboBox 
+                    Name="blockHeightComboBox" 
+                    SelectionChanged="blockHeightComboBox_SelectionChanged"
                     Foreground="Black" 
                     Grid.Row="0" 
                     Grid.Column="7" 
                     Width="60" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" />
-
-                <TextBlock 
-                    Name="textWidth"
-                    Text="Ширина:"
-                    Grid.Row="0" 
-                    Grid.Column="8"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"/>
-
-                <ComboBox 
-                    Name="blockWidthComboBox" 
-                    SelectionChanged="blockWidthComboBox_SelectionChanged"
-                    Foreground="Black" 
-                    Grid.Row="0" 
-                    Grid.Column="9" 
-                    Width="60" 
-                    HorizontalAlignment="Center" 
                     VerticalAlignment="Center"/>
+                    
 
-                <TextBlock 
-                    Name="textHeight"
-                    Text="Высота:"
-                    Grid.Row="0" 
-                    Grid.Column="10"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"/>
-
-                <ComboBox 
-                    Name="blockHeightComboBox" 
-                    SelectionChanged="blockHeightComboBox_SelectionChanged"
-                    Foreground="Black" 
-                    Grid.Row="0" 
-                    Grid.Column="11" 
-                    Width="60" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
-
+                </Grid>
                 <Button 
-                    Name="buttonCloseMenu"
-                    Grid.Row="0" 
-                    Grid.Column="1" 
+                        Name="buttonCloseMenu"
+                        Grid.Row="0" 
+                        Grid.Column="1" 
                     Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
                     Width="30" 
                     Height="30"
@@ -603,6 +613,7 @@
                     <materialDesign:PackIcon
                         Kind="Menu"/>
                 </Button>
+                
                 <Button Name="buttonOpenMenu" 
                         Grid.Row="0" 
                         Grid.Column="1"
@@ -619,7 +630,6 @@
                     <materialDesign:PackIcon 
                         Kind="Menu"/>
                 </Button>
-
             </Grid>
         </Grid>
     </Grid>

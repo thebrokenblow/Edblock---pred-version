@@ -22,6 +22,7 @@ namespace Flowchart_Editor.Models
         private int defaulFontSize = DefaultPropertyForBlock.fontSize;
         private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private int valueOfClicksOnTextBlock = 0;
+        private const int radiusPoint = 6;
 
         public UIElement GetUIElementWithoutCreate() => canvasOfActionBlock;
 
@@ -80,29 +81,29 @@ namespace Flowchart_Editor.Models
                 canvasOfActionBlock.Height = defaulHeight;
 
                 firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint); 
-                firstPointToConnect.Height = 6;
-                firstPointToConnect.Width = 6;
+                firstPointToConnect.Height = radiusPoint;
+                firstPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
                 Canvas.SetTop(firstPointToConnect,  -2);
                 firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                secondPointToConnect.Height = 6;
-                secondPointToConnect.Width = 6;
+                secondPointToConnect.Height = radiusPoint;
+                secondPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(secondPointToConnect, -2);
                 Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
                 secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                thirdPointToConnect.Height = 6;
-                thirdPointToConnect.Width = 6;
+                thirdPointToConnect.Height = radiusPoint;
+                thirdPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
                 Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
 
                 fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                fourthPointToConnect.Height = 6;
-                fourthPointToConnect.Width = 6;
+                fourthPointToConnect.Height = radiusPoint;
+                fourthPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 -2);
                 fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;

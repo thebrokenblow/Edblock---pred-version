@@ -77,11 +77,13 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        List<SubroutineBlock> listSubroutineBlock = new List<SubroutineBlock>();
         private void subroutineBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceSubroutineBlock = new SubroutineBlock();
+                listSubroutineBlock.Add(instanceSubroutineBlock);
                 var dataObjectInformationOfSubroutineBlock = new DataObject(typeof(SubroutineBlock), instanceSubroutineBlock);
                 DragDrop.DoDragDrop(subroutineBlock, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
             }
@@ -602,6 +604,20 @@ namespace Flowchart_Editor
                         itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                     }
+                    foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
+                    {
+                        itemListInputOutputBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListInputOutputBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListInputOutputBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListInputOutputBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                    }
+                    foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
+                    {
+                        itemListSubroutineBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListSubroutineBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListSubroutineBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListSubroutineBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                    }
                 }
                 else
                 {
@@ -670,6 +686,27 @@ namespace Flowchart_Editor
                         itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                         itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                     }
+                    foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
+                    {
+                        itemListStartEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListStartEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
+                    foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
+                    {
+                        itemListInputOutputBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListInputOutputBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListInputOutputBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListInputOutputBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
+                    foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
+                    {
+                        itemListSubroutineBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListSubroutineBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListSubroutineBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListSubroutineBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
                 }
             }
         }
@@ -698,6 +735,11 @@ namespace Flowchart_Editor
                 itemListInputOutputBlock.textBoxInputOutputBlock.FontFamily = fontFamily;
                 itemListInputOutputBlock.textBlockInputOutputBlock.FontFamily = fontFamily;
             }
+            foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
+            {
+                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.FontFamily = fontFamily;
+                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.FontFamily = fontFamily;
+            }
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -724,6 +766,11 @@ namespace Flowchart_Editor
                 itemListInputOutputBlock.textBoxInputOutputBlock.FontSize = valueFontSize;
                 itemListInputOutputBlock.textBlockInputOutputBlock.FontSize = valueFontSize;
             }
+            foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
+            {
+                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.FontSize = valueFontSize;
+                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.FontSize = valueFontSize;
+            }
         }
 
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -738,7 +785,6 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListActionBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
                 Canvas.SetLeft(itemListActionBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
                 Canvas.SetLeft(itemListActionBlock.fourthPointToConnect, valueBlokWidth - 4);
-                
             }
             int valueBlokHeight = DefaultPropertyForBlock.height;
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
@@ -795,18 +841,31 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListInputOutputBlock.thirdPointToConnect, valueBlokWidth / 2);
                 Canvas.SetLeft(itemListInputOutputBlock.fourthPointToConnect, valueBlokWidth - 13);
             }
+            foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
+            {
+                itemListSubroutineBlock.canvasSubroutineBlock.Width = valueBlokWidth;
+                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.Width = valueBlokWidth;
+                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.Width = valueBlokWidth;
+                itemListSubroutineBlock.borderSubroutineBlock.Width = valueBlokWidth;
+                itemListSubroutineBlock.borderSubroutineBlock.Width = valueBlokWidth;
+                itemListSubroutineBlock.internalBorderSubroutineBlock.Width = valueBlokWidth - 40;
+
+                Canvas.SetLeft(itemListSubroutineBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(itemListSubroutineBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(itemListSubroutineBlock.fourthPointToConnect, valueBlokWidth - 4);
+            }
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
             DefaultPropertyForBlock.height = (int)valueBlokHeight;
-            foreach (ActionBlock listActionBlock in listActionBlock)
+            foreach (ActionBlock itemListActionBlock in listActionBlock)
             {
-                listActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
-                listActionBlock.textBoxOfActionBlock.Height = valueBlokHeight;
-                Canvas.SetTop(listActionBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(listActionBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(listActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
+                itemListActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
+                itemListActionBlock.textBoxOfActionBlock.Height = valueBlokHeight;
+                Canvas.SetTop(itemListActionBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
+                Canvas.SetTop(itemListActionBlock.thirdPointToConnect, valueBlokHeight - 3);
+                Canvas.SetTop(itemListActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
             int valueBlokWidth = DefaultPropertyForBlock.width;
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
@@ -857,6 +916,18 @@ namespace Flowchart_Editor
                 Canvas.SetTop(itemListInputOutputBlock.secondPointToConnect, valueBlokHeight / 2 - 5);
                 Canvas.SetTop(itemListInputOutputBlock.thirdPointToConnect, valueBlokHeight - 3);                
                 Canvas.SetTop(itemListInputOutputBlock.fourthPointToConnect, valueBlokHeight / 2 - 5);
+            }
+            foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
+            {
+                itemListSubroutineBlock.canvasSubroutineBlock.Height = valueBlokHeight;
+                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.Height = valueBlokHeight;
+                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.Height = valueBlokHeight;
+                itemListSubroutineBlock.borderSubroutineBlock.Height = valueBlokHeight;
+                itemListSubroutineBlock.internalBorderSubroutineBlock.Height = valueBlokHeight;
+
+                Canvas.SetTop(itemListSubroutineBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
+                Canvas.SetTop(itemListSubroutineBlock.thirdPointToConnect, valueBlokHeight - 3);
+                Canvas.SetTop(itemListSubroutineBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
         }   
     }
