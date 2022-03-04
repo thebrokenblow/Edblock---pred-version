@@ -113,11 +113,13 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        List<CycleWhileEndBlock> listCycleWhileEndBlock = new List<CycleWhileEndBlock>();
         private void cycleBlockWhileEnd_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfCycleWhileBlock = new CycleWhileEndBlock();
+                listCycleWhileEndBlock.Add(instanceOfCycleWhileBlock);
                 var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileEndBlock), instanceOfCycleWhileBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
             }
@@ -636,6 +638,13 @@ namespace Flowchart_Editor
                         itemListCycleWhileBeginBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         itemListCycleWhileBeginBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                     }
+                    foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
+                    {
+                        itemListCycleWhileEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListCycleWhileEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                    }
                 }
                 else
                 {
@@ -739,6 +748,13 @@ namespace Flowchart_Editor
                         itemListCycleWhileBeginBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                         itemListCycleWhileBeginBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                     }
+                    foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
+                    {
+                        itemListCycleWhileEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListCycleWhileEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
                 }
             }
         }
@@ -782,6 +798,11 @@ namespace Flowchart_Editor
                 itemListCycleWhileBeginBlock.textBoxOfCycleWhileBeginBlock.FontFamily = fontFamily;
                 itemListCycleWhileBeginBlock.textBlockOfCycleWhileBeginBlock.FontFamily = fontFamily;
             }
+            foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
+            {
+                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.FontFamily = fontFamily;
+                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.FontFamily = fontFamily;
+            }
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -822,6 +843,11 @@ namespace Flowchart_Editor
             {
                 itemListCycleWhileBeginBlock.textBoxOfCycleWhileBeginBlock.FontSize = valueFontSize;
                 itemListCycleWhileBeginBlock.textBlockOfCycleWhileBeginBlock.FontSize = valueFontSize;
+            }
+            foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
+            {
+                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.FontSize = valueFontSize;
+                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.FontSize = valueFontSize;
             }
         }
 
@@ -957,6 +983,30 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListCycleWhileBeginBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
                 Canvas.SetLeft(itemListCycleWhileBeginBlock.fourthPointToConnect, valueBlokWidth - 4);
             }
+            foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
+            {
+                Point Point1 = new Point(0, 0);
+                Point Point2 = new Point(0, valueBlokHeight - 10);
+                Point Point3 = new Point(10, valueBlokHeight);
+                Point Point4 = new Point(valueBlokWidth - 10, valueBlokHeight);
+                Point Point5 = new Point(valueBlokWidth, valueBlokHeight - 10);
+                Point Point6 = new Point(valueBlokWidth, 0);
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+                myPointCollection.Add(Point5);
+                myPointCollection.Add(Point6);
+
+                itemListCycleWhileEndBlock.polygonCycleWhileEndBlock.Points = myPointCollection;
+                itemListCycleWhileEndBlock.canvasCycleWhileEndBlock.Width = valueBlokWidth;
+                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.Width = valueBlokWidth;
+                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.Width = valueBlokWidth;
+                Canvas.SetLeft(itemListCycleWhileEndBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(itemListCycleWhileEndBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(itemListCycleWhileEndBlock.fourthPointToConnect, valueBlokWidth - 4);
+            }
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1084,6 +1134,30 @@ namespace Flowchart_Editor
                 Canvas.SetTop(itemListCycleWhileBeginBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
                 Canvas.SetTop(itemListCycleWhileBeginBlock.thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(itemListCycleWhileBeginBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
+            }
+            foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
+            {
+                Point Point1 = new Point(0, 0);
+                Point Point2 = new Point(0, valueBlokHeight - 10);
+                Point Point3 = new Point(10, valueBlokHeight);
+                Point Point4 = new Point(valueBlokWidth - 10, valueBlokHeight);
+                Point Point5 = new Point(valueBlokWidth, valueBlokHeight - 10);
+                Point Point6 = new Point(valueBlokWidth, 0);
+                PointCollection myPointCollection = new PointCollection();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+                myPointCollection.Add(Point5);
+                myPointCollection.Add(Point6);
+
+                itemListCycleWhileEndBlock.polygonCycleWhileEndBlock.Points = myPointCollection;
+                itemListCycleWhileEndBlock.canvasCycleWhileEndBlock.Height = valueBlokHeight;
+                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.Height = valueBlokHeight;
+                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.Height = valueBlokHeight;
+                Canvas.SetTop(itemListCycleWhileEndBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
+                Canvas.SetTop(itemListCycleWhileEndBlock.thirdPointToConnect, valueBlokHeight - 3);
+                Canvas.SetTop(itemListCycleWhileEndBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
         }   
     }

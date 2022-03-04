@@ -8,13 +8,22 @@ namespace Flowchart_Editor.Models
 {
     public class CycleWhileEndBlock
     {
-        private Canvas? canvasCycleWhileEndBlock = null;
-        private Polygon? polygonCycleWhileEndBlock = null;
-        private TextBox? textOfCycleWhileEndBlock = null;
-        private Ellipse? firstPointToConnect = null;
-        private Ellipse? secondPointToConnect = null;
-        private Ellipse? thirdPointToConnect = null;
-        private Ellipse? fourthPointToConnect = null;
+        public Canvas? canvasCycleWhileEndBlock = null;
+        public Polygon? polygonCycleWhileEndBlock = null;
+        public TextBox? textBoxOfCycleWhileEndBlock = null;
+        public TextBlock? textBlockOfCycleWhileEndBlock = null;
+        public Ellipse? firstPointToConnect = null;
+        public Ellipse? secondPointToConnect = null;
+        public Ellipse? thirdPointToConnect = null;
+        public Ellipse? fourthPointToConnect = null;
+        private int defaultWidth = DefaultPropertyForBlock.width;
+        private int defaulHeight = DefaultPropertyForBlock.height;
+        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
+        private bool textChangeStatus = false;
+        private int valueOfClicksOnTextBlock = 0;
+        private const int radiusPoint = 6;
 
         public UIElement GetUIElementWithoutCreate() => canvasCycleWhileEndBlock;
 
@@ -22,9 +31,12 @@ namespace Flowchart_Editor.Models
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfConditionBlock = new CycleWhileEndBlockForMovements(sender);
-                var dataObjectInformationOConditionBlock = new DataObject(typeof(CycleWhileEndBlockForMovements), instanceOfConditionBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+                if (textChangeStatus)
+                {
+                    var instanceOfConditionBlock = new CycleWhileEndBlockForMovements(sender);
+                    var dataObjectInformationOConditionBlock = new DataObject(typeof(CycleWhileEndBlockForMovements), instanceOfConditionBlock);
+                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+                }
             }
             e.Handled = true;
         }
@@ -35,16 +47,21 @@ namespace Flowchart_Editor.Models
             {
                 canvasCycleWhileEndBlock = new Canvas();
                 polygonCycleWhileEndBlock = new Polygon();
-                textOfCycleWhileEndBlock = new TextBox();
+                textBoxOfCycleWhileEndBlock = new TextBox();
+                textBlockOfCycleWhileEndBlock = new TextBlock();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
 
                 var backgroundColor = new BrushConverter();
                 polygonCycleWhileEndBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FFCCCCFF");
-                Point Point1 = new Point(10, 10); 
-                Point Point2 = new Point(10, 60);
-                Point Point3 = new Point(20, 70);
-                Point Point4 = new Point(140, 70);
-                Point Point5 = new Point(150, 60);
-                Point Point6 = new Point(150, 10);
+                Point Point1 = new Point(0, 0); 
+                Point Point2 = new Point(0, defaulHeight - 10);
+                Point Point3 = new Point(10, defaulHeight);
+                Point Point4 = new Point(defaultWidth - 10, defaulHeight);
+                Point Point5 = new Point(defaultWidth, defaulHeight - 10);
+                Point Point6 = new Point(defaultWidth, 0);
                 PointCollection myPointCollection1 = new PointCollection();
                 myPointCollection1.Add(Point1);
                 myPointCollection1.Add(Point2);
@@ -55,18 +72,94 @@ namespace Flowchart_Editor.Models
                 polygonCycleWhileEndBlock.Points = myPointCollection1;
                 canvasCycleWhileEndBlock.Children.Add(polygonCycleWhileEndBlock);
 
-                textOfCycleWhileEndBlock.Text = "Цикл for";
-                textOfCycleWhileEndBlock.FontSize = 12;
-                textOfCycleWhileEndBlock.Foreground = Brushes.White;
-                Canvas.SetLeft(textOfCycleWhileEndBlock, 50);
-                Canvas.SetTop(textOfCycleWhileEndBlock, 24);
-                canvasCycleWhileEndBlock.Children.Add(textOfCycleWhileEndBlock);
+                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                firstPointToConnect.Height = radiusPoint;
+                firstPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
+                Canvas.SetTop(firstPointToConnect, -2);
+                //firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+
+                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                secondPointToConnect.Height = radiusPoint;
+                secondPointToConnect.Width = radiusPoint;
+
+                Canvas.SetLeft(secondPointToConnect, -2);
+                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
+                //secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+
+                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                thirdPointToConnect.Height = radiusPoint;
+                thirdPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
+                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
+                //thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+
+                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                fourthPointToConnect.Height = radiusPoint;
+                fourthPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
+                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
+                //fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+
+                textBoxOfCycleWhileEndBlock.Text = "Цикл while начало";
+                textBoxOfCycleWhileEndBlock.Width = defaultWidth;
+                textBoxOfCycleWhileEndBlock.Height = defaulHeight;
+                textBoxOfCycleWhileEndBlock.FontSize = defaulFontSize;
+                textBoxOfCycleWhileEndBlock.FontFamily = defaultFontFamily;
+                textBoxOfCycleWhileEndBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBoxOfCycleWhileEndBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBoxOfCycleWhileEndBlock.TextAlignment = TextAlignment.Center;
+                textBoxOfCycleWhileEndBlock.Foreground = Brushes.White;
+                textBoxOfCycleWhileEndBlock.TextWrapping = TextWrapping.Wrap;
+                textBoxOfCycleWhileEndBlock.MouseDoubleClick += changeTextBoxToTextBlock;
+
+                textBlockOfCycleWhileEndBlock.Text = "Цикл while начало";
+                textBlockOfCycleWhileEndBlock.Width = defaultWidth;
+                textBlockOfCycleWhileEndBlock.Height = defaulHeight;
+                textBlockOfCycleWhileEndBlock.FontSize = defaulFontSize;
+                textBlockOfCycleWhileEndBlock.FontFamily = defaultFontFamily;
+                textBlockOfCycleWhileEndBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlockOfCycleWhileEndBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlockOfCycleWhileEndBlock.TextAlignment = TextAlignment.Center;
+                textBlockOfCycleWhileEndBlock.Foreground = Brushes.White;
+                textBlockOfCycleWhileEndBlock.TextWrapping = TextWrapping.Wrap;
+                textBlockOfCycleWhileEndBlock.MouseDown += changeTextBoxToTextBlock;
+
+                canvasCycleWhileEndBlock.Children.Add(textBoxOfCycleWhileEndBlock);
+                canvasCycleWhileEndBlock.Children.Add(firstPointToConnect);
+                canvasCycleWhileEndBlock.Children.Add(secondPointToConnect);
+                canvasCycleWhileEndBlock.Children.Add(thirdPointToConnect);
+                canvasCycleWhileEndBlock.Children.Add(fourthPointToConnect);
 
                 canvasCycleWhileEndBlock.MouseMove += cycleForBlock_MouseMove;
             }
             return canvasCycleWhileEndBlock;
         }
-
+        private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
+        {
+            if (textChangeStatus)
+            {
+                valueOfClicksOnTextBlock++;
+                if (valueOfClicksOnTextBlock == 2)
+                {
+                    canvasCycleWhileEndBlock.Children.Remove(textBoxOfCycleWhileEndBlock);
+                    canvasCycleWhileEndBlock.Children.Remove(textBlockOfCycleWhileEndBlock);
+                    textBoxOfCycleWhileEndBlock.Text = textBlockOfCycleWhileEndBlock.Text;
+                    canvasCycleWhileEndBlock.Children.Add(textBoxOfCycleWhileEndBlock);
+                    textChangeStatus = false;
+                    valueOfClicksOnTextBlock = 0;
+                }
+            }
+            else
+            {
+                canvasCycleWhileEndBlock.Children.Remove(textBoxOfCycleWhileEndBlock);
+                canvasCycleWhileEndBlock.Children.Remove(textBlockOfCycleWhileEndBlock);
+                textBlockOfCycleWhileEndBlock.Text = textBoxOfCycleWhileEndBlock.Text;
+                Canvas.SetTop(textBlockOfCycleWhileEndBlock, 3.5);
+                canvasCycleWhileEndBlock.Children.Add(textBlockOfCycleWhileEndBlock);
+                textChangeStatus = true;
+            }
+        }
         public void Reset()
         {
             canvasCycleWhileEndBlock = null;
