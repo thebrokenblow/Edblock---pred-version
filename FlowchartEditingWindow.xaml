@@ -412,13 +412,14 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                <Canvas Grid.Row="7" Grid.Column="1" 
+                <Canvas Grid.Row="7" 
+                        Grid.Column="1" 
                         Name="cycleBlockWhileBegin"
                         MouseMove="cycleBlockWhileBegin_MouseMove">
 
                     <Polygon Fill="#CCCCFF" 
-                         Points="10 70 10 20 20 10 140 10 150 20 150 70" 
-                         Margin="-5"/>
+                         Points="0 60 0 10 10 0 130 0 140 10 140 60" 
+                         Margin="5"/>
                     <TextBlock Canvas.Top="25"
                                 Text="Начало цикла"
                                 FontSize="12"
@@ -439,19 +440,19 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
 
-                <Canvas Grid.Row="8" Grid.Column="1"
+                <Canvas Grid.Row="8" 
+                        Grid.Column="1"
                         Name="cycleBlockWhileEnd"
                         MouseMove="cycleBlockWhileEnd_MouseMove">
                     <Polygon Fill="#CCCCFF" 
-                             Points="10 10 10 60 20 70 140 70 150 60 150 10" 
-                             Margin="-5 0 0 0"/>
+                             Points="0 0 0 50 10 60 130 60 140 50 140 0" 
+                             Margin="5"/>
                     <TextBlock Canvas.Top="25"
                                 Text="Конец цикла"
                                 FontSize="12"
                                 Foreground="White"
                                 TextAlignment="Center"  
-                                HorizontalAlignment="Center" 
-                                TextWrapping="Wrap" 
+                                HorizontalAlignment="Center"  
                                 Width="150" 
                                 Height="20"/>
                 </Canvas>
