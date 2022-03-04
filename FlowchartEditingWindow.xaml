@@ -389,15 +389,18 @@
                     MouseMove="cycleBlockFor_MouseMove">
 
                     <Polygon Fill="#FFC618" 
-                         Points="20 10 10 20 10 60 20 70 140 70 150 60 150 20 140 10" 
-                         Margin="-5"/>
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="45"
-                           Canvas.Top="22">
-                        <TextBlock Text="Цикл for" 
-                                   TextWrapping="Wrap"/>
-                    </Label>
+                         Points="10 0 0 10 0 50 10 60 130 60 140 50 140 10 130 0" 
+                         Margin="5"/>
+                    <TextBlock Canvas.Top="25"
+                                Text="Цикл for"
+                                FontSize="12"
+                                Foreground="White"
+                                TextAlignment="Center"  
+                                HorizontalAlignment="Center" 
+                                TextWrapping="Wrap" 
+                                Width="150" 
+                                Height="20"/>
+            
                 </Canvas>
 
                 <TextBlock
@@ -416,13 +419,15 @@
                     <Polygon Fill="#CCCCFF" 
                          Points="10 70 10 20 20 10 140 10 150 20 150 70" 
                          Margin="-5"/>
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="17"
-                           Canvas.Top="23">
-                        <TextBlock Text="Цикл do while, while" 
-                                   TextWrapping="Wrap"/>
-                    </Label>
+                    <TextBlock Canvas.Top="25"
+                                Text="Начало цикла"
+                                FontSize="12"
+                                Foreground="White"
+                                TextAlignment="Center"  
+                                HorizontalAlignment="Center" 
+                                TextWrapping="Wrap" 
+                                Width="150" 
+                                Height="20"/>
                 </Canvas>
 
                 <TextBlock 
@@ -440,13 +445,15 @@
                     <Polygon Fill="#CCCCFF" 
                              Points="10 10 10 60 20 70 140 70 150 60 150 10" 
                              Margin="-5 0 0 0"/>
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="17"
-                           Canvas.Top="26">
-                        <TextBlock Text="Цикл do while, while" 
-                                   TextWrapping="Wrap"/>
-                    </Label>
+                    <TextBlock Canvas.Top="25"
+                                Text="Конец цикла"
+                                FontSize="12"
+                                Foreground="White"
+                                TextAlignment="Center"  
+                                HorizontalAlignment="Center" 
+                                TextWrapping="Wrap" 
+                                Width="150" 
+                                Height="20"/>
                 </Canvas>
 
                 <TextBlock 
