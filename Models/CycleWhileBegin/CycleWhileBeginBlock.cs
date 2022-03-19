@@ -23,7 +23,13 @@ namespace Flowchart_Editor.Models
         private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private bool textChangeStatus = false;
         private int valueOfClicksOnTextBlock = 0;
+        private MainWindow mainWindow;
         private const int radiusPoint = 6;
+
+        public CycleWhileBeginBlock(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
 
         public UIElement GetUIElementWithoutCreate() => canvasCycleWhileBeginBlock;
 
@@ -77,7 +83,7 @@ namespace Flowchart_Editor.Models
                 firstPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
                 Canvas.SetTop(firstPointToConnect, -2);
-                //firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                firstPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 secondPointToConnect.Height = radiusPoint;
@@ -85,21 +91,21 @@ namespace Flowchart_Editor.Models
 
                 Canvas.SetLeft(secondPointToConnect, -2);
                 Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
-                //secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                secondPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 thirdPointToConnect.Height = radiusPoint;
                 thirdPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
                 Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
-                //thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 fourthPointToConnect.Height = radiusPoint;
                 fourthPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
-                //fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 textBoxOfCycleWhileBeginBlock.Text = "Цикл while начало";
                 textBoxOfCycleWhileBeginBlock.Width = defaultWidth;
@@ -111,7 +117,7 @@ namespace Flowchart_Editor.Models
                 textBoxOfCycleWhileBeginBlock.TextAlignment = TextAlignment.Center;
                 textBoxOfCycleWhileBeginBlock.Foreground = Brushes.White;
                 textBoxOfCycleWhileBeginBlock.TextWrapping = TextWrapping.Wrap;
-                textBoxOfCycleWhileBeginBlock.MouseDoubleClick += changeTextBoxToTextBlock;
+                textBoxOfCycleWhileBeginBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
 
                 textBlockOfCycleWhileBeginBlock.Text = "Цикл while начало";
                 textBlockOfCycleWhileBeginBlock.Width = defaultWidth;
@@ -123,7 +129,7 @@ namespace Flowchart_Editor.Models
                 textBlockOfCycleWhileBeginBlock.TextAlignment = TextAlignment.Center;
                 textBlockOfCycleWhileBeginBlock.Foreground = Brushes.White;
                 textBlockOfCycleWhileBeginBlock.TextWrapping = TextWrapping.Wrap;
-                textBlockOfCycleWhileBeginBlock.MouseDown += changeTextBoxToTextBlock;
+                textBlockOfCycleWhileBeginBlock.MouseDown += ChangeTextBoxToTextBlock;
 
                 canvasCycleWhileBeginBlock.Children.Add(textBoxOfCycleWhileBeginBlock);
                 canvasCycleWhileBeginBlock.Children.Add(firstPointToConnect);
@@ -134,7 +140,30 @@ namespace Flowchart_Editor.Models
             }
             return canvasCycleWhileBeginBlock;
         }
-        private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
+        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
+                {
+                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileBeginBlock) + 3;
+                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileBeginBlock) + 3;
+                }
+                else
+                {
+                    double x1 = CoordinatesBlock.coordinatesBlockPointX;
+                    double y1 = CoordinatesBlock.coordinatesBlockPointY;
+
+                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileBeginBlock) + 3;
+                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileBeginBlock) + 3;
+
+                    mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                    CoordinatesBlock.coordinatesBlockPointX = 0;
+                    CoordinatesBlock.coordinatesBlockPointY = 0;
+                }
+            }
+        }
+        private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
             if (textChangeStatus)
             {
