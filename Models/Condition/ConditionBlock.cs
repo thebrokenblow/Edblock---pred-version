@@ -23,7 +23,13 @@ namespace Flowchart_Editor.Models
         private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private bool textChangeStatus = false;
         private int valueOfClicksOnTextBlock = 0;
+        private MainWindow mainWindow;
         private const int radiusPoint = 6;
+
+        public ConditionBlock(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
 
         public UIElement GetUIElementWithoutCreate() => canvasConditionBlock;
 
@@ -81,7 +87,7 @@ namespace Flowchart_Editor.Models
                 textBoxOfConditionBlock.VerticalAlignment = VerticalAlignment.Center;
                 textBoxOfConditionBlock.TextAlignment = TextAlignment.Center;
                 textBoxOfConditionBlock.TextWrapping = TextWrapping.Wrap;
-                textBoxOfConditionBlock.MouseDoubleClick += changeTextBoxToTextBlock;
+                textBoxOfConditionBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
                 Canvas.SetLeft(textBoxOfConditionBlock, defaultWidth / 2 - (defaultWidth / 4));
                 Canvas.SetTop(textBoxOfConditionBlock, defaulHeight / 4);
 
@@ -93,7 +99,7 @@ namespace Flowchart_Editor.Models
                 textBlocOfConditionBlock.VerticalAlignment = VerticalAlignment.Center;
                 textBlocOfConditionBlock.TextAlignment = TextAlignment.Center;
                 textBlocOfConditionBlock.TextWrapping = TextWrapping.Wrap;
-                textBlocOfConditionBlock.MouseDown += changeTextBoxToTextBlock;
+                textBlocOfConditionBlock.MouseDown += ChangeTextBoxToTextBlock;
                 Canvas.SetLeft(textBlocOfConditionBlock, defaultWidth / 2 - (defaultWidth / 4));
                 Canvas.SetTop(textBlocOfConditionBlock, defaulHeight / 4);
 
@@ -102,28 +108,28 @@ namespace Flowchart_Editor.Models
                 firstPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 3);
                 Canvas.SetTop(firstPointToConnect, -2);
-                firstPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                firstPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 secondPointToConnect.Height = radiusPoint;
                 secondPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(secondPointToConnect, -2 + 2);
                 Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 3);
-                secondPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                secondPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 thirdPointToConnect.Height = radiusPoint;
                 thirdPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 3);
                 Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
-                thirdPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 fourthPointToConnect.Height = radiusPoint;
                 fourthPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(fourthPointToConnect, defaultWidth - 6);
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 3);
-                fourthPointToConnect.MouseDown += getСoordinatesOfConnectionPoint;
+                fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 canvasConditionBlock.Children.Add(textBoxOfConditionBlock);
                 canvasConditionBlock.Children.Add(firstPointToConnect);
@@ -134,35 +140,30 @@ namespace Flowchart_Editor.Models
             }
             return canvasConditionBlock;
         }
-        private void getСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (CoordinatesBlock.coordinatesBlockX != 0 && CoordinatesBlock.coordinatesBlockY != 0)
+                if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
                 {
-                    if (canvasConditionBlock != null)
-                    {      
-                        Line connectionLine = new Line();
-
-                        connectionLine.X1 = CoordinatesBlock.coordinatesBlockPointX; 
-                        connectionLine.Y1 = CoordinatesBlock.coordinatesBlockPointY;
-                        connectionLine.X2 = CoordinatesBlock.coordinatesBlockPointX;
-                        connectionLine.Y2 = e.GetPosition(firstPointToConnect).Y + e.GetPosition(canvasConditionBlock).Y;
-                        connectionLine.Stroke = Brushes.Black;
-                        canvasConditionBlock.Children.Add(connectionLine);
-                        
-                        CoordinatesBlock.coordinatesBlockX = 0;
-                        CoordinatesBlock.coordinatesBlockY = 0;
-                    }
+                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasConditionBlock) + 3;
+                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasConditionBlock) + 3;
                 }
                 else
                 {
-                    CoordinatesBlock.coordinatesBlockX = e.GetPosition((Ellipse)sender).X;
-                    CoordinatesBlock.coordinatesBlockY = e.GetPosition((Ellipse)sender).Y;
+                    double x1 = CoordinatesBlock.coordinatesBlockPointX;
+                    double y1 = CoordinatesBlock.coordinatesBlockPointY;
+
+                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasConditionBlock) + 3;
+                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasConditionBlock) + 3;
+
+                    mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                    CoordinatesBlock.coordinatesBlockPointX = 0;
+                    CoordinatesBlock.coordinatesBlockPointY = 0;
                 }
             }
         }
-        private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
+        private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
             if (textChangeStatus)
             {

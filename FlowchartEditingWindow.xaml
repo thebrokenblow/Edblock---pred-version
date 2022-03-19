@@ -212,6 +212,7 @@
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
+                    <RowDefinition Height="75"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -468,20 +469,26 @@
 
                 <Canvas Grid.Row="9" 
                         Grid.Column="1"
-                        Margin="40 5 0 0"
+                        Margin="60,25"
                         Name="linkBlock"  
                         MouseMove="linkBlock_MouseMove">
                     <Ellipse Fill="#5761A8"
-                             Width="75" 
-                             Height="75"/>
-                    <Label FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="14"
-                           Canvas.Top="25">
-                        <TextBlock Text="Ссылка" 
-                                   TextWrapping="Wrap"/>
-                    </Label>
+                             Width="30" 
+                             Height="30"/>
                 </Canvas>
+
+                <Canvas Grid.Row="10" 
+                        Grid.Column="1" Margin="0 35">
+
+                    <Line X1="0" Y1="10" X2="20" Y2="10" Stroke="Black" />
+                    <Line X1="30" Y1="10" X2="50" Y2="10" Stroke="Black" />
+                    <Line X1="60" Y1="10" X2="80" Y2="10" Stroke="Black" />
+                    <Line X1="90" Y1="10" X2="110" Y2="10" Stroke="Black" />
+                    <Line X1="120" Y1="10" X2="140" Y2="10" Stroke="Black" />
+                    <Line X1="150" Y1="10" X2="170" Y2="10" Stroke="Black" />
+                    <Line X1="170" Y1="50" X2="170" Y2="-30" Stroke="Black" />
+                </Canvas>
+               
 
 
                 <TextBlock 
@@ -513,7 +520,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
-                        <RowDefinition Height="1000"/>
+                        <RowDefinition Height="850*"/>
                     </Grid.RowDefinitions>
                    
                     <Canvas 

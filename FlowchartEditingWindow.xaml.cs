@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using Flowchart_Editor.Models;
 
 namespace Flowchart_Editor
@@ -15,11 +16,19 @@ namespace Flowchart_Editor
     {
         const int minHeight = 760;
         const int minWidth = 1380; 
+
         public MainWindow()
         {
             InitializeComponent();
             MinHeight = minHeight;
             MinWidth = minWidth;
+            //var t = new Line();
+            //t.X1 = 200;
+            //t.Y1 = 100;
+            //t.X2 = 200;
+            //t.Y2 = 250;
+            //t.Stroke = Brushes.Black;
+            //destination.Children.Add(t);
             for (int i = 8; i <= 36; i += 2)
                 fontSizeComboBox.Items.Add(i);
 
@@ -34,7 +43,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfActionBlock = new ActionBlock();
+                var instanceOfActionBlock = new ActionBlock(this);
                 listActionBlock.Add(instanceOfActionBlock);
                 var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
@@ -46,7 +55,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfConditionBlock = new ConditionBlock();
+                var instanceOfConditionBlock = new ConditionBlock(this);
                 listConditionBlock.Add(instanceOfConditionBlock);
                 var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlock), instanceOfConditionBlock);
                 DragDrop.DoDragDrop(conditionBlock, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
@@ -125,11 +134,13 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+        List<LinkBlock> listLinkBlock = new List<LinkBlock>();
         private void linkBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var instanceOfLinkBlock = new LinkBlock();
+                listLinkBlock.Add(instanceOfLinkBlock);
                 var dataObjectInformationOfLinkBlock = new DataObject(typeof(LinkBlock), instanceOfLinkBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
             }
@@ -202,6 +213,7 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
+
         private void destination_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -1159,6 +1171,29 @@ namespace Flowchart_Editor
                 Canvas.SetTop(itemListCycleWhileEndBlock.thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(itemListCycleWhileEndBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
-        }   
+            foreach (LinkBlock itemListLinkBlock in listLinkBlock)
+            {
+                itemListLinkBlock.canvasLinkBlock.Width = valueBlokHeight / 2;
+                itemListLinkBlock.canvasLinkBlock.Height = valueBlokHeight / 2;
+                itemListLinkBlock.eliposLinkBlock.Height = valueBlokHeight / 2;
+                itemListLinkBlock.eliposLinkBlock.Width = valueBlokHeight / 2;
+                itemListLinkBlock.textBoxOfLinkBlockBox.Width = valueBlokHeight / 2;
+                itemListLinkBlock.textBoxOfLinkBlockBox.Height = valueBlokHeight / 2 - 2.5;
+                itemListLinkBlock.textBlockOfLinkBlockBox.Width = valueBlokHeight / 2;
+                itemListLinkBlock.textBlockOfLinkBlockBox.Height = valueBlokHeight / 2 - 2.5;
+            }
+        }
+        List<Line> listLineConnection = new List<Line>();
+        public void DrawConnectionLine(double x1, double y1, double x2, double y2)
+        {
+            Line lineConnectionLine = new Line();
+            lineConnectionLine.X1 = x1;
+            lineConnectionLine.Y1 = y1;
+            lineConnectionLine.X2 = x2;
+            lineConnectionLine.Y2 = y2;
+            lineConnectionLine.Stroke = Brushes.Black;
+            listLineConnection.Add(lineConnectionLine);
+            destination.Children.Add(lineConnectionLine);
+        }
     }
 }
