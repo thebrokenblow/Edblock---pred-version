@@ -22,13 +22,7 @@ namespace Flowchart_Editor
             InitializeComponent();
             MinHeight = minHeight;
             MinWidth = minWidth;
-            //var t = new Line();
-            //t.X1 = 200;
-            //t.Y1 = 100;
-            //t.X2 = 200;
-            //t.Y2 = 250;
-            //t.Stroke = Brushes.Black;
-            //destination.Children.Add(t);
+
             for (int i = 8; i <= 36; i += 2)
                 fontSizeComboBox.Items.Add(i);
 
@@ -67,7 +61,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfStartEndBlock = new StartEndBlock();
+                var instanceOfStartEndBlock = new StartEndBlock(this);
                 listStartEndBlock.Add(instanceOfStartEndBlock);
                 var dataObjectInformationOfStartEndBlock = new DataObject(typeof(StartEndBlock), instanceOfStartEndBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
@@ -79,7 +73,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfInputOutputBlock = new InputOutputBlock();
+                var instanceOfInputOutputBlock = new InputOutputBlock(this);
                 listInputOutputBlock.Add(instanceOfInputOutputBlock);
                 var dataObjectInformationOfInputOutputBlock = new DataObject(typeof(InputOutputBlock), instanceOfInputOutputBlock);
                 DragDrop.DoDragDrop(inputOutputBlock, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
@@ -91,7 +85,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceSubroutineBlock = new SubroutineBlock();
+                var instanceSubroutineBlock = new SubroutineBlock(this);
                 listSubroutineBlock.Add(instanceSubroutineBlock);
                 var dataObjectInformationOfSubroutineBlock = new DataObject(typeof(SubroutineBlock), instanceSubroutineBlock);
                 DragDrop.DoDragDrop(subroutineBlock, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
@@ -103,7 +97,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfCycleForBlock = new CycleForBlock();
+                var instanceOfCycleForBlock = new CycleForBlock(this);
                 listCycleForBlock.Add(instanceOfCycleForBlock);
                 var dataObjectInstanceOfCycleForBlock = new DataObject(typeof(CycleForBlock), instanceOfCycleForBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleForBlock, DragDropEffects.Copy);
@@ -115,7 +109,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfCycleWhileBlock = new CycleWhileBeginBlock();
+                var instanceOfCycleWhileBlock = new CycleWhileBeginBlock(this);
                 listCycleWhileBeginBlock.Add(instanceOfCycleWhileBlock);
                 var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileBeginBlock), instanceOfCycleWhileBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
@@ -127,7 +121,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfCycleWhileBlock = new CycleWhileEndBlock();
+                var instanceOfCycleWhileBlock = new CycleWhileEndBlock(this);
                 listCycleWhileEndBlock.Add(instanceOfCycleWhileBlock);
                 var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileEndBlock), instanceOfCycleWhileBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
@@ -139,7 +133,7 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfLinkBlock = new LinkBlock();
+                var instanceOfLinkBlock = new LinkBlock(this);
                 listLinkBlock.Add(instanceOfLinkBlock);
                 var dataObjectInformationOfLinkBlock = new DataObject(typeof(LinkBlock), instanceOfLinkBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
@@ -559,15 +553,20 @@ namespace Flowchart_Editor
                     homeIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     homeText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                    instagramIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
-                    instagramText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    authorizationIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    authorizationText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                    facebookIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
-                    facebookText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    registrationIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    registrationText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
-                    twitterIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
-                    twitterText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    listOfProjectsIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    listOfProjectsText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
+                    informationIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    informationText.Foreground = (Brush)color.ConvertFrom(darkWhite);
+
+                    supportIcon.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    supportText.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
                     toggleButtonStyleTheme.Background = (Brush)color.ConvertFrom(darkWhite);
                     topicName.Foreground = (Brush)color.ConvertFrom(darkWhite);
@@ -657,6 +656,9 @@ namespace Flowchart_Editor
                         itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                     }
+                    DefaultPropertyForBlock.colorLine = darkWhite;
+                    foreach (Line itemListLineConnection in listLineConnection)
+                        itemListLineConnection.Stroke = (Brush)color.ConvertFrom(darkWhite);
                 }
                 else
                 {
@@ -665,14 +667,20 @@ namespace Flowchart_Editor
                     homeIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     homeText.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
-                    instagramIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
-                    instagramText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    authorizationIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    authorizationText.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
-                    facebookIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
-                    facebookText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    registrationIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    registrationText.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
-                    twitterIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
-                    twitterText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    listOfProjectsIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    listOfProjectsText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    informationIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    informationText.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    supportIcon.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    supportText.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
                     topicName.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     topicName.Text = lightThene;
@@ -767,6 +775,9 @@ namespace Flowchart_Editor
                         itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                         itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                     }
+                    DefaultPropertyForBlock.colorLine = darkBlack;
+                    foreach (Line itemListLineConnection in listLineConnection)
+                        itemListLineConnection.Stroke = (Brush)color.ConvertFrom(darkBlack);
                 }
             }
         }
@@ -1186,12 +1197,14 @@ namespace Flowchart_Editor
         List<Line> listLineConnection = new List<Line>();
         public void DrawConnectionLine(double x1, double y1, double x2, double y2)
         {
+            BrushConverter color = new BrushConverter();
             Line lineConnectionLine = new Line();
             lineConnectionLine.X1 = x1;
             lineConnectionLine.Y1 = y1;
             lineConnectionLine.X2 = x2;
             lineConnectionLine.Y2 = y2;
-            lineConnectionLine.Stroke = Brushes.Black;
+
+            lineConnectionLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
             listLineConnection.Add(lineConnectionLine);
             destination.Children.Add(lineConnectionLine);
         }

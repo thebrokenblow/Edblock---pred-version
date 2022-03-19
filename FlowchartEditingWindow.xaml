@@ -114,8 +114,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="instagramIcon" Kind="User" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="instagramText" Text="Авторизация" Margin="10" Foreground="#FF040205" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Name="authorizationIcon" Kind="User" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Name="authorizationText" Text="Авторизация" Margin="10" Foreground="#FF040205" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -128,8 +128,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="facebookIcon" Kind="UserAdd" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="facebookText" Text="Регистрация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Name="registrationIcon" Kind="UserAdd" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Name="registrationText" Text="Регистрация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -142,8 +142,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="twitterIcon" Kind="Assignment" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Name="twitterText" Text="Список проектов" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Name="listOfProjectsIcon" Kind="Assignment" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <TextBlock Name="listOfProjectsText" Text="Список проектов" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem4" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -156,8 +156,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon  Kind="Information" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock  Text="Информация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Name="informationIcon" Kind="Information" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <TextBlock Name="informationText" Text="Информация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem5" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -170,8 +170,8 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Chat" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Text="Поддержка" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Name="supportIcon" Kind="Chat" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <TextBlock Name="supportText" Text="Поддержка" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem6" Height="60" RenderTransformOrigin="0.5,0.5">
