@@ -26,6 +26,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyInputOutputBlock = 0;
+        private const string textOfInputOutputBlock = "Ввод/Вывод";
 
         public InputOutputBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -76,7 +77,7 @@ namespace Flowchart_Editor.Models
 
                 polygonInputOutputBlock.Points = myPointCollection;
 
-                textBoxInputOutputBlock.Text = "Ввод/Вывод";
+                textBoxInputOutputBlock.Text = textOfInputOutputBlock;
                 textBoxInputOutputBlock.FontSize = defaulFontSize;
                 textBoxInputOutputBlock.Foreground = Brushes.White;
                 textBoxInputOutputBlock.Width = defaultWidth;
@@ -145,6 +146,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasInputOutputBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyInputOutputBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfInputOutputBlock);
                 }
                 else
                 {
@@ -155,6 +158,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasInputOutputBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyInputOutputBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfInputOutputBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

@@ -26,6 +26,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyCycleForBlock = 0;
+        const string textOfCycleForBlock = "Цикл for";
 
         public CycleForBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -113,7 +114,7 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                textBoxOfCycleForBlock.Text = "Цикл for";
+                textBoxOfCycleForBlock.Text = textOfCycleForBlock;
                 textBoxOfCycleForBlock.Width = defaultWidth;
                 textBoxOfCycleForBlock.Height = defaulHeight;
                 textBoxOfCycleForBlock.FontSize = defaulFontSize;
@@ -125,7 +126,7 @@ namespace Flowchart_Editor.Models
                 textBoxOfCycleForBlock.TextWrapping = TextWrapping.Wrap;
                 textBoxOfCycleForBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
 
-                textBlockOfCycleForBlock.Text = "Цикл for";
+                textBlockOfCycleForBlock.Text = textOfCycleForBlock;
                 textBlockOfCycleForBlock.Width = defaultWidth;
                 textBlockOfCycleForBlock.Height = defaulHeight;
                 textBlockOfCycleForBlock.FontSize = defaulFontSize;
@@ -156,6 +157,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleForBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyCycleForBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfCycleForBlock);
                 }
                 else
                 {
@@ -166,6 +169,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleForBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyCycleForBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfCycleForBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

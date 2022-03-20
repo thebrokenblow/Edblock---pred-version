@@ -27,6 +27,8 @@ namespace Flowchart_Editor.Models
         private const int radiusOfRectangleStartEndBlock = 20;
         private const int radiusPoint = 6;
         private int keyStartEndBlock = 0;
+        private const string textOfStartEndBlock = "Начало / Конец";
+
 
         public StartEndBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -69,7 +71,7 @@ namespace Flowchart_Editor.Models
                 rectangleStartEndBlock.Width = defaultWidth;
                 rectangleStartEndBlock.Height = defaulHeight;
 
-                textBoxOfStartEnd.Text = "Начало";
+                textBoxOfStartEnd.Text = textOfStartEndBlock;
                 textBoxOfStartEnd.Foreground = Brushes.White;
                 textBoxOfStartEnd.Width = defaultWidth;
                 textBoxOfStartEnd.Height = defaulHeight;
@@ -142,6 +144,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasStartEndBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyStartEndBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfStartEndBlock);
                 }
                 else
                 {
@@ -152,6 +156,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasStartEndBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyStartEndBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfStartEndBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

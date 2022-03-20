@@ -27,6 +27,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keySubroutineBlock = 0;
+        private const string textOfSubroutineBlock = "Подпрограмма";
 
         public SubroutineBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -83,7 +84,7 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(internalBorderSubroutineBlock, 0);
                 Canvas.SetLeft(internalBorderSubroutineBlock, 20);
 
-                textBoxOfSubroutineBlockBox.Text = "Подпрограмма";
+                textBoxOfSubroutineBlockBox.Text = textOfSubroutineBlock;
                 textBoxOfSubroutineBlockBox.Width = defaultWidth;
                 textBoxOfSubroutineBlockBox.Height = defaulHeight;
                 textBoxOfSubroutineBlockBox.FontSize = defaulFontSize;
@@ -95,7 +96,7 @@ namespace Flowchart_Editor.Models
                 textBoxOfSubroutineBlockBox.TextWrapping = TextWrapping.Wrap;
                 textBoxOfSubroutineBlockBox.MouseDoubleClick += ChangeTextBoxToLabel;
 
-                textBlockOfSubroutineBlockBox.Text = "Подпрограмма";
+                textBlockOfSubroutineBlockBox.Text = textOfSubroutineBlock;
                 textBlockOfSubroutineBlockBox.Width = defaultWidth;
                 textBlockOfSubroutineBlockBox.Height = defaulHeight;
                 textBlockOfSubroutineBlockBox.FontSize = defaulFontSize;
@@ -156,6 +157,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasSubroutineBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keySubroutineBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfSubroutineBlock);
                 }
                 else
                 {
@@ -168,6 +171,9 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.keySecondBlock = keySubroutineBlock;
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfSubroutineBlock);
+
                     CoordinatesBlock.coordinatesBlockPointX = 0;
                     CoordinatesBlock.coordinatesBlockPointY = 0;
                 }

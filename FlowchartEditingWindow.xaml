@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Flowchart Editor" Height="850" Width="1480">
+        Title="Flowchart Editor" Height="850" Width="1820">
     <Window.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="blockLayoutMenu">
@@ -508,13 +508,17 @@
 
                 <Grid Grid.Column="4" Grid.RowSpan="11">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
@@ -530,7 +534,7 @@
                         DragLeave="destination_DragLeave" 
                         Drop="destination_Drop"
                         Name="destination" 
-                        Grid.ColumnSpan="9"
+                        Grid.ColumnSpan="13"
                         Grid.Row="2" />
                     
                     <TextBlock 
@@ -547,7 +551,7 @@
                     Foreground="Black" 
                     Grid.Row="0" 
                     Grid.Column="1" 
-                    Width="150" 
+                    Width="130" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center">
                         <ComboBoxItem>Times New Roman</ComboBoxItem>
@@ -591,24 +595,52 @@
                     VerticalAlignment="Center"/>
 
                     <TextBlock 
-                    Name="textHeight"
-                    Text="Высота:"
-                    Grid.Row="0" 
-                    Grid.Column="6"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"/>
+                        Name="textHeight"
+                        Text="Высота:"
+                        Grid.Row="0" 
+                        Grid.Column="6"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <ComboBox 
-                    Name="blockHeightComboBox" 
-                    SelectionChanged="blockHeightComboBox_SelectionChanged"
-                    Foreground="Black" 
-                    Grid.Row="0" 
-                    Grid.Column="7" 
-                    Width="60" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
-                    
+                        Name="blockHeightComboBox" 
+                        SelectionChanged="blockHeightComboBox_SelectionChanged"
+                        Foreground="Black" 
+                        Grid.Row="0" 
+                        Grid.Column="7" 
+                        Width="60" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
 
+                    <TextBlock 
+                        Name="labelNameOfFirstBlockToConnect"
+                        Text="Первый блок:"
+                        Grid.Row="0" 
+                        Grid.Column="8"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
+                    
+                    <TextBlock 
+                        Name="textNameOfFirstBlockToConnect"
+                        Grid.Row="0" 
+                        Grid.Column="9"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
+
+                    <TextBlock 
+                        Name="labelNameOfSecondBlockToConnect"
+                        Text="Второй блок:"
+                        Grid.Row="0" 
+                        Grid.Column="10"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
+
+                    <TextBlock 
+                        Name="textNameOfSecondBlockToConnect"
+                        Grid.Row="0" 
+                        Grid.Column="11"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
                 </Grid>
                 <Button 
                         Name="buttonCloseMenu"

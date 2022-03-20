@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
-    public class ConditionBlock : Window
+    public class ConditionBlock
     {
         public Canvas? canvasConditionBlock = null;
         public Polygon? polygonConditionBlock = null;
@@ -26,6 +26,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyConditionBlock = 0;
+        const string textOfConditionBlock = "Условие";
 
         public ConditionBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -80,7 +81,7 @@ namespace Flowchart_Editor.Models
                 polygonConditionBlock.Points = myPointCollection;
                 canvasConditionBlock.Children.Add(polygonConditionBlock);
 
-                textBoxOfConditionBlock.Text = "Условие";
+                textBoxOfConditionBlock.Text = textOfConditionBlock;
                 textBoxOfConditionBlock.FontSize = defaulFontSize;
                 textBoxOfConditionBlock.Width = defaultWidth / 2;
                 textBoxOfConditionBlock.Foreground = Brushes.White;
@@ -152,6 +153,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasConditionBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyConditionBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfConditionBlock);
                 }
                 else
                 {
@@ -162,6 +165,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasConditionBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyConditionBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfConditionBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

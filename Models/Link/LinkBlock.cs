@@ -26,6 +26,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyLinkBlock = 0;
+        private const string textOfLinkBlock = "Ссылка";
 
         public LinkBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -141,6 +142,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasLinkBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyLinkBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfLinkBlock);
                 }
                 else
                 {
@@ -151,6 +154,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasLinkBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyLinkBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfLinkBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

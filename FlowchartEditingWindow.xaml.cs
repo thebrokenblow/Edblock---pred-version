@@ -609,6 +609,12 @@ namespace Flowchart_Editor
                     textWidth.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
+                    labelNameOfFirstBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    textNameOfFirstBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
+
+                    labelNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
+                    textNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
+
                     DefaultPropertyForBlock.colorPoint = darkWhite;
                     foreach (ActionBlock itemListActionBlock in listActionBlock)
                     {
@@ -728,6 +734,12 @@ namespace Flowchart_Editor
                     textFontSize.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textWidth.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    labelNameOfFirstBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    textNameOfFirstBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
+                    labelNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
+                    textNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
                     DefaultPropertyForBlock.colorPoint = darkBlack;
                     foreach (ActionBlock itemListActionBlock in listActionBlock)
@@ -1263,6 +1275,15 @@ namespace Flowchart_Editor
                 listLineConnection.Add(lineConnectionLine);
                 destination.Children.Add(lineConnectionLine);
             }
+        }
+        public void WriteFirstNameOfBlockToConect(string nameOfFirstBlockToConnect)
+        {
+            textNameOfFirstBlockToConnect.Text = nameOfFirstBlockToConnect;
+            textNameOfSecondBlockToConnect.Text = "";
+        }
+        public void WriteSecondNameOfBlockToConect(string nameOfSecondBlockToConnect)
+        {
+            textNameOfSecondBlockToConnect.Text = nameOfSecondBlockToConnect;
         }
     }
 }

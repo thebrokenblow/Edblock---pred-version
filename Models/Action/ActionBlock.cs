@@ -26,6 +26,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyOfActionBlock = 0;
+        const string textOfActionBlock = "Действие";
 
         public ActionBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -61,7 +62,7 @@ namespace Flowchart_Editor.Models
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-                textBoxOfActionBlock.Text = "Действие";
+                textBoxOfActionBlock.Text = textOfActionBlock;
                 textBoxOfActionBlock.Width = defaultWidth;
                 textBoxOfActionBlock.Height = defaulHeight;
                 textBoxOfActionBlock.FontSize = defaulFontSize;
@@ -136,6 +137,7 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasOfActionBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyOfActionBlock;
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfActionBlock);
                 }
                 else
                 {
@@ -146,6 +148,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasOfActionBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyOfActionBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfActionBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

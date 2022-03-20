@@ -26,6 +26,7 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyCycleWhileBeginBlock = 0;
+        private const string textOfCycleForBlock = "Цикл while начало";
 
         public CycleWhileBeginBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -109,7 +110,7 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                textBoxOfCycleWhileBeginBlock.Text = "Цикл while начало";
+                textBoxOfCycleWhileBeginBlock.Text = textOfCycleForBlock;
                 textBoxOfCycleWhileBeginBlock.Width = defaultWidth;
                 textBoxOfCycleWhileBeginBlock.Height = defaulHeight;
                 textBoxOfCycleWhileBeginBlock.FontSize = defaulFontSize;
@@ -121,7 +122,7 @@ namespace Flowchart_Editor.Models
                 textBoxOfCycleWhileBeginBlock.TextWrapping = TextWrapping.Wrap;
                 textBoxOfCycleWhileBeginBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
 
-                textBlockOfCycleWhileBeginBlock.Text = "Цикл while начало";
+                textBlockOfCycleWhileBeginBlock.Text = textOfCycleForBlock;
                 textBlockOfCycleWhileBeginBlock.Width = defaultWidth;
                 textBlockOfCycleWhileBeginBlock.Height = defaulHeight;
                 textBlockOfCycleWhileBeginBlock.FontSize = defaulFontSize;
@@ -152,6 +153,8 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileBeginBlock) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyCycleWhileBeginBlock;
+
+                    mainWindow.WriteFirstNameOfBlockToConect(textOfCycleForBlock);
                 }
                 else
                 {
@@ -162,6 +165,8 @@ namespace Flowchart_Editor.Models
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileBeginBlock) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyCycleWhileBeginBlock;
+
+                    mainWindow.WriteSecondNameOfBlockToConect(textOfCycleForBlock);
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;
