@@ -477,20 +477,6 @@
                              Height="30"/>
                 </Canvas>
 
-                <Canvas Grid.Row="10" 
-                        Grid.Column="1" Margin="0 35">
-
-                    <Line X1="0" Y1="10" X2="20" Y2="10" Stroke="Black" />
-                    <Line X1="30" Y1="10" X2="50" Y2="10" Stroke="Black" />
-                    <Line X1="60" Y1="10" X2="80" Y2="10" Stroke="Black" />
-                    <Line X1="90" Y1="10" X2="110" Y2="10" Stroke="Black" />
-                    <Line X1="120" Y1="10" X2="140" Y2="10" Stroke="Black" />
-                    <Line X1="150" Y1="10" X2="170" Y2="10" Stroke="Black" />
-                    <Line X1="170" Y1="50" X2="170" Y2="-30" Stroke="Black" />
-                </Canvas>
-               
-
-
                 <TextBlock 
                            Name="linkBlockText" 
                            Text="Ссылка (9)" 
@@ -499,8 +485,31 @@
                            Grid.Row="9" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"/>
+                
+                <Canvas Grid.Row="10" 
+                        Grid.Column="1" 
+                        Margin="0 25" 
+                        Name="comment"  
+                        MouseMove="comment_MouseMove">
 
-            
+                    <Line X1="30" Y1="10" X2="50" Y2="10" Stroke="Black" />
+                    <Line X1="60" Y1="10" X2="80" Y2="10" Stroke="Black" />
+                    <Line X1="90" Y1="10" X2="110" Y2="10" Stroke="Black" />
+                    <Line X1="110" Y1="40" X2="110" Y2="-20" Stroke="Black" />
+                    <Line X1="120" Y1="-20" X2="110" Y2="-20" Stroke="Black" />
+                    <Line X1="120" Y1="40" X2="110" Y2="40" Stroke="Black" />
+                </Canvas>
+
+                <TextBlock 
+                           Name="textComment" 
+                           Text="Комментарий(10)" 
+                           FontSize="10" 
+                           Grid.Column="2" 
+                           Grid.Row="10" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Left"/>
+
+
                 <Canvas Name="lineSeparatingLocationOfBlocksAndField"
                         Grid.RowSpan="11" 
                         Grid.Column="3"

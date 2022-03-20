@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Flowchart_Editor.Models;
+using Flowchart_Editor.Models.Comment;
 
 namespace Flowchart_Editor
 {
@@ -149,7 +150,19 @@ namespace Flowchart_Editor
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
-        } 
+        }
+        List<Comment> listComment = new List<Comment>();
+        private void comment_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var instanceOfComment = new Comment();
+                listComment.Add(instanceOfComment);
+                var dataObjectInformationOfComment = new DataObject(typeof(Comment), instanceOfComment);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfComment, DragDropEffects.Copy);
+            }
+            e.Handled = true;
+        }
         private void destination_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -214,6 +227,13 @@ namespace Flowchart_Editor
                 var featuresOfLinkBlock = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
                 Canvas.SetLeft(featuresOfLinkBlock, position.X);
                 Canvas.SetTop(featuresOfLinkBlock, position.Y);
+            }
+            else if (e.Data.GetDataPresent(typeof(Comment)))
+            {
+                var position = e.GetPosition(destination);
+                var featuresOfComment = ((Comment)e.Data.GetData(typeof(Comment))).GetUIElement();
+                Canvas.SetLeft(featuresOfComment, position.X);
+                Canvas.SetTop(featuresOfComment, position.Y);
             }
             e.Handled = true;
         }
@@ -463,6 +483,32 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (LinkBlockForMovements)e.Data.GetData(typeof(LinkBlockForMovements));
+                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+            }
+            else if (e.Data.GetDataPresent(typeof(Comment)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var dataInformationOfComment = (Comment)e.Data.GetData(typeof(Comment));
+                UIElement commentOfUIElement;
+                if (dataInformationOfComment.GetUIElementWithoutCreate() == null)
+                {
+                    commentOfUIElement = ((Comment)e.Data.GetData(typeof(Comment))).GetUIElement();
+                    destination.Children.Add(commentOfUIElement);
+                }
+                else
+                {
+                    commentOfUIElement = ((Comment)e.Data.GetData(typeof(Comment))).GetUIElement();
+                }
+                Canvas.SetLeft(commentOfUIElement, position.X + 1);
+                Canvas.SetTop(commentOfUIElement, position.Y + 1);
+            }
+            else if (e.Data.GetDataPresent(typeof(CommentForMovements)))
+            {
+                e.Effects = DragDropEffects.Copy;
+                var position = e.GetPosition(destination);
+                var resultTransferInformation = (CommentForMovements)e.Data.GetData(typeof(CommentForMovements));
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
             }
