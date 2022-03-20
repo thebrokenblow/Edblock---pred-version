@@ -25,10 +25,12 @@ namespace Flowchart_Editor.Models
         private int valueOfClicksOnTextBlock = 0;
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
+        private int keyCycleWhileEndBlock = 0;
 
-        public CycleWhileEndBlock(MainWindow mainWindow)
+        public CycleWhileEndBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
+            keyCycleWhileEndBlock = keyBlock;
         }
 
         public UIElement GetUIElementWithoutCreate() => canvasCycleWhileEndBlock;
@@ -107,7 +109,7 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                textBoxOfCycleWhileEndBlock.Text = "Цикл while начало";
+                textBoxOfCycleWhileEndBlock.Text = "Цикл while конец";
                 textBoxOfCycleWhileEndBlock.Width = defaultWidth;
                 textBoxOfCycleWhileEndBlock.Height = defaulHeight;
                 textBoxOfCycleWhileEndBlock.FontSize = defaulFontSize;
@@ -119,7 +121,7 @@ namespace Flowchart_Editor.Models
                 textBoxOfCycleWhileEndBlock.TextWrapping = TextWrapping.Wrap;
                 textBoxOfCycleWhileEndBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
 
-                textBlockOfCycleWhileEndBlock.Text = "Цикл while начало";
+                textBlockOfCycleWhileEndBlock.Text = "Цикл while конец";
                 textBlockOfCycleWhileEndBlock.Width = defaultWidth;
                 textBlockOfCycleWhileEndBlock.Height = defaulHeight;
                 textBlockOfCycleWhileEndBlock.FontSize = defaulFontSize;
@@ -149,6 +151,8 @@ namespace Flowchart_Editor.Models
                 {
                     CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileEndBlock) + 3;
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileEndBlock) + 3;
+
+                    CoordinatesBlock.keyFirstBlock = keyCycleWhileEndBlock;
                 }
                 else
                 {
@@ -157,6 +161,8 @@ namespace Flowchart_Editor.Models
 
                     double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileEndBlock) + 3;
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileEndBlock) + 3;
+
+                    CoordinatesBlock.keySecondBlock = keyCycleWhileEndBlock;
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

@@ -26,10 +26,12 @@ namespace Flowchart_Editor.Models
         private MainWindow mainWindow;
         private const int radiusOfRectangleStartEndBlock = 20;
         private const int radiusPoint = 6;
+        private int keyStartEndBlock = 0;
 
-        public StartEndBlock(MainWindow mainWindow)
+        public StartEndBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
+            keyStartEndBlock = keyBlock;
         }
 
         public UIElement GetUIElementWithoutCreate() => canvasStartEndBlock;
@@ -138,6 +140,8 @@ namespace Flowchart_Editor.Models
                 {
                     CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasStartEndBlock) + 3;
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasStartEndBlock) + 3;
+
+                    CoordinatesBlock.keyFirstBlock = keyStartEndBlock;
                 }
                 else
                 {
@@ -146,6 +150,8 @@ namespace Flowchart_Editor.Models
 
                     double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasStartEndBlock) + 3;
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasStartEndBlock) + 3;
+
+                    CoordinatesBlock.keySecondBlock = keyStartEndBlock;
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

@@ -25,10 +25,12 @@ namespace Flowchart_Editor.Models
         private int valueOfClicksOnTextBlock = 0;
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
+        private int keyCycleWhileBeginBlock = 0;
 
-        public CycleWhileBeginBlock(MainWindow mainWindow)
+        public CycleWhileBeginBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
+            keyCycleWhileBeginBlock = keyBlock;
         }
 
         public UIElement GetUIElementWithoutCreate() => canvasCycleWhileBeginBlock;
@@ -148,6 +150,8 @@ namespace Flowchart_Editor.Models
                 {
                     CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileBeginBlock) + 3;
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileBeginBlock) + 3;
+
+                    CoordinatesBlock.keyFirstBlock = keyCycleWhileBeginBlock;
                 }
                 else
                 {
@@ -156,6 +160,8 @@ namespace Flowchart_Editor.Models
 
                     double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileBeginBlock) + 3;
                     double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileBeginBlock) + 3;
+
+                    CoordinatesBlock.keySecondBlock = keyCycleWhileBeginBlock;
 
                     mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                     CoordinatesBlock.coordinatesBlockPointX = 0;

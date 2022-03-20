@@ -33,11 +33,13 @@ namespace Flowchart_Editor
                 blockHeightComboBox.Items.Add(i);
         }
         List<ActionBlock> listActionBlock = new List<ActionBlock>();
+        int keyBlock = 0;
         public void actionBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfActionBlock = new ActionBlock(this);
+                keyBlock++;
+                var instanceOfActionBlock = new ActionBlock(this, keyBlock);
                 listActionBlock.Add(instanceOfActionBlock);
                 var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
@@ -49,7 +51,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfConditionBlock = new ConditionBlock(this);
+                keyBlock++;
+                var instanceOfConditionBlock = new ConditionBlock(this, keyBlock);
                 listConditionBlock.Add(instanceOfConditionBlock);
                 var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlock), instanceOfConditionBlock);
                 DragDrop.DoDragDrop(conditionBlock, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
@@ -61,7 +64,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfStartEndBlock = new StartEndBlock(this);
+                keyBlock++;
+                var instanceOfStartEndBlock = new StartEndBlock(this, keyBlock);
                 listStartEndBlock.Add(instanceOfStartEndBlock);
                 var dataObjectInformationOfStartEndBlock = new DataObject(typeof(StartEndBlock), instanceOfStartEndBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
@@ -73,7 +77,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfInputOutputBlock = new InputOutputBlock(this);
+                keyBlock++;
+                var instanceOfInputOutputBlock = new InputOutputBlock(this, keyBlock);
                 listInputOutputBlock.Add(instanceOfInputOutputBlock);
                 var dataObjectInformationOfInputOutputBlock = new DataObject(typeof(InputOutputBlock), instanceOfInputOutputBlock);
                 DragDrop.DoDragDrop(inputOutputBlock, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
@@ -85,7 +90,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceSubroutineBlock = new SubroutineBlock(this);
+                keyBlock++;
+                var instanceSubroutineBlock = new SubroutineBlock(this, keyBlock);
                 listSubroutineBlock.Add(instanceSubroutineBlock);
                 var dataObjectInformationOfSubroutineBlock = new DataObject(typeof(SubroutineBlock), instanceSubroutineBlock);
                 DragDrop.DoDragDrop(subroutineBlock, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
@@ -97,7 +103,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfCycleForBlock = new CycleForBlock(this);
+                keyBlock++;
+                var instanceOfCycleForBlock = new CycleForBlock(this, keyBlock);
                 listCycleForBlock.Add(instanceOfCycleForBlock);
                 var dataObjectInstanceOfCycleForBlock = new DataObject(typeof(CycleForBlock), instanceOfCycleForBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleForBlock, DragDropEffects.Copy);
@@ -109,7 +116,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfCycleWhileBlock = new CycleWhileBeginBlock(this);
+                keyBlock++;
+                var instanceOfCycleWhileBlock = new CycleWhileBeginBlock(this, keyBlock);
                 listCycleWhileBeginBlock.Add(instanceOfCycleWhileBlock);
                 var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileBeginBlock), instanceOfCycleWhileBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
@@ -121,7 +129,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfCycleWhileBlock = new CycleWhileEndBlock(this);
+                keyBlock++;
+                var instanceOfCycleWhileBlock = new CycleWhileEndBlock(this, keyBlock);
                 listCycleWhileEndBlock.Add(instanceOfCycleWhileBlock);
                 var dataObjectInstanceOfCycleWhileBlock = new DataObject(typeof(CycleWhileEndBlock), instanceOfCycleWhileBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
@@ -133,7 +142,8 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var instanceOfLinkBlock = new LinkBlock(this);
+                keyBlock++;
+                var instanceOfLinkBlock = new LinkBlock(this, keyBlock);
                 listLinkBlock.Add(instanceOfLinkBlock);
                 var dataObjectInformationOfLinkBlock = new DataObject(typeof(LinkBlock), instanceOfLinkBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
@@ -231,6 +241,7 @@ namespace Flowchart_Editor
             }
             else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
             {
+
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
@@ -599,12 +610,12 @@ namespace Flowchart_Editor
                     textHeight.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
                     DefaultPropertyForBlock.colorPoint = darkWhite;
-                    foreach (ActionBlock listActionBlock in listActionBlock)
+                    foreach (ActionBlock itemListActionBlock in listActionBlock)
                     {
-                        listActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        listActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        listActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        listActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
 
                     }
                     foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
@@ -655,6 +666,13 @@ namespace Flowchart_Editor
                         itemListCycleWhileEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                         itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                    }
+                    foreach (LinkBlock itemListLinkBlock in listLinkBlock)
+                    {
+                        itemListLinkBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListLinkBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListLinkBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
+                        itemListLinkBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
                     }
                     DefaultPropertyForBlock.colorLine = darkWhite;
                     foreach (Line itemListLineConnection in listLineConnection)
@@ -775,6 +793,13 @@ namespace Flowchart_Editor
                         itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                         itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
                     }
+                    foreach (LinkBlock itemListLinkBlock in listLinkBlock)
+                    {
+                        itemListLinkBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListLinkBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListLinkBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                        itemListLinkBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
+                    }
                     DefaultPropertyForBlock.colorLine = darkBlack;
                     foreach (Line itemListLineConnection in listLineConnection)
                         itemListLineConnection.Stroke = (Brush)color.ConvertFrom(darkBlack);
@@ -826,6 +851,11 @@ namespace Flowchart_Editor
                 itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.FontFamily = fontFamily;
                 itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.FontFamily = fontFamily;
             }
+            foreach (LinkBlock itemListLinkBlock in listLinkBlock)
+            {
+                itemListLinkBlock.textBoxOfLinkBlockBox.FontFamily = fontFamily;
+                itemListLinkBlock.textBlockOfLinkBlockBox.FontFamily = fontFamily;
+            }
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -871,6 +901,11 @@ namespace Flowchart_Editor
             {
                 itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.FontSize = valueFontSize;
                 itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.FontSize = valueFontSize;
+            }
+            foreach (LinkBlock itemListLinkBlock in listLinkBlock)
+            {
+                itemListLinkBlock.textBoxOfLinkBlockBox.FontSize = valueFontSize;
+                itemListLinkBlock.textBlockOfLinkBlockBox.FontSize = valueFontSize;
             }
         }
 
@@ -1186,27 +1221,48 @@ namespace Flowchart_Editor
             {
                 itemListLinkBlock.canvasLinkBlock.Width = valueBlokHeight / 2;
                 itemListLinkBlock.canvasLinkBlock.Height = valueBlokHeight / 2;
+
                 itemListLinkBlock.eliposLinkBlock.Height = valueBlokHeight / 2;
                 itemListLinkBlock.eliposLinkBlock.Width = valueBlokHeight / 2;
+
                 itemListLinkBlock.textBoxOfLinkBlockBox.Width = valueBlokHeight / 2;
                 itemListLinkBlock.textBoxOfLinkBlockBox.Height = valueBlokHeight / 2 - 2.5;
+
                 itemListLinkBlock.textBlockOfLinkBlockBox.Width = valueBlokHeight / 2;
                 itemListLinkBlock.textBlockOfLinkBlockBox.Height = valueBlokHeight / 2 - 2.5;
+
+                Canvas.SetLeft(itemListLinkBlock.firstPointToConnect, valueBlokHeight / 4 - 3);
+                Canvas.SetTop(itemListLinkBlock.firstPointToConnect, -2);
+
+                Canvas.SetLeft(itemListLinkBlock.secondPointToConnect, -2);
+                Canvas.SetTop(itemListLinkBlock.secondPointToConnect, valueBlokHeight / 4 - 3);
+
+                Canvas.SetLeft(itemListLinkBlock.thirdPointToConnect, valueBlokHeight / 4 - 3);
+                Canvas.SetTop(itemListLinkBlock.thirdPointToConnect, valueBlokHeight / 2 - 3);
+
+
+                Canvas.SetLeft(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 2 - 3);
+                Canvas.SetTop(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 4 - 3);
             }
         }
         List<Line> listLineConnection = new List<Line>();
         public void DrawConnectionLine(double x1, double y1, double x2, double y2)
         {
-            BrushConverter color = new BrushConverter();
-            Line lineConnectionLine = new Line();
-            lineConnectionLine.X1 = x1;
-            lineConnectionLine.Y1 = y1;
-            lineConnectionLine.X2 = x2;
-            lineConnectionLine.Y2 = y2;
+            if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
+                MessageBox.Show("Ошибка соединения блоков");
+            else
+            {
+                BrushConverter color = new BrushConverter();
+                Line lineConnectionLine = new Line();
+                lineConnectionLine.X1 = x1;
+                lineConnectionLine.Y1 = y1;
+                lineConnectionLine.X2 = x2;
+                lineConnectionLine.Y2 = y2;
 
-            lineConnectionLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
-            listLineConnection.Add(lineConnectionLine);
-            destination.Children.Add(lineConnectionLine);
+                lineConnectionLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                listLineConnection.Add(lineConnectionLine);
+                destination.Children.Add(lineConnectionLine);
+            }
         }
     }
 }
