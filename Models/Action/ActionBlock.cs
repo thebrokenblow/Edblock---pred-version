@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Controls;
+using System;
 
 namespace Flowchart_Editor.Models
 {
@@ -27,7 +27,8 @@ namespace Flowchart_Editor.Models
         private const int radiusPoint = 6;
         private int keyOfActionBlock = 0;
         const string textOfActionBlock = "Действие";
-
+        public bool flagOfFirstBlockToConnect;
+        public Line? lineConnectionBlock = null;
         public ActionBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
@@ -42,8 +43,17 @@ namespace Flowchart_Editor.Models
             {
                 if (textChangeStatus)
                 {
-                    var instanceOfActionBlock = new ActionBlockForMovements(sender);
-                    var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlock);
+                    var instanceOfActionBlockForMovements = new ActionBlockForMovements(sender);
+                    if (lineConnectionBlock != null && CoordinatesBlock.firstActionBlock != null && CoordinatesBlock.secondActionBlock != null)
+                    {
+                        instanceOfActionBlockForMovements.firstSenderConnectionPoints = CoordinatesBlock.firstSenderConnectionPoints;
+                        instanceOfActionBlockForMovements.secondSenderConnectionPoints = CoordinatesBlock.secondSenderConnectionPoints;
+                        instanceOfActionBlockForMovements.lineConnectionBlock = lineConnectionBlock;
+                        instanceOfActionBlockForMovements.flagOfFirstBlockToConnect = flagOfFirstBlockToConnect;
+                        instanceOfActionBlockForMovements.firstActionBlock = CoordinatesBlock.firstActionBlock;
+                        instanceOfActionBlockForMovements.secondActionBlock = CoordinatesBlock.secondActionBlock;
+                    }
+                    var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlockForMovements);
                     DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
                 }
             }
@@ -136,7 +146,11 @@ namespace Flowchart_Editor.Models
                     CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasOfActionBlock) + 3;
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasOfActionBlock) + 3;
 
+                    CoordinatesBlock.firstSenderConnectionPoints = sender;
                     CoordinatesBlock.keyFirstBlock = keyOfActionBlock;
+
+                    CoordinatesBlock.firstActionBlock = this;
+                    flagOfFirstBlockToConnect = false;
                     mainWindow.WriteFirstNameOfBlockToConect(textOfActionBlock);
                 }
                 else
@@ -149,14 +163,26 @@ namespace Flowchart_Editor.Models
 
                     CoordinatesBlock.keySecondBlock = keyOfActionBlock;
 
+                    CoordinatesBlock.secondSenderConnectionPoints = sender;
+
+                    flagOfFirstBlockToConnect = true;
+
                     mainWindow.WriteSecondNameOfBlockToConect(textOfActionBlock);
 
-                    mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                    CoordinatesBlock.secondActionBlock = this;
+
+                    if (CoordinatesBlock.firstActionBlock != null)
+                        mainWindow.DrawConnectionLine(x1, y1, x2, y2, this, CoordinatesBlock.firstActionBlock);
+                    else 
+                        mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+
+
                     CoordinatesBlock.coordinatesBlockPointX = 0;
                     CoordinatesBlock.coordinatesBlockPointY = 0;
                 }
             }
         }
+        
         private void ChangeTextBoxToLabel(object sender, MouseEventArgs e)
         {
             if (textChangeStatus)

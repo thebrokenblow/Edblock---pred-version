@@ -242,6 +242,7 @@ namespace Flowchart_Editor
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
+            
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
@@ -261,12 +262,44 @@ namespace Flowchart_Editor
             }
             else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
             {
-
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
+                
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformationActionBlock, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformationActionBlock, position.Y + 1);
+
+                if (resultTransferInformation.lineConnectionBlock != null)
+                { 
+                    if (resultTransferInformation.flagOfFirstBlockToConnect)
+                    {
+                        double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockX();
+                        double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockY();
+
+                        double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockX();
+                        double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockY();
+
+                        resultTransferInformation.lineConnectionBlock.X1 = x1;
+                        resultTransferInformation.lineConnectionBlock.Y1 = y1;
+
+                        resultTransferInformation.lineConnectionBlock.X2 = x2;
+                        resultTransferInformation.lineConnectionBlock.Y2 = y2;
+                    }
+                    else
+                    {
+                        double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockX();
+                        double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockY();
+
+                        double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockX();
+                        double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockY();
+
+                        resultTransferInformation.lineConnectionBlock.X1 = x1;
+                        resultTransferInformation.lineConnectionBlock.Y1 = y1;
+
+                        resultTransferInformation.lineConnectionBlock.X2 = x2;
+                        resultTransferInformation.lineConnectionBlock.Y2 = y2;
+                    }
+                }
 
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
@@ -515,6 +548,7 @@ namespace Flowchart_Editor
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
+
         private void destination_DragLeave(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -1304,7 +1338,7 @@ namespace Flowchart_Editor
             }
         }
         List<Line> listLineConnection = new List<Line>();
-        public void DrawConnectionLine(double x1, double y1, double x2, double y2)
+        public void DrawConnectionLine(double x1, double y1, double x2, double y2, ActionBlock firstActionBlock, ActionBlock secondnActionBlock)
         {
             if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
                 MessageBox.Show("Ошибка соединения блоков");
@@ -1318,8 +1352,31 @@ namespace Flowchart_Editor
                 lineConnectionLine.Y2 = y2;
 
                 lineConnectionLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                firstActionBlock.lineConnectionBlock = lineConnectionLine;
+                secondnActionBlock.lineConnectionBlock = lineConnectionLine;
+                
                 listLineConnection.Add(lineConnectionLine);
                 destination.Children.Add(lineConnectionLine);
+            }
+        }
+        Line lineOfTravel = new Line();
+        public void DrawConnectionLine(double x1, double y1, double x2, double y2)
+        {
+            if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
+                MessageBox.Show("Ошибка соединения блоков");
+            else
+            {
+                if (lineOfTravel.X1 != null)
+                    destination.Children.Remove(lineOfTravel);
+                BrushConverter color = new BrushConverter();
+                lineOfTravel.X1 = x1;
+                lineOfTravel.Y1 = y1;
+                lineOfTravel.X2 = x2;
+                lineOfTravel.Y2 = y2;
+
+                lineOfTravel.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                listLineConnection.Add(lineOfTravel);
+                destination.Children.Add(lineOfTravel);
             }
         }
         public void WriteFirstNameOfBlockToConect(string nameOfFirstBlockToConnect)
