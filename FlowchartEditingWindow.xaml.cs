@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Flowchart_Editor.Models;
+using Flowchart_Editor.Models.Action;
 using Flowchart_Editor.Models.Comment;
 
 namespace Flowchart_Editor
@@ -40,9 +41,9 @@ namespace Flowchart_Editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 keyBlock++;
-                var instanceOfActionBlock = new ActionBlock(this, keyBlock);
+                ActionBlock instanceOfActionBlock = new ActionBlock(this, keyBlock);
                 listActionBlock.Add(instanceOfActionBlock);
-                var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
+                DataObject dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlock), instanceOfActionBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
@@ -238,14 +239,21 @@ namespace Flowchart_Editor
             e.Handled = true;
         }
 
+        public void DrawCommet(UIElement commentUIElement, double coordinatesX, double coordinatesY)
+        {
+            destination.Children.Add(commentUIElement);
+            Canvas.SetLeft(commentUIElement, coordinatesX);
+            Canvas.SetTop(commentUIElement, coordinatesY);
+        }
+
         private void destination_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
             
                 e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
+                Point position = e.GetPosition(destination);
+                ActionBlock dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
                 UIElement actionBlockOfUIElement;
                 if (dataInformationOfActionBlock.GetUIElementWithoutCreate() == null)
                 {
@@ -263,44 +271,52 @@ namespace Flowchart_Editor
             else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
             {
                 e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
+                Point position = e.GetPosition(destination);
+                ActionBlockForMovements resultTransferInformation = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
                 
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformationActionBlock, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformationActionBlock, position.Y + 1);
 
-                if (resultTransferInformation.lineConnectionBlock != null)
-                { 
-                    if (resultTransferInformation.flagOfFirstBlockToConnect)
+                    if (resultTransferInformation.numberOfOccurrencesInBlock == 1)
                     {
-                        double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockX();
-                        double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockY();
+                        double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
+                        double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
 
-                        double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockX();
-                        double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockY();
+                        double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
+                        double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
 
-                        resultTransferInformation.lineConnectionBlock.X1 = x1;
-                        resultTransferInformation.lineConnectionBlock.Y1 = y1;
+                        resultTransferInformation.firstLineConnectionBlock.X1 = x1;
+                        resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
 
-                        resultTransferInformation.lineConnectionBlock.X2 = x2;
-                        resultTransferInformation.lineConnectionBlock.Y2 = y2;
+                        resultTransferInformation.firstLineConnectionBlock.X2 = x2;
+                        resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
                     }
-                    else
+                    if (resultTransferInformation.numberOfOccurrencesInBlock == 2)
                     {
-                        double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockX();
-                        double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockY();
+                        //double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
+                        //double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
 
-                        double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockX();
-                        double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockY();
+                        //double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
+                        //double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
 
-                        resultTransferInformation.lineConnectionBlock.X1 = x1;
-                        resultTransferInformation.lineConnectionBlock.Y1 = y1;
+                        //resultTransferInformation.firstLineConnectionBlock.X1 = x1;
+                        //resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
 
-                        resultTransferInformation.lineConnectionBlock.X2 = x2;
-                        resultTransferInformation.lineConnectionBlock.Y2 = y2;
+                        //resultTransferInformation.firstLineConnectionBlock.X2 = x2;
+                        //resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
+
+                        //double x3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockX();
+                        //double y3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockY();
+
+                        //double x4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockX();
+                        //double y4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockY();
+
+                        //resultTransferInformation.secondLineConnectionBlock.X1 = x3;
+                        //resultTransferInformation.secondLineConnectionBlock.Y1 = y3;
+
+                        //resultTransferInformation.secondLineConnectionBlock.X2 = x4;
+                        //resultTransferInformation.secondLineConnectionBlock.Y2 = y4;
                     }
-                }
-
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
             {
@@ -324,11 +340,12 @@ namespace Flowchart_Editor
             else if (e.Data.GetDataPresent(typeof(ConditionBlockForMovements)))
             {
                 e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-
+                Point position = e.GetPosition(destination);
+                ConditionBlockForMovements instanseTransferConditionBlockForMovements = (ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements));
+                object instanseConditionBlockForMovements = instanseTransferConditionBlockForMovements.GetTransferInformationConditionBlock();
+               
+                Canvas.SetLeft((UIElement)instanseConditionBlockForMovements, position.X + 1);
+                Canvas.SetTop((UIElement)instanseConditionBlockForMovements, position.Y + 1);
             }
             else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
             {
@@ -354,8 +371,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (StartEndBlockForMovements)e.Data.GetData(typeof(StartEndBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             } 
             else if (e.Data.GetDataPresent(typeof(InputOutputBlock)))
             {
@@ -381,8 +401,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (InputOutputBlockForMovements)e.Data.GetData(typeof(InputOutputBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             }
             else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
             {
@@ -408,8 +431,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (SubroutineBlockForMovements)e.Data.GetData(typeof(SubroutineBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             }
             else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
             {
@@ -435,8 +461,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (CycleForBlockForMovements)e.Data.GetData(typeof(CycleForBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             }
             else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
             {
@@ -462,8 +491,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (CycleWhileBeginBlockForMovements)e.Data.GetData(typeof(CycleWhileBeginBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             }
             else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
             {
@@ -489,8 +521,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (CycleWhileEndBlockForMovements)e.Data.GetData(typeof(CycleWhileEndBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
@@ -516,8 +551,11 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 var position = e.GetPosition(destination);
                 var resultTransferInformation = (LinkBlockForMovements)e.Data.GetData(typeof(LinkBlockForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                if (resultTransferInformation.transferInformation != null)
+                {
+                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
+                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
+                }
             }
             else if (e.Data.GetDataPresent(typeof(Comment)))
             {
@@ -536,14 +574,6 @@ namespace Flowchart_Editor
                 }
                 Canvas.SetLeft(commentOfUIElement, position.X + 1);
                 Canvas.SetTop(commentOfUIElement, position.Y + 1);
-            }
-            else if (e.Data.GetDataPresent(typeof(CommentForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (CommentForMovements)e.Data.GetData(typeof(CommentForMovements));
-                Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
             }
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
@@ -1338,45 +1368,37 @@ namespace Flowchart_Editor
             }
         }
         List<Line> listLineConnection = new List<Line>();
-        public void DrawConnectionLine(double x1, double y1, double x2, double y2, ActionBlock firstActionBlock, ActionBlock secondnActionBlock)
+        public Line? DrawConnectionLine(double x1, double y1, double x2, double y2, ActionBlock actionBlockFromWhichLineOriginates = null, ActionBlock actionBlockFromWhichLineEnters = null)
         {
             if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
-                MessageBox.Show("Ошибка соединения блоков");
-            else
             {
-                BrushConverter color = new BrushConverter();
-                Line lineConnectionLine = new Line();
-                lineConnectionLine.X1 = x1;
-                lineConnectionLine.Y1 = y1;
-                lineConnectionLine.X2 = x2;
-                lineConnectionLine.Y2 = y2;
-
-                lineConnectionLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
-                firstActionBlock.lineConnectionBlock = lineConnectionLine;
-                secondnActionBlock.lineConnectionBlock = lineConnectionLine;
-                
-                listLineConnection.Add(lineConnectionLine);
-                destination.Children.Add(lineConnectionLine);
+                MessageBox.Show("Ошибка соединения блоков");
+                return null;
             }
-        }
-        Line lineOfTravel = new Line();
-        public void DrawConnectionLine(double x1, double y1, double x2, double y2)
-        {
-            if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
-                MessageBox.Show("Ошибка соединения блоков");
             else
             {
-                if (lineOfTravel.X1 != null)
-                    destination.Children.Remove(lineOfTravel);
                 BrushConverter color = new BrushConverter();
-                lineOfTravel.X1 = x1;
-                lineOfTravel.Y1 = y1;
-                lineOfTravel.X2 = x2;
-                lineOfTravel.Y2 = y2;
 
-                lineOfTravel.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
-                listLineConnection.Add(lineOfTravel);
-                destination.Children.Add(lineOfTravel);
+                Line lineConnection = new Line();
+                lineConnection.X1 = x1;
+                lineConnection.Y1 = y1;
+                lineConnection.X2 = x2;
+                lineConnection.Y2 = y2;
+                lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                listLineConnection.Add(lineConnection);
+                destination.Children.Add(lineConnection);
+                if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 1)
+                {
+                    actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
+
+                    actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    actionBlockFromWhichLineOriginates.senderFirstdActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+
+                    actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
+                    actionBlockFromWhichLineEnters.senderFirstdActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                }
+
+                return lineConnection;
             }
         }
         public void WriteFirstNameOfBlockToConect(string nameOfFirstBlockToConnect)
@@ -1387,6 +1409,16 @@ namespace Flowchart_Editor
         public void WriteSecondNameOfBlockToConect(string nameOfSecondBlockToConnect)
         {
             textNameOfSecondBlockToConnect.Text = nameOfSecondBlockToConnect;
+        }
+        
+        private void comment_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Comment instanceOfComment = new Comment();
+            string textOfComment = instanceOfComment.GetTextOfComment();
+            WriteFirstNameOfBlockToConect(textOfComment);
+            listComment.Add(instanceOfComment);
+            PinningComment.flagPinningComment = true;
+            PinningComment.comment = instanceOfComment;
         }
     }
 }

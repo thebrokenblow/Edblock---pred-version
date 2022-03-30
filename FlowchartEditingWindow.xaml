@@ -489,7 +489,7 @@
                 <Canvas Grid.Row="10" 
                         Grid.Column="1" 
                         Name="comment"  
-                        MouseMove="comment_MouseMove">
+                        MouseLeftButtonDown="comment_MouseLeftButtonDown">
 
                     <Line X1="30" Y1="40" X2="50" Y2="40" Stroke="Black" />
                     <Line X1="60" Y1="40" X2="80" Y2="40" Stroke="Black" />
