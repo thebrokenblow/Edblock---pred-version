@@ -16,9 +16,10 @@ namespace Flowchart_Editor.Models.Comment
         private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private string defaulLineColor = DefaultPropertyForBlock.colorLine;
         private int valueOfClicksOnTextBlock = 0;
+        private int gapBetweenCommentLines = 15;
+        private int minimumHeightOfAllBlocks = DefaultPropertyForBlock.height;
         private double initialСoordinatesX = 0;
         private double initialСoordinatesY = 0;
-        private int gapBetweenCommentLines = 15;
         private const string textComment = "Комментарий";
         private Line? firstLine;
         private Line? secondLine;
@@ -30,6 +31,34 @@ namespace Flowchart_Editor.Models.Comment
         public UIElement? GetUIElementWithoutCreate() => canvasOfComment != null ? canvasOfComment : null;
 
         public string GetTextOfComment() => textComment;
+
+        public void SetHeightForFirstLine(int height)
+        {
+            if (firstLine != null && secondLine != null && thirdLine != null && fourthLine != null && fifthLine != null && sixthtLine != null)
+            {
+                firstLine.Y1 = (height - minimumHeightOfAllBlocks) / 2;
+                firstLine.Y2 = (height - minimumHeightOfAllBlocks) / 2;
+
+                secondLine.Y1 = (height - minimumHeightOfAllBlocks) / 2;
+                secondLine.Y2 = (height - minimumHeightOfAllBlocks) / 2;
+
+                thirdLine.Y1 = (height - minimumHeightOfAllBlocks) / 2;
+                thirdLine.Y2 = (height - minimumHeightOfAllBlocks) / 2;
+
+                fourthLine.Y1 = -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2;
+                fourthLine.Y2 = gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2;
+
+                fifthLine.Y1 = -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2;
+                fifthLine.Y2 = -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2;
+
+                sixthtLine.Y1 = gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2;
+                sixthtLine.Y2 = gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2;
+
+                Canvas.SetTop(textBoxOfComment, -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2);
+
+                Canvas.SetTop(textBlockOfComment, -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2);
+            }
+        }
 
         public UIElement GetUIElement()
         {
@@ -96,17 +125,17 @@ namespace Flowchart_Editor.Models.Comment
                 Canvas.SetLeft(textBoxOfComment, gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
                 Canvas.SetTop(textBoxOfComment, -gapBetweenCommentLines * 2);
 
-                textBoxOfComment.Text = textComment;
-                textBoxOfComment.FontSize = defaulFontSize;
-                textBoxOfComment.FontFamily = defaultFontFamily;
-                textBoxOfComment.VerticalAlignment = VerticalAlignment.Center;
-                textBoxOfComment.HorizontalAlignment = HorizontalAlignment.Center;
-                textBoxOfComment.TextAlignment = TextAlignment.Center;
-                textBoxOfComment.Foreground = Brushes.Black;
-                textBoxOfComment.TextWrapping = TextWrapping.Wrap;
-                textBoxOfComment.MouseDoubleClick += ChangeTextBoxToLabel;
-                Canvas.SetLeft(textBoxOfComment, gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
-                Canvas.SetTop(textBoxOfComment, -gapBetweenCommentLines * 2);
+                textBlockOfComment.Text = textComment;
+                textBlockOfComment.FontSize = defaulFontSize;
+                textBlockOfComment.FontFamily = defaultFontFamily;
+                textBlockOfComment.VerticalAlignment = VerticalAlignment.Center;
+                textBlockOfComment.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlockOfComment.TextAlignment = TextAlignment.Center;
+                textBlockOfComment.Foreground = Brushes.Black;
+                textBlockOfComment.TextWrapping = TextWrapping.Wrap;
+                textBlockOfComment.MouseDown += ChangeTextBoxToLabel;
+                Canvas.SetLeft(textBlockOfComment, gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
+                Canvas.SetTop(textBlockOfComment, -gapBetweenCommentLines * 2);
 
                 canvasOfComment.Children.Add(firstLine);
                 canvasOfComment.Children.Add(secondLine);
@@ -130,7 +159,8 @@ namespace Flowchart_Editor.Models.Comment
                         canvasOfComment.Children.Remove(textBoxOfComment);
                         canvasOfComment.Children.Remove(textBlockOfComment);
                         textBoxOfComment.Text = textBlockOfComment.Text;
-                        Canvas.SetLeft(textBoxOfComment, 110);
+                        Canvas.SetTop(textBoxOfComment, -gapBetweenCommentLines * 2);
+                        Canvas.SetLeft(textBoxOfComment, gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
                         canvasOfComment.Children.Add(textBoxOfComment);
                         textChangeStatus = false;
                         valueOfClicksOnTextBlock = 0;
@@ -141,17 +171,12 @@ namespace Flowchart_Editor.Models.Comment
                     canvasOfComment.Children.Remove(textBoxOfComment);
                     canvasOfComment.Children.Remove(textBlockOfComment);
                     textBlockOfComment.Text = textBoxOfComment.Text;
-                    Canvas.SetTop(textBlockOfComment, 3.5);
-                    Canvas.SetLeft(textBlockOfComment, 110);
+                    Canvas.SetTop(textBoxOfComment, -gapBetweenCommentLines * 2 + 3.5);
+                    Canvas.SetLeft(textBlockOfComment, gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
                     canvasOfComment.Children.Add(textBlockOfComment);
                     textChangeStatus = true;
                 }
             }
-        }
-
-        public void Reset()
-        {
-            canvasOfComment = null;
         }
     }
 }

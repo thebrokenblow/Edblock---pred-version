@@ -238,14 +238,6 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-
-        public void DrawCommet(UIElement commentUIElement, double coordinatesX, double coordinatesY)
-        {
-            destination.Children.Add(commentUIElement);
-            Canvas.SetLeft(commentUIElement, coordinatesX);
-            Canvas.SetTop(commentUIElement, coordinatesY);
-        }
-
         private void destination_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
@@ -1362,9 +1354,12 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListLinkBlock.thirdPointToConnect, valueBlokHeight / 4 - 3);
                 Canvas.SetTop(itemListLinkBlock.thirdPointToConnect, valueBlokHeight / 2 - 3);
 
-
                 Canvas.SetLeft(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 2 - 3);
                 Canvas.SetTop(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 4 - 3);
+            }
+            foreach (Comment itemListComment in listComment)
+            {
+                itemListComment.SetHeightForFirstLine(valueBlokHeight);
             }
         }
         List<Line> listLineConnection = new List<Line>();
