@@ -155,7 +155,7 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
+                fourthPointToConnect.Fill = Brushes.Red;
                 fourthPointToConnect.Height = radiusPoint;
                 fourthPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
@@ -177,12 +177,10 @@ namespace Flowchart_Editor.Models
             {
                 if (PinningComment.flagPinningComment && PinningComment.comment != null)
                 {
-                    double coordinatesX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasOfActionBlock) + 3;
-                    double coordinatesY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasOfActionBlock) + 3;
                     UIElement commentUIElement = PinningComment.comment.GetUIElement();
                     canvasOfActionBlock.Children.Add(commentUIElement);
-                    Canvas.SetTop(commentUIElement, 31);
-                    Canvas.SetLeft(commentUIElement, 141);
+                    Canvas.SetTop(commentUIElement, defaulHeight / 2 + 1);
+                    Canvas.SetLeft(commentUIElement, defaultWidth + 1);
                     mainWindow.WriteFirstNameOfBlockToConect("");
                     PinningComment.flagPinningComment = false;
                     PinningComment.comment = null;

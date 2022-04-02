@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,6 +19,7 @@ namespace Flowchart_Editor.Models.Comment
         private int valueOfClicksOnTextBlock = 0;
         private int gapBetweenCommentLines = 15;
         private int minimumHeightOfAllBlocks = DefaultPropertyForBlock.height;
+        private int minimumWidthOfAllBlocks = DefaultPropertyForBlock.width;
         private double initialСoordinatesX = 0;
         private double initialСoordinatesY = 0;
         private const string textComment = "Комментарий";
@@ -59,7 +61,32 @@ namespace Flowchart_Editor.Models.Comment
                 Canvas.SetTop(textBlockOfComment, -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2);
             }
         }
+        public void SetWidthtForFirstLine(int width)
+        {
+            if (firstLine != null && secondLine != null && thirdLine != null && fourthLine != null && fifthLine != null && sixthtLine != null)
+            {
+                firstLine.X1 = width - minimumWidthOfAllBlocks;
+                firstLine.X2 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines;
 
+                secondLine.X1 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 2;
+                secondLine.X2 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 3;
+
+                thirdLine.X1 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 4;
+                thirdLine.X2 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5;
+
+                fourthLine.X1 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5;
+                fourthLine.X2 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5;
+
+                fifthLine.X1 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5;
+                fifthLine.X2 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 6;
+
+                sixthtLine.X1 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5;
+                sixthtLine.X2 = width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 6;
+
+                Canvas.SetLeft(textBoxOfComment, width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
+                Canvas.SetLeft(textBlockOfComment, width - minimumWidthOfAllBlocks + gapBetweenCommentLines * 5 + gapBetweenCommentLines / 4);
+            }
+        }
         public UIElement GetUIElement()
         {
             if (canvasOfComment == null)
