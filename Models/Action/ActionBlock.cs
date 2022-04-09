@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
-using System;
 using Flowchart_Editor.Models.Action;
 
 namespace Flowchart_Editor.Models
@@ -24,6 +23,7 @@ namespace Flowchart_Editor.Models
         private int defaulFontSize = DefaultPropertyForBlock.fontSize;
         private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private int valueOfClicksOnTextBlock = 0;
+        private bool joiningFourthConnectionPoint = false;
         private MainWindow mainWindow;
         private const int radiusPoint = 6;
         private int keyOfActionBlock = 0;
@@ -155,12 +155,12 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                fourthPointToConnect.Fill = Brushes.Red;
+                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 fourthPointToConnect.Height = radiusPoint;
                 fourthPointToConnect.Width = radiusPoint;
                 Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 -2);
-                fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                fourthPointToConnect.MouseDown += AttachСommentGetСoordinatesOfConnectionPoint;
 
                 canvasOfActionBlock.Children.Add(textBoxOfActionBlock);
                 canvasOfActionBlock.Children.Add(firstPointToConnect);
@@ -171,11 +171,12 @@ namespace Flowchart_Editor.Models
             }
             return canvasOfActionBlock;
         }
-        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+
+        private void AttachСommentGetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (PinningComment.flagPinningComment && PinningComment.comment != null)
+                if (PinningComment.flagPinningComment && PinningComment.comment != null && !joiningFourthConnectionPoint)
                 {
                     UIElement commentUIElement = PinningComment.comment.GetUIElement();
                     canvasOfActionBlock.Children.Add(commentUIElement);
@@ -184,21 +185,41 @@ namespace Flowchart_Editor.Models
                     mainWindow.WriteFirstNameOfBlockToConect("");
                     PinningComment.flagPinningComment = false;
                     PinningComment.comment = null;
+                    joiningFourthConnectionPoint = true;
                 }
-                else if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
+                else
+                {
+                    if (!joiningFourthConnectionPoint)
+                        GetСoordinatesOfConnectionPoint(sender, e);
+                }
+            }
+        }
+        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
                 {
                     CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasOfActionBlock) + 3;
                     CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasOfActionBlock) + 3;
 
-                    mainActionBlock = this;
-                    firstSenderMainActionBlock = sender;
+                    joiningFourthConnectionPoint = true;
 
                     numberOfOccurrencesInBlock++;
 
                     CoordinatesBlock.keyFirstBlock = keyOfActionBlock;
 
-                    StaticActionBlock.actionBlock = this;
-                    StaticActionBlock.senderActionBlock = sender;
+                    if (numberOfOccurrencesInBlock == 1)
+                    {
+                        mainActionBlock = this;
+                        firstSenderMainActionBlock = sender;
+                        StaticActionBlock.actionBlock = this;
+                    }
+                    if (numberOfOccurrencesInBlock == 2)
+                    {
+                        StaticActionBlock.actionBlock = this;
+                        secondSenderMainActionBlock = sender;
+                    }
 
                     mainWindow.WriteFirstNameOfBlockToConect(textOfActionBlock);
                 }
@@ -216,33 +237,27 @@ namespace Flowchart_Editor.Models
 
                     numberOfOccurrencesInBlock++;
 
+                    joiningFourthConnectionPoint = true;
+
                     if (numberOfOccurrencesInBlock == 1)
                     {
                         mainActionBlock = this;
                         firstSenderMainActionBlock = sender;
                     }
 
-                    if (firstLineConnectionBlock == null)
-                    {
-                        firstLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                        StaticActionBlock.actionBlock.firstLineConnectionBlock = firstLineConnectionBlock;
-                    }
-                    else if (secondLineConnectionBlock == null)
-                    {
-                        secondLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                        StaticActionBlock.actionBlock.firstLineConnectionBlock = secondLineConnectionBlock;
-                    }
-                    else if (thirdLineConnectionBlock == null)
-                    {
-                        thirdLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                        StaticActionBlock.actionBlock.firstLineConnectionBlock = thirdLineConnectionBlock;
-                    }
-                    else if (fourthLineConnectionBlock == null)
-                    {
-                        thirdLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                        StaticActionBlock.actionBlock.firstLineConnectionBlock = thirdLineConnectionBlock; ;
-                    }
+                    if (numberOfOccurrencesInBlock == 2)
+                        secondSenderMainActionBlock = sender;
+                    
 
+                    if (firstLineConnectionBlock == null)
+                        firstLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
+                    else if (secondLineConnectionBlock == null)
+                        secondLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
+                    else if (thirdLineConnectionBlock == null)
+                        thirdLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
+                    else if (fourthLineConnectionBlock == null)
+                        thirdLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
+                        
                     CoordinatesBlock.coordinatesBlockPointX = 0;
                     CoordinatesBlock.coordinatesBlockPointY = 0;
                 }

@@ -268,47 +268,46 @@ namespace Flowchart_Editor
                 
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformationActionBlock, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformationActionBlock, position.Y + 1);
+                if (resultTransferInformation.numberOfOccurrencesInBlock == 1)
+                {
+                    double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
+                    double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
 
-                    if (resultTransferInformation.numberOfOccurrencesInBlock == 1)
-                    {
-                        double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
-                        double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
+                    double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
+                    double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
 
-                        double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
-                        double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
+                    resultTransferInformation.firstLineConnectionBlock.X1 = x1;
+                    resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
 
-                        resultTransferInformation.firstLineConnectionBlock.X1 = x1;
-                        resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
+                    resultTransferInformation.firstLineConnectionBlock.X2 = x2;
+                    resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
+                }
+                if (resultTransferInformation.numberOfOccurrencesInBlock == 2)
+                {
+                    double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
+                    double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
 
-                        resultTransferInformation.firstLineConnectionBlock.X2 = x2;
-                        resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
-                    }
-                    if (resultTransferInformation.numberOfOccurrencesInBlock == 2)
-                    {
-                        //double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
-                        //double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
+                    double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
+                    double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
 
-                        //double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
-                        //double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
+                    resultTransferInformation.firstLineConnectionBlock.X1 = x1;
+                    resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
 
-                        //resultTransferInformation.firstLineConnectionBlock.X1 = x1;
-                        //resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
+                    resultTransferInformation.firstLineConnectionBlock.X2 = x2;
+                    resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
 
-                        //resultTransferInformation.firstLineConnectionBlock.X2 = x2;
-                        //resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
+                    double x3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockX();
+                    double y3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockY();
 
-                        //double x3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockX();
-                        //double y3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockY();
+                    double x4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockX();
+                    double y4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockY();
 
-                        //double x4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockX();
-                        //double y4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockY();
+                    resultTransferInformation.secondLineConnectionBlock.X1 = x3;
+                    resultTransferInformation.secondLineConnectionBlock.Y1 = y3;
 
-                        //resultTransferInformation.secondLineConnectionBlock.X1 = x3;
-                        //resultTransferInformation.secondLineConnectionBlock.Y1 = y3;
-
-                        //resultTransferInformation.secondLineConnectionBlock.X2 = x4;
-                        //resultTransferInformation.secondLineConnectionBlock.Y2 = y4;
-                    }
+                    resultTransferInformation.secondLineConnectionBlock.X2 = x4;
+                    resultTransferInformation.secondLineConnectionBlock.Y2 = y4;
+                }
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
             {
@@ -1179,6 +1178,8 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(itemListCycleWhileEndBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
                 Canvas.SetLeft(itemListCycleWhileEndBlock.fourthPointToConnect, valueBlokWidth - 4);
             }
+            foreach (Comment itemListComment in listComment)
+                itemListComment.SetWidthtForFirstLine(valueBlokWidth);
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1358,9 +1359,7 @@ namespace Flowchart_Editor
                 Canvas.SetTop(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 4 - 3);
             }
             foreach (Comment itemListComment in listComment)
-            {
                 itemListComment.SetHeightForFirstLine(valueBlokHeight);
-            }
         }
         List<Line> listLineConnection = new List<Line>();
         public Line? DrawConnectionLine(double x1, double y1, double x2, double y2, ActionBlock actionBlockFromWhichLineOriginates = null, ActionBlock actionBlockFromWhichLineEnters = null)
@@ -1368,13 +1367,14 @@ namespace Flowchart_Editor
             if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
             {
                 MessageBox.Show("Ошибка соединения блоков");
+                actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock  = actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock - 2;
                 return null;
             }
             else
             {
                 BrushConverter color = new BrushConverter();
-
                 Line lineConnection = new Line();
+
                 lineConnection.X1 = x1;
                 lineConnection.Y1 = y1;
                 lineConnection.X2 = x2;
@@ -1384,15 +1384,44 @@ namespace Flowchart_Editor
                 destination.Children.Add(lineConnection);
                 if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 1)
                 {
-                    actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
+                    if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 1)
+                    {
+                        actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
+
+                        actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                        actionBlockFromWhichLineOriginates.senderFirstdActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+
+                        actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFirstdActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                    } 
+                    if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 2)
+                    {
+                        actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
+
+                        actionBlockFromWhichLineOriginates.secondActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                        actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+
+                        actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFirstdActionBlock = actionBlockFromWhichLineOriginates.secondSenderMainActionBlock;
+                    }
+
+                }
+                if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 2)
+                {
+                    if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 1)
+                        actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
+         
+                    actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
+
+                    actionBlockFromWhichLineOriginates.senderFirstdActionBlock = actionBlockFromWhichLineEnters.secondSenderMainActionBlock;
 
                     actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
-                    actionBlockFromWhichLineOriginates.senderFirstdActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+                    actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
 
-                    actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
-                    actionBlockFromWhichLineEnters.senderFirstdActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                    actionBlockFromWhichLineEnters.secondActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
+                    actionBlockFromWhichLineEnters.senderSecondActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+
                 }
-
                 return lineConnection;
             }
         }
