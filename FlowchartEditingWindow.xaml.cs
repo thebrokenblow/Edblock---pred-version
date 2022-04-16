@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Flowchart_Editor.Models;
-using Flowchart_Editor.Models.Action;
+using System.Windows.Controls;
+using System.Collections.Generic;
 using Flowchart_Editor.Models.Comment;
 
 namespace Flowchart_Editor
@@ -54,9 +53,9 @@ namespace Flowchart_Editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 keyBlock++;
-                var instanceOfConditionBlock = new ConditionBlock(this, keyBlock);
+                ConditionBlock instanceOfConditionBlock = new ConditionBlock(this, keyBlock);
                 listConditionBlock.Add(instanceOfConditionBlock);
-                var dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlock), instanceOfConditionBlock);
+                DataObject dataObjectInformationOConditionBlock = new DataObject(typeof(ConditionBlock), instanceOfConditionBlock);
                 DragDrop.DoDragDrop(conditionBlock, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
@@ -67,9 +66,9 @@ namespace Flowchart_Editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 keyBlock++;
-                var instanceOfStartEndBlock = new StartEndBlock(this, keyBlock);
+                StartEndBlock instanceOfStartEndBlock = new StartEndBlock(this, keyBlock);
                 listStartEndBlock.Add(instanceOfStartEndBlock);
-                var dataObjectInformationOfStartEndBlock = new DataObject(typeof(StartEndBlock), instanceOfStartEndBlock);
+                DataObject dataObjectInformationOfStartEndBlock = new DataObject(typeof(StartEndBlock), instanceOfStartEndBlock);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
@@ -80,9 +79,9 @@ namespace Flowchart_Editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 keyBlock++;
-                var instanceOfInputOutputBlock = new InputOutputBlock(this, keyBlock);
+                InputOutputBlock instanceOfInputOutputBlock = new InputOutputBlock(this, keyBlock);
                 listInputOutputBlock.Add(instanceOfInputOutputBlock);
-                var dataObjectInformationOfInputOutputBlock = new DataObject(typeof(InputOutputBlock), instanceOfInputOutputBlock);
+                DataObject dataObjectInformationOfInputOutputBlock = new DataObject(typeof(InputOutputBlock), instanceOfInputOutputBlock);
                 DragDrop.DoDragDrop(inputOutputBlock, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
@@ -253,9 +252,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(actionBlockOfUIElement);
                 }
                 else
-                {
                     actionBlockOfUIElement = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
-                }
+
                 Canvas.SetLeft(actionBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(actionBlockOfUIElement, position.Y + 1);
 
@@ -268,6 +266,7 @@ namespace Flowchart_Editor
                 
                 Canvas.SetLeft((UIElement)resultTransferInformation.transferInformationActionBlock, position.X + 1);
                 Canvas.SetTop((UIElement)resultTransferInformation.transferInformationActionBlock, position.Y + 1);
+
                 if (resultTransferInformation.numberOfOccurrencesInBlock == 1)
                 {
                     double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
@@ -282,7 +281,7 @@ namespace Flowchart_Editor
                     resultTransferInformation.firstLineConnectionBlock.X2 = x2;
                     resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
                 }
-                if (resultTransferInformation.numberOfOccurrencesInBlock == 2)
+                else if (resultTransferInformation.numberOfOccurrencesInBlock == 2)
                 {
                     double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
                     double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
@@ -308,6 +307,92 @@ namespace Flowchart_Editor
                     resultTransferInformation.secondLineConnectionBlock.X2 = x4;
                     resultTransferInformation.secondLineConnectionBlock.Y2 = y4;
                 }
+                else if (resultTransferInformation.numberOfOccurrencesInBlock == 3)
+                {
+                    double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
+                    double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
+
+                    double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
+                    double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
+
+                    resultTransferInformation.firstLineConnectionBlock.X1 = x1;
+                    resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
+
+                    resultTransferInformation.firstLineConnectionBlock.X2 = x2;
+                    resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
+
+                    double x3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockX();
+                    double y3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockY();
+
+                    double x4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockX();
+                    double y4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockY();
+
+                    resultTransferInformation.secondLineConnectionBlock.X1 = x3;
+                    resultTransferInformation.secondLineConnectionBlock.Y1 = y3;
+
+                    resultTransferInformation.secondLineConnectionBlock.X2 = x4;
+                    resultTransferInformation.secondLineConnectionBlock.Y2 = y4;
+
+                    double x5 = resultTransferInformation.GetСoordinatesFourthAtionBlockAndThirdSenderActionBlockX();
+                    double y5 = resultTransferInformation.GetСoordinatesFourthAtionBlockAndThirdSenderActionBlockY();
+
+                    double x6 = resultTransferInformation.GetСoordinatesFifthAtionBlockAndFourthSenderActionBlockX();
+                    double y6 = resultTransferInformation.GetСoordinatesFifthAtionBlockAndFourthSenderActionBlockY();
+
+                    resultTransferInformation.thirdLineConnectionBlock.X1 = x5;
+                    resultTransferInformation.thirdLineConnectionBlock.Y1 = y5;
+                    resultTransferInformation.thirdLineConnectionBlock.X2 = x6;
+                    resultTransferInformation.thirdLineConnectionBlock.Y2 = y6;
+
+                }
+                else if (resultTransferInformation.numberOfOccurrencesInBlock == 4)
+                {
+                    double x1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
+                    double y1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
+
+                    double x2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
+                    double y2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
+
+                    resultTransferInformation.firstLineConnectionBlock.X1 = x1;
+                    resultTransferInformation.firstLineConnectionBlock.Y1 = y1;
+
+                    resultTransferInformation.firstLineConnectionBlock.X2 = x2;
+                    resultTransferInformation.firstLineConnectionBlock.Y2 = y2;
+
+                    double x3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockX();
+                    double y3 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockY();
+
+                    double x4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockX();
+                    double y4 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockY();
+
+                    resultTransferInformation.secondLineConnectionBlock.X1 = x3;
+                    resultTransferInformation.secondLineConnectionBlock.Y1 = y3;
+
+                    resultTransferInformation.secondLineConnectionBlock.X2 = x4;
+                    resultTransferInformation.secondLineConnectionBlock.Y2 = y4;
+
+                    double x5 = resultTransferInformation.GetСoordinatesFourthAtionBlockAndThirdSenderActionBlockX();
+                    double y5 = resultTransferInformation.GetСoordinatesFourthAtionBlockAndThirdSenderActionBlockY();
+
+                    double x6 = resultTransferInformation.GetСoordinatesFifthAtionBlockAndFourthSenderActionBlockX();
+                    double y6 = resultTransferInformation.GetСoordinatesFifthAtionBlockAndFourthSenderActionBlockY();
+
+                    resultTransferInformation.thirdLineConnectionBlock.X1 = x5;
+                    resultTransferInformation.thirdLineConnectionBlock.Y1 = y5;
+                    resultTransferInformation.thirdLineConnectionBlock.X2 = x6;
+                    resultTransferInformation.thirdLineConnectionBlock.Y2 = y6;
+
+                    double x7 = resultTransferInformation.GetСoordinatesSixthAtionBlockAndFifthSenderActionBlockX();
+                    double y7 = resultTransferInformation.GetСoordinatesSixthAtionBlockAndFifthSenderActionBlockY();
+
+                    double x8 = resultTransferInformation.GetСoordinatesSeventhAtionBlockAndSixthSenderActionBlockX();
+                    double y8 = resultTransferInformation.GetСoordinatesSeventhAtionBlockAndSixthSenderActionBlockY();
+
+                    resultTransferInformation.fourthLineConnectionBlock.X1 = x7;
+                    resultTransferInformation.fourthLineConnectionBlock.Y1 = y7;
+                    resultTransferInformation.fourthLineConnectionBlock.X2 = x8;
+                    resultTransferInformation.fourthLineConnectionBlock.Y2 = y8;
+                }
             }
             else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
             {
@@ -321,9 +406,7 @@ namespace Flowchart_Editor
                     destination.Children.Add(conditionBlockOfUIElement);
                 }
                 else
-                {
                     conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
-                }
                 Canvas.SetLeft(conditionBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(conditionBlockOfUIElement, position.Y + 1);
 
@@ -350,9 +433,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(startEndBlockOfUIElement);
                 }
                 else
-                {
                     startEndBlockOfUIElement = ((StartEndBlock)e.Data.GetData(typeof(StartEndBlock))).GetUIElement();
-                }
+                
                 Canvas.SetLeft(startEndBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(startEndBlockOfUIElement, position.Y + 1);
 
@@ -380,9 +462,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(inputOutputBlockOfUIElement);
                 }
                 else
-                {
                     inputOutputBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
-                }
+                
                 Canvas.SetLeft(inputOutputBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(inputOutputBlockOfUIElement, position.Y + 1);
 
@@ -410,9 +491,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(subroutineBlockOfUIElement);
                 }
                 else
-                {
                     subroutineBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
-                }
+                
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
@@ -440,9 +520,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(subroutineBlockOfUIElement);
                 }
                 else
-                {
                     subroutineBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
-                }
+
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
@@ -470,9 +549,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(subroutineBlockOfUIElement);
                 }
                 else
-                {
                     subroutineBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
-                }
+
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
@@ -500,9 +578,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(subroutineBlockOfUIElement);
                 }
                 else
-                {
                     subroutineBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
-                }
+
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
@@ -530,9 +607,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(linkBlockOfUIElement);
                 }
                 else
-                {
                     linkBlockOfUIElement = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
-                }
+                
                 Canvas.SetLeft(linkBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(linkBlockOfUIElement, position.Y + 1);
 
@@ -560,9 +636,8 @@ namespace Flowchart_Editor
                     destination.Children.Add(commentOfUIElement);
                 }
                 else
-                {
                     commentOfUIElement = ((Comment)e.Data.GetData(typeof(Comment))).GetUIElement();
-                }
+
                 Canvas.SetLeft(commentOfUIElement, position.X + 1);
                 Canvas.SetTop(commentOfUIElement, position.Y + 1);
             }
@@ -717,73 +792,38 @@ namespace Flowchart_Editor
                     textNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
                     DefaultPropertyForBlock.colorPoint = darkWhite;
-                    foreach (ActionBlock itemListActionBlock in listActionBlock)
-                    {
-                        itemListActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
 
-                    }
+                    foreach (ActionBlock itemListActionBlock in listActionBlock)
+                        itemListActionBlock.SetFillOfPointToConnect(darkWhite);
+
                     foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
-                    {
-                        itemListConditionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListConditionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListConditionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListConditionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListConditionBlock.SetFillOfPointToConnect(darkWhite);
+                    
                     foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-                    {
-                        itemListStartEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListStartEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListStartEndBlock.SetFillOfPointToConnect(darkWhite);
+                        
                     foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
-                    {
-                        itemListInputOutputBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListInputOutputBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListInputOutputBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListInputOutputBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListInputOutputBlock.SetFillOfPointToConnect(darkWhite);
+                    
                     foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
-                    {
-                        itemListSubroutineBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListSubroutineBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListSubroutineBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListSubroutineBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListSubroutineBlock.SetFillOfPointToConnect(darkWhite);
+
                     foreach (CycleForBlock itemListCycleForBlock in listCycleForBlock)
-                    {
-                        itemListCycleForBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleForBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleForBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleForBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListCycleForBlock.SetFillOfPointToConnect(darkWhite);
+                    
                     foreach (CycleWhileBeginBlock itemListCycleWhileBeginBlock in listCycleWhileBeginBlock)
-                    {
-                        itemListCycleWhileBeginBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleWhileBeginBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleWhileBeginBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleWhileBeginBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListCycleWhileBeginBlock.SetFillOfPointToConnect(darkWhite);
+                       
                     foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
-                    {
-                        itemListCycleWhileEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleWhileEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
+                        itemListCycleWhileEndBlock.SetFillOfPointToConnect(darkWhite);
+                    
                     foreach (LinkBlock itemListLinkBlock in listLinkBlock)
-                    {
-                        itemListLinkBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListLinkBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListLinkBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                        itemListLinkBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
-                    }
-                    DefaultPropertyForBlock.colorLine = darkWhite;
+                        itemListLinkBlock.SetFillOfPointToConnect(darkWhite);
+
                     foreach (Line itemListLineConnection in listLineConnection)
                         itemListLineConnection.Stroke = (Brush)color.ConvertFrom(darkWhite);
+
+                    DefaultPropertyForBlock.colorLine = darkWhite;
                 }
                 else
                 {
@@ -843,79 +883,41 @@ namespace Flowchart_Editor
                     textNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
                     DefaultPropertyForBlock.colorPoint = darkBlack;
+
                     foreach (ActionBlock itemListActionBlock in listActionBlock)
-                    {
-                        itemListActionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListActionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListActionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListActionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListActionBlock.SetFillOfPointToConnect(darkBlack);
+                   
                     foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
-                    {
-                        itemListConditionBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListConditionBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListConditionBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListConditionBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListConditionBlock.SetFillOfPointToConnect(darkBlack);
+
                     foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-                    {
-                        itemListStartEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListStartEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListStartEndBlock.SetFillOfPointToConnect(darkBlack);
+
                     foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-                    {
-                        itemListStartEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListStartEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListStartEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListStartEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListStartEndBlock.SetFillOfPointToConnect(darkBlack);
+                    
                     foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
-                    {
-                        itemListInputOutputBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListInputOutputBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListInputOutputBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListInputOutputBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListInputOutputBlock.SetFillOfPointToConnect(darkBlack);
+
                     foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
-                    {
-                        itemListSubroutineBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListSubroutineBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListSubroutineBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListSubroutineBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListSubroutineBlock.SetFillOfPointToConnect(darkBlack);
+                    
                     foreach (CycleForBlock itemListCycleForBlock in listCycleForBlock)
-                    {
-                        itemListCycleForBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleForBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleForBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleForBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListCycleForBlock.SetFillOfPointToConnect(darkBlack);
+                    
                     foreach (CycleWhileBeginBlock itemListCycleWhileBeginBlock in listCycleWhileBeginBlock)
-                    {
-                        itemListCycleWhileBeginBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleWhileBeginBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleWhileBeginBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleWhileBeginBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListCycleWhileBeginBlock.SetFillOfPointToConnect(darkBlack);
+
                     foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
-                    {
-                        itemListCycleWhileEndBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleWhileEndBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleWhileEndBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListCycleWhileEndBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
+                        itemListCycleWhileEndBlock.SetFillOfPointToConnect(darkBlack);
+
                     foreach (LinkBlock itemListLinkBlock in listLinkBlock)
-                    {
-                        itemListLinkBlock.firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListLinkBlock.secondPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListLinkBlock.thirdPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                        itemListLinkBlock.fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkBlack);
-                    }
-                    DefaultPropertyForBlock.colorLine = darkBlack;
+                        itemListLinkBlock.SetFillOfPointToConnect(darkBlack);
+
                     foreach (Line itemListLineConnection in listLineConnection)
                         itemListLineConnection.Stroke = (Brush)color.ConvertFrom(darkBlack);
+
+                    DefaultPropertyForBlock.colorLine = darkBlack;
                 }
             }
         }
@@ -924,450 +926,147 @@ namespace Flowchart_Editor
         {
             FontFamily fontFamily = new FontFamily(((ComboBoxItem)listOfFontsComboBox.SelectedItem).Content.ToString());
             DefaultPropertyForBlock.fontFamily = fontFamily;
+
             foreach (ActionBlock itemListActionBlock in listActionBlock)
-            {
-                itemListActionBlock.textBoxOfActionBlock.FontFamily = fontFamily;
-                itemListActionBlock.textBlockOfActionBlock.FontFamily = fontFamily;
-            }
+                itemListActionBlock.SetFontFamily(fontFamily);
+
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
-            {
-                itemListConditionBlock.textBoxOfConditionBlock.FontFamily = fontFamily;
-                itemListConditionBlock.textBlocOfConditionBlock.FontFamily = fontFamily;
-            }
+                itemListConditionBlock.SetFontFamily(fontFamily);
+
             foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-            {
-                itemListStartEndBlock.textBoxOfStartEnd.FontFamily = fontFamily;
-                itemListStartEndBlock.textBlockOfStartEnd.FontFamily = fontFamily;
-            }
+                itemListStartEndBlock.SetFontFamily(fontFamily);
+            
             foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
-            {
-                itemListInputOutputBlock.textBoxInputOutputBlock.FontFamily = fontFamily;
-                itemListInputOutputBlock.textBlockInputOutputBlock.FontFamily = fontFamily;
-            }
+                itemListInputOutputBlock.SetFontFamily(fontFamily);
+
             foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
-            {
-                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.FontFamily = fontFamily;
-                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.FontFamily = fontFamily;
-            }
+                itemListSubroutineBlock.SetFontFamily(fontFamily);
+               
             foreach (CycleForBlock itemListCycleForBlock in listCycleForBlock)
-            {
-                itemListCycleForBlock.textBoxOfCycleForBlock.FontFamily = fontFamily;
-                itemListCycleForBlock.textBlockOfCycleForBlock.FontFamily = fontFamily;
-            }
+                itemListCycleForBlock.SetFontFamily(fontFamily);
+
             foreach (CycleWhileBeginBlock itemListCycleWhileBeginBlock in listCycleWhileBeginBlock)
-            {
-                itemListCycleWhileBeginBlock.textBoxOfCycleWhileBeginBlock.FontFamily = fontFamily;
-                itemListCycleWhileBeginBlock.textBlockOfCycleWhileBeginBlock.FontFamily = fontFamily;
-            }
+                itemListCycleWhileBeginBlock.SetFontFamily(fontFamily);
+
             foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
-            {
-                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.FontFamily = fontFamily;
-                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.FontFamily = fontFamily;
-            }
+                itemListCycleWhileEndBlock.SetFontFamily(fontFamily);
+
             foreach (LinkBlock itemListLinkBlock in listLinkBlock)
-            {
-                itemListLinkBlock.textBoxOfLinkBlockBox.FontFamily = fontFamily;
-                itemListLinkBlock.textBlockOfLinkBlockBox.FontFamily = fontFamily;
-            }
+                itemListLinkBlock.SetFontFamily(fontFamily);
         }
 
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueFontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
             DefaultPropertyForBlock.fontSize = valueFontSize;
+
             foreach (ActionBlock itemListActionBlock in listActionBlock)
-            {
-                itemListActionBlock.textBoxOfActionBlock.FontSize = valueFontSize;
-                itemListActionBlock.textBlockOfActionBlock.FontSize = valueFontSize;
-            }
+                itemListActionBlock.SetFontSize(valueFontSize);
+            
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
-            {
-                itemListConditionBlock.textBoxOfConditionBlock.FontSize = valueFontSize;
-                itemListConditionBlock.textBlocOfConditionBlock.FontSize = valueFontSize;
-            }
+                itemListConditionBlock.SetFontSize(valueFontSize);
+               
             foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-            {
-                itemListStartEndBlock.textBoxOfStartEnd.FontSize = valueFontSize;
-                itemListStartEndBlock.textBlockOfStartEnd.FontSize = valueFontSize;
-            }
+                itemListStartEndBlock.SetFontSize(valueFontSize);
+            
             foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
-            {
-                itemListInputOutputBlock.textBoxInputOutputBlock.FontSize = valueFontSize;
-                itemListInputOutputBlock.textBlockInputOutputBlock.FontSize = valueFontSize;
-            }
+                itemListInputOutputBlock.SetFontSize(valueFontSize);
+            
             foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
-            {
-                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.FontSize = valueFontSize;
-                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.FontSize = valueFontSize;
-            }
+                itemListSubroutineBlock.SetFontSize(valueFontSize);
+
             foreach (CycleForBlock itemListCycleForBlock in listCycleForBlock)
-            {
-                itemListCycleForBlock.textBoxOfCycleForBlock.FontSize = valueFontSize;
-                itemListCycleForBlock.textBlockOfCycleForBlock.FontSize = valueFontSize;
-            }
+                itemListCycleForBlock.SetFontSize(valueFontSize);
+            
             foreach (CycleWhileBeginBlock itemListCycleWhileBeginBlock in listCycleWhileBeginBlock)
-            {
-                itemListCycleWhileBeginBlock.textBoxOfCycleWhileBeginBlock.FontSize = valueFontSize;
-                itemListCycleWhileBeginBlock.textBlockOfCycleWhileBeginBlock.FontSize = valueFontSize;
-            }
+                itemListCycleWhileBeginBlock.SetFontSize(valueFontSize);
+            
             foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
-            {
-                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.FontSize = valueFontSize;
-                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.FontSize = valueFontSize;
-            }
+                itemListCycleWhileEndBlock.SetFontSize(valueFontSize);
+
             foreach (LinkBlock itemListLinkBlock in listLinkBlock)
-            {
-                itemListLinkBlock.textBoxOfLinkBlockBox.FontSize = valueFontSize;
-                itemListLinkBlock.textBlockOfLinkBlockBox.FontSize = valueFontSize;
-            }
+                itemListLinkBlock.SetFontSize(valueFontSize);
         }
 
         private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int valueBlokWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
-            DefaultPropertyForBlock.width = (int)valueBlokWidth;
+            int valueBlockWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
+            DefaultPropertyForBlock.width = (int)valueBlockWidth;
+            int valueBlockHeight = DefaultPropertyForBlock.height;
+
             foreach (ActionBlock itemListActionBlock in listActionBlock)
-            {
-                itemListActionBlock.canvasOfActionBlock.Width = valueBlokWidth;
-                itemListActionBlock.textBoxOfActionBlock.Width = valueBlokWidth;
-                itemListActionBlock.textBlockOfActionBlock.Width = valueBlokWidth;
-                Canvas.SetLeft(itemListActionBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListActionBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListActionBlock.fourthPointToConnect, valueBlokWidth - 4);
-            }
-            int valueBlokHeight = DefaultPropertyForBlock.height;
+                itemListActionBlock.SetWidthOfBlock(valueBlockWidth);
+            
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
-            {
-                Point Point1 = new Point(0, valueBlokHeight / 2);
-                Point Point2 = new Point(valueBlokWidth / 2, valueBlokHeight);
-                Point Point3 = new Point(valueBlokWidth, valueBlokHeight / 2);
-                Point Point4 = new Point(valueBlokWidth / 2, 0);
-                Point Point5 = new Point(0, valueBlokHeight / 2);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                itemListConditionBlock.polygonConditionBlock.Points = myPointCollection;
-                itemListConditionBlock.textBoxOfConditionBlock.Width = valueBlokWidth / 2;
-                itemListConditionBlock.textBlocOfConditionBlock.Width = valueBlokWidth / 2;
-                Canvas.SetLeft(itemListConditionBlock.textBlocOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
-                Canvas.SetLeft(itemListConditionBlock.textBoxOfConditionBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
-                Canvas.SetLeft(itemListConditionBlock.firstPointToConnect, valueBlokWidth / 2 - 3);
-                Canvas.SetLeft(itemListConditionBlock.secondPointToConnect, 0);
-                Canvas.SetLeft(itemListConditionBlock.thirdPointToConnect, valueBlokWidth / 2 - 3);
-                Canvas.SetLeft(itemListConditionBlock.fourthPointToConnect, valueBlokWidth - 6);
-            }
+                itemListConditionBlock.SetWidthAndHeightOfBlock(valueBlockWidth, valueBlockHeight);
+
             foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-            {
-                itemListStartEndBlock.canvasStartEndBlock.Width = valueBlokWidth;
-                itemListStartEndBlock.rectangleStartEndBlock.Width = valueBlokWidth;
-                itemListStartEndBlock.textBlockOfStartEnd.Width = valueBlokWidth;
-                itemListStartEndBlock.textBoxOfStartEnd.Width = valueBlokWidth;
-                Canvas.SetLeft(itemListStartEndBlock.firstPointToConnect, valueBlokWidth / 2 - 2.5);
-                Canvas.SetLeft(itemListStartEndBlock.thirdPointToConnect, valueBlokWidth / 2 - 2.5);
-                Canvas.SetLeft(itemListStartEndBlock.fourthPointToConnect, valueBlokWidth - 2.5);
-            }
+                itemListStartEndBlock.SetWidthOfBlock(valueBlockWidth);
+
             foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
-            {
-                Point Point1 = new Point(20, 0);
-                Point Point2 = new Point(0, valueBlokHeight);
-                Point Point3 = new Point(valueBlokWidth - 20, valueBlokHeight);
-                Point Point4 = new Point(valueBlokWidth, 0);
-
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-
-                itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
-                itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
-                itemListInputOutputBlock.textBoxInputOutputBlock.Width = valueBlokWidth;
-                itemListInputOutputBlock.textBlockInputOutputBlock.Width = valueBlokWidth;
-                Canvas.SetLeft(itemListInputOutputBlock.firstPointToConnect, valueBlokWidth / 2);
-                Canvas.SetLeft(itemListInputOutputBlock.thirdPointToConnect, valueBlokWidth / 2);
-                Canvas.SetLeft(itemListInputOutputBlock.fourthPointToConnect, valueBlokWidth - 13);
-            }
+                itemListInputOutputBlock.SetWidthAndHeightOfBlock(valueBlockWidth, valueBlockHeight);
+            
             foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
-            {
-                itemListSubroutineBlock.canvasSubroutineBlock.Width = valueBlokWidth;
-                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.Width = valueBlokWidth;
-                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.Width = valueBlokWidth;
-                itemListSubroutineBlock.borderSubroutineBlock.Width = valueBlokWidth;
-                itemListSubroutineBlock.borderSubroutineBlock.Width = valueBlokWidth;
-                itemListSubroutineBlock.internalBorderSubroutineBlock.Width = valueBlokWidth - 40;
-
-                Canvas.SetLeft(itemListSubroutineBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListSubroutineBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListSubroutineBlock.fourthPointToConnect, valueBlokWidth - 4);
-            }
+                itemListSubroutineBlock.SetWidthOfBlock(valueBlockWidth);
+                
             foreach (CycleForBlock itemListCycleForBlock in listCycleForBlock)
-            {
-                Point Point1 = new Point(10, 0);
-                Point Point2 = new Point(0, 10);
-                Point Point3 = new Point(0, valueBlokHeight - 10);
-                Point Point4 = new Point(10, valueBlokHeight);
-                Point Point5 = new Point(valueBlokWidth - 10, valueBlokHeight);
-                Point Point6 = new Point(valueBlokWidth, valueBlokHeight - 10);
-                Point Point7 = new Point(valueBlokWidth, 10);
-                Point Point8 = new Point(valueBlokWidth - 10, 0);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                myPointCollection.Add(Point6);
-                myPointCollection.Add(Point7);
-                myPointCollection.Add(Point8);
-                itemListCycleForBlock.polygonCycleForBlock.Points = myPointCollection;
-                itemListCycleForBlock.canvasCycleForBlock.Width = valueBlokWidth;
-                itemListCycleForBlock.textBoxOfCycleForBlock.Width = valueBlokWidth;
-                itemListCycleForBlock.textBlockOfCycleForBlock.Width = valueBlokWidth;
-                Canvas.SetLeft(itemListCycleForBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListCycleForBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListCycleForBlock.fourthPointToConnect, valueBlokWidth - 4);
-            }
+                itemListCycleForBlock.SetWidthAndHeightOfBlock(valueBlockWidth, valueBlockHeight);
+
             foreach (CycleWhileBeginBlock itemListCycleWhileBeginBlock in listCycleWhileBeginBlock)
-            {
-                Point Point1 = new Point(0, valueBlokHeight);
-                Point Point2 = new Point(0, 10);
-                Point Point3 = new Point(10, 0);
-                Point Point4 = new Point(valueBlokWidth - 10, 0);
-                Point Point5 = new Point(valueBlokWidth, 10);
-                Point Point6 = new Point(valueBlokWidth, valueBlokHeight);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                myPointCollection.Add(Point6);
-
-                itemListCycleWhileBeginBlock.polygonCycleWhileBeginBlock.Points = myPointCollection;
-                itemListCycleWhileBeginBlock.canvasCycleWhileBeginBlock.Width = valueBlokWidth;
-                itemListCycleWhileBeginBlock.textBoxOfCycleWhileBeginBlock.Width = valueBlokWidth;
-                itemListCycleWhileBeginBlock.textBlockOfCycleWhileBeginBlock.Width = valueBlokWidth;
-                Canvas.SetLeft(itemListCycleWhileBeginBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListCycleWhileBeginBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListCycleWhileBeginBlock.fourthPointToConnect, valueBlokWidth - 4);
-            }
+                itemListCycleWhileBeginBlock.SetWidthAndHeightOfBlock(valueBlockWidth, valueBlockHeight);
+                
             foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
-            {
-                Point Point1 = new Point(0, 0);
-                Point Point2 = new Point(0, valueBlokHeight - 10);
-                Point Point3 = new Point(10, valueBlokHeight);
-                Point Point4 = new Point(valueBlokWidth - 10, valueBlokHeight);
-                Point Point5 = new Point(valueBlokWidth, valueBlokHeight - 10);
-                Point Point6 = new Point(valueBlokWidth, 0);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                myPointCollection.Add(Point6);
+                itemListCycleWhileEndBlock.SetWidthAndHeightOfBlock(valueBlockWidth, valueBlockHeight);
 
-                itemListCycleWhileEndBlock.polygonCycleWhileEndBlock.Points = myPointCollection;
-                itemListCycleWhileEndBlock.canvasCycleWhileEndBlock.Width = valueBlokWidth;
-                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.Width = valueBlokWidth;
-                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.Width = valueBlokWidth;
-                Canvas.SetLeft(itemListCycleWhileEndBlock.firstPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListCycleWhileEndBlock.thirdPointToConnect, valueBlokWidth / 2 - 2);
-                Canvas.SetLeft(itemListCycleWhileEndBlock.fourthPointToConnect, valueBlokWidth - 4);
-            }
             foreach (Comment itemListComment in listComment)
-                itemListComment.SetWidthtForFirstLine(valueBlokWidth);
+                itemListComment.SetWidtht(valueBlockWidth);
         }
         private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
             DefaultPropertyForBlock.height = (int)valueBlokHeight;
-            foreach (ActionBlock itemListActionBlock in listActionBlock)
-            {
-                itemListActionBlock.canvasOfActionBlock.Height = valueBlokHeight;
-                itemListActionBlock.textBoxOfActionBlock.Height = valueBlokHeight;
-                Canvas.SetTop(itemListActionBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(itemListActionBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(itemListActionBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
-            }
             int valueBlokWidth = DefaultPropertyForBlock.width;
+
+            foreach (ActionBlock itemListActionBlock in listActionBlock)
+                itemListActionBlock.SetHeightBlock(valueBlokHeight);
+
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
-            {
-                Point Point1 = new Point(0, valueBlokHeight / 2);
-                Point Point2 = new Point(valueBlokWidth / 2, valueBlokHeight);
-                Point Point3 = new Point(valueBlokWidth, valueBlokHeight / 2);
-                Point Point4 = new Point(valueBlokWidth / 2, 0);
-                Point Point5 = new Point(0, valueBlokHeight / 2);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                itemListConditionBlock.polygonConditionBlock.Points = myPointCollection;
-                Canvas.SetTop(itemListConditionBlock.textBoxOfConditionBlock, valueBlokHeight / 4);
-                Canvas.SetTop(itemListConditionBlock.textBlocOfConditionBlock, valueBlokHeight / 4);
-                Canvas.SetTop(itemListConditionBlock.firstPointToConnect, -2);
-                Canvas.SetTop(itemListConditionBlock.secondPointToConnect, valueBlokHeight / 2 - 3);
-                Canvas.SetTop(itemListConditionBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(itemListConditionBlock.fourthPointToConnect, valueBlokHeight / 2 - 3);
-            }
+                itemListConditionBlock.SetWidthAndHeightOfBlock(valueBlokWidth, valueBlokHeight);
+
             foreach (StartEndBlock itemListStartEndBlock in listStartEndBlock)
-            {
-                itemListStartEndBlock.canvasStartEndBlock.Height = valueBlokHeight / 2;
-                itemListStartEndBlock.rectangleStartEndBlock.Height = valueBlokHeight / 2;
-                Canvas.SetTop(itemListStartEndBlock.secondPointToConnect, valueBlokHeight / 4 - 2.5);
-                Canvas.SetTop(itemListStartEndBlock.thirdPointToConnect, valueBlokHeight / 2 - 2.5);
-                Canvas.SetTop(itemListStartEndBlock.fourthPointToConnect, valueBlokHeight / 4 - 2.5);
-            }
+                itemListStartEndBlock.SetHeightOfBlock(valueBlokHeight);
+            
             foreach (InputOutputBlock itemListInputOutputBlock in listInputOutputBlock)
-            {
-                Point Point1 = new Point(20, 0);
-                Point Point2 = new Point(0, valueBlokHeight);
-                Point Point3 = new Point(valueBlokWidth - 20, valueBlokHeight);
-                Point Point4 = new Point(valueBlokWidth, 0);
-
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-
-                itemListInputOutputBlock.polygonInputOutputBlock.Points = myPointCollection;
-                itemListInputOutputBlock.canvasInputOutputBlock.Width = valueBlokWidth;
-                itemListInputOutputBlock.textBoxInputOutputBlock.Height = valueBlokHeight;
-                itemListInputOutputBlock.textBlockInputOutputBlock.Height = valueBlokHeight;
-
-                Canvas.SetTop(itemListInputOutputBlock.secondPointToConnect, valueBlokHeight / 2 - 5);
-                Canvas.SetTop(itemListInputOutputBlock.thirdPointToConnect, valueBlokHeight - 3);                
-                Canvas.SetTop(itemListInputOutputBlock.fourthPointToConnect, valueBlokHeight / 2 - 5);
-            }
+                itemListInputOutputBlock.SetWidthAndHeightOfBlock(valueBlokWidth, valueBlokHeight);
+                
             foreach (SubroutineBlock itemListSubroutineBlock in listSubroutineBlock)
-            {
-                itemListSubroutineBlock.canvasSubroutineBlock.Height = valueBlokHeight;
-                itemListSubroutineBlock.textBoxOfSubroutineBlockBox.Height = valueBlokHeight;
-                itemListSubroutineBlock.textBlockOfSubroutineBlockBox.Height = valueBlokHeight;
-                itemListSubroutineBlock.borderSubroutineBlock.Height = valueBlokHeight;
-                itemListSubroutineBlock.internalBorderSubroutineBlock.Height = valueBlokHeight;
+                itemListSubroutineBlock.SetHeightOfBlock(valueBlokHeight);
 
-                Canvas.SetTop(itemListSubroutineBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(itemListSubroutineBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(itemListSubroutineBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
-            }
             foreach (CycleForBlock itemListCycleForBlock in listCycleForBlock)
-            {
-                Point Point1 = new Point(10, 0);
-                Point Point2 = new Point(0, 10);
-                Point Point3 = new Point(0, valueBlokHeight - 10);
-                Point Point4 = new Point(10, valueBlokHeight);
-                Point Point5 = new Point(valueBlokWidth - 10, valueBlokHeight);
-                Point Point6 = new Point(valueBlokWidth, valueBlokHeight - 10);
-                Point Point7 = new Point(valueBlokWidth, 10);
-                Point Point8 = new Point(valueBlokWidth - 10, 0);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                myPointCollection.Add(Point6);
-                myPointCollection.Add(Point7);
-                myPointCollection.Add(Point8);
-                itemListCycleForBlock.polygonCycleForBlock.Points = myPointCollection;
-                itemListCycleForBlock.canvasCycleForBlock.Height = valueBlokHeight;
-                itemListCycleForBlock.textBoxOfCycleForBlock.Height = valueBlokHeight;
-                itemListCycleForBlock.textBlockOfCycleForBlock.Height = valueBlokHeight;
-                Canvas.SetTop(itemListCycleForBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(itemListCycleForBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(itemListCycleForBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
-            }
+                itemListCycleForBlock.SetWidthAndHeightOfBlock(valueBlokWidth, valueBlokHeight);
+
             foreach (CycleWhileBeginBlock itemListCycleWhileBeginBlock in listCycleWhileBeginBlock)
-            {
-                Point Point1 = new Point(0, valueBlokHeight);
-                Point Point2 = new Point(0, 10);
-                Point Point3 = new Point(10, 0);
-                Point Point4 = new Point(valueBlokWidth - 10, 0);
-                Point Point5 = new Point(valueBlokWidth, 10);
-                Point Point6 = new Point(valueBlokWidth, valueBlokHeight);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                myPointCollection.Add(Point6);
-
-                itemListCycleWhileBeginBlock.polygonCycleWhileBeginBlock.Points = myPointCollection;
-                itemListCycleWhileBeginBlock.canvasCycleWhileBeginBlock.Height = valueBlokHeight;
-                itemListCycleWhileBeginBlock.textBoxOfCycleWhileBeginBlock.Height = valueBlokHeight;
-                itemListCycleWhileBeginBlock.textBlockOfCycleWhileBeginBlock.Height = valueBlokHeight;
-                Canvas.SetTop(itemListCycleWhileBeginBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(itemListCycleWhileBeginBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(itemListCycleWhileBeginBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
-            }
+                itemListCycleWhileBeginBlock.SetWidthAndHeightOfBlock(valueBlokWidth, valueBlokHeight);
+              
             foreach (CycleWhileEndBlock itemListCycleWhileEndBlock in listCycleWhileEndBlock)
-            {
-                Point Point1 = new Point(0, 0);
-                Point Point2 = new Point(0, valueBlokHeight - 10);
-                Point Point3 = new Point(10, valueBlokHeight);
-                Point Point4 = new Point(valueBlokWidth - 10, valueBlokHeight);
-                Point Point5 = new Point(valueBlokWidth, valueBlokHeight - 10);
-                Point Point6 = new Point(valueBlokWidth, 0);
-                PointCollection myPointCollection = new PointCollection();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                myPointCollection.Add(Point6);
+                itemListCycleWhileEndBlock.SetWidthAndHeightOfBlock(valueBlokWidth, valueBlokHeight);
 
-                itemListCycleWhileEndBlock.polygonCycleWhileEndBlock.Points = myPointCollection;
-                itemListCycleWhileEndBlock.canvasCycleWhileEndBlock.Height = valueBlokHeight;
-                itemListCycleWhileEndBlock.textBoxOfCycleWhileEndBlock.Height = valueBlokHeight;
-                itemListCycleWhileEndBlock.textBlockOfCycleWhileEndBlock.Height = valueBlokHeight;
-                Canvas.SetTop(itemListCycleWhileEndBlock.secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(itemListCycleWhileEndBlock.thirdPointToConnect, valueBlokHeight - 3);
-                Canvas.SetTop(itemListCycleWhileEndBlock.fourthPointToConnect, valueBlokHeight / 2 - 2);
-            }
             foreach (LinkBlock itemListLinkBlock in listLinkBlock)
-            {
-                itemListLinkBlock.canvasLinkBlock.Width = valueBlokHeight / 2;
-                itemListLinkBlock.canvasLinkBlock.Height = valueBlokHeight / 2;
-
-                itemListLinkBlock.eliposLinkBlock.Height = valueBlokHeight / 2;
-                itemListLinkBlock.eliposLinkBlock.Width = valueBlokHeight / 2;
-
-                itemListLinkBlock.textBoxOfLinkBlockBox.Width = valueBlokHeight / 2;
-                itemListLinkBlock.textBoxOfLinkBlockBox.Height = valueBlokHeight / 2 - 2.5;
-
-                itemListLinkBlock.textBlockOfLinkBlockBox.Width = valueBlokHeight / 2;
-                itemListLinkBlock.textBlockOfLinkBlockBox.Height = valueBlokHeight / 2 - 2.5;
-
-                Canvas.SetLeft(itemListLinkBlock.firstPointToConnect, valueBlokHeight / 4 - 3);
-                Canvas.SetTop(itemListLinkBlock.firstPointToConnect, -2);
-
-                Canvas.SetLeft(itemListLinkBlock.secondPointToConnect, -2);
-                Canvas.SetTop(itemListLinkBlock.secondPointToConnect, valueBlokHeight / 4 - 3);
-
-                Canvas.SetLeft(itemListLinkBlock.thirdPointToConnect, valueBlokHeight / 4 - 3);
-                Canvas.SetTop(itemListLinkBlock.thirdPointToConnect, valueBlokHeight / 2 - 3);
-
-                Canvas.SetLeft(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 2 - 3);
-                Canvas.SetTop(itemListLinkBlock.fourthPointToConnect, valueBlokHeight / 4 - 3);
-            }
+                itemListLinkBlock.SetHeightOfBlock(valueBlokHeight);
+                
             foreach (Comment itemListComment in listComment)
-                itemListComment.SetHeightForFirstLine(valueBlokHeight);
+                itemListComment.SetHeight(valueBlokHeight);
         }
         List<Line> listLineConnection = new List<Line>();
+        
         public Line? DrawConnectionLine(double x1, double y1, double x2, double y2, ActionBlock actionBlockFromWhichLineOriginates = null, ActionBlock actionBlockFromWhichLineEnters = null)
         {
             if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
             {
                 MessageBox.Show("Ошибка соединения блоков");
-                actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock  = actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock - 2;
+                actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock = actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock - 2;
+                WriteFirstNameOfBlockToConect("");
+                WriteSecondNameOfBlockToConect("");
                 return null;
             }
             else
@@ -1380,6 +1079,7 @@ namespace Flowchart_Editor
                 lineConnection.X2 = x2;
                 lineConnection.Y2 = y2;
                 lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+
                 listLineConnection.Add(lineConnection);
                 destination.Children.Add(lineConnection);
                 if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 1)
@@ -1387,40 +1087,130 @@ namespace Flowchart_Editor
                     if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 1)
                     {
                         actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
-
                         actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
-                        actionBlockFromWhichLineOriginates.senderFirstdActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
-
-                        actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
-                        actionBlockFromWhichLineEnters.senderFirstdActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.senderFirstActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFirstActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
                     } 
-                    if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 2)
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 2)
                     {
                         actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
-
                         actionBlockFromWhichLineOriginates.secondActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
                         actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
-
-                        actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
-                        actionBlockFromWhichLineEnters.senderFirstdActionBlock = actionBlockFromWhichLineOriginates.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFirstActionBlock = actionBlockFromWhichLineOriginates.secondSenderMainActionBlock;
                     }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 3)
+                    {
+                        actionBlockFromWhichLineOriginates.thirdLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.thirdActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                        actionBlockFromWhichLineOriginates.senderThirdActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFirstActionBlock = actionBlockFromWhichLineOriginates.thirdSenderMainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 4)
+                    {
+                        actionBlockFromWhichLineOriginates.fourthLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.fourthActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                        actionBlockFromWhichLineOriginates.senderFourthActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFirstActionBlock = actionBlockFromWhichLineOriginates.thirdSenderMainActionBlock;
+                    }
+                    actionBlockFromWhichLineEnters.firstActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
 
                 }
-                if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 2)
+                else if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 2)
                 {
                     if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 1)
+                    {
                         actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
-         
-                    actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
-
-                    actionBlockFromWhichLineOriginates.senderFirstdActionBlock = actionBlockFromWhichLineEnters.secondSenderMainActionBlock;
-
-                    actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
-                    actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.firstSenderMainActionBlock;
-
+                        actionBlockFromWhichLineOriginates.senderFirstActionBlock = actionBlockFromWhichLineEnters.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderSecondActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 2)
+                    {
+                        actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderSecondActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.secondActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 3)
+                    {
+                        actionBlockFromWhichLineOriginates.thirdLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderThirdActionBlock = actionBlockFromWhichLineEnters.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderSecondActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.thirdActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 4)
+                    {
+                        actionBlockFromWhichLineOriginates.fourthLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderFourthActionBlock = actionBlockFromWhichLineEnters.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderSecondActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.fourthActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
                     actionBlockFromWhichLineEnters.secondActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
-                    actionBlockFromWhichLineEnters.senderSecondActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
 
+                }
+                else if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 3)
+                {
+                    if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 1)
+                    {
+                        actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderFirstActionBlock = actionBlockFromWhichLineEnters.thirdSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderThirdActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 2)
+                    {
+                        actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.thirdSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderThirdActionBlock = actionBlockFromWhichLineOriginates.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.secondActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 3)
+                    {
+                        actionBlockFromWhichLineOriginates.thirdLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderThirdActionBlock = actionBlockFromWhichLineEnters.thirdSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderThirdActionBlock = actionBlockFromWhichLineOriginates.thirdSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.thirdActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 4)
+                    {
+                        actionBlockFromWhichLineOriginates.fourthLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderFourthActionBlock = actionBlockFromWhichLineEnters.thirdSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderThirdActionBlock = actionBlockFromWhichLineOriginates.fourthSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.fourthActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    actionBlockFromWhichLineEnters.thirdActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
+                }
+                else if (actionBlockFromWhichLineEnters.numberOfOccurrencesInBlock == 4)
+                {
+                    if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 1)
+                    {
+                        actionBlockFromWhichLineOriginates.firstLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderFirstActionBlock = actionBlockFromWhichLineEnters.fourthSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFourthActionBlock = actionBlockFromWhichLineOriginates.firstSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.firstActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 2)
+                    {
+                        actionBlockFromWhichLineOriginates.secondLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderSecondActionBlock = actionBlockFromWhichLineEnters.fourthSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFourthActionBlock = actionBlockFromWhichLineOriginates.secondSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.secondActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 3)
+                    {
+                        actionBlockFromWhichLineOriginates.thirdLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderThirdActionBlock = actionBlockFromWhichLineEnters.fourthSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFourthActionBlock = actionBlockFromWhichLineOriginates.thirdSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.thirdActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    else if (actionBlockFromWhichLineOriginates.numberOfOccurrencesInBlock == 4)
+                    {
+                        actionBlockFromWhichLineOriginates.fourthLineConnectionBlock = lineConnection;
+                        actionBlockFromWhichLineOriginates.senderFourthActionBlock = actionBlockFromWhichLineEnters.fourthSenderMainActionBlock;
+                        actionBlockFromWhichLineEnters.senderFourthActionBlock = actionBlockFromWhichLineOriginates.fourthSenderMainActionBlock;
+                        actionBlockFromWhichLineOriginates.fourthActionBlock = actionBlockFromWhichLineEnters.mainActionBlock;
+                    }
+                    actionBlockFromWhichLineEnters.fourthActionBlock = actionBlockFromWhichLineOriginates.mainActionBlock;
                 }
                 return lineConnection;
             }
