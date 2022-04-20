@@ -4,10 +4,11 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using Flowchart_Editor.Models.Action;
+using Flowchart_Editor.Models.Interface;
 
 namespace Flowchart_Editor.Models
 {
-    public class ActionBlock : Window
+    public class ActionBlock
     {
         private Canvas? canvasOfActionBlock;
         private TextBox? textBoxOfActionBlock = null;
@@ -16,41 +17,37 @@ namespace Flowchart_Editor.Models
         private Ellipse? secondPointToConnect = null;
         private Ellipse? thirdPointToConnect = null;
         private Ellipse? fourthPointToConnect = null;
-        private bool textChangeStatus = false;
+        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
+        private MainWindow mainWindow;
+        private Line firstLineConnectionBlock;
+        private Line secondLineConnectionBlock;
+        private Line thirdLineConnectionBlock;
+        private Line fourthLineConnectionBlock;
+        private ActionBlock mainActionBlock;
+        private ActionBlock firstActionBlock;
+        private ActionBlock secondActionBlock;
+        private ActionBlock thirdActionBlock;
+        private ActionBlock fourthActionBlock;
+        private object firstSenderMainActionBlock;
+        private object secondSenderMainActionBlock;
+        private object thirdSenderMainActionBlock;
+        private object fourthSenderMainActionBlock;
+        private object senderFirstActionBlock;
+        private object senderSecondActionBlock;
+        private object senderThirdActionBlock;
+        private object senderFourthActionBlock;
         private int defaultWidth = DefaultPropertyForBlock.width;
         private int defaulHeight = DefaultPropertyForBlock.height;
-        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
         private int defaulFontSize = DefaultPropertyForBlock.fontSize;
-        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private int valueOfClicksOnTextBlock = 0;
-        private bool joiningFourthConnectionPoint = false;
-        private MainWindow mainWindow;
-        private const int radiusPoint = 6;
         private int keyOfActionBlock = 0;
+        private int numberOfOccurrencesInBlock = 0;
+        private const int radiusPoint = 6;
+        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
         private const string textOfActionBlock = "Действие";
+        private bool textChangeStatus = false;
+        private bool joiningFourthConnectionPoint = false;
 
-        public Line firstLineConnectionBlock;
-        public Line secondLineConnectionBlock;
-        public Line thirdLineConnectionBlock;
-        public Line fourthLineConnectionBlock;
-
-        public ActionBlock mainActionBlock;
-        public ActionBlock firstActionBlock;
-        public ActionBlock secondActionBlock;
-        public ActionBlock thirdActionBlock;
-        public ActionBlock fourthActionBlock;
-
-        public object firstSenderMainActionBlock;
-        public object secondSenderMainActionBlock;
-        public object thirdSenderMainActionBlock;
-        public object fourthSenderMainActionBlock;
-
-        public object senderFirstActionBlock;
-        public object senderSecondActionBlock;
-        public object senderThirdActionBlock;
-        public object senderFourthActionBlock;
-
-        public int numberOfOccurrencesInBlock = 0;
         public ActionBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
@@ -61,35 +58,28 @@ namespace Flowchart_Editor.Models
 
         public Canvas? GetCanvas() => canvasOfActionBlock;
 
+        public ActionBlock GetMainBlock() => mainActionBlock;
+
+        public object GetFirstSenderMainBlock() => firstSenderMainActionBlock;
+
+        public object GetSecondSenderMainBlock() => secondSenderMainActionBlock;
+
+        public object GetThirdSenderMainBlock() => thirdSenderMainActionBlock;
+
+        public object GetFourthSenderMainBlock() => fourthSenderMainActionBlock;
+
+        public int GetNumberOfOccurrencesInBlock() => numberOfOccurrencesInBlock;
 
         private void actionBlockForMovements_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && textChangeStatus)
             {
-                ActionBlockForMovements instanceOfActionBlockForMovements = new ActionBlockForMovements(sender);
 
-                instanceOfActionBlockForMovements.mainActionBlock = mainActionBlock;
-                instanceOfActionBlockForMovements.firstActionBlock = firstActionBlock;
-                instanceOfActionBlockForMovements.secondActionBlock = secondActionBlock;
-                instanceOfActionBlockForMovements.thirdActionBlock = thirdActionBlock;
-                instanceOfActionBlockForMovements.fourthActionBlock = fourthActionBlock;
-
-                instanceOfActionBlockForMovements.firstSenderMainActionBlock = firstSenderMainActionBlock;
-                instanceOfActionBlockForMovements.secondSenderMainActionBlock = secondSenderMainActionBlock;
-                instanceOfActionBlockForMovements.thirdSenderMainActionBlock = thirdSenderMainActionBlock;
-                instanceOfActionBlockForMovements.fourthSenderMainActionBlock = fourthSenderMainActionBlock;
-
-                instanceOfActionBlockForMovements.senderFirstdActionBlock = senderFirstActionBlock;
-                instanceOfActionBlockForMovements.senderSecondActionBlock = senderSecondActionBlock;
-                instanceOfActionBlockForMovements.senderThirdActionBlock = senderThirdActionBlock;
-                instanceOfActionBlockForMovements.senderFourthActionBlock = senderFourthActionBlock;
-
-                instanceOfActionBlockForMovements.firstLineConnectionBlock = firstLineConnectionBlock;
-                instanceOfActionBlockForMovements.secondLineConnectionBlock = secondLineConnectionBlock;
-                instanceOfActionBlockForMovements.thirdLineConnectionBlock = thirdLineConnectionBlock;
-                instanceOfActionBlockForMovements.fourthLineConnectionBlock = fourthLineConnectionBlock;
-
-                instanceOfActionBlockForMovements.numberOfOccurrencesInBlock = numberOfOccurrencesInBlock;
+                ActionBlockForMovements instanceOfActionBlockForMovements = new(sender, 
+                    mainActionBlock, firstActionBlock, secondActionBlock, thirdActionBlock, fourthActionBlock, firstSenderMainActionBlock, 
+                    secondSenderMainActionBlock, thirdSenderMainActionBlock, fourthSenderMainActionBlock, senderFirstActionBlock, senderSecondActionBlock, 
+                    senderThirdActionBlock, senderFourthActionBlock, firstLineConnectionBlock, secondLineConnectionBlock, thirdLineConnectionBlock,
+                    fourthLineConnectionBlock, numberOfOccurrencesInBlock);
 
                 var dataObjectInformationOfActionBlock = new DataObject(typeof(ActionBlockForMovements), instanceOfActionBlockForMovements);
                 DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
@@ -264,20 +254,51 @@ namespace Flowchart_Editor.Models
                     if (numberOfOccurrencesInBlock == 4)
                         fourthSenderMainActionBlock = sender;
 
+                    SavingСontrols savingСontrols = new();
 
-                    if (firstLineConnectionBlock == null && StaticActionBlock.actionBlock != null)
+                    if (StaticActionBlock.actionBlock != null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                        if (line != null)
-                            firstLineConnectionBlock = line;
-                    }
-                    else if (secondLineConnectionBlock == null)
-                        secondLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                    else if (thirdLineConnectionBlock == null)
-                        thirdLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                    else if (fourthLineConnectionBlock == null)
-                        fourthLineConnectionBlock = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticActionBlock.actionBlock, this);
-                        
+                        if (firstLineConnectionBlock == null)
+                        {
+                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                            if (line != null)
+                            {
+                                firstLineConnectionBlock = line;
+                                savingСontrols.Save(StaticActionBlock.actionBlock, this, line);
+                            }
+                            else numberOfOccurrencesInBlock -= 2;
+                        }
+                        else if (secondLineConnectionBlock == null)
+                        {
+                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                            if (line != null)
+                            {
+                                secondLineConnectionBlock = line;
+                                savingСontrols.Save(StaticActionBlock.actionBlock, this, line);
+                            }
+                            else numberOfOccurrencesInBlock -= 2;
+                        }
+                        else if (thirdLineConnectionBlock == null)
+                        {
+                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                            if (line != null)
+                            {
+                                thirdLineConnectionBlock = line;
+                                savingСontrols.Save(StaticActionBlock.actionBlock, this, line);
+                            }
+                            else numberOfOccurrencesInBlock -= 2;
+                        }
+                        else if (fourthLineConnectionBlock == null)
+                        {
+                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                            if (line != null)
+                            {
+                                fourthLineConnectionBlock = line;
+                                savingСontrols.Save(StaticActionBlock.actionBlock, this, line);
+                            }
+                            else numberOfOccurrencesInBlock -= 2;
+                        }
+                    }   
                     CoordinatesBlock.coordinatesBlockPointX = 0;
                     CoordinatesBlock.coordinatesBlockPointY = 0;
                 }
@@ -313,14 +334,9 @@ namespace Flowchart_Editor.Models
             }
         }
 
-        public void Reset()
-        {
-            canvasOfActionBlock = null;
-        }
-
         public void SetFillOfPointToConnect(string darkWhite)
         {
-            BrushConverter color = new BrushConverter();
+            BrushConverter color = new();
             if (firstPointToConnect != null && secondPointToConnect != null && thirdPointToConnect != null && fourthPointToConnect != null)
             {
                 firstPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
@@ -371,6 +387,78 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(thirdPointToConnect, valueBlokHeight - 3);
                 Canvas.SetTop(fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
+        }
+
+        public void SetValueSenderOfBlockWithSingleLineOccurrence(ActionBlock block, object sender, Line lineConnection)
+        {
+            firstActionBlock = block;
+            senderFirstActionBlock = sender;
+            firstLineConnectionBlock = lineConnection;
+        }
+
+        public void SetValueSenderOfBlockWithTwoLineOccurrence(ActionBlock block, object sender, Line lineConnection)
+        {
+            secondActionBlock = block;
+            senderSecondActionBlock = sender;
+            secondLineConnectionBlock = lineConnection;
+        }
+
+        public void SetValueSenderOfBlockWithThreeLineOccurrence(ActionBlock block, object sender, Line lineConnection)
+        {
+            thirdActionBlock = block;
+            senderThirdActionBlock = sender;
+            thirdLineConnectionBlock = lineConnection;
+        }
+
+        public void SetValueSenderOfBlockWithFourLineOccurrence(ActionBlock block, object sender, Line lineConnection)
+        {
+            fourthActionBlock = block;
+            senderFourthActionBlock = sender;
+            fourthLineConnectionBlock = lineConnection;
+        }
+
+        public void SetValueSenderOfFirstBlock(object sender)
+        {
+            senderFirstActionBlock = sender;
+        }
+
+        public void SetValueSenderOfSecondBlock(object sender)
+        {
+            senderSecondActionBlock = sender;
+        }
+
+        public void SetValueSenderOfThirdBlock(object sender)
+        {
+            senderThirdActionBlock = sender;
+        }
+
+        public void SetValueSenderOfFourthBlock(object sender)
+        {
+            senderFourthActionBlock = sender;
+        }
+
+        public void SetFirstBlock(ActionBlock block)
+        {
+            firstActionBlock = block;
+        }
+
+        public void SetSecondBlock(ActionBlock block)
+        {
+            secondActionBlock = block;
+        }
+
+        public void SetThirdBlock(ActionBlock block)
+        {
+            thirdActionBlock = block;
+        }
+
+        public void SetFourthBlock(ActionBlock block)
+        {
+            fourthActionBlock = block;
+        }
+        public void Reset()
+        {
+            canvasOfActionBlock = null;
         }
     }
 }
