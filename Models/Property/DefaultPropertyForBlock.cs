@@ -9,6 +9,6 @@ namespace Flowchart_Editor.Models
         public static string colorPoint = "#FF040205";
         public static string colorLine = "#FF040205";
         public static int fontSize = 12;
-        public static FontFamily fontFamily = new FontFamily();
+        public static FontFamily fontFamily = new();
     }
 }

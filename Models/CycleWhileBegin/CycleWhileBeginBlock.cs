@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,9 +7,9 @@ using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
-    public class CycleWhileBeginBlock
+    public class CycleWhileBeginBlock : Block
     {
-        public Canvas? canvasCycleWhileBeginBlock = null;
+        public Canvas? canvasCycleWhileBeginBlock;
         public Polygon? polygonCycleWhileBeginBlock = null;
         public TextBox? textBoxOfCycleWhileBeginBlock = null;
         public TextBlock? textBlockOfCycleWhileBeginBlock = null;
@@ -16,38 +17,22 @@ namespace Flowchart_Editor.Models
         public Ellipse? secondPointToConnect = null;
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
-        private int defaultWidth = DefaultPropertyForBlock.width;
-        private int defaulHeight = DefaultPropertyForBlock.height;
-        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
-        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
-        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
+        private readonly int defaultWidth = DefaultPropertyForBlock.width;
+        private readonly int defaulHeight = DefaultPropertyForBlock.height;
+        private readonly string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private readonly int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private readonly FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private bool textChangeStatus = false;
         private int valueOfClicksOnTextBlock = 0;
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
         private const int radiusPoint = 6;
-        private int keyCycleWhileBeginBlock = 0;
+        private readonly int keyCycleWhileBeginBlock = 0;
         private const string textOfCycleForBlock = "Цикл while начало";
 
         public CycleWhileBeginBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
             keyCycleWhileBeginBlock = keyBlock;
-        }
-
-        public UIElement GetUIElementWithoutCreate() => canvasCycleWhileBeginBlock;
-
-        private void cycleForBlock_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (textChangeStatus)
-                {
-                    var instanceOfConditionBlock = new CycleForBlockForMovements(sender);
-                    var dataObjectInformationOConditionBlock = new DataObject(typeof(CycleForBlockForMovements), instanceOfConditionBlock);
-                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
-                }
-            }
-            e.Handled = true;
         }
 
         public UIElement GetUIElement()
@@ -65,13 +50,13 @@ namespace Flowchart_Editor.Models
 
                 var backgroundColor = new BrushConverter();
                 polygonCycleWhileBeginBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FFCCCCFF");
-                Point Point1 = new Point(0, defaulHeight);
-                Point Point2 = new Point(0, 10);
-                Point Point3 = new Point(10, 0);
-                Point Point4 = new Point(defaultWidth - 10, 0);
-                Point Point5 = new Point(defaultWidth, 10);
-                Point Point6 = new Point(defaultWidth, defaulHeight);
-                PointCollection myPointCollection1 = new PointCollection();
+                Point Point1 = new(0, defaulHeight);
+                Point Point2 = new(0, 10);
+                Point Point3 = new(10, 0);
+                Point Point4 = new(defaultWidth - 10, 0);
+                Point Point5 = new(defaultWidth, 10);
+                Point Point6 = new(defaultWidth, defaulHeight);
+                PointCollection myPointCollection1 = new();
                 myPointCollection1.Add(Point1);
                 myPointCollection1.Add(Point2);
                 myPointCollection1.Add(Point3);
@@ -139,7 +124,7 @@ namespace Flowchart_Editor.Models
                 canvasCycleWhileBeginBlock.Children.Add(secondPointToConnect);
                 canvasCycleWhileBeginBlock.Children.Add(thirdPointToConnect);
                 canvasCycleWhileBeginBlock.Children.Add(fourthPointToConnect);
-                canvasCycleWhileBeginBlock.MouseMove += cycleForBlock_MouseMove;
+                canvasCycleWhileBeginBlock.MouseMove += MouseMoveBlockForMovements;
             }
             return canvasCycleWhileBeginBlock;
         }
@@ -176,32 +161,58 @@ namespace Flowchart_Editor.Models
         }
         private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (textChangeStatus)
+            if (canvasCycleWhileBeginBlock != null && textBoxOfCycleWhileBeginBlock != null && textBlockOfCycleWhileBeginBlock != null)
             {
-                valueOfClicksOnTextBlock++;
-                if (valueOfClicksOnTextBlock == 2)
+                if (textChangeStatus)
+                {
+                    valueOfClicksOnTextBlock++;
+                    if (valueOfClicksOnTextBlock == 2)
+                    {
+                        canvasCycleWhileBeginBlock.Children.Remove(textBoxOfCycleWhileBeginBlock);
+                        canvasCycleWhileBeginBlock.Children.Remove(textBlockOfCycleWhileBeginBlock);
+                        textBoxOfCycleWhileBeginBlock.Text = textBlockOfCycleWhileBeginBlock.Text;
+                        canvasCycleWhileBeginBlock.Children.Add(textBoxOfCycleWhileBeginBlock);
+                        textChangeStatus = false;
+                        valueOfClicksOnTextBlock = 0;
+                    }
+                }
+                else
                 {
                     canvasCycleWhileBeginBlock.Children.Remove(textBoxOfCycleWhileBeginBlock);
                     canvasCycleWhileBeginBlock.Children.Remove(textBlockOfCycleWhileBeginBlock);
-                    textBoxOfCycleWhileBeginBlock.Text = textBlockOfCycleWhileBeginBlock.Text;
-                    canvasCycleWhileBeginBlock.Children.Add(textBoxOfCycleWhileBeginBlock);
-                    textChangeStatus = false;
-                    valueOfClicksOnTextBlock = 0;
+                    textBlockOfCycleWhileBeginBlock.Text = textBoxOfCycleWhileBeginBlock.Text;
+                    Canvas.SetTop(textBlockOfCycleWhileBeginBlock, 3.5);
+                    canvasCycleWhileBeginBlock.Children.Add(textBlockOfCycleWhileBeginBlock);
+                    textChangeStatus = true;
                 }
             }
-            else
-            {
-                canvasCycleWhileBeginBlock.Children.Remove(textBoxOfCycleWhileBeginBlock);
-                canvasCycleWhileBeginBlock.Children.Remove(textBlockOfCycleWhileBeginBlock);
-                textBlockOfCycleWhileBeginBlock.Text = textBoxOfCycleWhileBeginBlock.Text;
-                Canvas.SetTop(textBlockOfCycleWhileBeginBlock, 3.5);
-                canvasCycleWhileBeginBlock.Children.Add(textBlockOfCycleWhileBeginBlock);
-                textChangeStatus = true;
-            }
         }
-        public void Reset()
+        public void SetWidthAndHeightOfBlock(int valueBlokWidth, int valueBlokHeight)
         {
-            canvasCycleWhileBeginBlock = null;
+            if (polygonCycleWhileBeginBlock != null && canvasCycleWhileBeginBlock != null && textBoxOfCycleWhileBeginBlock != null && textBlockOfCycleWhileBeginBlock != null)
+            {
+                Point Point1 = new(0, valueBlokHeight);
+                Point Point2 = new(0, 10);
+                Point Point3 = new(10, 0);
+                Point Point4 = new(valueBlokWidth - 10, 0);
+                Point Point5 = new(valueBlokWidth, 10);
+                Point Point6 = new(valueBlokWidth, valueBlokHeight);
+                PointCollection myPointCollection = new();
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPointCollection.Add(Point4);
+                myPointCollection.Add(Point5);
+                myPointCollection.Add(Point6);
+
+                polygonCycleWhileBeginBlock.Points = myPointCollection;
+                canvasCycleWhileBeginBlock.Width = valueBlokWidth;
+                textBoxOfCycleWhileBeginBlock.Width = valueBlokWidth;
+                textBlockOfCycleWhileBeginBlock.Width = valueBlokWidth;
+                Canvas.SetLeft(firstPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(thirdPointToConnect, valueBlokWidth / 2 - 2);
+                Canvas.SetLeft(fourthPointToConnect, valueBlokWidth - 4);
+            }
         }
     }
 }

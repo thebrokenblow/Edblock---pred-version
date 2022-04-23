@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,26 +7,26 @@ using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
-    public class LinkBlock
+    public class LinkBlock : Block
     {
-        public Canvas? canvasLinkBlock = null;
-        public Ellipse? eliposLinkBlock = null;
-        public TextBox? textBoxOfLinkBlockBox = null;
-        public TextBlock? textBlockOfLinkBlockBox = null;
-        public Ellipse? firstPointToConnect = null;
-        public Ellipse? secondPointToConnect = null;
-        public Ellipse? thirdPointToConnect = null;
-        public Ellipse? fourthPointToConnect = null;
+        public Canvas? canvasLinkBlock;
+        public Ellipse eliposLinkBlock;
+        public TextBox textBoxOfLinkBlock;
+        public TextBlock textBlockOfLinkBlock;
+        public Ellipse firstPointToConnect;
+        public Ellipse secondPointToConnect;
+        public Ellipse thirdPointToConnect;
+        public Ellipse fourthPointToConnect;
         private bool textChangeStatus = false;
-        private int defaultWidth = DefaultPropertyForBlock.height / 2;
-        private int defaulHeight = DefaultPropertyForBlock.height / 2;
-        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
-        private FontFamily defaulFontFamily = DefaultPropertyForBlock.fontFamily;
-        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private readonly int defaultWidth = DefaultPropertyForBlock.height / 2;
+        private readonly int defaulHeight = DefaultPropertyForBlock.height / 2;
+        private readonly string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private readonly FontFamily defaulFontFamily = DefaultPropertyForBlock.fontFamily;
+        private readonly int defaulFontSize = DefaultPropertyForBlock.fontSize;
         private int valueOfClicksOnTextBlock = 0;
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
         private const int radiusPoint = 6;
-        private int keyLinkBlock = 0;
+        private readonly int keyLinkBlock = 0;
         private const string textOfLinkBlock = "Ссылка";
 
         public LinkBlock(MainWindow mainWindow, int keyBlock)
@@ -34,30 +35,14 @@ namespace Flowchart_Editor.Models
             keyLinkBlock = keyBlock;
         }
 
-        public UIElement GetUIElementWithoutCreate() => canvasLinkBlock;
-
-        private void linkBlock_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (textChangeStatus)
-                {
-                    var instanceOfLinkBlockBlock = new LinkBlockForMovements(sender);
-                    var dataObjectInformationOfLinkBlock = new DataObject(typeof(LinkBlockForMovements), instanceOfLinkBlockBlock);
-                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
-                }
-            }
-            e.Handled = true;
-        }
-
         public UIElement GetUIElement()
         {
             if (canvasLinkBlock == null)
             {
                 canvasLinkBlock = new Canvas();
                 eliposLinkBlock = new Ellipse();
-                textBoxOfLinkBlockBox = new TextBox();
-                textBlockOfLinkBlockBox = new TextBlock();
+                textBoxOfLinkBlock = new TextBox();
+                textBlockOfLinkBlock = new TextBlock();
                 firstPointToConnect = new Ellipse();
                 secondPointToConnect = new Ellipse();
                 thirdPointToConnect = new Ellipse();
@@ -70,29 +55,29 @@ namespace Flowchart_Editor.Models
                 var backgroundColor = new BrushConverter();
                 eliposLinkBlock.Fill = (Brush)backgroundColor.ConvertFrom("#5761A8");
 
-                textBoxOfLinkBlockBox.Width = defaultWidth;
-                textBoxOfLinkBlockBox.Height = defaulHeight - 5;
-                textBoxOfLinkBlockBox.FontSize = defaulFontSize;
-                textBoxOfLinkBlockBox.FontFamily = defaulFontFamily;
-                textBoxOfLinkBlockBox.Foreground = Brushes.White;
-                textBoxOfLinkBlockBox.TextWrapping = TextWrapping.Wrap;
-                textBoxOfLinkBlockBox.VerticalAlignment = VerticalAlignment.Center;
-                textBoxOfLinkBlockBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBoxOfLinkBlockBox.TextAlignment = TextAlignment.Center;
-                textBoxOfLinkBlockBox.MouseDoubleClick += changeTextBoxToTextBlock;
-                Canvas.SetTop(textBoxOfLinkBlockBox, 5);
+                textBoxOfLinkBlock.Width = defaultWidth;
+                textBoxOfLinkBlock.Height = defaulHeight - 5;
+                textBoxOfLinkBlock.FontSize = defaulFontSize;
+                textBoxOfLinkBlock.FontFamily = defaulFontFamily;
+                textBoxOfLinkBlock.Foreground = Brushes.White;
+                textBoxOfLinkBlock.TextWrapping = TextWrapping.Wrap;
+                textBoxOfLinkBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBoxOfLinkBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBoxOfLinkBlock.TextAlignment = TextAlignment.Center;
+                textBoxOfLinkBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
+                Canvas.SetTop(textBoxOfLinkBlock, 5);
 
-                textBlockOfLinkBlockBox.Width = defaultWidth;
-                textBlockOfLinkBlockBox.Height = defaulHeight - 5;
-                textBlockOfLinkBlockBox.FontSize = defaulFontSize;
-                textBlockOfLinkBlockBox.FontFamily = defaulFontFamily;
-                textBlockOfLinkBlockBox.Foreground = Brushes.White;
-                textBlockOfLinkBlockBox.TextWrapping = TextWrapping.Wrap;
-                textBlockOfLinkBlockBox.VerticalAlignment = VerticalAlignment.Center;
-                textBlockOfLinkBlockBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlockOfLinkBlockBox.TextAlignment = TextAlignment.Center;
-                textBlockOfLinkBlockBox.MouseDown += changeTextBoxToTextBlock;
-                Canvas.SetTop(textBlockOfLinkBlockBox, 5);
+                textBlockOfLinkBlock.Width = defaultWidth;
+                textBlockOfLinkBlock.Height = defaulHeight - 5;
+                textBlockOfLinkBlock.FontSize = defaulFontSize;
+                textBlockOfLinkBlock.FontFamily = defaulFontFamily;
+                textBlockOfLinkBlock.Foreground = Brushes.White;
+                textBlockOfLinkBlock.TextWrapping = TextWrapping.Wrap;
+                textBlockOfLinkBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlockOfLinkBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlockOfLinkBlock.TextAlignment = TextAlignment.Center;
+                textBlockOfLinkBlock.MouseDown += ChangeTextBoxToTextBlock;
+                Canvas.SetTop(textBlockOfLinkBlock, 5);
 
                 firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 firstPointToConnect.Height = radiusPoint;
@@ -123,12 +108,12 @@ namespace Flowchart_Editor.Models
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
                 canvasLinkBlock.Children.Add(eliposLinkBlock);
-                canvasLinkBlock.Children.Add(textBoxOfLinkBlockBox);
+                canvasLinkBlock.Children.Add(textBoxOfLinkBlock);
                 canvasLinkBlock.Children.Add(firstPointToConnect);
                 canvasLinkBlock.Children.Add(secondPointToConnect);
                 canvasLinkBlock.Children.Add(thirdPointToConnect);
                 canvasLinkBlock.Children.Add(fourthPointToConnect);
-                canvasLinkBlock.MouseMove += linkBlock_MouseMove;
+                canvasLinkBlock.MouseMove += MouseMoveBlockForMovements;
             }
             return canvasLinkBlock;
         }
@@ -163,36 +148,64 @@ namespace Flowchart_Editor.Models
                 }
             }
         }
-        private void changeTextBoxToTextBlock(object sender, MouseEventArgs e)
+        private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (textChangeStatus)
+            if (canvasLinkBlock != null)
             {
-                valueOfClicksOnTextBlock++;
-                if (valueOfClicksOnTextBlock == 2)
+                if (textChangeStatus)
                 {
-                    canvasLinkBlock.Children.Remove(textBoxOfLinkBlockBox);
-                    canvasLinkBlock.Children.Remove(textBlockOfLinkBlockBox);
-                    textBoxOfLinkBlockBox.Text = textBlockOfLinkBlockBox.Text;
-                    //Canvas.SetTop(textBoxOfLinkBlockBox, 2.5);
-                    canvasLinkBlock.Children.Add(textBoxOfLinkBlockBox);
-                    textChangeStatus = false;
-                    valueOfClicksOnTextBlock = 0;
+                    valueOfClicksOnTextBlock++;
+                    if (valueOfClicksOnTextBlock == 2)
+                    {
+                        canvasLinkBlock.Children.Remove(textBoxOfLinkBlock);
+                        canvasLinkBlock.Children.Remove(textBlockOfLinkBlock);
+                        textBoxOfLinkBlock.Text = textBlockOfLinkBlock.Text;
+                        //Canvas.SetTop(textBoxOfLinkBlockBox, 2.5);
+                        canvasLinkBlock.Children.Add(textBoxOfLinkBlock);
+                        textChangeStatus = false;
+                        valueOfClicksOnTextBlock = 0;
+                    }
                 }
-            }
-            else
-            {
-                canvasLinkBlock.Children.Remove(textBoxOfLinkBlockBox);
-                canvasLinkBlock.Children.Remove(textBlockOfLinkBlockBox);
-                textBlockOfLinkBlockBox.Text = textBoxOfLinkBlockBox.Text;
-                Canvas.SetTop(textBlockOfLinkBlockBox, 5.5);
-                canvasLinkBlock.Children.Add(textBlockOfLinkBlockBox);
-                textChangeStatus = true;
+                else
+                {
+                    canvasLinkBlock.Children.Remove(textBoxOfLinkBlock);
+                    canvasLinkBlock.Children.Remove(textBlockOfLinkBlock);
+                    textBlockOfLinkBlock.Text = textBoxOfLinkBlock.Text;
+                    Canvas.SetTop(textBlockOfLinkBlock, 5.5);
+                    canvasLinkBlock.Children.Add(textBlockOfLinkBlock);
+                    textChangeStatus = true;
+                }
             }
         }
 
-        public void Reset()
+        public void SetHeightOfBlock(int valueBlokHeight)
         {
-            canvasLinkBlock = null;
+            if (canvasLinkBlock != null)
+            {
+                canvasLinkBlock.Width = valueBlokHeight / 2;
+                canvasLinkBlock.Height = valueBlokHeight / 2;
+
+                eliposLinkBlock.Height = valueBlokHeight / 2;
+                eliposLinkBlock.Width = valueBlokHeight / 2;
+
+                textBoxOfLinkBlock.Width = valueBlokHeight / 2;
+                textBoxOfLinkBlock.Height = valueBlokHeight / 2 - 2.5;
+
+                textBlockOfLinkBlock.Width = valueBlokHeight / 2;
+                textBlockOfLinkBlock.Height = valueBlokHeight / 2 - 2.5;
+
+                Canvas.SetLeft(firstPointToConnect, valueBlokHeight / 4 - 3);
+                Canvas.SetTop(firstPointToConnect, -2);
+
+                Canvas.SetLeft(secondPointToConnect, -2);
+                Canvas.SetTop(secondPointToConnect, valueBlokHeight / 4 - 3);
+
+                Canvas.SetLeft(thirdPointToConnect, valueBlokHeight / 4 - 3);
+                Canvas.SetTop(thirdPointToConnect, valueBlokHeight / 2 - 3);
+
+                Canvas.SetLeft(fourthPointToConnect, valueBlokHeight / 2 - 3);
+                Canvas.SetTop(fourthPointToConnect, valueBlokHeight / 4 - 3);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,27 +7,27 @@ using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
-    public class SubroutineBlock
+    public class SubroutineBlock : Block
     {
-        public Canvas? canvasSubroutineBlock = null;
+        public Canvas? canvasSubroutineBlock;
         public Border? borderSubroutineBlock = null;
         public Border? internalBorderSubroutineBlock = null;
-        public TextBox? textBoxOfSubroutineBlockBox = null;
-        public TextBlock? textBlockOfSubroutineBlockBox = null;
+        public TextBox textBoxOfSubroutineBlockBox;
+        public TextBlock textBlockOfSubroutineBlockBox;
         public Ellipse? firstPointToConnect = null;
         public Ellipse? secondPointToConnect = null;
         public Ellipse? thirdPointToConnect = null;
         public Ellipse? fourthPointToConnect = null;
         private bool textChangeStatus = false;
-        private int defaultWidth = DefaultPropertyForBlock.width;
-        private int defaulHeight = DefaultPropertyForBlock.height;
-        private string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
-        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
-        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
+        private readonly int defaultWidth = DefaultPropertyForBlock.width;
+        private readonly int defaulHeight = DefaultPropertyForBlock.height;
+        private readonly string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
+        private readonly int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private readonly FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         private int valueOfClicksOnTextBlock = 0;
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
         private const int radiusPoint = 6;
-        private int keySubroutineBlock = 0;
+        private readonly int keySubroutineBlock = 0;
         private const string textOfSubroutineBlock = "Подпрограмма";
 
         public SubroutineBlock(MainWindow mainWindow, int keyBlock)
@@ -34,22 +35,7 @@ namespace Flowchart_Editor.Models
             this.mainWindow = mainWindow;
             keySubroutineBlock = keyBlock;
         }
-
-        public UIElement GetUIElementWithoutCreate() => canvasSubroutineBlock;
-        
-        private void subroutineBlock_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (textChangeStatus)
-                {
-                    var instanceOfInputOutputBlock = new SubroutineBlockForMovements(sender);
-                    var dataObjectInformationOfStartEndBlock = new DataObject(typeof(SubroutineBlockForMovements), instanceOfInputOutputBlock);
-                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
-                }
-            }
-            e.Handled = true;
-        }
+       
 
         public UIElement GetUIElement()
         {
@@ -143,7 +129,7 @@ namespace Flowchart_Editor.Models
                 canvasSubroutineBlock.Children.Add(secondPointToConnect);
                 canvasSubroutineBlock.Children.Add(thirdPointToConnect);
                 canvasSubroutineBlock.Children.Add(fourthPointToConnect);
-                canvasSubroutineBlock.MouseMove += subroutineBlock_MouseMove;
+                canvasSubroutineBlock.MouseMove += MouseMoveBlockForMovements;
             }
             return canvasSubroutineBlock;
         }
@@ -181,32 +167,31 @@ namespace Flowchart_Editor.Models
         }
         private void ChangeTextBoxToLabel(object sender, MouseEventArgs e)
         {
-            if (textChangeStatus)
+            if (canvasSubroutineBlock != null)
             {
-                valueOfClicksOnTextBlock++;
-                if (valueOfClicksOnTextBlock == 2)
+                if (textChangeStatus)
+                {
+                    valueOfClicksOnTextBlock++;
+                    if (valueOfClicksOnTextBlock == 2)
+                    {
+                        canvasSubroutineBlock.Children.Remove(textBoxOfSubroutineBlockBox);
+                        canvasSubroutineBlock.Children.Remove(textBlockOfSubroutineBlockBox);
+                        textBoxOfSubroutineBlockBox.Text = textBlockOfSubroutineBlockBox.Text;
+                        canvasSubroutineBlock.Children.Add(textBoxOfSubroutineBlockBox);
+                        textChangeStatus = false;
+                        valueOfClicksOnTextBlock = 0;
+                    }
+                }
+                else
                 {
                     canvasSubroutineBlock.Children.Remove(textBoxOfSubroutineBlockBox);
                     canvasSubroutineBlock.Children.Remove(textBlockOfSubroutineBlockBox);
-                    textBoxOfSubroutineBlockBox.Text = textBlockOfSubroutineBlockBox.Text;
-                    canvasSubroutineBlock.Children.Add(textBoxOfSubroutineBlockBox);
-                    textChangeStatus = false;
-                    valueOfClicksOnTextBlock = 0;
+                    textBlockOfSubroutineBlockBox.Text = textBoxOfSubroutineBlockBox.Text;
+                    Canvas.SetTop(textBlockOfSubroutineBlockBox, 3.5);
+                    canvasSubroutineBlock.Children.Add(textBlockOfSubroutineBlockBox);
+                    textChangeStatus = true;
                 }
             }
-            else
-            {
-                canvasSubroutineBlock.Children.Remove(textBoxOfSubroutineBlockBox);
-                canvasSubroutineBlock.Children.Remove(textBlockOfSubroutineBlockBox);
-                textBlockOfSubroutineBlockBox.Text = textBoxOfSubroutineBlockBox.Text;
-                Canvas.SetTop(textBlockOfSubroutineBlockBox, 3.5);
-                canvasSubroutineBlock.Children.Add(textBlockOfSubroutineBlockBox);
-                textChangeStatus = true;
-            }
-        }
-        public void Reset()
-        {
-            canvasSubroutineBlock = null;
         }
     }
 }

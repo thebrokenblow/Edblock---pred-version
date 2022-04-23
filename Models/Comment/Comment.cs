@@ -10,31 +10,31 @@ namespace Flowchart_Editor.Models.Comment
     public class Comment
     {
         private Canvas? canvasOfComment;
-        private TextBox? textBoxOfComment = null;
-        private TextBlock? textBlockOfComment = null;
+        private TextBox textBoxOfComment;
+        private TextBlock textBlockOfComment;
         private bool textChangeStatus = false;
-        private int defaulFontSize = DefaultPropertyForBlock.fontSize;
-        private FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
-        private string defaulLineColor = DefaultPropertyForBlock.colorLine;
+        private readonly int defaulFontSize = DefaultPropertyForBlock.fontSize;
+        private readonly FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
+        private readonly string defaulLineColor = DefaultPropertyForBlock.colorLine;
         private int valueOfClicksOnTextBlock = 0;
-        private int gapBetweenCommentLines = 15;
-        private int minimumHeightOfAllBlocks = DefaultPropertyForBlock.height;
-        private int minimumWidthOfAllBlocks = DefaultPropertyForBlock.width;
-        private double initialСoordinatesX = 0;
-        private double initialСoordinatesY = 0;
+        private readonly int gapBetweenCommentLines = 15;
+        private readonly int minimumHeightOfAllBlocks = DefaultPropertyForBlock.height;
+        private readonly int minimumWidthOfAllBlocks = DefaultPropertyForBlock.width;
+        private readonly double initialСoordinatesX = 0;
+        private readonly double initialСoordinatesY = 0;
         private const string textComment = "Комментарий";
-        private Line? firstLine;
-        private Line? secondLine;
-        private Line? thirdLine;
-        private Line? fourthLine;
-        private Line? fifthLine;
-        private Line? sixthtLine;
+        private Line firstLine;
+        private Line secondLine;
+        private Line thirdLine;
+        private Line fourthLine;
+        private Line fifthLine;
+        private Line sixthtLine;
 
-        public UIElement? GetUIElementWithoutCreate() => canvasOfComment != null ? canvasOfComment : null;
+        public UIElement? GetUIElementWithoutCreate() => canvasOfComment;
 
-        public string GetTextOfComment() => textComment;
+        public static string GetTextOfComment() => textComment;
 
-        public void SetHeightForFirstLine(int height)
+        public void SetHeight(int height)
         {
             if (firstLine != null && secondLine != null && thirdLine != null && fourthLine != null && fifthLine != null && sixthtLine != null)
             {
@@ -61,7 +61,7 @@ namespace Flowchart_Editor.Models.Comment
                 Canvas.SetTop(textBlockOfComment, -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2);
             }
         }
-        public void SetWidthtForFirstLine(int width)
+        public void SetWidtht(int width)
         {
             if (firstLine != null && secondLine != null && thirdLine != null && fourthLine != null && fifthLine != null && sixthtLine != null)
             {
@@ -101,7 +101,7 @@ namespace Flowchart_Editor.Models.Comment
                 fifthLine = new Line();
                 sixthtLine = new Line();
 
-                BrushConverter color = new BrushConverter();
+                BrushConverter color = new();
              
                 firstLine.X1 = initialСoordinatesX;
                 firstLine.Y1 = initialСoordinatesY;
@@ -176,7 +176,7 @@ namespace Flowchart_Editor.Models.Comment
         }
         private void ChangeTextBoxToLabel(object sender, MouseEventArgs e)
         {
-            if (canvasOfComment != null && textBlockOfComment != null && textBoxOfComment != null)
+            if (canvasOfComment != null)
             {
                 if (textChangeStatus)
                 {

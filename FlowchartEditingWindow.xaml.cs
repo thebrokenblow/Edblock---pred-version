@@ -33,9 +33,10 @@ namespace Flowchart_Editor
             for (int i = 60; i <= 250; i += 10)
                 blockHeightComboBox.Items.Add(i);
         }
-        List<ActionBlock> listActionBlock = new();
+
+        readonly List<ActionBlock> listActionBlock = new();
         int keyBlock = 0;
-        public void actionBlock_MouseMove(object sender, MouseEventArgs e)
+        public void MouseMoveActionBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -47,8 +48,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<ConditionBlock> listConditionBlock = new();
-        private void conditionBlock_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<ConditionBlock> listConditionBlock = new();
+        private void MouseMoveConditionBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -60,8 +62,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<StartEndBlock> listStartEndBlock = new();
-        private void startEndBlock_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<StartEndBlock> listStartEndBlock = new();
+        private void MouseMoveStartEndBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -73,8 +76,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<InputOutputBlock> listInputOutputBlock = new();
-        private void inputOutputBlock_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<InputOutputBlock> listInputOutputBlock = new();
+        private void MouseMoveInputOutputBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -86,8 +90,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<SubroutineBlock> listSubroutineBlock = new();
-        private void subroutineBlock_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<SubroutineBlock> listSubroutineBlock = new();
+        private void MouseMoveSubroutineBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -99,8 +104,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<CycleForBlock> listCycleForBlock = new();
-        private void cycleBlockFor_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<CycleForBlock> listCycleForBlock = new();
+        private void MouseMoveCycleBlockFor(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -112,8 +118,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<CycleWhileBeginBlock> listCycleWhileBeginBlock = new();
-        private void cycleBlockWhileBegin_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<CycleWhileBeginBlock> listCycleWhileBeginBlock = new();
+        private void MouseMoveCycleBlockWhileBegin(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -125,8 +132,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<CycleWhileEndBlock> listCycleWhileEndBlock = new();
-        private void cycleBlockWhileEnd_MouseMove(object sender, MouseEventArgs e)
+
+        private readonly List<CycleWhileEndBlock> listCycleWhileEndBlock = new();
+        private void MouseMoveCycleBlockWhileEnd(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -138,8 +146,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<LinkBlock> listLinkBlock = new();
-        private void linkBlock_MouseMove(object sender, MouseEventArgs e)
+
+        readonly List<LinkBlock> listLinkBlock = new();
+        private void MouseMoveLinkBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -151,8 +160,9 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        List<Comment> listComment = new();
-        private void destination_Drop(object sender, DragEventArgs e)
+
+        readonly List<Comment> listComment = new();
+        private void DropDestination(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
@@ -226,71 +236,11 @@ namespace Flowchart_Editor
             }
             e.Handled = true;
         }
-        private void ChangeCoordinatesForFirstLine(ActionBlockForMovements resultTransferInformation)
-        {
-            double СoordinateForFirstLineX1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockX();
-            double СoordinateForFirstLineY1 = resultTransferInformation.GetСoordinatesFirstAtionBlockAndFirstSenderActionBlockY();
-            double СoordinateForFirstLineX2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockX();
-            double СoordinateForFirstLineY2 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndFirstSenderActionBlockY();
 
-            resultTransferInformation.SetCoordinateForFirstLine(СoordinateForFirstLineX1, СoordinateForFirstLineY1, СoordinateForFirstLineX2, СoordinateForFirstLineY2);
-        }
-        private void ChangeCoordinatesForSecondLine(ActionBlockForMovements resultTransferInformation)
-        {
-            double СoordinateForSecondLineX1 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockX();
-            double СoordinateForSecondLineY1 = resultTransferInformation.GetСoordinatesSecondAtionBlockAndSecondSenderActionBlockY();
-            double СoordinateForSecondLineX2 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockX();
-            double СoordinateForSecondLineY2 = resultTransferInformation.GetСoordinatesThirdAtionBlockAndFirstSenderActionBlockY();
-
-            resultTransferInformation.SetCoordinateForSecondLine(СoordinateForSecondLineX1, СoordinateForSecondLineY1, СoordinateForSecondLineX2, СoordinateForSecondLineY2);
-        }
-        private void ChangeCoordinatesForThirdLine(ActionBlockForMovements resultTransferInformation)
-        {
-            double СoordinateForThirdLineX1 = resultTransferInformation.GetСoordinatesFourthAtionBlockAndThirdSenderActionBlockX();
-            double СoordinateForThirdLineY1 = resultTransferInformation.GetСoordinatesFourthAtionBlockAndThirdSenderActionBlockY();
-            double СoordinateForThirdLineX2 = resultTransferInformation.GetСoordinatesFifthAtionBlockAndFourthSenderActionBlockX();
-            double СoordinateForThirdLineY2 = resultTransferInformation.GetСoordinatesFifthAtionBlockAndFourthSenderActionBlockY();
-
-            resultTransferInformation.SetCoordinateForThirdLine(СoordinateForThirdLineX1, СoordinateForThirdLineY1, СoordinateForThirdLineX2, СoordinateForThirdLineY2);
-        }
-        private void ChangeCoordinatesForFourthLine(ActionBlockForMovements resultTransferInformation)
-        {
-            double СoordinateForFourthLineX1 = resultTransferInformation.GetСoordinatesSixthAtionBlockAndFifthSenderActionBlockX();
-            double СoordinateForFourthLineY1 = resultTransferInformation.GetСoordinatesSixthAtionBlockAndFifthSenderActionBlockY();
-            double СoordinateForFourthLineX2 = resultTransferInformation.GetСoordinatesSeventhAtionBlockAndSixthSenderActionBlockX();
-            double СoordinateForFourthLineY2 = resultTransferInformation.GetСoordinatesSeventhAtionBlockAndSixthSenderActionBlockY();
-
-            resultTransferInformation.SetCoordinateForFourthLine(СoordinateForFourthLineX1, СoordinateForFourthLineY1, СoordinateForFourthLineX2, СoordinateForFourthLineY2);
-        }
-        private void ChooseWayToChangeCoordinatesForLine(int numberOfOccurrencesInBlock, ActionBlockForMovements resultTransferInformation)
-        {
-            switch (numberOfOccurrencesInBlock)
-            {
-                case 1:
-                    ChangeCoordinatesForFirstLine(resultTransferInformation);
-                    break;
-                case 2:
-                    ChangeCoordinatesForFirstLine(resultTransferInformation);
-                    ChangeCoordinatesForSecondLine(resultTransferInformation);
-                    break;
-                case 3:
-                    ChangeCoordinatesForFirstLine(resultTransferInformation);
-                    ChangeCoordinatesForSecondLine(resultTransferInformation);
-                    ChangeCoordinatesForThirdLine(resultTransferInformation);
-                    break;
-                case 4:
-                    ChangeCoordinatesForFirstLine(resultTransferInformation);
-                    ChangeCoordinatesForSecondLine(resultTransferInformation);
-                    ChangeCoordinatesForThirdLine(resultTransferInformation);
-                    ChangeCoordinatesForFourthLine(resultTransferInformation);
-                    break;
-            }
-        }
-        private void destination_DragOver(object sender, DragEventArgs e)
+        private void DragOverDestination(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
-            
                 e.Effects = DragDropEffects.Copy;
                 Point position = e.GetPosition(destination);
                 ActionBlock dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
@@ -307,11 +257,11 @@ namespace Flowchart_Editor
                 Canvas.SetTop(actionBlockOfUIElement, position.Y + 1);
 
             }
-            else if (e.Data.GetDataPresent(typeof(ActionBlockForMovements)))
+            else if (e.Data.GetDataPresent(typeof(BlockForMovements)))
             {
                 e.Effects = DragDropEffects.Copy;
                 Point position = e.GetPosition(destination);
-                ActionBlockForMovements resultTransferInformation = (ActionBlockForMovements)e.Data.GetData(typeof(ActionBlockForMovements));
+                BlockForMovements resultTransferInformation = (BlockForMovements)e.Data.GetData(typeof(BlockForMovements));
                 object transferInformationActionBlock = resultTransferInformation.GetTransferInformationActionBlock();
                 Canvas.SetLeft((UIElement)transferInformationActionBlock, position.X + 1);
                 Canvas.SetTop((UIElement)transferInformationActionBlock, position.Y + 1);
@@ -337,16 +287,6 @@ namespace Flowchart_Editor
                 Canvas.SetTop(conditionBlockOfUIElement, position.Y + 1);
 
             }
-            else if (e.Data.GetDataPresent(typeof(ConditionBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                Point position = e.GetPosition(destination);
-                ConditionBlockForMovements instanseTransferConditionBlockForMovements = (ConditionBlockForMovements)e.Data.GetData(typeof(ConditionBlockForMovements));
-                object instanseConditionBlockForMovements = instanseTransferConditionBlockForMovements.GetTransferInformationConditionBlock();
-               
-                Canvas.SetLeft((UIElement)instanseConditionBlockForMovements, position.X + 1);
-                Canvas.SetTop((UIElement)instanseConditionBlockForMovements, position.Y + 1);
-            }
             else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -364,17 +304,6 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(startEndBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(startEndBlockOfUIElement, position.Y + 1);
 
-            } 
-            else if (e.Data.GetDataPresent(typeof(StartEndBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (StartEndBlockForMovements)e.Data.GetData(typeof(StartEndBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
             } 
             else if (e.Data.GetDataPresent(typeof(InputOutputBlock)))
             {
@@ -394,17 +323,6 @@ namespace Flowchart_Editor
                 Canvas.SetTop(inputOutputBlockOfUIElement, position.Y + 1);
 
             }
-            else if (e.Data.GetDataPresent(typeof(InputOutputBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (InputOutputBlockForMovements)e.Data.GetData(typeof(InputOutputBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
-            }
             else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -422,17 +340,6 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
-            }
-            else if (e.Data.GetDataPresent(typeof(SubroutineBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (SubroutineBlockForMovements)e.Data.GetData(typeof(SubroutineBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
             }
             else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
             {
@@ -452,17 +359,6 @@ namespace Flowchart_Editor
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
             }
-            else if (e.Data.GetDataPresent(typeof(CycleForBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (CycleForBlockForMovements)e.Data.GetData(typeof(CycleForBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
-            }
             else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -480,17 +376,6 @@ namespace Flowchart_Editor
                 Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (CycleWhileBeginBlockForMovements)e.Data.GetData(typeof(CycleWhileBeginBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
             }
             else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
             {
@@ -510,17 +395,6 @@ namespace Flowchart_Editor
                 Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
 
             }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (CycleWhileEndBlockForMovements)e.Data.GetData(typeof(CycleWhileEndBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
-            }
             else if (e.Data.GetDataPresent(typeof(LinkBlock)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -539,39 +413,11 @@ namespace Flowchart_Editor
                 Canvas.SetTop(linkBlockOfUIElement, position.Y + 1);
 
             }
-            else if (e.Data.GetDataPresent(typeof(LinkBlockForMovements)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var resultTransferInformation = (LinkBlockForMovements)e.Data.GetData(typeof(LinkBlockForMovements));
-                if (resultTransferInformation.transferInformation != null)
-                {
-                    Canvas.SetLeft((UIElement)resultTransferInformation.transferInformation, position.X + 1);
-                    Canvas.SetTop((UIElement)resultTransferInformation.transferInformation, position.Y + 1);
-                }
-            }
-            else if (e.Data.GetDataPresent(typeof(Comment)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfComment = (Comment)e.Data.GetData(typeof(Comment));
-                UIElement commentOfUIElement;
-                if (dataInformationOfComment.GetUIElementWithoutCreate() == null)
-                {
-                    commentOfUIElement = ((Comment)e.Data.GetData(typeof(Comment))).GetUIElement();
-                    destination.Children.Add(commentOfUIElement);
-                }
-                else
-                    commentOfUIElement = ((Comment)e.Data.GetData(typeof(Comment))).GetUIElement();
-
-                Canvas.SetLeft(commentOfUIElement, position.X + 1);
-                Canvas.SetTop(commentOfUIElement, position.Y + 1);
-            }
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
 
-        private void destination_DragLeave(object sender, DragEventArgs e)
+        private void DragLeaveDestination(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(ActionBlock)))
             {
@@ -632,11 +478,6 @@ namespace Flowchart_Editor
             e.Handled = true;
         }
 
-        private void listViewItem_Selected(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
             buttonOpenMenu.Visibility = Visibility.Collapsed;
@@ -655,7 +496,7 @@ namespace Flowchart_Editor
         const string darkTheme = "Тёмная тема";
         const string lightThene = "Светлая тема";
 
-        private void toggleButtonStyleTheme_Click(object sender, RoutedEventArgs e)
+        private void ClickToggleButtonStyleTheme(object sender, RoutedEventArgs e)
         {
             if (toggleButtonStyleTheme.IsChecked != null)
             {
@@ -716,6 +557,15 @@ namespace Flowchart_Editor
 
                     labelNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
                     textNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkWhite);
+
+                    firstLineOfComment.Stroke = (Brush)color.ConvertFrom(darkWhite);
+                    secondLineOfComment.Stroke = (Brush)color.ConvertFrom(darkWhite);
+                    thirdLineOfComment.Stroke = (Brush)color.ConvertFrom(darkWhite);
+                    fourthLineOfComment.Stroke = (Brush)color.ConvertFrom(darkWhite);
+                    fifthLineOfComment.Stroke = (Brush)color.ConvertFrom(darkWhite);
+                    sixthLineOfComment.Stroke = (Brush)color.ConvertFrom(darkWhite);
+
+                    textComment.Foreground = (Brush)color.ConvertFrom(darkWhite);
 
                     DefaultPropertyForBlock.colorPoint = darkWhite;
 
@@ -808,6 +658,15 @@ namespace Flowchart_Editor
                     labelNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
                     textNameOfSecondBlockToConnect.Foreground = (Brush)color.ConvertFrom(darkBlack);
 
+                    firstLineOfComment.Stroke = (Brush)color.ConvertFrom(darkBlack);
+                    secondLineOfComment.Stroke = (Brush)color.ConvertFrom(darkBlack);
+                    thirdLineOfComment.Stroke = (Brush)color.ConvertFrom(darkBlack);
+                    fourthLineOfComment.Stroke = (Brush)color.ConvertFrom(darkBlack);
+                    fifthLineOfComment.Stroke = (Brush)color.ConvertFrom(darkBlack);
+                    sixthLineOfComment.Stroke = (Brush)color.ConvertFrom(darkBlack);
+
+                    textComment.Foreground = (Brush)color.ConvertFrom(darkBlack);
+
                     DefaultPropertyForBlock.colorPoint = darkBlack;
 
                     foreach (ActionBlock itemListActionBlock in listActionBlock)
@@ -848,7 +707,7 @@ namespace Flowchart_Editor
             }
         }
 
-        private void listOfFontsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChangedListOfFontsComboBox(object sender, SelectionChangedEventArgs e)
         {
             FontFamily fontFamily = new(((ComboBoxItem)listOfFontsComboBox.SelectedItem).Content.ToString());
             DefaultPropertyForBlock.fontFamily = fontFamily;
@@ -881,7 +740,7 @@ namespace Flowchart_Editor
                 itemListLinkBlock.SetFontFamily(fontFamily);
         }
 
-        private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChangedFontSizeComboBox(object sender, SelectionChangedEventArgs e)
         {
             int valueFontSize = Convert.ToInt32(fontSizeComboBox.SelectedItem);
             DefaultPropertyForBlock.fontSize = valueFontSize;
@@ -914,7 +773,7 @@ namespace Flowchart_Editor
                 itemListLinkBlock.SetFontSize(valueFontSize);
         }
 
-        private void blockWidthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChangedBlockWidthComboBox(object sender, SelectionChangedEventArgs e)
         {
             int valueBlockWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
             DefaultPropertyForBlock.width = (int)valueBlockWidth;
@@ -947,14 +806,14 @@ namespace Flowchart_Editor
             foreach (Comment itemListComment in listComment)
                 itemListComment.SetWidtht(valueBlockWidth);
         }
-        private void blockHeightComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChangedBlockHeightComboBox(object sender, SelectionChangedEventArgs e)
         {
             int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
             DefaultPropertyForBlock.height = (int)valueBlokHeight;
             int valueBlokWidth = DefaultPropertyForBlock.width;
 
             foreach (ActionBlock itemListActionBlock in listActionBlock)
-                itemListActionBlock.SetHeightBlock(valueBlokHeight);
+                itemListActionBlock.SetHeightOfBlock(valueBlokHeight);
 
             foreach (ConditionBlock itemListConditionBlock in listConditionBlock)
                 itemListConditionBlock.SetWidthAndHeightOfBlock(valueBlokWidth, valueBlokHeight);
@@ -983,7 +842,8 @@ namespace Flowchart_Editor
             foreach (Comment itemListComment in listComment)
                 itemListComment.SetHeight(valueBlokHeight);
         }
-        List<Line> listLineConnection = new();
+
+        readonly List<Line> listLineConnection = new();
         
         public Line? DrawConnectionLine(double x1, double y1, double x2, double y2)
         {
@@ -1007,7 +867,6 @@ namespace Flowchart_Editor
 
                 listLineConnection.Add(lineConnection);
                 destination.Children.Add(lineConnection);
-
                 
                 return lineConnection;
             }
@@ -1022,10 +881,10 @@ namespace Flowchart_Editor
             textNameOfSecondBlockToConnect.Text = nameOfSecondBlockToConnect;
         }
         
-        private void comment_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void MouseLeftButtonDownComment(object sender, MouseButtonEventArgs e)
         {
             Comment instanceOfComment = new();
-            string textOfComment = instanceOfComment.GetTextOfComment();
+            string textOfComment = Comment.GetTextOfComment();
             WriteFirstNameOfBlockToConect(textOfComment);
             listComment.Add(instanceOfComment);
             PinningComment.flagPinningComment = true;

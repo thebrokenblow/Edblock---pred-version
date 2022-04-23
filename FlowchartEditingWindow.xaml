@@ -90,7 +90,7 @@
                 </TransformGroup>
             </StackPanel.RenderTransform>
             <ListView>
-                <ListViewItem x:Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5" Selected="listViewItem_Selected">
+                <ListViewItem Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -184,7 +184,7 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal">
-                        <ToggleButton Name="toggleButtonStyleTheme" Click="toggleButtonStyleTheme_Click" Background="Black" Width="50" Height="50" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
+                        <ToggleButton Name="toggleButtonStyleTheme" Click="ClickToggleButtonStyleTheme" Background="Black" Width="50" Height="50" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
                         <TextBlock Name="topicName" Text="Светлая тема" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
                     </StackPanel>
                 </ListViewItem>
@@ -230,7 +230,7 @@
                         Height="60"
                         Background="#FF52C0AA" 
                         Name="actionBlock"
-                        MouseMove="actionBlock_MouseMove">
+                        MouseMove="MouseMoveActionBlock">
 
                     <TextBlock 
                         Canvas.Top="20"
@@ -253,7 +253,7 @@
                            Grid.Column="2" />
 
                 <Canvas Name="conditionBlock" 
-                        MouseMove="conditionBlock_MouseMove" 
+                        MouseMove="MouseMoveConditionBlock" 
                         Grid.Row="2"
                         Grid.Column="1" >
 
@@ -282,7 +282,7 @@
                                Grid.Row="2"/>
 
                 <Canvas Name="startEndBlock"  
-                        MouseMove="startEndBlock_MouseMove"  
+                        MouseMove="MouseMoveStartEndBlock"  
                         Grid.Row="3"
                         Grid.Column="1">
 
@@ -312,7 +312,7 @@
                            HorizontalAlignment="Left"/>
 
                 <Canvas Name="inputOutputBlock"  
-                            MouseMove="inputOutputBlock_MouseMove"  
+                            MouseMove="MouseMoveInputOutputBlock"  
                             Grid.Row="4"
                             Grid.Column="1">
 
@@ -347,7 +347,7 @@
                         Grid.Row="5"
                         Grid.Column="1"
                         Name="subroutineBlock"  
-                        MouseMove="subroutineBlock_MouseMove">
+                        MouseMove="MouseMoveSubroutineBlock">
                     <Border BorderBrush="Black" 
                             Height="60" 
                             Width="140" 
@@ -387,7 +387,7 @@
 
                 <Canvas Grid.Row="6" Grid.Column="1"
                     Name="cycleBlockFor"
-                    MouseMove="cycleBlockFor_MouseMove">
+                    MouseMove="MouseMoveCycleBlockFor">
 
                     <Polygon Fill="#FFC618" 
                          Points="10 0 0 10 0 50 10 60 130 60 140 50 140 10 130 0" 
@@ -416,7 +416,7 @@
                 <Canvas Grid.Row="7" 
                         Grid.Column="1" 
                         Name="cycleBlockWhileBegin"
-                        MouseMove="cycleBlockWhileBegin_MouseMove">
+                        MouseMove="MouseMoveCycleBlockWhileBegin">
 
                     <Polygon Fill="#CCCCFF" 
                          Points="0 60 0 10 10 0 130 0 140 10 140 60" 
@@ -444,7 +444,7 @@
                 <Canvas Grid.Row="8" 
                         Grid.Column="1"
                         Name="cycleBlockWhileEnd"
-                        MouseMove="cycleBlockWhileEnd_MouseMove">
+                        MouseMove="MouseMoveCycleBlockWhileEnd">
                     <Polygon Fill="#CCCCFF" 
                              Points="0 0 0 50 10 60 130 60 140 50 140 0" 
                              Margin="5"/>
@@ -471,7 +471,7 @@
                         Grid.Column="1"
                         Margin="60,25"
                         Name="linkBlock"  
-                        MouseMove="linkBlock_MouseMove">
+                        MouseMove="MouseMoveLinkBlock">
                     <Ellipse Fill="#5761A8"
                              Width="30" 
                              Height="30"/>
@@ -489,14 +489,14 @@
                 <Canvas Grid.Row="10" 
                         Grid.Column="1" 
                         Name="comment"  
-                        MouseLeftButtonDown="comment_MouseLeftButtonDown">
+                        MouseLeftButtonDown="MouseLeftButtonDownComment">
 
-                    <Line X1="30" Y1="40" X2="50" Y2="40" Stroke="Black" />
-                    <Line X1="60" Y1="40" X2="80" Y2="40" Stroke="Black" />
-                    <Line X1="90" Y1="40" X2="110" Y2="40" Stroke="Black" />
-                    <Line X1="110" Y1="0" X2="110" Y2="75" Stroke="Black" />
-                    <Line X1="120" Y1="0" X2="110" Y2="0" Stroke="Black" />
-                    <Line X1="120" Y1="75" X2="110" Y2="75" Stroke="Black" />
+                    <Line Name="firstLineOfComment" X1="30" Y1="40" X2="50" Y2="40" Stroke="Black" />
+                    <Line Name="secondLineOfComment" X1="60" Y1="40" X2="80" Y2="40" Stroke="Black" />
+                    <Line Name="thirdLineOfComment" X1="90" Y1="40" X2="110" Y2="40" Stroke="Black" />
+                    <Line Name="fourthLineOfComment" X1="110" Y1="0" X2="110" Y2="75" Stroke="Black" />
+                    <Line Name="fifthLineOfComment" X1="120" Y1="0" X2="110" Y2="0" Stroke="Black" />
+                    <Line Name="sixthLineOfComment" X1="120" Y1="75" X2="110" Y2="75" Stroke="Black" />
                     
                 </Canvas>
 
@@ -539,9 +539,9 @@
                     <Canvas 
                         Background="#FFF9F9FB" 
                         AllowDrop="True" 
-                        DragOver="destination_DragOver" 
-                        DragLeave="destination_DragLeave" 
-                        Drop="destination_Drop"
+                        DragOver="DragOverDestination" 
+                        DragLeave="DragLeaveDestination" 
+                        Drop="DropDestination"
                         Name="destination" 
                         Grid.ColumnSpan="13"
                         Grid.Row="2" />
@@ -556,7 +556,7 @@
 
                     <ComboBox 
                     Name="listOfFontsComboBox" 
-                    SelectionChanged="listOfFontsComboBox_SelectionChanged" 
+                    SelectionChanged="SelectionChangedListOfFontsComboBox" 
                     Foreground="Black" 
                     Grid.Row="0" 
                     Grid.Column="1" 
@@ -577,7 +577,7 @@
 
                     <ComboBox 
                     Name="fontSizeComboBox" 
-                    SelectionChanged="fontSizeComboBox_SelectionChanged"
+                    SelectionChanged="SelectionChangedFontSizeComboBox"
                     Foreground="Black" 
                     Grid.Row="0" 
                     Grid.Column="3" 
@@ -595,7 +595,7 @@
 
                     <ComboBox 
                     Name="blockWidthComboBox" 
-                    SelectionChanged="blockWidthComboBox_SelectionChanged"
+                    SelectionChanged="SelectionChangedBlockWidthComboBox"
                     Foreground="Black" 
                     Grid.Row="0" 
                     Grid.Column="5" 
@@ -613,7 +613,7 @@
 
                     <ComboBox 
                         Name="blockHeightComboBox" 
-                        SelectionChanged="blockHeightComboBox_SelectionChanged"
+                        SelectionChanged="SelectionChangedBlockHeightComboBox"
                         Foreground="Black" 
                         Grid.Row="0" 
                         Grid.Column="7" 
