@@ -77,6 +77,97 @@ namespace Flowchart_Editor.Models
             }
             e.Handled = true;
         }
+        protected void SetPropertyForFirstPointToConnect(Brush defaulColorPoint, int defaultWidth)
+        {
+            if (firstPointToConnect != null)
+            {
+                firstPointToConnect.Fill = defaulColorPoint;
+                firstPointToConnect.Height = radiusPoint;
+                firstPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
+                Canvas.SetTop(firstPointToConnect, -2);
+               
+            }
+        }
+        protected void SetPropertyForSecondPointToConnect(Brush defaulColorPoint, int defaulHeight)
+        {
+            if (secondPointToConnect != null)
+            {
+                secondPointToConnect.Fill = defaulColorPoint;
+                secondPointToConnect.Height = radiusPoint;
+                secondPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(secondPointToConnect, -2);
+                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
+            }
+        }
+        protected void SetPropertyForThirdPointToConnect(Brush defaulColorPoint, int defaultWidth, int defaulHeight)
+        {
+            if (thirdPointToConnect != null)
+            {
+                thirdPointToConnect.Fill = defaulColorPoint;
+                thirdPointToConnect.Height = radiusPoint;
+                thirdPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
+                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
+            }
+        }
+        protected void SetPropertyForFourthPointToConnect(Brush defaulColorPoint, int defaultWidth, int defaulHeight)
+        {
+            if (fourthPointToConnect != null)
+            {
+                fourthPointToConnect.Fill = defaulColorPoint;
+                fourthPointToConnect.Height = radiusPoint;
+                fourthPointToConnect.Width = radiusPoint;
+                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
+                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
+            }
+        }
+        protected void AddChildrenForCanvas()
+        {
+            if (canvas != null)
+            {
+                canvas.Children.Add(textBox);
+                canvas.Children.Add(firstPointToConnect);
+                canvas.Children.Add(secondPointToConnect);
+                canvas.Children.Add(thirdPointToConnect);
+                canvas.Children.Add(fourthPointToConnect);
+                canvas.MouseMove += MouseMoveBlockForMovements;
+            }
+        }
+        protected void SetPropertyForTextBox(int defaultWidth, int defaulHeight, string textOfBlock)
+        {
+            if (textBox != null)
+            {
+                textBox.Text = textOfBlock;
+                textBox.Width = defaultWidth;
+                textBox.Height = defaulHeight;
+                textBox.FontSize = defaulFontSize;
+                textBox.FontFamily = defaultFontFamily;
+                textBox.VerticalAlignment = VerticalAlignment.Center;
+                textBox.HorizontalAlignment = HorizontalAlignment.Center;
+                textBox.TextAlignment = TextAlignment.Center;
+                textBox.Foreground = Brushes.White;
+                textBox.TextWrapping = TextWrapping.Wrap;
+                textBox.AcceptsReturn = true;
+                textBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
+            }
+        }
+        protected void SetPropertyForTextBlock(int defaultWidth, int defaulHeight)
+        {
+            if (textBlock != null)
+            {
+                textBlock.Width = defaultWidth;
+                textBlock.Height = defaulHeight;
+                textBlock.FontSize = defaulFontSize;
+                textBlock.FontFamily = defaultFontFamily;
+                textBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlock.TextAlignment = TextAlignment.Center;
+                textBlock.Foreground = Brushes.White;
+                textBlock.TextWrapping = TextWrapping.Wrap;
+                textBlock.MouseDown += ChangeTextBoxToTextBlock;
+            }
+        }
         protected bool CheckForZeroCoordinates(double coordinatesBlockPointX, double coordinatesBlockPointY) => coordinatesBlockPointX == 0 && coordinatesBlockPointY == 0 ? true : false;
         protected double GetCoordinatesX(object sender) => Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
         protected double GetCoordinatesY(object sender) => Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
@@ -111,6 +202,7 @@ namespace Flowchart_Editor.Models
             {
                 case 1:
                     mainBlock = this;
+                    StaticBlock.block = this;
                     firstSenderMainBlock = sender;
                     break;
                 case 2:
@@ -140,7 +232,7 @@ namespace Flowchart_Editor.Models
 
                 CoordinatesBlock.keyFirstBlock = keyOfBlock;
 
-                SaveControlsForConnectionPointToOutgoingLine(sender);
+                SaveСontrolsForConnectionPointToIncomingLine(sender);
 
                 mainWindow.WriteFirstNameOfBlockToConect(initialText);
             }
@@ -166,7 +258,7 @@ namespace Flowchart_Editor.Models
                 {
                     if (firstLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
                         if (line != null)
                         {
                             firstLineConnectionBlock = line;
@@ -176,7 +268,7 @@ namespace Flowchart_Editor.Models
                     }
                     else if (secondLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
                         if (line != null)
                         {
                             secondLineConnectionBlock = line;
@@ -186,7 +278,7 @@ namespace Flowchart_Editor.Models
                     }
                     else if (thirdLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
                         if (line != null)
                         {
                             thirdLineConnectionBlock = line;
@@ -196,7 +288,7 @@ namespace Flowchart_Editor.Models
                     }
                     else if (fourthLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
                         if (line != null)
                         {
                             fourthLineConnectionBlock = line;
@@ -218,27 +310,9 @@ namespace Flowchart_Editor.Models
                 canvas.Height = defaulHeight;
             }
         }
-
-        protected void SetPropertyForTextBox(int defaultWidth, int defaulHeight, string textOfBlock)
-        {
-            if (textBox != null) 
-            {
-                textBox.Text = textOfBlock;
-                textBox.Width = defaultWidth;
-                textBox.Height = defaulHeight;
-                textBox.FontSize = defaulFontSize;
-                textBox.FontFamily = defaultFontFamily;
-                textBox.VerticalAlignment = VerticalAlignment.Center;
-                textBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBox.TextAlignment = TextAlignment.Center;
-                textBox.Foreground = Brushes.White;
-                textBox.TextWrapping = TextWrapping.Wrap;
-                textBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
-            }
-        }
         protected void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (canvas != null && textBlock != null)
+            if (canvas != null && textBlock != null && textBox != null)
             {
                 if (textChangeStatus)
                 {
@@ -264,7 +338,6 @@ namespace Flowchart_Editor.Models
                 }
             }
         }
-
         public void SetFillOfPointToConnect(string darkWhite)
         {
             if (firstPointToConnect != null && secondPointToConnect != null &&
@@ -277,7 +350,6 @@ namespace Flowchart_Editor.Models
                 fourthPointToConnect.Fill = (Brush)color.ConvertFrom(darkWhite);
             }
         }
-
         public void SetFontFamily(FontFamily fontFamily)
         {
             if (textBox != null && textBlock != null)
@@ -286,7 +358,6 @@ namespace Flowchart_Editor.Models
                 textBlock.FontFamily = fontFamily;
             }
         }
-
         public void SetFontSize(int valueFontSize)
         {
             if (textBox != null && textBlock != null)
@@ -295,7 +366,6 @@ namespace Flowchart_Editor.Models
                 textBlock.FontSize = valueFontSize;
             }
         }
-
         public void SetWidthOfBlock(int valueBlokWidth)
         {
             if (canvas != null && textBox != null && textBlock != null)
@@ -320,70 +390,58 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
         }
-
         public void SetValueSenderOfBlockWithSingleLineOccurrence(Block block, object sender, Line lineConnection)
         {
             firstBlock = block;
             firstSenderBlock = sender;
             firstLineConnectionBlock = lineConnection;
         }
-
         public void SetValueSenderOfBlockWithTwoLineOccurrence(Block block, object sender, Line lineConnection)
         {
             secondBlock = block;
             secondSenderBlock = sender;
             secondLineConnectionBlock = lineConnection;
         }
-
         public void SetValueSenderOfBlockWithThreeLineOccurrence(Block block, object sender, Line lineConnection)
         {
             thirdBlock = block;
             thirdSenderBlock = sender;
             thirdLineConnectionBlock = lineConnection;
         }
-
         public void SetValueSenderOfBlockWithFourLineOccurrence(Block block, object sender, Line lineConnection)
         {
             fourthBlock = block;
             fourthSenderBlock = sender;
             fourthLineConnectionBlock = lineConnection;
         }
-
         public void SetValueSenderOfFirstBlock(object sender)
         {
             firstSenderBlock = sender;
         }
-
         public void SetValueSenderOfSecondBlock(object sender)
         {
             secondSenderBlock = sender;
         }
-
         public void SetValueSenderOfThirdBlock(object sender)
         {
             thirdSenderBlock = sender;
         }
-
         public void SetValueSenderOfFourthBlock(object sender)
         {
             fourthSenderBlock = sender;
         }
-
         public void SetFirstBlock(Block block)
         {
             firstBlock = block;
         }
-
         public void SetSecondBlock(Block block)
         {
             secondBlock = block;
         }
-
         public void SetThirdBlock(Block block)
         {
             thirdBlock = block;
         }
-
         public void SetFourthBlock(Block block)
         {
             fourthBlock = block;

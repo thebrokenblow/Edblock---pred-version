@@ -9,24 +9,11 @@ namespace Flowchart_Editor.Models
 {
     public class SubroutineBlock : Block
     {
-        public Canvas? canvasSubroutineBlock;
         public Border? borderSubroutineBlock = null;
         public Border? internalBorderSubroutineBlock = null;
-        public TextBox textBoxOfSubroutineBlockBox;
-        public TextBlock textBlockOfSubroutineBlockBox;
-        public Ellipse? firstPointToConnect = null;
-        public Ellipse? secondPointToConnect = null;
-        public Ellipse? thirdPointToConnect = null;
-        public Ellipse? fourthPointToConnect = null;
-        private bool textChangeStatus = false;
+        private readonly MainWindow mainWindow;
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
-        private readonly string defaulColorPoint = DefaultPropertyForBlock.colorPoint;
-        private readonly int defaulFontSize = DefaultPropertyForBlock.fontSize;
-        private readonly FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
-        private int valueOfClicksOnTextBlock = 0;
-        private readonly MainWindow mainWindow;
-        private const int radiusPoint = 6;
         private readonly int keySubroutineBlock = 0;
         private const string textOfSubroutineBlock = "Подпрограмма";
 
@@ -39,22 +26,22 @@ namespace Flowchart_Editor.Models
 
         public UIElement GetUIElement()
         {
-            if (canvasSubroutineBlock == null)
+            if (canvas == null)
             {
-                canvasSubroutineBlock = new Canvas();
+                canvas = new Canvas();
                 borderSubroutineBlock = new Border();
                 internalBorderSubroutineBlock = new Border();
-                textBoxOfSubroutineBlockBox = new TextBox();
-                textBlockOfSubroutineBlockBox = new TextBlock();
+                textBox = new TextBox();
+                textBlock = new TextBlock();
                 firstPointToConnect = new Ellipse();
                 secondPointToConnect = new Ellipse();
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-                canvasSubroutineBlock.Width = defaultWidth;
-                canvasSubroutineBlock.Height = defaulHeight;
+                canvas.Width = defaultWidth;
+                canvas.Height = defaulHeight;
                 var backgroundColor = new BrushConverter();
-                canvasSubroutineBlock.Background = (Brush)backgroundColor.ConvertFrom("#FFBA64C8");
+                canvas.Background = (Brush)backgroundColor.ConvertFrom("#FFBA64C8");
 
                 borderSubroutineBlock.BorderBrush = Brushes.Black;
                 borderSubroutineBlock.Height = defaulHeight;
@@ -70,29 +57,29 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(internalBorderSubroutineBlock, 0);
                 Canvas.SetLeft(internalBorderSubroutineBlock, 20);
 
-                textBoxOfSubroutineBlockBox.Text = textOfSubroutineBlock;
-                textBoxOfSubroutineBlockBox.Width = defaultWidth;
-                textBoxOfSubroutineBlockBox.Height = defaulHeight;
-                textBoxOfSubroutineBlockBox.FontSize = defaulFontSize;
-                textBoxOfSubroutineBlockBox.FontFamily = defaultFontFamily;
-                textBoxOfSubroutineBlockBox.VerticalAlignment = VerticalAlignment.Center;
-                textBoxOfSubroutineBlockBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBoxOfSubroutineBlockBox.TextAlignment = TextAlignment.Center;
-                textBoxOfSubroutineBlockBox.Foreground = Brushes.White;
-                textBoxOfSubroutineBlockBox.TextWrapping = TextWrapping.Wrap;
-                textBoxOfSubroutineBlockBox.MouseDoubleClick += ChangeTextBoxToLabel;
+                textBox.Text = textOfSubroutineBlock;
+                textBox.Width = defaultWidth;
+                textBox.Height = defaulHeight;
+                textBox.FontSize = defaulFontSize;
+                textBox.FontFamily = defaultFontFamily;
+                textBox.VerticalAlignment = VerticalAlignment.Center;
+                textBox.HorizontalAlignment = HorizontalAlignment.Center;
+                textBox.TextAlignment = TextAlignment.Center;
+                textBox.Foreground = Brushes.White;
+                textBox.TextWrapping = TextWrapping.Wrap;
+                textBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
 
-                textBlockOfSubroutineBlockBox.Text = textOfSubroutineBlock;
-                textBlockOfSubroutineBlockBox.Width = defaultWidth;
-                textBlockOfSubroutineBlockBox.Height = defaulHeight;
-                textBlockOfSubroutineBlockBox.FontSize = defaulFontSize;
-                textBlockOfSubroutineBlockBox.FontFamily = defaultFontFamily;
-                textBlockOfSubroutineBlockBox.VerticalAlignment = VerticalAlignment.Center;
-                textBlockOfSubroutineBlockBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlockOfSubroutineBlockBox.TextAlignment = TextAlignment.Center;
-                textBlockOfSubroutineBlockBox.Foreground = Brushes.White;
-                textBlockOfSubroutineBlockBox.TextWrapping = TextWrapping.Wrap;
-                textBlockOfSubroutineBlockBox.MouseDown += ChangeTextBoxToLabel;
+                textBlock.Text = textOfSubroutineBlock;
+                textBlock.Width = defaultWidth;
+                textBlock.Height = defaulHeight;
+                textBlock.FontSize = defaulFontSize;
+                textBlock.FontFamily = defaultFontFamily;
+                textBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlock.TextAlignment = TextAlignment.Center;
+                textBlock.Foreground = Brushes.White;
+                textBlock.TextWrapping = TextWrapping.Wrap;
+                textBlock.MouseDown += ChangeTextBoxToTextBlock;
 
                 firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 firstPointToConnect.Height = radiusPoint;
@@ -122,16 +109,16 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                canvasSubroutineBlock.Children.Add(borderSubroutineBlock);
-                canvasSubroutineBlock.Children.Add(internalBorderSubroutineBlock);
-                canvasSubroutineBlock.Children.Add(textBoxOfSubroutineBlockBox);
-                canvasSubroutineBlock.Children.Add(firstPointToConnect);
-                canvasSubroutineBlock.Children.Add(secondPointToConnect);
-                canvasSubroutineBlock.Children.Add(thirdPointToConnect);
-                canvasSubroutineBlock.Children.Add(fourthPointToConnect);
-                canvasSubroutineBlock.MouseMove += MouseMoveBlockForMovements;
+                canvas.Children.Add(borderSubroutineBlock);
+                canvas.Children.Add(internalBorderSubroutineBlock);
+                canvas.Children.Add(textBox);
+                canvas.Children.Add(firstPointToConnect);
+                canvas.Children.Add(secondPointToConnect);
+                canvas.Children.Add(thirdPointToConnect);
+                canvas.Children.Add(fourthPointToConnect);
+                canvas.MouseMove += MouseMoveBlockForMovements;
             }
-            return canvasSubroutineBlock;
+            return canvas;
         }
         private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
@@ -139,8 +126,8 @@ namespace Flowchart_Editor.Models
             {
                 if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasSubroutineBlock) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasSubroutineBlock) + 3;
+                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keySubroutineBlock;
 
@@ -151,8 +138,8 @@ namespace Flowchart_Editor.Models
                     double x1 = CoordinatesBlock.coordinatesBlockPointX;
                     double y1 = CoordinatesBlock.coordinatesBlockPointY;
 
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasSubroutineBlock) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasSubroutineBlock) + 3;
+                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keySecondBlock = keySubroutineBlock;
 
@@ -162,34 +149,6 @@ namespace Flowchart_Editor.Models
 
                     CoordinatesBlock.coordinatesBlockPointX = 0;
                     CoordinatesBlock.coordinatesBlockPointY = 0;
-                }
-            }
-        }
-        private void ChangeTextBoxToLabel(object sender, MouseEventArgs e)
-        {
-            if (canvasSubroutineBlock != null)
-            {
-                if (textChangeStatus)
-                {
-                    valueOfClicksOnTextBlock++;
-                    if (valueOfClicksOnTextBlock == 2)
-                    {
-                        canvasSubroutineBlock.Children.Remove(textBoxOfSubroutineBlockBox);
-                        canvasSubroutineBlock.Children.Remove(textBlockOfSubroutineBlockBox);
-                        textBoxOfSubroutineBlockBox.Text = textBlockOfSubroutineBlockBox.Text;
-                        canvasSubroutineBlock.Children.Add(textBoxOfSubroutineBlockBox);
-                        textChangeStatus = false;
-                        valueOfClicksOnTextBlock = 0;
-                    }
-                }
-                else
-                {
-                    canvasSubroutineBlock.Children.Remove(textBoxOfSubroutineBlockBox);
-                    canvasSubroutineBlock.Children.Remove(textBlockOfSubroutineBlockBox);
-                    textBlockOfSubroutineBlockBox.Text = textBoxOfSubroutineBlockBox.Text;
-                    Canvas.SetTop(textBlockOfSubroutineBlockBox, 3.5);
-                    canvasSubroutineBlock.Children.Add(textBlockOfSubroutineBlockBox);
-                    textChangeStatus = true;
                 }
             }
         }

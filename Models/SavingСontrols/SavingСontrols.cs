@@ -12,7 +12,7 @@ namespace Flowchart_Editor
 
         public void Save(Block actionBlockFromWhichLineOriginates, Block actionBlockFromWhichLineEnters, Line lineConnection)
         {
-            Block mainBlockOriginates = actionBlockFromWhichLineOriginates.GetMainBlock();
+            Block? mainBlockOriginates = actionBlockFromWhichLineOriginates.GetMainBlock();
             int numberOfOccurrencesInBlockEnters = actionBlockFromWhichLineEnters.GetNumberOfOccurrencesInBlock();
             switch (numberOfOccurrencesInBlockEnters)
             {

@@ -9,7 +9,6 @@ namespace Flowchart_Editor.Models
 {
     public class LinkBlock : Block
     {
-        public Canvas? canvasLinkBlock;
         public Ellipse eliposLinkBlock;
         public TextBox textBoxOfLinkBlock;
         public TextBlock textBlockOfLinkBlock;
@@ -37,9 +36,9 @@ namespace Flowchart_Editor.Models
 
         public UIElement GetUIElement()
         {
-            if (canvasLinkBlock == null)
+            if (canvas == null)
             {
-                canvasLinkBlock = new Canvas();
+                canvas = new Canvas();
                 eliposLinkBlock = new Ellipse();
                 textBoxOfLinkBlock = new TextBox();
                 textBlockOfLinkBlock = new TextBlock();
@@ -48,8 +47,8 @@ namespace Flowchart_Editor.Models
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-                canvasLinkBlock.Width = defaultWidth;
-                canvasLinkBlock.Width = defaulHeight;
+                canvas.Width = defaultWidth;
+                canvas.Width = defaulHeight;
                 eliposLinkBlock.Width = defaultWidth;
                 eliposLinkBlock.Height = defaulHeight;
                 var backgroundColor = new BrushConverter();
@@ -107,15 +106,15 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 3);
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                canvasLinkBlock.Children.Add(eliposLinkBlock);
-                canvasLinkBlock.Children.Add(textBoxOfLinkBlock);
-                canvasLinkBlock.Children.Add(firstPointToConnect);
-                canvasLinkBlock.Children.Add(secondPointToConnect);
-                canvasLinkBlock.Children.Add(thirdPointToConnect);
-                canvasLinkBlock.Children.Add(fourthPointToConnect);
-                canvasLinkBlock.MouseMove += MouseMoveBlockForMovements;
+                canvas.Children.Add(eliposLinkBlock);
+                canvas.Children.Add(textBoxOfLinkBlock);
+                canvas.Children.Add(firstPointToConnect);
+                canvas.Children.Add(secondPointToConnect);
+                canvas.Children.Add(thirdPointToConnect);
+                canvas.Children.Add(fourthPointToConnect);
+                canvas.MouseMove += MouseMoveBlockForMovements;
             }
-            return canvasLinkBlock;
+            return canvas;
         }
         private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
@@ -123,8 +122,8 @@ namespace Flowchart_Editor.Models
             {
                 if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasLinkBlock) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasLinkBlock) + 3;
+                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyLinkBlock;
 
@@ -135,8 +134,8 @@ namespace Flowchart_Editor.Models
                     double x1 = CoordinatesBlock.coordinatesBlockPointX;
                     double y1 = CoordinatesBlock.coordinatesBlockPointY;
 
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasLinkBlock) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasLinkBlock) + 3;
+                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyLinkBlock;
 
@@ -150,29 +149,29 @@ namespace Flowchart_Editor.Models
         }
         private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (canvasLinkBlock != null)
+            if (canvas != null)
             {
                 if (textChangeStatus)
                 {
                     valueOfClicksOnTextBlock++;
                     if (valueOfClicksOnTextBlock == 2)
                     {
-                        canvasLinkBlock.Children.Remove(textBoxOfLinkBlock);
-                        canvasLinkBlock.Children.Remove(textBlockOfLinkBlock);
+                        canvas.Children.Remove(textBoxOfLinkBlock);
+                        canvas.Children.Remove(textBlockOfLinkBlock);
                         textBoxOfLinkBlock.Text = textBlockOfLinkBlock.Text;
                         //Canvas.SetTop(textBoxOfLinkBlockBox, 2.5);
-                        canvasLinkBlock.Children.Add(textBoxOfLinkBlock);
+                        canvas.Children.Add(textBoxOfLinkBlock);
                         textChangeStatus = false;
                         valueOfClicksOnTextBlock = 0;
                     }
                 }
                 else
                 {
-                    canvasLinkBlock.Children.Remove(textBoxOfLinkBlock);
-                    canvasLinkBlock.Children.Remove(textBlockOfLinkBlock);
+                    canvas.Children.Remove(textBoxOfLinkBlock);
+                    canvas.Children.Remove(textBlockOfLinkBlock);
                     textBlockOfLinkBlock.Text = textBoxOfLinkBlock.Text;
                     Canvas.SetTop(textBlockOfLinkBlock, 5.5);
-                    canvasLinkBlock.Children.Add(textBlockOfLinkBlock);
+                    canvas.Children.Add(textBlockOfLinkBlock);
                     textChangeStatus = true;
                 }
             }
@@ -180,10 +179,10 @@ namespace Flowchart_Editor.Models
 
         public void SetHeightOfBlock(int valueBlokHeight)
         {
-            if (canvasLinkBlock != null)
+            if (canvas != null)
             {
-                canvasLinkBlock.Width = valueBlokHeight / 2;
-                canvasLinkBlock.Height = valueBlokHeight / 2;
+                canvas.Width = valueBlokHeight / 2;
+                canvas.Height = valueBlokHeight / 2;
 
                 eliposLinkBlock.Height = valueBlokHeight / 2;
                 eliposLinkBlock.Width = valueBlokHeight / 2;

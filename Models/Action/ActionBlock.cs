@@ -19,22 +19,6 @@ namespace Flowchart_Editor.Models
             this.mainWindow = mainWindow;
             keyOfBlock = keyBlock;
         }
-        protected void SetPropertyForTextBlock(int defaultWidth, int defaulHeight)
-        {
-            if (textBlock != null)
-            {
-                textBlock.Width = defaultWidth;
-                textBlock.Height = defaulHeight;
-                textBlock.FontSize = defaulFontSize;
-                textBlock.FontFamily = defaultFontFamily;
-                textBlock.VerticalAlignment = VerticalAlignment.Center;
-                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlock.TextAlignment = TextAlignment.Center;
-                textBlock.Foreground = Brushes.White;
-                textBlock.TextWrapping = TextWrapping.Wrap;
-                textBlock.MouseDown += ChangeTextBoxToTextBlock;
-            }
-        }
 
         public UIElement GetUIElement()
         {
@@ -48,48 +32,27 @@ namespace Flowchart_Editor.Models
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-                SetPropertyForTextBox(defaultWidth, defaulHeight, initialText);
-                SetPropertyForTextBlock(defaultWidth, defaulHeight);
-
                 BrushConverter brushConverter = new();
                 Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF52C0AA");
+                Brush brushDefaulColorPoint = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
 
+                SetPropertyForTextBox(defaultWidth, defaulHeight, initialText);
+                SetPropertyForTextBlock(defaultWidth, defaulHeight);
                 SetPropertyForCanvas(backgroundColor, defaultWidth, defaulHeight);
 
-                firstPointToConnect.Fill = (Brush)brushConverter.ConvertFrom(defaulColorPoint); 
-                firstPointToConnect.Height = radiusPoint;
-                firstPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
-                Canvas.SetTop(firstPointToConnect,  -2);
+                SetPropertyForFirstPointToConnect(brushDefaulColorPoint, defaultWidth);
                 firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                secondPointToConnect.Fill = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
-                secondPointToConnect.Height = radiusPoint;
-                secondPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(secondPointToConnect, -2);
-                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
+                SetPropertyForSecondPointToConnect(brushDefaulColorPoint, defaulHeight);
                 secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                thirdPointToConnect.Fill = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
-                thirdPointToConnect.Height = radiusPoint;
-                thirdPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
-                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
+                SetPropertyForThirdPointToConnect(brushDefaulColorPoint, defaultWidth, defaulHeight);
                 thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                fourthPointToConnect.Fill = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
-                fourthPointToConnect.Height = radiusPoint;
-                fourthPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
-                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 -2);
+                SetPropertyForFourthPointToConnect(brushDefaulColorPoint, defaultWidth, defaulHeight);
                 fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
-                canvas.Children.Add(textBox);
-                canvas.Children.Add(firstPointToConnect);
-                canvas.Children.Add(secondPointToConnect);
-                canvas.Children.Add(thirdPointToConnect);
-                canvas.Children.Add(fourthPointToConnect);
-                canvas.MouseMove += MouseMoveBlockForMovements;
+                AddChildrenForCanvas();
             }
             return canvas;
         }
@@ -98,6 +61,7 @@ namespace Flowchart_Editor.Models
         {
             if (!flagForEnteringFirstConnectionPoint)
             {
+                StaticBlock.firstPointToConnect = "firstPointToConnect";
                 flagForEnteringFirstConnectionPoint = true;
                 GetDataForCoordinates(sender, initialText, mainWindow);
             }
@@ -114,6 +78,7 @@ namespace Flowchart_Editor.Models
         {
             if (!flagForEnteringThirdConnectionPoint)
             {
+                StaticBlock.secondPointToConnect = "thirdPointToConnect";
                 flagForEnteringThirdConnectionPoint = true;
                 GetDataForCoordinates(sender, initialText, mainWindow);
             }

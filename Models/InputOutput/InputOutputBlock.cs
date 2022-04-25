@@ -9,7 +9,6 @@ namespace Flowchart_Editor.Models
 {
     public class InputOutputBlock : Block
     {
-        public Canvas? canvasInputOutputBlock;
         public Polygon polygonInputOutputBlock;
         public TextBox textBoxInputOutputBlock;
         public TextBlock textBlockInputOutputBlock;
@@ -39,9 +38,9 @@ namespace Flowchart_Editor.Models
 
         public UIElement GetUIElement()
         {
-            if (canvasInputOutputBlock == null)
+            if (canvas == null)
             {
-                canvasInputOutputBlock = new Canvas();
+                canvas = new Canvas();
                 polygonInputOutputBlock = new Polygon();
                 textBoxInputOutputBlock = new TextBox();
                 textBlockInputOutputBlock = new TextBlock();
@@ -115,15 +114,15 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 5);
                 fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
 
-                canvasInputOutputBlock.Children.Add(polygonInputOutputBlock);
-                canvasInputOutputBlock.Children.Add(textBoxInputOutputBlock);
-                canvasInputOutputBlock.Children.Add(firstPointToConnect);
-                canvasInputOutputBlock.Children.Add(secondPointToConnect);
-                canvasInputOutputBlock.Children.Add(thirdPointToConnect);
-                canvasInputOutputBlock.Children.Add(fourthPointToConnect);
-                canvasInputOutputBlock.MouseMove += MouseMoveBlockForMovements;
+                canvas.Children.Add(polygonInputOutputBlock);
+                canvas.Children.Add(textBoxInputOutputBlock);
+                canvas.Children.Add(firstPointToConnect);
+                canvas.Children.Add(secondPointToConnect);
+                canvas.Children.Add(thirdPointToConnect);
+                canvas.Children.Add(fourthPointToConnect);
+                canvas.MouseMove += MouseMoveBlockForMovements;
             }
-            return canvasInputOutputBlock;
+            return canvas;
         }
         private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
@@ -131,8 +130,8 @@ namespace Flowchart_Editor.Models
             {
                 if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasInputOutputBlock) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasInputOutputBlock) + 3;
+                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyInputOutputBlock;
 
@@ -143,8 +142,8 @@ namespace Flowchart_Editor.Models
                     double x1 = CoordinatesBlock.coordinatesBlockPointX;
                     double y1 = CoordinatesBlock.coordinatesBlockPointY;
 
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasInputOutputBlock) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasInputOutputBlock) + 3;
+                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyInputOutputBlock;
 
@@ -158,17 +157,17 @@ namespace Flowchart_Editor.Models
         }
         private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (canvasInputOutputBlock != null)
+            if (canvas != null)
             {
                 if (textChangeStatus)
                 {
                     valueOfClicksOnTextBlock++;
                     if (valueOfClicksOnTextBlock == 2)
                     {
-                        canvasInputOutputBlock.Children.Remove(textBoxInputOutputBlock);
-                        canvasInputOutputBlock.Children.Remove(textBlockInputOutputBlock);
+                        canvas.Children.Remove(textBoxInputOutputBlock);
+                        canvas.Children.Remove(textBlockInputOutputBlock);
                         textBoxInputOutputBlock.Text = textBlockInputOutputBlock.Text;
-                        canvasInputOutputBlock.Children.Add(textBoxInputOutputBlock);
+                        canvas.Children.Add(textBoxInputOutputBlock);
 
                         textChangeStatus = false;
                         valueOfClicksOnTextBlock = 0;
@@ -176,18 +175,18 @@ namespace Flowchart_Editor.Models
                 }
                 else
                 {
-                    canvasInputOutputBlock.Children.Remove(textBoxInputOutputBlock);
-                    canvasInputOutputBlock.Children.Remove(textBlockInputOutputBlock);
+                    canvas.Children.Remove(textBoxInputOutputBlock);
+                    canvas.Children.Remove(textBlockInputOutputBlock);
                     textBlockInputOutputBlock.Text = textBoxInputOutputBlock.Text;
                     Canvas.SetTop(textBlockInputOutputBlock, 3.5);
-                    canvasInputOutputBlock.Children.Add(textBlockInputOutputBlock);
+                    canvas.Children.Add(textBlockInputOutputBlock);
                     textChangeStatus = true;
                 }
             }
         }
         public void SetWidthAndHeightOfBlock(int valueBlokWidth, int valueBlokHeight)
         {
-            if (canvasInputOutputBlock != null)
+            if (canvas != null)
             {
                 Point Point1 = new(20, 0);
                 Point Point2 = new(0, valueBlokHeight);
@@ -201,7 +200,7 @@ namespace Flowchart_Editor.Models
                 myPointCollection.Add(Point4);
 
                 polygonInputOutputBlock.Points = myPointCollection;
-                canvasInputOutputBlock.Width = valueBlokWidth;
+                canvas.Width = valueBlokWidth;
                 textBoxInputOutputBlock.Width = valueBlokWidth;
                 textBlockInputOutputBlock.Width = valueBlokWidth;
                 Canvas.SetLeft(firstPointToConnect, valueBlokWidth / 2);

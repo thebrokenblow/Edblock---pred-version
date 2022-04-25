@@ -9,7 +9,6 @@ namespace Flowchart_Editor.Models
 {
     public class CycleWhileEndBlock : Block
     {
-        public Canvas? canvasCycleWhileEndBlock;
         public Polygon polygonCycleWhileEndBlock;
         public TextBox textBoxOfCycleWhileEndBlock;
         public TextBlock textBlockOfCycleWhileEndBlock;
@@ -37,9 +36,9 @@ namespace Flowchart_Editor.Models
 
         public UIElement GetUIElement()
         {
-            if (canvasCycleWhileEndBlock == null)
+            if (canvas == null)
             {
-                canvasCycleWhileEndBlock = new Canvas();
+                canvas = new Canvas();
                 polygonCycleWhileEndBlock = new Polygon();
                 textBoxOfCycleWhileEndBlock = new TextBox();
                 textBlockOfCycleWhileEndBlock = new TextBlock();
@@ -64,7 +63,7 @@ namespace Flowchart_Editor.Models
                 myPointCollection1.Add(Point5);
                 myPointCollection1.Add(Point6);
                 polygonCycleWhileEndBlock.Points = myPointCollection1;
-                canvasCycleWhileEndBlock.Children.Add(polygonCycleWhileEndBlock);
+                canvas.Children.Add(polygonCycleWhileEndBlock);
 
                 firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
                 firstPointToConnect.Height = radiusPoint;
@@ -119,15 +118,15 @@ namespace Flowchart_Editor.Models
                 textBlockOfCycleWhileEndBlock.TextWrapping = TextWrapping.Wrap;
                 textBlockOfCycleWhileEndBlock.MouseDown += ChangeTextBoxToTextBlock;
 
-                canvasCycleWhileEndBlock.Children.Add(textBoxOfCycleWhileEndBlock);
-                canvasCycleWhileEndBlock.Children.Add(firstPointToConnect);
-                canvasCycleWhileEndBlock.Children.Add(secondPointToConnect);
-                canvasCycleWhileEndBlock.Children.Add(thirdPointToConnect);
-                canvasCycleWhileEndBlock.Children.Add(fourthPointToConnect);
+                canvas.Children.Add(textBoxOfCycleWhileEndBlock);
+                canvas.Children.Add(firstPointToConnect);
+                canvas.Children.Add(secondPointToConnect);
+                canvas.Children.Add(thirdPointToConnect);
+                canvas.Children.Add(fourthPointToConnect);
 
-                canvasCycleWhileEndBlock.MouseMove += MouseMoveBlockForMovements;
+                canvas.MouseMove += MouseMoveBlockForMovements;
             }
-            return canvasCycleWhileEndBlock;
+            return canvas;
         }
         private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
         {
@@ -135,8 +134,8 @@ namespace Flowchart_Editor.Models
             {
                 if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileEndBlock) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileEndBlock) + 3;
+                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keyFirstBlock = keyCycleWhileEndBlock;
 
@@ -147,8 +146,8 @@ namespace Flowchart_Editor.Models
                     double x1 = CoordinatesBlock.coordinatesBlockPointX;
                     double y1 = CoordinatesBlock.coordinatesBlockPointY;
 
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvasCycleWhileEndBlock) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvasCycleWhileEndBlock) + 3;
+                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
+                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
                     CoordinatesBlock.keySecondBlock = keyCycleWhileEndBlock;
 
@@ -162,28 +161,28 @@ namespace Flowchart_Editor.Models
         }
         private void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
         {
-            if (canvasCycleWhileEndBlock != null)
+            if (canvas != null)
             {
                 if (textChangeStatus)
                 {
                     valueOfClicksOnTextBlock++;
                     if (valueOfClicksOnTextBlock == 2)
                     {
-                        canvasCycleWhileEndBlock.Children.Remove(textBoxOfCycleWhileEndBlock);
-                        canvasCycleWhileEndBlock.Children.Remove(textBlockOfCycleWhileEndBlock);
+                        canvas.Children.Remove(textBoxOfCycleWhileEndBlock);
+                        canvas.Children.Remove(textBlockOfCycleWhileEndBlock);
                         textBoxOfCycleWhileEndBlock.Text = textBlockOfCycleWhileEndBlock.Text;
-                        canvasCycleWhileEndBlock.Children.Add(textBoxOfCycleWhileEndBlock);
+                        canvas.Children.Add(textBoxOfCycleWhileEndBlock);
                         textChangeStatus = false;
                         valueOfClicksOnTextBlock = 0;
                     }
                 }
                 else
                 {
-                    canvasCycleWhileEndBlock.Children.Remove(textBoxOfCycleWhileEndBlock);
-                    canvasCycleWhileEndBlock.Children.Remove(textBlockOfCycleWhileEndBlock);
+                    canvas.Children.Remove(textBoxOfCycleWhileEndBlock);
+                    canvas.Children.Remove(textBlockOfCycleWhileEndBlock);
                     textBlockOfCycleWhileEndBlock.Text = textBoxOfCycleWhileEndBlock.Text;
                     Canvas.SetTop(textBlockOfCycleWhileEndBlock, 3.5);
-                    canvasCycleWhileEndBlock.Children.Add(textBlockOfCycleWhileEndBlock);
+                    canvas.Children.Add(textBlockOfCycleWhileEndBlock);
                     textChangeStatus = true;
                 }
             }
@@ -191,7 +190,7 @@ namespace Flowchart_Editor.Models
 
         public void SetWidthAndHeightOfBlock(int valueBlokWidth, int valueBlokHeight)
         {
-            if (canvasCycleWhileEndBlock != null)
+            if (canvas != null)
             {
                 Point Point1 = new(0, 0);
                 Point Point2 = new(0, valueBlokHeight - 10);
@@ -208,7 +207,7 @@ namespace Flowchart_Editor.Models
                 myPointCollection.Add(Point6);
 
                 polygonCycleWhileEndBlock.Points = myPointCollection;
-                canvasCycleWhileEndBlock.Width = valueBlokWidth;
+                canvas.Width = valueBlokWidth;
                 textBoxOfCycleWhileEndBlock.Width = valueBlokWidth;
                 textBlockOfCycleWhileEndBlock.Width = valueBlokWidth;
                 Canvas.SetLeft(firstPointToConnect, valueBlokWidth / 2 - 2);

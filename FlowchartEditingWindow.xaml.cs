@@ -7,6 +7,7 @@ using Flowchart_Editor.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.Models.Comment;
+using Flowchart_Editor.Models.Action;
 
 namespace Flowchart_Editor
 {
@@ -845,7 +846,7 @@ namespace Flowchart_Editor
 
         readonly List<Line> listLineConnection = new();
         
-        public Line? DrawConnectionLine(double x1, double y1, double x2, double y2)
+        public Line? DrawConnectionLine(double x1, double y1, double x2, double y2, Block firstBlock = null, Block secondBlock = null)
         {
             if (CoordinatesBlock.keyFirstBlock == CoordinatesBlock.keySecondBlock)
             {
@@ -858,15 +859,150 @@ namespace Flowchart_Editor
             {
                 BrushConverter color = new();
                 Line lineConnection = new();
+                if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+                {
 
-                lineConnection.X1 = x1;
-                lineConnection.Y1 = y1;
-                lineConnection.X2 = x2;
-                lineConnection.Y2 = y2;
-                lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
 
-                listLineConnection.Add(lineConnection);
-                destination.Children.Add(lineConnection);
+                    if (y2 < y1)
+                    {
+                        Line firstLine = new();
+                        double distanceBetweenTwoPoints = y2 - y1;
+                        firstLine.Y1 = y1;
+                        firstLine.X1 = x1;
+                        firstLine.Y2 = y2 - distanceBetweenTwoPoints / 2;
+                        firstLine.X2 = x1;
+                        firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(firstLine);
+                        destination.Children.Add(firstLine);
+
+                        Line secondLine = new();
+                        secondLine.Y1 = y1 + distanceBetweenTwoPoints / 2;
+                        secondLine.X1 = x2;
+                        secondLine.Y2 = y2;
+                        secondLine.X2 = x2;
+                        secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(secondLine);
+                        destination.Children.Add(secondLine);
+
+                        Line thirdLine = new();
+                        thirdLine.Y1 = y1 + distanceBetweenTwoPoints / 2;
+                        thirdLine.X1 = x1;
+                        thirdLine.Y2 = y1 + distanceBetweenTwoPoints / 2;
+                        thirdLine.X2 = x2;
+                        thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(thirdLine);
+                        destination.Children.Add(thirdLine);
+                    }
+                    else if (y2 > y1 && !((x2 - x1) < DefaultPropertyForBlock.height))
+                    {
+
+                        Line firstLine = new();
+                        firstLine.X1 = x1;
+                        firstLine.X2 = x1;
+                        firstLine.Y1 = y1 - 20;
+                        firstLine.Y2 = y1;
+                        firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(firstLine);
+                        destination.Children.Add(firstLine);
+
+                        Line secondLine = new();
+                        secondLine.X1 = x2 + (x1 - x2) / 2;
+                        secondLine.Y1 = y1 - 20;
+                        secondLine.Y2 = y1 - 20;
+                        secondLine.X2 = x1;
+                        secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(secondLine);
+                        destination.Children.Add(secondLine);
+
+                        Line thirdLine = new();
+                        thirdLine.Y1 = y1 - 20;
+                        thirdLine.X1 = x2 + (x1 - x2) / 2;
+                        thirdLine.Y2 = y1 + 20 + DefaultPropertyForBlock.height;
+                        thirdLine.X2 = x2 + (x1 - x2) / 2;
+                        thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(thirdLine);
+                        destination.Children.Add(thirdLine);
+
+
+                        Line fourthLine = new();
+                        fourthLine.X1 = x2;
+                        fourthLine.Y1 = y1 + 20 + DefaultPropertyForBlock.height;
+                        fourthLine.X2 = x2 + (x1 - x2) / 2;
+                        fourthLine.Y2 = y1 + 20 + DefaultPropertyForBlock.height;
+                        fourthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(fourthLine);
+                        destination.Children.Add(fourthLine);
+
+                        Line fifthLine = new();
+                        fifthLine.X2 = x2;
+                        fifthLine.Y1 = y2;
+                        fifthLine.X1 = x2;
+                        fifthLine.Y2 = y1 + 20 + DefaultPropertyForBlock.height;
+                        fifthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(fifthLine);
+                        destination.Children.Add(fifthLine);
+
+                    }
+                    else if ((x2 - x1) < DefaultPropertyForBlock.height)
+                    {
+                        Line firstLine = new();
+                        firstLine.X1 = x1;
+                        firstLine.X2 = x1;
+                        firstLine.Y1 = y1 - 20;
+                        firstLine.Y2 = y1;
+                        firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(firstLine);
+                        destination.Children.Add(firstLine);
+
+                        Line secondLine = new();
+                        secondLine.X2 = x1;
+                        secondLine.Y1 = y1 - 20;
+                        secondLine.Y2 = y1 - 20;
+                        secondLine.X1 = x1 + DefaultPropertyForBlock.width / 2 + 20;
+                        secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(secondLine);
+                        destination.Children.Add(secondLine);
+
+                        Line thirdLine = new();
+                        thirdLine.Y1 = y1 - 20;
+                        thirdLine.X1 = x1 + DefaultPropertyForBlock.width / 2 + 20;
+                        thirdLine.Y2 = y2 + 20;
+                        thirdLine.X2 = x1 + DefaultPropertyForBlock.width / 2 + 20;
+                        thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(thirdLine);
+                        destination.Children.Add(thirdLine);
+
+                        Line fourthLine = new();
+                        fourthLine.X1 = x2;
+                        fourthLine.Y1 = y2 - 40 + DefaultPropertyForBlock.height;
+                        fourthLine.X2 = x1 + DefaultPropertyForBlock.width / 2 + 20;
+                        fourthLine.Y2 = y2 - 40 + DefaultPropertyForBlock.height;
+                        fourthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(fourthLine);
+                        destination.Children.Add(fourthLine);
+
+                        Line fifthLine = new();
+                        fifthLine.X2 = x2;
+                        fifthLine.Y1 = y2;
+                        fifthLine.X1 = x2;
+                        fifthLine.Y2 = y2 + 20;
+                        fifthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(fifthLine);
+                        destination.Children.Add(fifthLine);
+                    }
+                    else if (x1 == x2)
+                    {
+
+                        lineConnection.X1 = x1;
+                        lineConnection.Y1 = y1;
+                        lineConnection.X2 = x2;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Add(lineConnection);
+                    }
+                }
                 
                 return lineConnection;
             }
