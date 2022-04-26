@@ -36,20 +36,21 @@ namespace Flowchart_Editor.Models
                 Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF52C0AA");
                 Brush brushDefaulColorPoint = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
 
+                SetPropertyForCanvas(defaultWidth, defaulHeight, backgroundColor);
+
                 SetPropertyForTextBox(defaultWidth, defaulHeight, initialText);
                 SetPropertyForTextBlock(defaultWidth, defaulHeight);
-                SetPropertyForCanvas(backgroundColor, defaultWidth, defaulHeight);
 
-                SetPropertyForFirstPointToConnect(brushDefaulColorPoint, defaultWidth);
+                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 2, -2, brushDefaulColorPoint);
                 firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                SetPropertyForSecondPointToConnect(brushDefaulColorPoint, defaulHeight);
+                SetPropertyForSecondPointToConnect(-2, defaulHeight / 2 - 2, brushDefaulColorPoint);
                 secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                SetPropertyForThirdPointToConnect(brushDefaulColorPoint, defaultWidth, defaulHeight);
+                SetPropertyForThirdPointToConnect(defaultWidth / 2 - 2, defaulHeight - 3, brushDefaulColorPoint);
                 thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                SetPropertyForFourthPointToConnect(brushDefaulColorPoint, defaultWidth, defaulHeight);
+                SetPropertyForFourthPointToConnect(defaultWidth - 4, defaulHeight / 2 - 2, brushDefaulColorPoint);
                 fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
                 AddChildrenForCanvas();

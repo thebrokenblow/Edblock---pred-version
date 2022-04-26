@@ -9,34 +9,36 @@ namespace Flowchart_Editor.Models
 {
     public class ConditionBlock : Block
     {
-        public Polygon? polygonConditionBlock = null;
+        public Polygon? polygonConditionBlock;
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
         private readonly MainWindow mainWindow;
-        private readonly int keyConditionBlock = 0;
-        const string textOfConditionBlock = "Условие";
+        const string initialText = "Условие";
 
         public ConditionBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
-            keyConditionBlock = keyBlock;
+            keyOfBlock = keyBlock;
         }
 
         public UIElement GetUIElement()
         {
             if (canvas == null)
             {
-                firstPointToConnect = new Ellipse();
-                secondPointToConnect = new Ellipse();
-                thirdPointToConnect = new Ellipse();
-                fourthPointToConnect = new Ellipse();
                 canvas = new Canvas();
                 polygonConditionBlock = new Polygon();
                 textBox = new TextBox();
                 textBlock = new TextBlock();
+                firstPointToConnect = new Ellipse();
+                secondPointToConnect = new Ellipse();
+                thirdPointToConnect = new Ellipse();
+                fourthPointToConnect = new Ellipse();
+               
+                BrushConverter brushConverter = new();
+                Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF60B2D3");
+                Brush brushDefaulColorPoint = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
 
-                var backgroundColor = new BrushConverter();
-                polygonConditionBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FF60B2D3");
+                polygonConditionBlock.Fill = backgroundColor;
                 Point Point1 = new(0, defaulHeight / 2);
                 Point Point2 = new(defaultWidth / 2, defaulHeight);
                 Point Point3 = new(defaultWidth, defaulHeight / 2);
@@ -49,176 +51,93 @@ namespace Flowchart_Editor.Models
                 myPointCollection.Add(Point3);
                 myPointCollection.Add(Point4);
                 myPointCollection.Add(Point5);
-
                 polygonConditionBlock.Points = myPointCollection;
 
-                SetPropertyForTextBox(defaultWidth / 2, defaulHeight, textOfConditionBlock);
-                Canvas.SetLeft(textBox, defaultWidth / 2 - (defaultWidth / 4));
-                Canvas.SetTop(textBox, defaulHeight / 4);
+                int valueForSetLeftTextBoxAndTextBlock = defaultWidth / 2 - defaultWidth / 4;
+                int valueForSetTopTextBoxAndTextBlock = defaulHeight / 4;
 
-                SetPropertyForTextBlock(defaultWidth / 2, defaulHeight);
-                Canvas.SetLeft(textBlock, defaultWidth / 2 - (defaultWidth / 4));
-                Canvas.SetTop(textBlock, defaulHeight / 4);
+                SetPropertyForTextBox(defaultWidth / 2, defaulHeight / 2, initialText, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
+                SetPropertyForTextBlock(defaultWidth / 2, defaulHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
 
-                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                firstPointToConnect.Height = radiusPoint;
-                firstPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 3);
-                Canvas.SetTop(firstPointToConnect, -2);
-                firstPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 3, -2, brushDefaulColorPoint);
+                firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                secondPointToConnect.Height = radiusPoint;
-                secondPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(secondPointToConnect, -2 + 2);
-                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 3);
-                secondPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForSecondPointToConnect(0, defaulHeight / 2 - 3, brushDefaulColorPoint);
+                secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                thirdPointToConnect.Height = radiusPoint;
-                thirdPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 3);
-                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
-                thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForThirdPointToConnect(defaultWidth / 2 - 3, defaulHeight - 3, brushDefaulColorPoint);
+                thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                fourthPointToConnect.Height = radiusPoint;
-                fourthPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 6);
-                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 3);
-                fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForFourthPointToConnect(defaultWidth - 6, defaulHeight / 2 - 3, brushDefaulColorPoint);
+                fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
-                canvas.Children.Add(textBox);
                 canvas.Children.Add(polygonConditionBlock);
                 canvas.Children.Add(firstPointToConnect);
                 canvas.Children.Add(secondPointToConnect);
                 canvas.Children.Add(thirdPointToConnect);
                 canvas.Children.Add(fourthPointToConnect);
+                canvas.Children.Add(textBox);
                 canvas.MouseMove += MouseMoveBlockForMovements;
             }
             return canvas;
         }
-        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        private void ClickOnFirstConnectionPoint(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (!flagForEnteringFirstConnectionPoint)
             {
-                if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
+                StaticBlock.firstPointToConnect = "firstPointToConnect";
+                flagForEnteringFirstConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnSecondConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringSecondConnectionPoint)
+            {
+                flagForEnteringSecondConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnThirdConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringThirdConnectionPoint)
+            {
+                StaticBlock.secondPointToConnect = "thirdPointToConnect";
+                flagForEnteringThirdConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnFourthConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringSecondConnectionPoint)
+            {
+                if (PinningComment.flagPinningComment && PinningComment.comment != null && canvas != null)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
-
-                    CoordinatesBlock.keyFirstBlock = keyConditionBlock;
-                    numberOfOccurrencesInBlock++;
-
-                    if (numberOfOccurrencesInBlock == 1)
-                    {
-                        mainBlock = this;
-                        firstSenderMainBlock = sender;
-                        StaticBlock.block = this;
-                    }
-                    if (numberOfOccurrencesInBlock == 2)
-                    {
-                        StaticBlock.block = this;
-                        secondSenderMainBlock = sender;
-                    }
-                    if (numberOfOccurrencesInBlock == 3)
-                    {
-                        StaticBlock.block = this;
-                        thirdSenderMainBlock = sender;
-                    }
-                    if (numberOfOccurrencesInBlock == 4)
-                    {
-                        StaticBlock.block = this;
-                        fourthSenderMainBlock = sender;
-                    }
-                    mainWindow.WriteFirstNameOfBlockToConect(textOfConditionBlock);
-
+                    flagForEnteringSecondConnectionPoint = true;
+                    UIElement commentUIElement = PinningComment.comment.GetUIElement();
+                    canvas.Children.Add(commentUIElement);
+                    Canvas.SetTop(commentUIElement, defaulHeight / 2 + 1);
+                    Canvas.SetLeft(commentUIElement, defaultWidth + 1);
+                    mainWindow.WriteFirstNameOfBlockToConect("");
+                    PinningComment.flagPinningComment = false;
+                    PinningComment.comment = null;
                 }
                 else
                 {
-                    double x1 = CoordinatesBlock.coordinatesBlockPointX;
-                    double y1 = CoordinatesBlock.coordinatesBlockPointY;
-
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
-
-                    mainWindow.WriteSecondNameOfBlockToConect(textOfConditionBlock);
-
-                    CoordinatesBlock.keySecondBlock = keyConditionBlock;
-
-                    numberOfOccurrencesInBlock++;
-
-                    if (numberOfOccurrencesInBlock == 1)
-                    {
-                        mainBlock = this;
-                        firstSenderMainBlock = sender;
-                    }
-                    if (numberOfOccurrencesInBlock == 2)
-                        secondSenderMainBlock = sender;
-                    if (numberOfOccurrencesInBlock == 3)
-                        thirdSenderMainBlock = sender;
-                    if (numberOfOccurrencesInBlock == 4)
-                        fourthSenderMainBlock = sender;
-
-                    SavingСontrols savingСontrols = new();
-
-                    if (StaticBlock.block != null)
-                    {
-                        if (firstLineConnectionBlock == null)
-                        {
-                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
-                            if (line != null)
-                            {
-                                firstLineConnectionBlock = line;
-                                savingСontrols.Save(StaticBlock.block, this, line);
-                            }
-                            else numberOfOccurrencesInBlock -= 2;
-                        }
-                        else if (secondLineConnectionBlock == null)
-                        {
-                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
-                            if (line != null)
-                            {
-                                secondLineConnectionBlock = line;
-                                savingСontrols.Save(StaticBlock.block, this, line);
-                            }
-                            else numberOfOccurrencesInBlock -= 2;
-                        }
-                        else if (thirdLineConnectionBlock == null)
-                        {
-                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
-                            if (line != null)
-                            {
-                                thirdLineConnectionBlock = line;
-                                savingСontrols.Save(StaticBlock.block, this, line);
-                            }
-                            else numberOfOccurrencesInBlock -= 2;
-                        }
-                        else if (fourthLineConnectionBlock == null)
-                        {
-                            Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
-                            if (line != null)
-                            {
-                                fourthLineConnectionBlock = line;
-                                savingСontrols.Save(StaticBlock.block, this, line);
-                            }
-                            else numberOfOccurrencesInBlock -= 2;
-                        }
-                    }
-                    CoordinatesBlock.coordinatesBlockPointX = 0;
-                    CoordinatesBlock.coordinatesBlockPointY = 0;
+                    flagForEnteringSecondConnectionPoint = true;
+                    GetDataForCoordinates(sender, initialText, mainWindow);
                 }
             }
         }
 
-        public void SetWidthAndHeightOfBlock(int valueBlokWidth, int valueBlokHeight)
+        public void SetWidthAndHeightOfBlock(int valueBlockWidth, int valueBlokHeight)
         {
             if (polygonConditionBlock != null && textBox != null && textBlock != null)
             {
                 Point Point1 = new(0, valueBlokHeight / 2);
-                Point Point2 = new(valueBlokWidth / 2, valueBlokHeight);
-                Point Point3 = new(valueBlokWidth, valueBlokHeight / 2);
-                Point Point4 = new(valueBlokWidth / 2, 0);
+                Point Point2 = new(valueBlockWidth / 2, valueBlokHeight);
+                Point Point3 = new(valueBlockWidth, valueBlokHeight / 2);
+                Point Point4 = new(valueBlockWidth / 2, 0);
                 Point Point5 = new(0, valueBlokHeight / 2);
                 PointCollection myPointCollection = new();
                 myPointCollection.Add(Point1);
@@ -227,14 +146,17 @@ namespace Flowchart_Editor.Models
                 myPointCollection.Add(Point4);
                 myPointCollection.Add(Point5);
                 polygonConditionBlock.Points = myPointCollection;
-                textBox.Width = valueBlokWidth / 2;
-                textBlock.Width = valueBlokWidth / 2;
-                Canvas.SetLeft(textBlock, valueBlokWidth / 2 - (valueBlokWidth / 4));
-                Canvas.SetLeft(textBox, valueBlokWidth / 2 - (valueBlokWidth / 4));
-                Canvas.SetLeft(firstPointToConnect, valueBlokWidth / 2 - 3);
-                Canvas.SetLeft(secondPointToConnect, 0);
-                Canvas.SetLeft(thirdPointToConnect, valueBlokWidth / 2 - 3);
-                Canvas.SetLeft(fourthPointToConnect, valueBlokWidth - 6);
+
+                int valueForSetLeftTextBoxAndTextBlock = valueBlockWidth / 2 - valueBlockWidth / 4;
+                int valueForSetTopTextBoxAndTextBlock = valueBlokHeight / 4;
+
+                SetPropertyForTextBox(valueBlockWidth / 2, valueBlokHeight / 2, textBox.Text, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
+                SetPropertyForTextBlock(valueBlockWidth / 2, valueBlokHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
+
+                SetPropertyForFirstPointToConnect(valueBlockWidth / 2 - 3, -2);
+                SetPropertyForSecondPointToConnect(0, valueBlokHeight / 2 - 3);
+                SetPropertyForThirdPointToConnect(valueBlockWidth / 2 - 3, valueBlokHeight - 3);
+                SetPropertyForFourthPointToConnect(valueBlockWidth - 6, valueBlokHeight / 2 - 3);
             }
         }
     }

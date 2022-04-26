@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flowchart_Editor.Models.Action;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,15 +15,13 @@ namespace Flowchart_Editor.Models
         private readonly MainWindow mainWindow;
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
-        private readonly int keySubroutineBlock = 0;
-        private const string textOfSubroutineBlock = "Подпрограмма";
+        private const string initialText = "Подпрограмма";
 
         public SubroutineBlock(MainWindow mainWindow, int keyBlock)
         {
             this.mainWindow = mainWindow;
-            keySubroutineBlock = keyBlock;
+            keyOfBlock = keyBlock;
         }
-       
 
         public UIElement GetUIElement()
         {
@@ -38,10 +37,11 @@ namespace Flowchart_Editor.Models
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-                canvas.Width = defaultWidth;
-                canvas.Height = defaulHeight;
-                var backgroundColor = new BrushConverter();
-                canvas.Background = (Brush)backgroundColor.ConvertFrom("#FFBA64C8");
+                BrushConverter brushConverter = new();
+                Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FFBA64C8");
+                Brush brushDefaulColorPoint = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
+
+                SetPropertyForCanvas(defaultWidth, defaulHeight, backgroundColor);
 
                 borderSubroutineBlock.BorderBrush = Brushes.Black;
                 borderSubroutineBlock.Height = defaulHeight;
@@ -57,57 +57,20 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(internalBorderSubroutineBlock, 0);
                 Canvas.SetLeft(internalBorderSubroutineBlock, 20);
 
-                textBox.Text = textOfSubroutineBlock;
-                textBox.Width = defaultWidth;
-                textBox.Height = defaulHeight;
-                textBox.FontSize = defaulFontSize;
-                textBox.FontFamily = defaultFontFamily;
-                textBox.VerticalAlignment = VerticalAlignment.Center;
-                textBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBox.TextAlignment = TextAlignment.Center;
-                textBox.Foreground = Brushes.White;
-                textBox.TextWrapping = TextWrapping.Wrap;
-                textBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
+                SetPropertyForTextBox(defaultWidth - 40, defaulHeight, initialText, 20);
+                SetPropertyForTextBlock(defaultWidth - 40, defaulHeight, 20);
 
-                textBlock.Text = textOfSubroutineBlock;
-                textBlock.Width = defaultWidth;
-                textBlock.Height = defaulHeight;
-                textBlock.FontSize = defaulFontSize;
-                textBlock.FontFamily = defaultFontFamily;
-                textBlock.VerticalAlignment = VerticalAlignment.Center;
-                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlock.TextAlignment = TextAlignment.Center;
-                textBlock.Foreground = Brushes.White;
-                textBlock.TextWrapping = TextWrapping.Wrap;
-                textBlock.MouseDown += ChangeTextBoxToTextBlock;
+                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 2, -2, brushDefaulColorPoint);
+                firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                firstPointToConnect.Height = radiusPoint;
-                firstPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
-                Canvas.SetTop(firstPointToConnect, -2);
-                firstPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForSecondPointToConnect(-2, defaulHeight / 2 - 2, brushDefaulColorPoint);
+                secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                secondPointToConnect.Height = radiusPoint;
-                secondPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(secondPointToConnect, -2);
-                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
-                secondPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForThirdPointToConnect(defaultWidth / 2 - 2, defaulHeight - 3, brushDefaulColorPoint);
+                thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                thirdPointToConnect.Height = radiusPoint;
-                thirdPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
-                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
-                thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
-
-                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                fourthPointToConnect.Height = radiusPoint;
-                fourthPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
-                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
-                fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForFourthPointToConnect(defaultWidth - 4, defaulHeight / 2 - 2, brushDefaulColorPoint);
+                fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
                 canvas.Children.Add(borderSubroutineBlock);
                 canvas.Children.Add(internalBorderSubroutineBlock);
@@ -120,35 +83,52 @@ namespace Flowchart_Editor.Models
             }
             return canvas;
         }
-        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        private void ClickOnFirstConnectionPoint(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (!flagForEnteringFirstConnectionPoint)
             {
-                if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
+                StaticBlock.firstPointToConnect = "firstPointToConnect";
+                flagForEnteringFirstConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnSecondConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringSecondConnectionPoint)
+            {
+                flagForEnteringSecondConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnThirdConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringThirdConnectionPoint)
+            {
+                StaticBlock.secondPointToConnect = "thirdPointToConnect";
+                flagForEnteringThirdConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnFourthConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringSecondConnectionPoint)
+            {
+                if (PinningComment.flagPinningComment && PinningComment.comment != null && canvas != null)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
+                    flagForEnteringSecondConnectionPoint = true;
+                    UIElement commentUIElement = PinningComment.comment.GetUIElement();
+                    canvas.Children.Add(commentUIElement);
+                    Canvas.SetTop(commentUIElement, defaulHeight / 2 + 1);
+                    Canvas.SetLeft(commentUIElement, defaultWidth + 1);
+                    mainWindow.WriteFirstNameOfBlockToConect("");
+                    PinningComment.flagPinningComment = false;
+                    PinningComment.comment = null;
 
-                    CoordinatesBlock.keyFirstBlock = keySubroutineBlock;
-
-                    mainWindow.WriteFirstNameOfBlockToConect(textOfSubroutineBlock);
                 }
                 else
                 {
-                    double x1 = CoordinatesBlock.coordinatesBlockPointX;
-                    double y1 = CoordinatesBlock.coordinatesBlockPointY;
-
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
-
-                    CoordinatesBlock.keySecondBlock = keySubroutineBlock;
-
-                    mainWindow.DrawConnectionLine(x1, y1, x2, y2);
-
-                    mainWindow.WriteSecondNameOfBlockToConect(textOfSubroutineBlock);
-
-                    CoordinatesBlock.coordinatesBlockPointX = 0;
-                    CoordinatesBlock.coordinatesBlockPointY = 0;
+                    flagForEnteringSecondConnectionPoint = true;
+                    GetDataForCoordinates(sender, initialText, mainWindow);
                 }
             }
         }

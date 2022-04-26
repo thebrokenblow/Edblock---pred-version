@@ -3,18 +3,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System;
+using Flowchart_Editor.Models.Action;
 
 namespace Flowchart_Editor.Models
 {
     public class StartEndBlock : Block
     {
-        public Rectangle? rectangleStartEndBlock = null;
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height / 2;
         private readonly MainWindow mainWindow;
         private const int radiusOfRectangleStartEndBlock = 20;
-        private const string textOfStartEndBlock = "Начало / Конец";
+        private const string initialText = "Начало / Конец";
 
         public StartEndBlock(MainWindow mainWindow, int keyBlock)
         {
@@ -26,7 +25,7 @@ namespace Flowchart_Editor.Models
             if (canvas == null)
             {
                 canvas = new Canvas();
-                rectangleStartEndBlock = new Rectangle();
+                rectangle = new Rectangle();
                 textBox = new TextBox();
                 textBlock = new TextBlock();
                 firstPointToConnect = new Ellipse();
@@ -34,67 +33,32 @@ namespace Flowchart_Editor.Models
                 thirdPointToConnect = new Ellipse();
                 fourthPointToConnect = new Ellipse();
 
-                var backgroundColor = new BrushConverter();
-                rectangleStartEndBlock.Fill = (Brush)backgroundColor.ConvertFrom("#FFF25252");
-                rectangleStartEndBlock.RadiusX = radiusOfRectangleStartEndBlock;
-                rectangleStartEndBlock.RadiusY = radiusOfRectangleStartEndBlock;
-                rectangleStartEndBlock.Width = defaultWidth;
-                rectangleStartEndBlock.Height = defaulHeight;
+                BrushConverter brushConverter = new();
+                Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FFF25252");
+                Brush brushDefaulColorPoint = (Brush)brushConverter.ConvertFrom(defaulColorPoint);
 
-                textBox.Text = textOfStartEndBlock;
-                textBox.Foreground = Brushes.White;
-                textBox.Width = defaultWidth;
-                textBox.Height = defaulHeight;
-                textBox.FontSize = defaulFontSize;
-                textBox.FontFamily = defaultFontFamily;
-                textBox.VerticalAlignment = VerticalAlignment.Center;
-                textBox.HorizontalAlignment = HorizontalAlignment.Center;
-                textBox.TextAlignment = TextAlignment.Center;
-                textBox.Foreground = Brushes.White;
-                textBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
-                Canvas.SetTop(textBlock, 3.5);
+                rectangle.Fill = backgroundColor;
+                rectangle.RadiusX = radiusOfRectangleStartEndBlock;
+                rectangle.RadiusY = radiusOfRectangleStartEndBlock;
+                rectangle.Width = defaultWidth;
+                rectangle.Height = defaulHeight;
 
-                textBlock.Foreground = Brushes.White;
-                textBlock.Width = defaultWidth;
-                textBlock.Height = defaulHeight;
-                textBlock.FontSize = defaulFontSize;
-                textBlock.FontFamily = defaultFontFamily;
-                textBlock.VerticalAlignment = VerticalAlignment.Center;
-                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlock.TextAlignment = TextAlignment.Center;
-                textBlock.Foreground = Brushes.White;
-                textBlock.MouseDown += ChangeTextBoxToTextBlock;
-                Canvas.SetTop(textBlock, 3.5);
+                SetPropertyForTextBox(defaultWidth - 20, defaulHeight - 3, initialText, valueForSetLeft: 10, valueForSetTop: 3);
+                SetPropertyForTextBlock(defaultWidth - 20, defaulHeight - 3);
 
-                firstPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                firstPointToConnect.Height = radiusPoint;
-                firstPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2.5);
-                Canvas.SetTop(firstPointToConnect, -2);
-                firstPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
-              
-                secondPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                secondPointToConnect.Height = radiusPoint;
-                secondPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(secondPointToConnect, -2);
-                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2.5);
-                secondPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 2.5, -2, brushDefaulColorPoint);
+                firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                thirdPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                thirdPointToConnect.Height = radiusPoint;
-                thirdPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2.5);
-                Canvas.SetTop(thirdPointToConnect, defaulHeight - 2.5);
-                thirdPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForSecondPointToConnect(-2, defaulHeight / 2 - 2.5, brushDefaulColorPoint);
+                secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                fourthPointToConnect.Fill = (Brush)backgroundColor.ConvertFrom(defaulColorPoint);
-                fourthPointToConnect.Height = radiusPoint;
-                fourthPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 2.5);
-                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2.5);
-                fourthPointToConnect.MouseDown += GetСoordinatesOfConnectionPoint;
+                SetPropertyForThirdPointToConnect(defaultWidth / 2 - 2.5, defaulHeight - 2.5, brushDefaulColorPoint);
+                thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                canvas.Children.Add(rectangleStartEndBlock);
+                SetPropertyForFourthPointToConnect(defaultWidth - 2.5, defaulHeight / 2 - 2.5, brushDefaulColorPoint);
+                fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
+
+                canvas.Children.Add(rectangle);
                 canvas.Children.Add(textBox);
                 canvas.Children.Add(firstPointToConnect);
                 canvas.Children.Add(secondPointToConnect);
@@ -104,34 +68,52 @@ namespace Flowchart_Editor.Models
             }
             return canvas;
         }
-        private void GetСoordinatesOfConnectionPoint(object sender, MouseEventArgs e)
+        private void ClickOnFirstConnectionPoint(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (!flagForEnteringFirstConnectionPoint)
             {
-                if (CoordinatesBlock.coordinatesBlockPointX == 0 && CoordinatesBlock.coordinatesBlockPointY == 0)
+                StaticBlock.firstPointToConnect = "firstPointToConnect";
+                flagForEnteringFirstConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnSecondConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringSecondConnectionPoint)
+            {
+                flagForEnteringSecondConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnThirdConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringThirdConnectionPoint)
+            {
+                StaticBlock.secondPointToConnect = "thirdPointToConnect";
+                flagForEnteringThirdConnectionPoint = true;
+                GetDataForCoordinates(sender, initialText, mainWindow);
+            }
+        }
+        private void ClickOnFourthConnectionPoint(object sender, MouseEventArgs e)
+        {
+            if (!flagForEnteringSecondConnectionPoint)
+            {
+                if (PinningComment.flagPinningComment && PinningComment.comment != null && canvas != null)
                 {
-                    CoordinatesBlock.coordinatesBlockPointX = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
-                    CoordinatesBlock.coordinatesBlockPointY = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
+                    flagForEnteringSecondConnectionPoint = true;
+                    UIElement commentUIElement = PinningComment.comment.GetUIElement();
+                    canvas.Children.Add(commentUIElement);
+                    Canvas.SetTop(commentUIElement, defaulHeight / 2 + 1);
+                    Canvas.SetLeft(commentUIElement, defaultWidth + 1);
+                    mainWindow.WriteFirstNameOfBlockToConect("");
+                    PinningComment.flagPinningComment = false;
+                    PinningComment.comment = null;
 
-                    CoordinatesBlock.keyFirstBlock = keyOfBlock;
-
-                    mainWindow.WriteFirstNameOfBlockToConect(textOfStartEndBlock);
                 }
                 else
                 {
-                    double x1 = CoordinatesBlock.coordinatesBlockPointX;
-                    double y1 = CoordinatesBlock.coordinatesBlockPointY;
-
-                    double x2 = Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
-                    double y2 = Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
-
-                    CoordinatesBlock.keySecondBlock = keyOfBlock;
-
-                    mainWindow.WriteSecondNameOfBlockToConect(textOfStartEndBlock);
-
-                    mainWindow.DrawConnectionLine(x1, y1, x2, y2);
-                    CoordinatesBlock.coordinatesBlockPointX = 0;
-                    CoordinatesBlock.coordinatesBlockPointY = 0;
+                    flagForEnteringSecondConnectionPoint = true;
+                    GetDataForCoordinates(sender, initialText, mainWindow);
                 }
             }
         }

@@ -10,6 +10,7 @@ namespace Flowchart_Editor.Models
     public abstract class Block
     {
         protected Canvas? canvas;
+        protected Rectangle? rectangle = null;
         protected TextBox? textBox;
         protected TextBlock? textBlock;
         protected Ellipse? firstPointToConnect;
@@ -25,6 +26,7 @@ namespace Flowchart_Editor.Models
         protected Block? secondBlock;
         protected Block? thirdBlock;
         protected Block? fourthBlock;
+        protected Ellipse? ellipse;
         protected object? firstSenderMainBlock;
         protected object? secondSenderMainBlock;
         protected object? thirdSenderMainBlock;
@@ -77,49 +79,52 @@ namespace Flowchart_Editor.Models
             }
             e.Handled = true;
         }
-        protected void SetPropertyForFirstPointToConnect(Brush defaulColorPoint, int defaultWidth)
+        protected void SetPropertyForFirstPointToConnect(double valueForSetLeft, double valueForSetTop, Brush? defaulColorPoint = null)
         {
             if (firstPointToConnect != null)
             {
-                firstPointToConnect.Fill = defaulColorPoint;
+                if (defaulColorPoint != null)
+                    firstPointToConnect.Fill = defaulColorPoint;
                 firstPointToConnect.Height = radiusPoint;
                 firstPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(firstPointToConnect, defaultWidth / 2 - 2);
-                Canvas.SetTop(firstPointToConnect, -2);
-               
+                Canvas.SetLeft(firstPointToConnect, valueForSetLeft);
+                Canvas.SetTop(firstPointToConnect, valueForSetTop);
             }
         }
-        protected void SetPropertyForSecondPointToConnect(Brush defaulColorPoint, int defaulHeight)
+        protected void SetPropertyForSecondPointToConnect(double valueForSetLeft, double valueForSetTop, Brush? defaulColorPoint = null)
         {
             if (secondPointToConnect != null)
             {
-                secondPointToConnect.Fill = defaulColorPoint;
+                if (defaulColorPoint != null)
+                    secondPointToConnect.Fill = defaulColorPoint;
                 secondPointToConnect.Height = radiusPoint;
                 secondPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(secondPointToConnect, -2);
-                Canvas.SetTop(secondPointToConnect, defaulHeight / 2 - 2);
+                Canvas.SetLeft(secondPointToConnect, valueForSetLeft);
+                Canvas.SetTop(secondPointToConnect, valueForSetTop);
             }
         }
-        protected void SetPropertyForThirdPointToConnect(Brush defaulColorPoint, int defaultWidth, int defaulHeight)
+        protected void SetPropertyForThirdPointToConnect(double valueForSetLeft, double valueForSetTop, Brush? defaulColorPoint = null)
         {
             if (thirdPointToConnect != null)
             {
-                thirdPointToConnect.Fill = defaulColorPoint;
+                if (defaulColorPoint != null)
+                    thirdPointToConnect.Fill = defaulColorPoint;
                 thirdPointToConnect.Height = radiusPoint;
                 thirdPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(thirdPointToConnect, defaultWidth / 2 - 2);
-                Canvas.SetTop(thirdPointToConnect, defaulHeight - 3);
+                Canvas.SetLeft(thirdPointToConnect, valueForSetLeft);
+                Canvas.SetTop(thirdPointToConnect, valueForSetTop);
             }
         }
-        protected void SetPropertyForFourthPointToConnect(Brush defaulColorPoint, int defaultWidth, int defaulHeight)
+        protected void SetPropertyForFourthPointToConnect(double valueForSetLeft, double valueForSetTop, Brush? defaulColorPoint = null)
         {
             if (fourthPointToConnect != null)
             {
-                fourthPointToConnect.Fill = defaulColorPoint;
+                if (defaulColorPoint != null)
+                    fourthPointToConnect.Fill = defaulColorPoint;
                 fourthPointToConnect.Height = radiusPoint;
                 fourthPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(fourthPointToConnect, defaultWidth - 4);
-                Canvas.SetTop(fourthPointToConnect, defaulHeight / 2 - 2);
+                Canvas.SetLeft(fourthPointToConnect, valueForSetLeft);
+                Canvas.SetTop(fourthPointToConnect, valueForSetTop);
             }
         }
         protected void AddChildrenForCanvas()
@@ -134,11 +139,12 @@ namespace Flowchart_Editor.Models
                 canvas.MouseMove += MouseMoveBlockForMovements;
             }
         }
-        protected void SetPropertyForTextBox(int defaultWidth, int defaulHeight, string textOfBlock)
+        protected void SetPropertyForTextBox(int defaultWidth, int defaulHeight, string? textOfBlock = null, double valueForSetLeft = 0, double valueForSetTop = 0)
         {
             if (textBox != null)
             {
-                textBox.Text = textOfBlock;
+                if (textOfBlock != null)
+                    textBox.Text = textOfBlock;
                 textBox.Width = defaultWidth;
                 textBox.Height = defaulHeight;
                 textBox.FontSize = defaulFontSize;
@@ -150,9 +156,14 @@ namespace Flowchart_Editor.Models
                 textBox.TextWrapping = TextWrapping.Wrap;
                 textBox.AcceptsReturn = true;
                 textBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
+                if (valueForSetLeft != 0)
+                    Canvas.SetLeft(textBox, valueForSetLeft);
+                if (valueForSetTop != 0)
+                    Canvas.SetTop(textBox, valueForSetTop);
+                
             }
         }
-        protected void SetPropertyForTextBlock(int defaultWidth, int defaulHeight)
+        protected void SetPropertyForTextBlock(int defaultWidth, int defaulHeight, double valueForSetLeft = 0, double valueForSetTop = 0)
         {
             if (textBlock != null)
             {
@@ -166,13 +177,17 @@ namespace Flowchart_Editor.Models
                 textBlock.Foreground = Brushes.White;
                 textBlock.TextWrapping = TextWrapping.Wrap;
                 textBlock.MouseDown += ChangeTextBoxToTextBlock;
+                if (valueForSetLeft != 0)
+                    Canvas.SetLeft(textBox, valueForSetLeft);
+                if (valueForSetTop != 0)
+                    Canvas.SetTop(textBox, valueForSetTop);
             }
         }
-        protected bool CheckForZeroCoordinates(double coordinatesBlockPointX, double coordinatesBlockPointY) => coordinatesBlockPointX == 0 && coordinatesBlockPointY == 0 ? true : false;
+        protected static bool CheckForZeroCoordinates(double coordinatesBlockPointX, double coordinatesBlockPointY) => coordinatesBlockPointX == 0 && coordinatesBlockPointY == 0;
         protected double GetCoordinatesX(object sender) => Canvas.GetLeft((Ellipse)sender) + Canvas.GetLeft(canvas) + 3;
         protected double GetCoordinatesY(object sender) => Canvas.GetTop((Ellipse)sender) + Canvas.GetTop(canvas) + 3;
 
-        protected void SeveCoordinates(double coordinatesBlockPointX, double coordinatesBlockPointY)
+        protected static void SeveCoordinates(double coordinatesBlockPointX, double coordinatesBlockPointY)
         {
             CoordinatesBlock.coordinatesBlockPointX = coordinatesBlockPointX;
             CoordinatesBlock.coordinatesBlockPointY = coordinatesBlockPointY;
@@ -252,47 +267,45 @@ namespace Flowchart_Editor.Models
 
                 SaveControlsForConnectionPointToOutgoingLine(sender);
 
-                SavingСontrols savingСontrols = new();
-
                 if (StaticBlock.block != null)
                 {
                     if (firstLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                         if (line != null)
                         {
                             firstLineConnectionBlock = line;
-                            savingСontrols.Save(StaticBlock.block, this, line);
+                            SavingСontrols.Save(StaticBlock.block, this, line);
                         }
                         else numberOfOccurrencesInBlock -= 2;
                     }
                     else if (secondLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                         if (line != null)
                         {
                             secondLineConnectionBlock = line;
-                            savingСontrols.Save(StaticBlock.block, this, line);
+                            SavingСontrols.Save(StaticBlock.block, this, line);
                         }
                         else numberOfOccurrencesInBlock -= 2;
                     }
                     else if (thirdLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                         if (line != null)
                         {
                             thirdLineConnectionBlock = line;
-                            savingСontrols.Save(StaticBlock.block, this, line);
+                            SavingСontrols.Save(StaticBlock.block, this, line);
                         }
                         else numberOfOccurrencesInBlock -= 2;
                     }
                     else if (fourthLineConnectionBlock == null)
                     {
-                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2, StaticBlock.block, this);
+                        Line? line = mainWindow.DrawConnectionLine(x1, y1, x2, y2);
                         if (line != null)
                         {
                             fourthLineConnectionBlock = line;
-                            savingСontrols.Save(StaticBlock.block, this, line);
+                            SavingСontrols.Save(StaticBlock.block, this, line);
                         }
                         else numberOfOccurrencesInBlock -= 2;
                     }
@@ -301,13 +314,22 @@ namespace Flowchart_Editor.Models
                 CoordinatesBlock.coordinatesBlockPointY = 0;
             }
         }
-        protected void SetPropertyForCanvas(Brush backgroundColor, int defaultWidth, int defaulHeight)
+        protected void SetPropertyForCanvas(int defaultWidth, int defaulHeight, Brush? backgroundColor = null)
         {
             if (canvas != null)
             {
-                canvas.Background = backgroundColor;
                 canvas.Width = defaultWidth;
                 canvas.Height = defaulHeight;
+                canvas.Background = backgroundColor;
+            }
+        }
+        protected void SetPropertyForEllipse(int defaultWidth, int defaulHeight, Brush backgroundColor)
+        {
+            if (ellipse != null)
+            {
+                ellipse.Width = defaultWidth;
+                ellipse.Height = defaulHeight;
+                ellipse.Fill = backgroundColor;
             }
         }
         protected void ChangeTextBoxToTextBlock(object sender, MouseEventArgs e)
@@ -370,14 +392,20 @@ namespace Flowchart_Editor.Models
         {
             if (canvas != null && textBox != null && textBlock != null)
             {
-                canvas.Width = valueBlokWidth;
+                canvas.Width = valueBlokWidth;                 
                 textBox.Width = valueBlokWidth;
                 textBlock.Width = valueBlokWidth;
+                if (rectangle != null)
+                {
+                    rectangle.Width = valueBlokWidth;
+                    SetPropertyForTextBox(valueBlokWidth - 20, DefaultPropertyForBlock.height / 2 - 3, valueForSetLeft: 10);
+                }
                 Canvas.SetLeft(firstPointToConnect, valueBlokWidth / 2 - 2);
                 Canvas.SetLeft(thirdPointToConnect, valueBlokWidth / 2 - 2);
                 Canvas.SetLeft(fourthPointToConnect, valueBlokWidth - 4);
             }
         }
+
         public void SetHeightOfBlock(int valueBlokHeight)
         {
             if (canvas != null && textBox != null && textBlock != null)
@@ -385,8 +413,13 @@ namespace Flowchart_Editor.Models
                 canvas.Height = valueBlokHeight;
                 textBox.Height = valueBlokHeight;
                 textBlock.Height = valueBlokHeight;
+                if (rectangle != null)
+                {
+                    rectangle.Height = valueBlokHeight;
+                    SetPropertyForTextBox(DefaultPropertyForBlock.width - 20, valueBlokHeight - 3, valueForSetLeft: 10);
+                }
                 Canvas.SetTop(secondPointToConnect, valueBlokHeight / 2 - 2);
-                Canvas.SetTop(thirdPointToConnect, valueBlokHeight - 3);
+                Canvas.SetTop(thirdPointToConnect, valueBlokHeight - 4);
                 Canvas.SetTop(fourthPointToConnect, valueBlokHeight / 2 - 2);
             }
         }

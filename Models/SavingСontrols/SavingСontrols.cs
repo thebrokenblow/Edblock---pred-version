@@ -10,7 +10,7 @@ namespace Flowchart_Editor
         private const int threeEntryIntoBlock = 3;
         private const int fourEntryIntoBlock = 4;
 
-        public void Save(Block actionBlockFromWhichLineOriginates, Block actionBlockFromWhichLineEnters, Line lineConnection)
+        public static void Save(Block actionBlockFromWhichLineOriginates, Block actionBlockFromWhichLineEnters, Line lineConnection)
         {
             Block? mainBlockOriginates = actionBlockFromWhichLineOriginates.GetMainBlock();
             int numberOfOccurrencesInBlockEnters = actionBlockFromWhichLineEnters.GetNumberOfOccurrencesInBlock();
@@ -38,7 +38,7 @@ namespace Flowchart_Editor
             }
         }
 
-        private void SetValuesForBlockWithSingleLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
+        private static void SetValuesForBlockWithSingleLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
         {
             Block mainBlockEnters = blockFromWhichLineEnters.GetMainBlock();
             object firstSenderMainBlockEnters = blockFromWhichLineEnters.GetFirstSenderMainBlock();
@@ -68,7 +68,7 @@ namespace Flowchart_Editor
             }
         }
 
-        private void SetValuesForBlockWithTwoLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
+        private static void SetValuesForBlockWithTwoLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
         {
             Block mainBlockEnters = blockFromWhichLineEnters.GetMainBlock();
             object secondSenderMainBlockEnters = blockFromWhichLineEnters.GetSecondSenderMainBlock();
@@ -98,7 +98,7 @@ namespace Flowchart_Editor
             }
         }
 
-        private void SetValuesForBlockWithThreeLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
+        private static void SetValuesForBlockWithThreeLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
         {
             Block mainBlockEnters = blockFromWhichLineEnters.GetMainBlock();
             object thirdSenderMainBlockEnters = blockFromWhichLineEnters.GetThirdSenderMainBlock();
@@ -128,7 +128,7 @@ namespace Flowchart_Editor
             }
         }
 
-        private void SetValuesForBlockWithFourLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
+        private static void SetValuesForBlockWithFourLineOccurrence(Block blockFromWhichLineOriginates, Block blockFromWhichLineEnters, Line lineConnection)
         {
             Block mainBlockEnters = blockFromWhichLineEnters.GetMainBlock();
             object fourthSenderMainBlockEnters = blockFromWhichLineEnters.GetFourthSenderMainBlock();
