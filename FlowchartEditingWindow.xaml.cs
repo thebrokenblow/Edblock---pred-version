@@ -57,7 +57,7 @@ namespace Flowchart_Editor
                     SetTheme(WindowsTheme.dark);
                     buttonOpenMenu.Foreground = darkWhiteBrush;
                     buttonCloseMenu.Foreground = darkWhiteBrush;
-                    toggleButtonStyleTheme.Background = darkWhiteBrush;
+                    //toggleButtonStyleTheme.Background = darkWhiteBrush;
                 }
                 else
                 {
@@ -979,6 +979,65 @@ namespace Flowchart_Editor
                 i++;
             }
         }
+        private void ChangeLine9(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y1;
+                }
+                if (i == 1)
+                {
+                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y1;
+                    line.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2;
+                }
+                if (i == 2)
+                {
+                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y2;
+                    line.X2 = x2;
+                    line.Y2 = y2;
+                }
+                i++;
+            }
+        }
+        private void ChangeLine10(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            double distanceBetweenTwoPoints = x1 - x2;
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1 - distanceBetweenTwoPoints - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y1;
+                }
+                if (i == 1)
+                {
+                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+                    line.Y1 = y1;
+                    line.X2 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+                    line.Y2 = y2;
+                }
+                if (i == 2)
+                {
+                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+                    line.Y1 = y2;
+                    line.X2 = x2;
+                    line.Y2 = y2;
+                }
+                i++;
+            }
+        }
         private void ChangeLine(Block firstBlock)
         {
             firstBlock = firstBlock.GetMyLine().GetFirstBlock();
@@ -1056,7 +1115,17 @@ namespace Flowchart_Editor
                         ChangeLine4(masLine, x2, y2, x1, y1);
                     else
                         ChangeLine8(masLine, x2, y2, x1, y1);
-
+                }
+                if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
+                {
+                    if (y1 < y2 && x2 < x1)
+                        ChangeLine9(masLine, x2, y2, x1, y1);
+                    else if (y1 > y2 && x2 > x1)
+                        ChangeLine9(masLine, x1, y1, x2, y2);
+                    else if (y1 < y2 && x2 > x1)
+                        ChangeLine10(masLine, x2, y2, x1, y1);
+                    else if (y1 > y2 && x2 < x1)
+                        ChangeLine10(masLine, x1, y1, x2, y2);
                 }
             }
         }
@@ -1136,11 +1205,7 @@ namespace Flowchart_Editor
 
         const string darkWhite = "#FFF9F9FB";
         const string darkBlack = "#FF040205";
-        const string lightBlack = "#FF262427";
-        const string darkTheme = "Тёмная тема";
-        const string lightThene = "Светлая тема";
 
-        
         private void SelectionChangedListOfFontsComboBox(object sender, SelectionChangedEventArgs e)
         {
             FontFamily fontFamily = new(((ComboBoxItem)listOfFontsComboBox.SelectedItem).Content.ToString());
@@ -1540,6 +1605,75 @@ namespace Flowchart_Editor
             firstBlock.SaveLine(myLine);
             secondBlock.SaveLine(myLine);
         }
+        private void DrawConnectionLine10(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+            Line firstLine = new();
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Y2 = y1;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y1 = y1;
+            secondLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y2 = y2;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y1 = y2;
+            thirdLine.X2 = x2;
+            thirdLine.Y2 = y2;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+        private void DrawConnectionLine11(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            double distanceBetweenTwoPoints = x1 - x2;
+            BrushConverter color = new();
+            Line firstLine = new();
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1 - distanceBetweenTwoPoints - valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Y2 = y1;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+            secondLine.Y1 = y1;
+            secondLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+            secondLine.Y2 = y2;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+            thirdLine.Y1 = y2;
+            thirdLine.X2 = x2;
+            thirdLine.Y2 = y2;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
         public void DrawConnectionLine(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
         {
             if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
@@ -1602,6 +1736,17 @@ namespace Flowchart_Editor
                     DrawConnectionLine5(x2, y2, x1, y1, firstBlock, secondBlock);
                 else if (y2 > y1 && x2 >= x1)
                     DrawConnectionLine9(x2, y2, x1, y1, firstBlock, secondBlock);
+            }
+            else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
+            {
+                if (y1 < y2 && x2 < x1)
+                    DrawConnectionLine10(x2, y2, x1, y1, firstBlock, secondBlock);
+                else if (y1 > y2 && x2 > x1)
+                    DrawConnectionLine10(x1, y1, x2, y2, firstBlock, secondBlock);
+                else if (y1 < y2 && x2 > x1)
+                    DrawConnectionLine11(x2, y2, x1, y1, firstBlock, secondBlock);
+                else if (y1 > y2 && x2 < x1)
+                    DrawConnectionLine11(x1, y1, x2, y2, firstBlock, secondBlock);
             }
             StaticBlock.firstPointToConnect = "";
             StaticBlock.secondPointToConnect = "";
