@@ -79,7 +79,7 @@
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </Window.Triggers>
-    <Grid Name="navigationMenu" Background="#FFF9F9FB">
+    <Grid Style="{DynamicResource GridLayoutMenuStyle}">
         <StackPanel x:Name="StackPanelMenu" Width="250" HorizontalAlignment="Left" Margin="-250 0 0 0" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
                 <TransformGroup>
@@ -100,8 +100,19 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="homeIcon" Kind="Home" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="homeText" Text="Главная" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Kind="Home" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Главная" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem1" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -114,8 +125,19 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="authorizationIcon" Kind="User" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="authorizationText" Text="Авторизация" Margin="10" Foreground="#FF040205" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="User" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Авторизация" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -128,8 +150,19 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="registrationIcon" Kind="UserAdd" Width="30" Height="30" Foreground="#FF040205" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Name="registrationText" Text="Регистрация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Kind="UserAdd" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Регистрация" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -142,8 +175,19 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="listOfProjectsIcon" Kind="Assignment" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Name="listOfProjectsText" Text="Список проектов" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Kind="Assignment" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Список проектов" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem4" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -156,8 +200,19 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="informationIcon" Kind="Information" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Name="informationText" Text="Информация" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Kind="Information" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Информация" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem5" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -170,8 +225,19 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Name="supportIcon" Kind="Chat" Width="30" Height="30" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Name="supportText" Text="Поддержка" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <materialDesign:PackIcon Kind="Chat" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Поддержка" Margin="10" VerticalAlignment="Center"  Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem6" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -184,13 +250,13 @@
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal">
-                        <ToggleButton Name="toggleButtonStyleTheme" Click="ClickToggleButtonStyleTheme" Background="Black" Width="50" Height="50" VerticalAlignment="Center" Foreground="#FF040205" Margin="5"/>
-                        <TextBlock Name="topicName" Text="Светлая тема" Margin="10" VerticalAlignment="Center" Foreground="#FF040205"/>
+                        <ToggleButton Name="toggleButtonStyleTheme"  Width="50" Height="50" VerticalAlignment="Center" Margin="5" Foreground="#FF040205" Background="#FF040205"/>
+                        <TextBlock Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockToggleButtonStyle}"/>
                     </StackPanel>
                 </ListViewItem>
             </ListView>
         </StackPanel>
-        <Grid Name="blockLayoutMenu" Background="#FFF9F9FB" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="blockLayoutMenu" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource GridStyle}">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -200,7 +266,7 @@
                 </TransformGroup>
             </Grid.RenderTransform>
 
-            <Grid>
+            <Grid Style="{DynamicResource GridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="75"/>
@@ -221,7 +287,7 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="1"/>
-                    <ColumnDefinition Width="*"/> 
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Canvas Grid.Row="1"
@@ -250,7 +316,8 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"
                            Grid.Row="1"
-                           Grid.Column="2" />
+                           Grid.Column="2" 
+                           Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Name="conditionBlock" 
                         MouseMove="MouseMoveConditionBlock" 
@@ -279,7 +346,8 @@
                                VerticalAlignment="Center" 
                                HorizontalAlignment="Left"
                                Grid.Column="2" 
-                               Grid.Row="2"/>
+                               Grid.Row="2"
+                               Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Name="startEndBlock"  
                         MouseMove="MouseMoveStartEndBlock"  
@@ -309,7 +377,8 @@
                            Grid.Column="2" 
                            Grid.Row="3" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                           HorizontalAlignment="Left"
+                           Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Name="inputOutputBlock"  
                             MouseMove="MouseMoveInputOutputBlock"  
@@ -339,7 +408,8 @@
                            Grid.Column="2" 
                            Grid.Row="4" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                           HorizontalAlignment="Left"
+                           Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Width="140" 
                         Height="60"
@@ -383,11 +453,14 @@
                            Grid.Column="2" 
                            Grid.Row="5" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                           HorizontalAlignment="Left"
+                           Style="{DynamicResource TextBlockStyle}"/>
 
-                <Canvas Grid.Row="6" Grid.Column="1"
+                <Canvas 
                     Name="cycleBlockFor"
-                    MouseMove="MouseMoveCycleBlockFor">
+                    MouseMove="MouseMoveCycleBlockFor"
+                    Grid.Row="6" 
+                    Grid.Column="1">
 
                     <Polygon Fill="#FFC618" 
                          Points="10 0 0 10 0 50 10 60 130 60 140 50 140 10 130 0" 
@@ -401,7 +474,6 @@
                                 TextWrapping="Wrap" 
                                 Width="150" 
                                 Height="20"/>
-            
                 </Canvas>
 
                 <TextBlock
@@ -411,7 +483,8 @@
                            Grid.Column="2" 
                            Grid.Row="6" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                           HorizontalAlignment="Left"
+                           Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Grid.Row="7" 
                         Grid.Column="1" 
@@ -439,7 +512,8 @@
                            Grid.Column="2" 
                            Grid.Row="7" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                           HorizontalAlignment="Left"
+                           Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Grid.Row="8" 
                         Grid.Column="1"
@@ -465,7 +539,8 @@
                            Grid.Column="2" 
                            Grid.Row="8" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                           HorizontalAlignment="Left"
+                           Style="{DynamicResource TextBlockStyle}"/>
 
                 <Canvas Grid.Row="9" 
                         Grid.Column="1"
@@ -484,38 +559,39 @@
                            Grid.Column="2" 
                            Grid.Row="9" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
-                
+                           HorizontalAlignment="Left" 
+                           Style="{DynamicResource TextBlockStyle}"/>
+
                 <Canvas Grid.Row="10" 
                         Grid.Column="1" 
-                        Name="comment"  
                         MouseLeftButtonDown="MouseLeftButtonDownComment">
 
-                    <Line Name="firstLineOfComment" X1="30" Y1="40" X2="50" Y2="40" Stroke="Black" />
-                    <Line Name="secondLineOfComment" X1="60" Y1="40" X2="80" Y2="40" Stroke="Black" />
-                    <Line Name="thirdLineOfComment" X1="90" Y1="40" X2="110" Y2="40" Stroke="Black" />
-                    <Line Name="fourthLineOfComment" X1="110" Y1="0" X2="110" Y2="75" Stroke="Black" />
-                    <Line Name="fifthLineOfComment" X1="120" Y1="0" X2="110" Y2="0" Stroke="Black" />
-                    <Line Name="sixthLineOfComment" X1="120" Y1="75" X2="110" Y2="75" Stroke="Black" />
-                    
+                    <Line Name="firstLineOfComment" X1="30" Y1="40" X2="50" Y2="40" Style="{DynamicResource LineStyle}"/>
+                    <Line Name="secondLineOfComment" X1="60" Y1="40" X2="80" Y2="40" Style="{DynamicResource LineStyle}"/>
+                    <Line Name="thirdLineOfComment" X1="90" Y1="40" X2="110" Y2="40" Style="{DynamicResource LineStyle}"/>
+                    <Line Name="fourthLineOfComment" X1="110" Y1="0" X2="110" Y2="75" Style="{DynamicResource LineStyle}"/>
+                    <Line Name="fifthLineOfComment" X1="120" Y1="0" X2="110" Y2="0" Style="{DynamicResource LineStyle}"/>
+                    <Line Name="sixthLineOfComment" X1="120" Y1="75" X2="110" Y2="75" Style="{DynamicResource LineStyle}"/>
+
                 </Canvas>
 
                 <TextBlock 
-                           Name="textComment" 
-                           Text="Комментарий(10)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="10" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
+                    Name="textComment" 
+                    Text="Комментарий(10)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="10" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
+                
+                <Canvas 
+                    Name="dividingLine"
+                    Style="{DynamicResource DividingLineStyle}"
+                    Grid.RowSpan="12" 
+                    Grid.Column="3"/>
 
-
-                <Canvas Name="lineSeparatingLocationOfBlocksAndField"
-                        Grid.RowSpan="11" 
-                        Grid.Column="3"
-                        Background="#FF040205"/>
-
-                <Grid Grid.Column="4" Grid.RowSpan="11">
+                <Grid Grid.Column="4" Grid.RowSpan="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="150"/>
@@ -535,126 +611,126 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="850*"/>
                     </Grid.RowDefinitions>
-                   
-                    <Canvas 
-                        Background="#FFF9F9FB" 
+
+                    <Canvas
                         AllowDrop="True" 
                         DragOver="DragOverDestination" 
                         DragLeave="DragLeaveDestination" 
                         Drop="DropDestination"
                         Name="destination" 
                         Grid.ColumnSpan="13"
-                        Grid.Row="2" />
-                    
+                        Grid.Row="1" 
+                        Style="{DynamicResource CanvasStyle}"/>
+
                     <TextBlock 
                         Name="textFont"
                         Text="Шрифт:" 
-                        Grid.Row="0" 
-                        Grid.Column="0" 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center" />
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center" 
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Margin="0 9 0 0"
+                        Style="{DynamicResource TextBlockStyle}"
+                        />
 
                     <ComboBox 
                     Name="listOfFontsComboBox" 
                     SelectionChanged="SelectionChangedListOfFontsComboBox" 
                     Foreground="Black" 
-                    Grid.Row="0" 
                     Grid.Column="1" 
                     Width="130" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Top" Margin="0,5,0,0" >
                         <ComboBoxItem>Times New Roman</ComboBoxItem>
                         <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
                     </ComboBox>
 
                     <TextBlock 
-                    Name="textFontSize"
-                    Text="Размер текста:" 
-                    Grid.Row="0" 
-                    Grid.Column="2" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"/>
+                        Name="textFontSize"
+                        Text="Размер текста:" 
+                        Grid.Column="2" 
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0 9 0 0"/>
 
                     <ComboBox 
                     Name="fontSizeComboBox" 
                     SelectionChanged="SelectionChangedFontSizeComboBox"
                     Foreground="Black" 
-                    Grid.Row="0" 
                     Grid.Column="3" 
                     Width="60" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Top" Margin="0,5,0,0" />
 
                     <TextBlock 
-                    Name="textWidth"
-                    Text="Ширина:"
-                    Grid.Row="0" 
-                    Grid.Column="4"
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"/>
+                        Name="textWidth"
+                        Text="Ширина:" 
+                        Grid.Column="4"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
 
                     <ComboBox 
                     Name="blockWidthComboBox" 
                     SelectionChanged="SelectionChangedBlockWidthComboBox"
                     Foreground="Black" 
-                    Grid.Row="0" 
                     Grid.Column="5" 
                     Width="60" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
+                    VerticalAlignment="Top" Margin="0,5,0,0" />
 
                     <TextBlock 
                         Name="textHeight"
-                        Text="Высота:"
-                        Grid.Row="0" 
+                        Text="Высота:" 
                         Grid.Column="6"
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
 
                     <ComboBox 
                         Name="blockHeightComboBox" 
                         SelectionChanged="SelectionChangedBlockHeightComboBox"
                         Foreground="Black" 
-                        Grid.Row="0" 
                         Grid.Column="7" 
                         Width="60" 
                         HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Top" Margin="0,5,0,0"/>
 
                     <TextBlock 
                         Name="labelNameOfFirstBlockToConnect"
-                        Text="Первый блок:"
-                        Grid.Row="0" 
+                        Text="Первый блок:" 
                         Grid.Column="8"
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
-                    
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
+
                     <TextBlock 
-                        Name="textNameOfFirstBlockToConnect"
-                        Grid.Row="0" 
+                        Name="textNameOfFirstBlockToConnect" 
                         Grid.Column="9"
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0" />
 
                     <TextBlock 
                         Name="labelNameOfSecondBlockToConnect"
-                        Text="Второй блок:"
-                        Grid.Row="0" 
+                        Text="Второй блок:" 
                         Grid.Column="10"
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
 
                     <TextBlock 
-                        Name="textNameOfSecondBlockToConnect"
-                        Grid.Row="0" 
+                        Name="textNameOfSecondBlockToConnect" 
                         Grid.Column="11"
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
                 </Grid>
                 <Button 
-                        Name="buttonCloseMenu"
-                        Grid.Row="0" 
-                        Grid.Column="1" 
+                    Name="buttonCloseMenu"
+                    Grid.Row="0" 
+                    Grid.Column="1" 
                     Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
                     Width="30" 
                     Height="30"
@@ -664,12 +740,12 @@
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Left" 
                     Margin="5"
-                    Click="ButtonCloseMenu_Click"
+                    Click="ButtonCloseMenuClick"
                     Visibility="Collapsed">
                     <materialDesign:PackIcon
                         Kind="Menu"/>
                 </Button>
-                
+
                 <Button Name="buttonOpenMenu" 
                         Grid.Row="0" 
                         Grid.Column="1"
@@ -682,7 +758,7 @@
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Left"
                         Margin="5"
-                        Click="ButtonOpenMenu_Click">
+                        Click="ButtonOpenMenuClick">
                     <materialDesign:PackIcon 
                         Kind="Menu"/>
                 </Button>
