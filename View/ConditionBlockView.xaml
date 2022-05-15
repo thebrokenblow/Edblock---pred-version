@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Flowchart_Editor.View.ConditionBlockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Canvas>
+            <Polygon 
+                Points="0 30 70 60 140 30 70 0 0 30" 
+                Canvas.Top="10"
+                Fill="#FF60B2D3" />
+
+            <TextBlock 
+                Text="Условие"
+                FontSize="12" 
+                Foreground="White" 
+                Width="70"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                TextAlignment="Center"
+                Canvas.Top="30"
+                Canvas.Left="35" />
+        </Canvas>
+    </Grid>
+</UserControl>

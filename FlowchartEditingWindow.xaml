@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:control="clr-namespace:Flowchart_Editor.View"
         mc:Ignorable="d"
         Title="Flowchart Editor" Height="850" Width="1820">
     <Window.Resources>
@@ -290,293 +291,139 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Canvas Grid.Row="1"
-                        Grid.Column="1"
-                        Width="140" 
-                        Height="60"
-                        Background="#FF52C0AA" 
-                        Name="actionBlock"
-                        MouseMove="MouseMoveActionBlock">
+                <control:ActionBlockView 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveActionBlock"/>
+                
+                <TextBlock 
+                    Text="Блок (1)" 
+                    FontSize="10" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Grid.Row="1"
+                    Grid.Column="2" 
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                    <TextBlock 
-                        Canvas.Top="20"
-                        Text="Действие"
-                        FontSize="12"
-                        Foreground="White"
-                        TextAlignment="Center"  
-                        HorizontalAlignment="Center" 
-                        TextWrapping="Wrap" 
-                        Width="140" 
-                        Height="20" />
-                </Canvas>
+                <control:ConditionBlockView
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveConditionBlock"/>
+                
+                <TextBlock 
+                    Text="Условие (2)" 
+                    FontSize="10" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Grid.Column="2" 
+                    Grid.Row="2"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <TextBlock Name="actionBlockText"
-                           Text="Блок (1)" 
-                           FontSize="10" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Grid.Row="1"
-                           Grid.Column="2" 
-                           Style="{DynamicResource TextBlockStyle}"/>
+                <control:StartEndBlockView
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveStartEndBlock"/>
+                
+                <TextBlock
+                    Text="Начало / Конец (3)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="3" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <Canvas Name="conditionBlock" 
-                        MouseMove="MouseMoveConditionBlock" 
-                        Grid.Row="2"
-                        Grid.Column="1" >
 
-                    <Polygon Points="0 30 70 60 140 30 70 0 0 30" 
-                             Canvas.Top="10"
-                             Fill="#FF60B2D3" />
+                <control:InputOutputBlockView
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveInputOutputBlock"/>
 
-                    <TextBlock Text="Условие"
-                               FontSize="12" 
-                               Foreground="White" 
-                               Width="70"
-                               TextWrapping="Wrap"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center"
-                               Canvas.Top="30"
-                               Canvas.Left="35" />
-                </Canvas>
+                <TextBlock 
+                    Text="Ввод / Вывод (4)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="4" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <TextBlock Name="conditionBlockText"
-                               Text="Условие (2)" 
-                               FontSize="10" 
-                               VerticalAlignment="Center" 
-                               HorizontalAlignment="Left"
-                               Grid.Column="2" 
-                               Grid.Row="2"
-                               Style="{DynamicResource TextBlockStyle}"/>
-
-                <Canvas Name="startEndBlock"  
-                        MouseMove="MouseMoveStartEndBlock"  
-                        Grid.Row="3"
-                        Grid.Column="1">
-
-                    <Rectangle Width="140" 
-                               Height="30" 
-                               Fill="#FFF25252" 
-                               RadiusX="20" 
-                               RadiusY="20" 
-                               Canvas.Top="25" />
-
-                    <TextBlock FontSize="12" 
-                           Foreground="White" 
-                           Canvas.Left="30" 
-                           Canvas.Top="30"
-                           Text="Начало/Конец" 
-                           TextWrapping="Wrap" />
-
-                </Canvas>
+                <control:SubroutineBlockView
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveSubroutineBlock"/> 
 
                 <TextBlock
-                           Name="startEndBlockText"
-                           Text="Начало / Конец (3)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="3" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Style="{DynamicResource TextBlockStyle}"/>
+                    Text="Подпрограмма (5)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="5" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <Canvas Name="inputOutputBlock"  
-                            MouseMove="MouseMoveInputOutputBlock"  
-                            Grid.Row="4"
-                            Grid.Column="1">
-
-                    <Polygon Fill="#FF008080" 
-                             Points="20 0 0 60 120 60 140 0"
-                             Canvas.Top="5"/>
-
-                    <TextBlock Text="Ввод/Вывод" 
-                                   FontSize="12" 
-                                   Foreground="White" 
-                                   Width="140" 
-                                   Height="20" 
-                                   TextAlignment="Center"
-                                   HorizontalAlignment="Center" 
-                                   TextWrapping="Wrap" 
-                                   Canvas.Top="25" />
-
-                </Canvas>
-
+                <control:CycleBlockForView
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveCycleBlockFor"/>
+                
                 <TextBlock
-                           Name="inputOutputBlockText"
-                           Text="Ввод / Вывод (4)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="4" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Style="{DynamicResource TextBlockStyle}"/>
-
-                <Canvas Width="140" 
-                        Height="60"
-                        Background="#FFBA64C8"
-                        Grid.Row="5"
-                        Grid.Column="1"
-                        Name="subroutineBlock"  
-                        MouseMove="MouseMoveSubroutineBlock">
-                    <Border BorderBrush="Black" 
-                            Height="60" 
-                            Width="140" 
-                            BorderThickness="1" 
-                            CornerRadius="1">
-                        <Canvas>
-                            <Border BorderBrush="Black" 
-                                    Height="60" 
-                                    Width="100" 
-                                    BorderThickness="1" 
-                                    CornerRadius="1" 
-                                    Canvas.Left="20" 
-                                    Canvas.Top="-1">
-                            </Border>
-                            <TextBlock 
-                                Canvas.Top="20"
-                                Text="Подпрограмма"
-                                FontSize="12"
-                                Foreground="White"
-                                TextAlignment="Center"  
-                                HorizontalAlignment="Center" 
-                                TextWrapping="Wrap" 
-                                Width="140" 
-                                Height="20" />
-                        </Canvas>
-                    </Border>
-                </Canvas>
-
-                <TextBlock
-                           Name="subroutineBlockText"
-                           Text="Подпрограмма (5)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="5" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Style="{DynamicResource TextBlockStyle}"/>
-
-                <Canvas 
-                    Name="cycleBlockFor"
-                    MouseMove="MouseMoveCycleBlockFor"
+                    Text="Цикл (6) for" 
+                    FontSize="10" 
+                    Grid.Column="2" 
                     Grid.Row="6" 
-                    Grid.Column="1">
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                    <Polygon Fill="#FFC618" 
-                         Points="10 0 0 10 0 50 10 60 130 60 140 50 140 10 130 0" 
-                         Margin="5"/>
-                    <TextBlock Canvas.Top="25"
-                                Text="Цикл for"
-                                FontSize="12"
-                                Foreground="White"
-                                TextAlignment="Center"  
-                                HorizontalAlignment="Center" 
-                                TextWrapping="Wrap" 
-                                Width="150" 
-                                Height="20"/>
-                </Canvas>
+                <control:CycleBlockWhileBeginView
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveCycleBlockWhileBegin"/>
+                
+                <TextBlock 
+                    Text="Цикл (7) do while, while (Начало)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="7" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <TextBlock
-                           Name="cycleBlockForText"
-                           Text="Цикл (6) for" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="6" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Style="{DynamicResource TextBlockStyle}"/>
-
-                <Canvas Grid.Row="7" 
-                        Grid.Column="1" 
-                        Name="cycleBlockWhileBegin"
-                        MouseMove="MouseMoveCycleBlockWhileBegin">
-
-                    <Polygon Fill="#CCCCFF" 
-                         Points="0 60 0 10 10 0 130 0 140 10 140 60" 
-                         Margin="5"/>
-                    <TextBlock Canvas.Top="25"
-                                Text="Начало цикла"
-                                FontSize="12"
-                                Foreground="White"
-                                TextAlignment="Center"  
-                                HorizontalAlignment="Center" 
-                                TextWrapping="Wrap" 
-                                Width="150" 
-                                Height="20"/>
-                </Canvas>
+                <control:CycleBlockWhileEndView
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveCycleBlockWhileEnd"/>
 
                 <TextBlock 
-                           Name="cycleBlockWhileBeginText"
-                           Text="Цикл (7) do while, while (Начало)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="7" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Style="{DynamicResource TextBlockStyle}"/>
+                    Text="Цикл (8) do while, while (Конец)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="8" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <Canvas Grid.Row="8" 
-                        Grid.Column="1"
-                        Name="cycleBlockWhileEnd"
-                        MouseMove="MouseMoveCycleBlockWhileEnd">
-                    <Polygon Fill="#CCCCFF" 
-                             Points="0 0 0 50 10 60 130 60 140 50 140 0" 
-                             Margin="5"/>
-                    <TextBlock Canvas.Top="25"
-                                Text="Конец цикла"
-                                FontSize="12"
-                                Foreground="White"
-                                TextAlignment="Center"  
-                                HorizontalAlignment="Center"  
-                                Width="150" 
-                                Height="20"/>
-                </Canvas>
-
+                <control:LinkBlockView
+                    Grid.Row="9"
+                    Grid.Column="1"
+                    MouseMove="MouseMoveLinkBlock"/>
+                
                 <TextBlock 
-                           Name="cycleBlockWhileEndText"
-                           Text="Цикл (8) do while, while (Конец)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="8" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"
-                           Style="{DynamicResource TextBlockStyle}"/>
+                    Text="Ссылка (9)" 
+                    FontSize="10" 
+                    Grid.Column="2" 
+                    Grid.Row="9" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left" 
+                    Style="{DynamicResource TextBlockStyle}"/>
 
-                <Canvas Grid.Row="9" 
-                        Grid.Column="1"
-                        Margin="60,25"
-                        Name="linkBlock"  
-                        MouseMove="MouseMoveLinkBlock">
-                    <Ellipse Fill="#5761A8"
-                             Width="30" 
-                             Height="30"/>
-                </Canvas>
-
+                <control:CommentView
+                    Grid.Row="10" 
+                    Grid.Column="1" 
+                    MouseLeftButtonDown="MouseLeftButtonDownComment"/>
+                
                 <TextBlock 
-                           Name="linkBlockText" 
-                           Text="Ссылка (9)" 
-                           FontSize="10" 
-                           Grid.Column="2" 
-                           Grid.Row="9" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Left" 
-                           Style="{DynamicResource TextBlockStyle}"/>
-
-                <Canvas Grid.Row="10" 
-                        Grid.Column="1" 
-                        MouseLeftButtonDown="MouseLeftButtonDownComment">
-
-                    <Line Name="firstLineOfComment" X1="30" Y1="40" X2="50" Y2="40" Style="{DynamicResource LineStyle}"/>
-                    <Line Name="secondLineOfComment" X1="60" Y1="40" X2="80" Y2="40" Style="{DynamicResource LineStyle}"/>
-                    <Line Name="thirdLineOfComment" X1="90" Y1="40" X2="110" Y2="40" Style="{DynamicResource LineStyle}"/>
-                    <Line Name="fourthLineOfComment" X1="110" Y1="0" X2="110" Y2="75" Style="{DynamicResource LineStyle}"/>
-                    <Line Name="fifthLineOfComment" X1="120" Y1="0" X2="110" Y2="0" Style="{DynamicResource LineStyle}"/>
-                    <Line Name="sixthLineOfComment" X1="120" Y1="75" X2="110" Y2="75" Style="{DynamicResource LineStyle}"/>
-
-                </Canvas>
-
-                <TextBlock 
-                    Name="textComment" 
                     Text="Комментарий(10)" 
                     FontSize="10" 
                     Grid.Column="2" 
@@ -586,7 +433,6 @@
                     Style="{DynamicResource TextBlockStyle}"/>
                 
                 <Canvas 
-                    Name="dividingLine"
                     Style="{DynamicResource DividingLineStyle}"
                     Grid.RowSpan="12" 
                     Grid.Column="3"/>
@@ -622,71 +468,71 @@
                         Grid.Row="1" 
                         Style="{DynamicResource CanvasStyle}"/>
 
-                    <TextBlock 
-                        Name="textFont"
+                    <TextBlock
                         Text="Шрифт:" 
                         VerticalAlignment="Top"
                         HorizontalAlignment="Center" 
                         Grid.Column="0"
                         Grid.Row="0"
-                        Margin="0 9 0 0"
-                        Style="{DynamicResource TextBlockStyle}"
-                        />
+                        Margin="0,9"
+                        Style="{DynamicResource TextBlockStyle}"/>
 
                     <ComboBox 
-                    Name="listOfFontsComboBox" 
-                    SelectionChanged="SelectionChangedListOfFontsComboBox" 
-                    Foreground="Black" 
-                    Grid.Column="1" 
-                    Width="130" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" Margin="0,5,0,0" >
-                        <ComboBoxItem>Times New Roman</ComboBoxItem>
-                        <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
+                        Name="listOfFontsComboBox" 
+                        SelectionChanged="SelectionChangedListOfFontsComboBox" 
+                        Foreground="Black" 
+                        Grid.Column="1" 
+                        Width="130" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top"
+                        Margin="0,5">
+                            <ComboBoxItem>Times New Roman</ComboBoxItem>
+                            <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
                     </ComboBox>
 
                     <TextBlock 
-                        Name="textFontSize"
                         Text="Размер текста:" 
                         Grid.Column="2" 
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
                         Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0 9 0 0"/>
+                        Margin="0,9"/>
 
                     <ComboBox 
-                    Name="fontSizeComboBox" 
-                    SelectionChanged="SelectionChangedFontSizeComboBox"
-                    Foreground="Black" 
-                    Grid.Column="3" 
-                    Width="60" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" Margin="0,5,0,0" />
+                        Name="fontSizeComboBox" 
+                        SelectionChanged="SelectionChangedFontSizeComboBox"
+                        Foreground="Black" 
+                        Grid.Column="3" 
+                        Width="60" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top" 
+                        Margin="0,5" />
 
                     <TextBlock 
-                        Name="textWidth"
                         Text="Ширина:" 
                         Grid.Column="4"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0,9"/>
 
                     <ComboBox 
-                    Name="blockWidthComboBox" 
-                    SelectionChanged="SelectionChangedBlockWidthComboBox"
-                    Foreground="Black" 
-                    Grid.Column="5" 
-                    Width="60" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" Margin="0,5,0,0" />
+                        Name="blockWidthComboBox" 
+                        SelectionChanged="SelectionChangedBlockWidthComboBox"
+                        Foreground="Black" 
+                        Grid.Column="5" 
+                        Width="60" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top" 
+                        Margin="0,5" />
 
                     <TextBlock 
-                        Name="textHeight"
                         Text="Высота:" 
                         Grid.Column="6"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0,9"/>
 
                     <ComboBox 
                         Name="blockHeightComboBox" 
@@ -695,37 +541,40 @@
                         Grid.Column="7" 
                         Width="60" 
                         HorizontalAlignment="Center" 
-                        VerticalAlignment="Top" Margin="0,5,0,0"/>
+                        VerticalAlignment="Top" 
+                        Margin="0,5"/>
 
                     <TextBlock 
-                        Name="labelNameOfFirstBlockToConnect"
                         Text="Первый блок:" 
                         Grid.Column="8"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0,9"/>
 
                     <TextBlock 
-                        Name="textNameOfFirstBlockToConnect" 
+                        Name="textNameOfFirstBlockToConnect"
                         Grid.Column="9"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0" />
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0,9" />
 
                     <TextBlock 
-                        Name="labelNameOfSecondBlockToConnect"
                         Text="Второй блок:" 
                         Grid.Column="10"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0,9"/>
 
                     <TextBlock 
-                        Name="textNameOfSecondBlockToConnect" 
+                        Name="textNameOfSecondBlockToConnect"
                         Grid.Column="11"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" Margin="0,9,0,0"/>
+                        Style="{DynamicResource TextBlockStyle}" 
+                        Margin="0,9"/>
                 </Grid>
                 <Button 
                     Name="buttonCloseMenu"
@@ -742,8 +591,8 @@
                     Margin="5"
                     Click="ButtonCloseMenuClick"
                     Visibility="Collapsed">
-                    <materialDesign:PackIcon
-                        Kind="Menu"/>
+                        <materialDesign:PackIcon
+                            Kind="Menu"/>
                 </Button>
 
                 <Button Name="buttonOpenMenu" 
@@ -759,8 +608,8 @@
                         HorizontalAlignment="Left"
                         Margin="5"
                         Click="ButtonOpenMenuClick">
-                    <materialDesign:PackIcon 
-                        Kind="Menu"/>
+                        <materialDesign:PackIcon 
+                            Kind="Menu"/>
                 </Button>
             </Grid>
         </Grid>
