@@ -68,6 +68,7 @@ namespace Flowchart_Editor
         private static void SetTheme(WindowsTheme windowsTheme)
         {
             Uri uri = new("WindowsTheme/" + windowsTheme + ".xaml", UriKind.Relative);
+            DefaultPropertyForBlock.uri = uri;
             ResourceDictionary? resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
             Application.Current.Resources.Clear();
             Application.Current.Resources.MergedDictionaries.Add(resourceDict);
@@ -96,7 +97,7 @@ namespace Flowchart_Editor
                 ConditionBlock instanceOfConditionBlock = new(this, keyBlock);
                 listOfBlock.Add(instanceOfConditionBlock);
                 DataObject dataObjectInformationOConditionBlock = new(typeof(ConditionBlock), instanceOfConditionBlock);
-                DragDrop.DoDragDrop(conditionBlock, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
@@ -122,7 +123,7 @@ namespace Flowchart_Editor
                 InputOutputBlock instanceOfInputOutputBlock = new(this, keyBlock);
                 listOfBlock.Add(instanceOfInputOutputBlock);
                 DataObject dataObjectInformationOfInputOutputBlock = new(typeof(InputOutputBlock), instanceOfInputOutputBlock);
-                DragDrop.DoDragDrop(inputOutputBlock, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
@@ -135,7 +136,7 @@ namespace Flowchart_Editor
                 SubroutineBlock instanceSubroutineBlock = new(this, keyBlock);
                 listOfBlock.Add(instanceSubroutineBlock);
                 DataObject dataObjectInformationOfSubroutineBlock = new(typeof(SubroutineBlock), instanceSubroutineBlock);
-                DragDrop.DoDragDrop(subroutineBlock, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
@@ -432,13 +433,14 @@ namespace Flowchart_Editor
                 object transferInformation = resultTransferInformation.GetTransferInformationActionBlock();
                 Canvas.SetLeft((UIElement)transferInformation, position.X + 1);
                 Canvas.SetTop((UIElement)transferInformation, position.Y + 1);
-
+                
                 if (resultTransferInformation.GetBlock().GetNumberOfOccurrencesInBlock() > 0)
                     ChangeLine(resultTransferInformation.GetBlock());
             }
             else e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
+
 
         private void ChangeLine1(Line[] masLine, double x1, double y1, double x2, double y2)
         {
@@ -1002,35 +1004,99 @@ namespace Flowchart_Editor
                     line.X2 = x2;
                     line.Y2 = y2;
                 }
+                if (i == 3)
+                {
+                    destination.Children.Remove(line); 
+                }
+                if (i == 4)
+                {
+                    destination.Children.Remove(line);
+                }
                 i++;
             }
         }
         private void ChangeLine10(Line[] masLine, double x1, double y1, double x2, double y2)
         {
             int i = 0;
-            double distanceBetweenTwoPoints = x1 - x2;
+            BrushConverter color = new();
             foreach (Line line in masLine)
             {
                 if (i == 0)
                 {
                     line.X1 = x1;
                     line.Y1 = y1;
-                    line.X2 = x1 - distanceBetweenTwoPoints - valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
                     line.Y2 = y1;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
                 }
                 if (i == 1)
                 {
-                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
+                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
                     line.Y1 = y1;
-                    line.X2 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
-                    line.Y2 = y2;
+                    line.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
                 }
                 if (i == 2)
                 {
-                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
-                    line.Y1 = y2;
-                    line.X2 = x2;
-                    line.Y2 = y2;
+                    line.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 3)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.X2 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        line.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.X2 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        line.Y2 = y2;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                if (i == 4)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X2 = x2;
+                        lineConnection.Y1 = y2;
+                        lineConnection.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X2 = x2;
+                        line.Y1 = y2;
+                        line.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        line.Y2 = y2;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
                 }
                 i++;
             }
@@ -1038,6 +1104,7 @@ namespace Flowchart_Editor
         private void ChangeLine11(Line[] masLine, double x1, double y1, double x2, double y2)
         {
             int i = 0;
+            BrushConverter color = new();
             foreach (Line line in masLine)
             {
                 if (i == 0)
@@ -1056,21 +1123,53 @@ namespace Flowchart_Editor
                 }
                 if (i == 2)
                 {
-                    line.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
-                    line.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
-                    line.X2 = x1;
-                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
-                    destination.Children.Remove(line);
-                    destination.Children.Add(line);
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.X2 = x1;
+                        lineConnection.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+                        line.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        line.X2 = x1;
+                        line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
                 }
                 if (i == 3)
                 {
-                    line.X1 = x1;
-                    line.Y1 = y1;
-                    line.X2 = x1;
-                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
-                    destination.Children.Remove(line);
-                    destination.Children.Add(line);
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x1;
+                        lineConnection.Y1 = y1;
+                        lineConnection.X2 = x1;
+                        lineConnection.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x1;
+                        line.Y1 = y1;
+                        line.X2 = x1;
+                        line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
                 }
                 i++;
             }
@@ -1194,6 +1293,370 @@ namespace Flowchart_Editor
                 i++;
             }
         }
+
+        private void ChangeLine14(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            double distanceBetweenTwoPoints = y1 - y2;
+            BrushConverter color = new();
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1;
+                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 1)
+                {
+                    line.X1 = x2;
+                    line.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 2)
+                {
+                    line.X1 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides + distanceBetweenTwoPoints;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 3)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides + distanceBetweenTwoPoints;
+                        lineConnection.X2 = x1;
+                        lineConnection.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides + distanceBetweenTwoPoints;
+                        line.X2 = x1;
+                        line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                if (i == 4)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X2 = x2;
+                        lineConnection.Y1 = y2;
+                        lineConnection.X1 = x2;
+                        lineConnection.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X2 = x2;
+                        line.Y1 = y2;
+                        line.X1 = x2;
+                        line.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                i++;
+            }
+        }
+        private void ChangeLine15(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            double distanceBetweenTwoPoints = y1 - y2;
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x2;
+                    line.Y1 = y2;
+                    line.X2 = x2;
+                    line.Y2 = y2 + distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+                }
+                if (i == 1)
+                {
+                    line.X1 = x2;
+                    line.Y1 = y2 + distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x1;
+                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                }
+                if (i == 2)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1;
+                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                }
+                if (i == 3)
+                {
+                    destination.Children.Remove(line);
+                }
+                if (i == 4)
+                {
+                    destination.Children.Remove(line);
+                }
+                i++;
+            }
+        }
+
+        private void ChangeLine16(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            BrushConverter color = new();
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1;
+                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                }
+                if (i == 1)
+                {
+                    line.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x1;
+                    line.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                }
+                if (i == 2)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+                        line.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y2 = y2;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                if (i == 3)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x2;
+                        lineConnection.Y1 = y2;
+                        lineConnection.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x2;
+                        line.Y1 = y2;
+                        line.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y2 = y2;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                i++;
+            }
+        }
+        private void ChangeLine17(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            double distanceBetweenTwoPoints = x2 - x1;
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y1;
+                }
+                if (i == 1)
+                {
+                    line.X1 = x1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y1;
+                    line.X2 = x2 - distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2;
+                }
+                if (i == 2)
+                {
+                    line.X1 = x2;
+                    line.Y1 = y2;
+                    line.X2 = x2 - distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2;
+                }
+                if (i == 3)
+                {
+                    destination.Children.Remove(line);
+                }
+                if (i == 4)
+                {
+                    destination.Children.Remove(line);
+                }
+                i++;
+            }
+        }
+
+        private void ChangeLine18(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x2;
+                    line.Y1 = y2;
+                    line.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2;
+                }
+                if (i == 1)
+                {
+                    line.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y2;
+                    line.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y1;
+                }
+                if (i == 2)
+                {
+                    line.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y1;
+                    line.X2 = x1;
+                    line.Y2 = y1;
+                }
+                if (i == 3)
+                {
+                    destination.Children.Remove(line);
+                }
+                if (i == 4)
+                {
+                    destination.Children.Remove(line);
+                }
+                i++;
+            }
+        }
+
+        private void ChangeLine19(Line[] masLine, double x1, double y1, double x2, double y2)
+        {
+            int i = 0;
+            BrushConverter color = new();
+            foreach (Line line in masLine)
+            {
+                if (i == 0)
+                {
+                    line.X1 = x1;
+                    line.Y1 = y1;
+                    line.X2 = x1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y1;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 1)
+                {
+                    line.X1 = x1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y1;
+                    line.X2 = x1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 2)
+                {
+                    line.X1 = x1 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                    line.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                    destination.Children.Remove(line);
+                    destination.Children.Add(line);
+                }
+                if (i == 3)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y2 = y2;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                if (i == 4)
+                {
+                    if (line == null)
+                    {
+                        Line lineConnection = new();
+                        lineConnection.X2 = x2;
+                        lineConnection.Y1 = y2;
+                        lineConnection.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        lineConnection.Y2 = y2;
+                        lineConnection.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+                        listLineConnection.Add(lineConnection);
+                        destination.Children.Remove(lineConnection);
+                        destination.Children.Add(lineConnection);
+                        masLine[i] = lineConnection;
+                    }
+                    else
+                    {
+                        line.X2 = x2;
+                        line.Y1 = y2;
+                        line.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+                        line.Y2 = y2;
+                        destination.Children.Remove(line);
+                        destination.Children.Add(line);
+                    }
+                }
+                i++;
+            }
+        }
+
         private void ChangeLine(Block firstBlock)
         {
             firstBlock = firstBlock.GetMyLine().GetFirstBlock();
@@ -1209,7 +1672,7 @@ namespace Flowchart_Editor
             if (firstBlock.flag != null)
             {
                 bool flagFirstBlock = (bool)firstBlock.flag;
-              
+
                 if (flagFirstBlock)
                     masLine = firstBlock.GetMyLine().GetFirtLine();
                 else
@@ -1274,25 +1737,23 @@ namespace Flowchart_Editor
                 }
                 if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
                 {
-                    if (y1 < y2 && x2 < x1)
-                        ChangeLine9(masLine, x2, y2, x1, y1);
-                    else if (y1 > y2 && x2 > x1)
-                        ChangeLine9(masLine, x1, y1, x2, y2);
-                    else if (y1 < y2 && x2 > x1)
+                    if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
                         ChangeLine10(masLine, x2, y2, x1, y1);
-                    else if (y1 > y2 && x2 < x1)
-                        ChangeLine10(masLine, x1, y1, x2, y2);
+                    else if (x2 < x1)
+                        ChangeLine9(masLine, x2, y2, x1, y1);
+                    else if (x2 > x1)
+                        ChangeLine9(masLine, x1, y1, x2, y2);
                 }
                 if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
                 {
-                    if (x1 > x2)
+                    if (x1 > x2 && y2 < y1)
                         ChangeLine4(masLine, x2, y2, x1, y1);
                     else
                         ChangeLine11(masLine, x2, y2, x1, y1);
                 }
                 if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
                 {
-                    if (x1 < x2)
+                    if (x1 < x2 && y2 > y1)
                         ChangeLine4(masLine, x1, y1, x2, y2);
                     else
                         ChangeLine11(masLine, x1, y1, x2, y2);
@@ -1310,6 +1771,40 @@ namespace Flowchart_Editor
                         ChangeLine13(masLine, x2, y2, x1, y1);
                     else
                         ChangeLine12(masLine, x1, y1, x2, y2);
+                }
+                if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
+                {
+                    if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+                    {
+                        if (y1 > y2)
+                            ChangeLine15(masLine, x1, y1, x2, y2);
+                        else
+                            ChangeLine15(masLine, x2, y2, x1, y1);
+                    }
+                    else ChangeLine14(masLine, x1, y1, x2, y2);
+                }
+                if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
+                {
+                    if (x1 > x2 && y2 > y1)
+                        ChangeLine4(masLine, x1, y1, x2, y2);
+                    else
+                        ChangeLine16(masLine, x1, y1, x2, y2);
+                }
+                if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
+                {
+                    if (x1 < x2 && y2 < y1)
+                        ChangeLine4(masLine, x2, y2, x1, y1);
+                    else
+                        ChangeLine16(masLine, x2, y2, x1, y1);
+                }
+                if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
+                {
+                    if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
+                        ChangeLine19(masLine, x2, y2, x1, y1);
+                    else if (x2 > x1) 
+                        ChangeLine17(masLine, x2, y2, x1, y1);
+                    else if (x2 < x1)
+                        ChangeLine17(masLine, x1, y1, x2, y2);
                 }
             }
         }
@@ -1793,6 +2288,41 @@ namespace Flowchart_Editor
         {
             BrushConverter color = new();
             Line firstLine = new();
+            double distanceBetweenTwoPoints = x2 - x1;
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Y2 = y1;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y1 = y1;
+            secondLine.X2 = x2 - distanceBetweenTwoPoints - valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y2 = y2;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x2;
+            thirdLine.Y1 = y2;
+            thirdLine.X2 = x2  - distanceBetweenTwoPoints - valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+        private void DrawConnectionLine11(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+            Line firstLine = new();
             firstLine.X1 = x1;
             firstLine.Y1 = y1;
             firstLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
@@ -1805,56 +2335,39 @@ namespace Flowchart_Editor
             secondLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
             secondLine.Y1 = y1;
             secondLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides;
-            secondLine.Y2 = y2;
+            secondLine.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
             secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
             listLineConnection.Add(secondLine);
             destination.Children.Add(secondLine);
 
             Line thirdLine = new();
             thirdLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides;
-            thirdLine.Y1 = y2;
-            thirdLine.X2 = x2;
-            thirdLine.Y2 = y2;
+            thirdLine.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.X2 = x2 - valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
             thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
             listLineConnection.Add(thirdLine);
             destination.Children.Add(thirdLine);
 
-            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
-            firstBlock.SaveLine(myLine);
-            secondBlock.SaveLine(myLine);
-        }
-        private void DrawConnectionLine11(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
-        {
-            double distanceBetweenTwoPoints = x1 - x2;
-            BrushConverter color = new();
-            Line firstLine = new();
-            firstLine.X1 = x1;
-            firstLine.Y1 = y1;
-            firstLine.X2 = x1 - distanceBetweenTwoPoints - valueOffsetOfLineFromTheBlockToSides;
-            firstLine.Y2 = y1;
-            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
-            listLineConnection.Add(firstLine);
-            destination.Children.Add(firstLine);
+            Line fourthLine = new();
+            fourthLine.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.X2 = x2 - valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Y2 = y2;
+            fourthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fourthLine);
+            destination.Children.Add(fourthLine);
 
-            Line secondLine = new();
-            secondLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
-            secondLine.Y1 = y1;
-            secondLine.X2 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
-            secondLine.Y2 = y2;
-            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
-            listLineConnection.Add(secondLine);
-            destination.Children.Add(secondLine);
+            Line fifthLine = new();
+            fifthLine.X2 = x2;
+            fifthLine.Y1 = y2;
+            fifthLine.X1 = x2 - valueOffsetOfLineFromTheBlockToSides;
+            fifthLine.Y2 = y2;
+            fifthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fifthLine);
+            destination.Children.Add(fifthLine);
 
-            Line thirdLine = new();
-            thirdLine.X1 = x1 - valueOffsetOfLineFromTheBlockToSides - distanceBetweenTwoPoints;
-            thirdLine.Y1 = y2;
-            thirdLine.X2 = x2;
-            thirdLine.Y2 = y2;
-            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
-            listLineConnection.Add(thirdLine);
-            destination.Children.Add(thirdLine);
-
-            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine, fourthLine, fifthLine);
             firstBlock.SaveLine(myLine);
             secondBlock.SaveLine(myLine);
         }
@@ -1989,6 +2502,263 @@ namespace Flowchart_Editor
             firstBlock.SaveLine(myLine);
             secondBlock.SaveLine(myLine);
         }
+
+        private void DrawConnectionLine15(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            double distanceBetweenTwoPoints = y1 - y2;
+            BrushConverter color = new();
+            Line firstLine = new();
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1;
+            firstLine.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x2;
+            secondLine.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.X2 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.X2 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides + distanceBetweenTwoPoints;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            Line fourthLine = new();
+            fourthLine.X1 = x2 + DefaultPropertyForBlock.width / 2 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Y1 = y2 + valueOffsetOfLineFromTheBlockToSides + distanceBetweenTwoPoints;
+            fourthLine.X2 = x1;
+            fourthLine.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fourthLine);
+            destination.Children.Add(fourthLine);
+
+            Line fifthLine = new();
+            fifthLine.X2 = x2;
+            fifthLine.Y1 = y2;
+            fifthLine.X1 = x2;
+            fifthLine.Y2 = y2 + valueOffsetOfLineFromTheBlockToSides;
+            fifthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fifthLine);
+            destination.Children.Add(fifthLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine, fourthLine, fifthLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+
+        private void DrawConnectionLine16(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+            Line firstLine = new();
+            double distanceBetweenTwoPoints = y1 - y2;
+
+            firstLine.X1 = x2;
+            firstLine.Y1 = y2;
+            firstLine.X2 = x2;
+            firstLine.Y2 = y2 + distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x2;
+            secondLine.Y1 = y2 + distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.X2 = x1;
+            secondLine.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x1;
+            thirdLine.Y1 = y1;
+            thirdLine.X2 = x1;
+            thirdLine.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+
+        private void DrawConnectionLine17(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+            Line firstLine = new();
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1;
+            firstLine.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.X2 = x1;
+            secondLine.Y2 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y1 = y1 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            Line fourthLine = new();
+            fourthLine.X1 = x2;
+            fourthLine.Y1 = y2;
+            fourthLine.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Y2 = y2;
+            fourthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fourthLine);
+            destination.Children.Add(fourthLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine, fourthLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+        private void DrawConnectionLine18(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+            Line firstLine = new();
+            double distanceBetweenTwoPoints = x2 - x1;
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1 + valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Y2 = y1;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x1 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y1 = y1;
+            secondLine.X2 = x2 - distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y2 = y2;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x2;
+            thirdLine.Y1 = y2;
+            thirdLine.X2 = x2 - distanceBetweenTwoPoints + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+        private void DrawConnectionLine19(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+
+            Line firstLine = new();
+            firstLine.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1;
+            firstLine.Y2 = y1;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y1 = y2;
+            secondLine.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y2 = y1;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x2;
+            thirdLine.Y1 = y2;
+            thirdLine.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
+        private void DrawConnectionLine20(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
+        {
+            BrushConverter color = new();
+            Line firstLine = new();
+            firstLine.X1 = x1;
+            firstLine.Y1 = y1;
+            firstLine.X2 = x1 + valueOffsetOfLineFromTheBlockToSides;
+            firstLine.Y2 = y1;
+            firstLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(firstLine);
+            destination.Children.Add(firstLine);
+
+            Line secondLine = new();
+            secondLine.X1 = x1 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y1 = y1;
+            secondLine.X2 = x1 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+            secondLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(secondLine);
+            destination.Children.Add(secondLine);
+
+            Line thirdLine = new();
+            thirdLine.X1 = x1 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Y2 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+            thirdLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(thirdLine);
+            destination.Children.Add(thirdLine);
+
+            Line fourthLine = new();
+            fourthLine.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Y1 = y2 + DefaultPropertyForBlock.height / 2 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.X2 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            fourthLine.Y2 = y2;
+            fourthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fourthLine);
+            destination.Children.Add(fourthLine);
+
+            Line fifthLine = new();
+            fifthLine.X2 = x2;
+            fifthLine.Y1 = y2;
+            fifthLine.X1 = x2 + valueOffsetOfLineFromTheBlockToSides;
+            fifthLine.Y2 = y2;
+            fifthLine.Stroke = (Brush)color.ConvertFrom(DefaultPropertyForBlock.colorLine);
+            listLineConnection.Add(fifthLine);
+            destination.Children.Add(fifthLine);
+
+            MyLine myLine = new(firstBlock, secondBlock, firstLine, secondLine, thirdLine, fourthLine, fifthLine);
+            firstBlock.SaveLine(myLine);
+            secondBlock.SaveLine(myLine);
+        }
         public void DrawConnectionLine(double x1, double y1, double x2, double y2, Block firstBlock, Block secondBlock)
         {
             if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
@@ -2056,25 +2826,23 @@ namespace Flowchart_Editor
             }
             else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
             {
-                if (y1 < y2 && x2 < x1)
-                    DrawConnectionLine10(x2, y2, x1, y1, firstBlock, secondBlock);
-                else if (y1 > y2 && x2 > x1)
-                    DrawConnectionLine10(x1, y1, x2, y2, firstBlock, secondBlock);
-                else if (y1 < y2 && x2 > x1)
+                if ((y2 + DefaultPropertyForBlock.height / 2 <= y1) || (y1 + DefaultPropertyForBlock.width / 2 >= y2))
                     DrawConnectionLine11(x2, y2, x1, y1, firstBlock, secondBlock);
-                else if (y1 > y2 && x2 < x1)
-                    DrawConnectionLine11(x1, y1, x2, y2, firstBlock, secondBlock);
+                else if (x2 < x1)
+                    DrawConnectionLine10(x2, y2, x1, y1, firstBlock, secondBlock);
+                else if (x2 > x1)
+                    DrawConnectionLine10(x1, y1, x2, y2, firstBlock, secondBlock);
             }
             else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
             {
-                if (x1 > x2)
-                    DrawConnectionLine5(x1, y1, x2, y2, firstBlock, secondBlock);
+                if (x1 > x2 && y2 < y1)
+                    DrawConnectionLine5(x2, y2, x1, y1, firstBlock, secondBlock);
                 else
                     DrawConnectionLine12(x2, y2, x1, y1, firstBlock, secondBlock);
             }
             else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
             {
-                if (x1 < x2)
+                if (x1 < x2 && y2 > y1)
                     DrawConnectionLine5(x1, y1, x2, y2, firstBlock, secondBlock);
                 else
                     DrawConnectionLine12(x1, y1, x2, y2, firstBlock, secondBlock);
@@ -2091,8 +2859,43 @@ namespace Flowchart_Editor
                 if (x2 > x1)
                     DrawConnectionLine14(x1, y1, x2, y2, firstBlock, secondBlock);
                 else
-                DrawConnectionLine13(x1, y1, x2, y2, firstBlock, secondBlock);
+                    DrawConnectionLine13(x1, y1, x2, y2, firstBlock, secondBlock);
             }
+            else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+            {
+                if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+                {
+                    if (y1 > y2)
+                        DrawConnectionLine16(x1, y1, x2, y2, firstBlock, secondBlock);
+                    else
+                        DrawConnectionLine16(x2, y2, x1, y1, firstBlock, secondBlock);
+                }
+                else DrawConnectionLine15(x1, y1, x2, y2, firstBlock, secondBlock);
+            }
+            else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
+            {
+                if (x1 > x2 && y2 > y1)
+                    DrawConnectionLine5(x1, y1, x2, y2, firstBlock, secondBlock);
+                else
+                    DrawConnectionLine17(x1, y1, x2, y2, firstBlock, secondBlock);
+            }
+            else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+            {
+                if (x1 < x2 && y2 < y1)
+                    DrawConnectionLine5(x2, y2, x1, y1, firstBlock, secondBlock);
+                else
+                    DrawConnectionLine17(x2, y2, x1, y1, firstBlock, secondBlock);
+            }
+            else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
+            {
+               if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
+                    DrawConnectionLine20(x2, y2, x1, y1, firstBlock, secondBlock);
+               else if (x2 > x1)
+                    DrawConnectionLine18(x2, y2, x1, y1, firstBlock, secondBlock);
+               else if (x2 < x1)
+                    DrawConnectionLine18(x1, y1, x2, y2, firstBlock, secondBlock);
+            }
+
             StaticBlock.firstPointToConnect = "";
             StaticBlock.secondPointToConnect = "";
         }
