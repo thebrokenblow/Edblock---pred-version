@@ -1,21 +1,22 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.Json;
 using System.Windows;
+using System.Text.Unicode;
 using System.Windows.Input;
 using System.Windows.Media;
+using Flowchart_Editor.View;
 using System.Windows.Shapes;
+using Flowchart_Editor.Model;
 using Flowchart_Editor.Models;
 using System.Windows.Controls;
+using System.Text.Encodings.Web;
 using System.Collections.Generic;
-using Flowchart_Editor.Models.Action;
 using Flowchart_Editor.Models.Comment;
 using Flowchart_Editor.Models.LineConnection;
 using WinForms = System.Windows.Forms;
-using System.IO;
-using System.Text.Json;
-using Flowchart_Editor.Model;
-using System.Text.Unicode;
-using System.Text.Encodings.Web;
-using Newtonsoft.Json;
 
 namespace Flowchart_Editor
 {
@@ -41,6 +42,10 @@ namespace Flowchart_Editor
 
             for (int i = 60; i <= 250; i += 10)
                 blockHeightComboBox.Items.Add(i);
+        }
+        public void RemoveBlock(UIElement? uIElement)
+        {
+            destination.Children.Remove(uIElement);
         }
 
         private void ThemeChange(object? sender = null, RoutedEventArgs? e = null)
@@ -75,119 +80,15 @@ namespace Flowchart_Editor
 
         readonly List<Block> listOfBlock = new();
         int keyBlock = 0;
-        public void MouseMoveActionBlock(object sender, MouseEventArgs e)
+        public void MouseMoveBlock(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 keyBlock++;
-                ActionBlock instanceOfActionBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfActionBlock);
-                DataObject dataObjectInformationOfActionBlock = new(typeof(ActionBlock), instanceOfActionBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveConditionBlock(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                ConditionBlock instanceOfConditionBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfConditionBlock);
-                DataObject dataObjectInformationOConditionBlock = new(typeof(ConditionBlock), instanceOfConditionBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOConditionBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveStartEndBlock(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                StartEndBlock instanceOfStartEndBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfStartEndBlock);
-                DataObject dataObjectInformationOfStartEndBlock = new(typeof(StartEndBlock), instanceOfStartEndBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfStartEndBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveInputOutputBlock(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                InputOutputBlock instanceOfInputOutputBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfInputOutputBlock);
-                DataObject dataObjectInformationOfInputOutputBlock = new(typeof(InputOutputBlock), instanceOfInputOutputBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfInputOutputBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveSubroutineBlock(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                SubroutineBlock instanceSubroutineBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceSubroutineBlock);
-                DataObject dataObjectInformationOfSubroutineBlock = new(typeof(SubroutineBlock), instanceSubroutineBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfSubroutineBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveCycleBlockFor(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                CycleForBlock instanceOfCycleForBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfCycleForBlock);
-                DataObject dataObjectInstanceOfCycleForBlock = new (typeof(CycleForBlock), instanceOfCycleForBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleForBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveCycleBlockWhileBegin(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                CycleWhileBeginBlock instanceOfCycleWhileBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfCycleWhileBlock);
-                DataObject dataObjectInstanceOfCycleWhileBlock = new(typeof(CycleWhileBeginBlock), instanceOfCycleWhileBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveCycleBlockWhileEnd(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                CycleWhileEndBlock instanceOfCycleWhileBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfCycleWhileBlock);
-                DataObject dataObjectInstanceOfCycleWhileBlock = new (typeof(CycleWhileEndBlock), instanceOfCycleWhileBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInstanceOfCycleWhileBlock, DragDropEffects.Copy);
-            }
-            e.Handled = true;
-        }
-
-        private void MouseMoveLinkBlock(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                keyBlock++;
-                LinkBlock instanceOfLinkBlock = new(this, keyBlock);
-                listOfBlock.Add(instanceOfLinkBlock);
-                DataObject dataObjectInformationOfLinkBlock = new(typeof(LinkBlock), instanceOfLinkBlock);
-                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfLinkBlock, DragDropEffects.Copy);
+                Block instanceOfBlock = ((IBlockView)sender).GetBlock(this, keyBlock);
+                listOfBlock.Add(instanceOfBlock);
+                DataObject dataObjectInformationOfBlock = new(typeof(Block), instanceOfBlock);
+                DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfBlock, DragDropEffects.Copy);
             }
             e.Handled = true;
         }
@@ -195,234 +96,35 @@ namespace Flowchart_Editor
         readonly List<Comment> listComment = new();
         private void DropDestination(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(ActionBlock)))
+            if (e.Data.GetDataPresent(typeof(Block)))
             {
                 Point position = e.GetPosition(destination);
-                UIElement featuresOfActionBlock = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfActionBlock, position.X);
-                Canvas.SetTop(featuresOfActionBlock, position.Y);
+                UIElement featuresOfBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
+                Canvas.SetLeft(featuresOfBlock, position.X);
+                Canvas.SetTop(featuresOfBlock, position.Y);
             }
-            else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfConditionBlock = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfConditionBlock, position.X);
-                Canvas.SetTop(featuresOfConditionBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfStartEndBlock = ((StartEndBlock)e.Data.GetData(typeof(StartEndBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfStartEndBlock, position.X);
-                Canvas.SetTop(featuresOfStartEndBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(InputOutputBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfInputOutputBlock = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfInputOutputBlock, position.X);
-                Canvas.SetTop(featuresOfInputOutputBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfSubroutineBlock = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfSubroutineBlock, position.X);
-                Canvas.SetTop(featuresOfSubroutineBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfCycleForBlock = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfCycleForBlock, position.X);
-                Canvas.SetTop(featuresOfCycleForBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfCycleForBlock = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfCycleForBlock, position.X);
-                Canvas.SetTop(featuresOfCycleForBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfCycleWhileBlock = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfCycleWhileBlock, position.X);
-                Canvas.SetTop(featuresOfCycleWhileBlock, position.Y);
-            }
-            else if (e.Data.GetDataPresent(typeof(LinkBlock)))
-            {
-                Point position = e.GetPosition(destination);
-                UIElement featuresOfLinkBlock = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
-                Canvas.SetLeft(featuresOfLinkBlock, position.X);
-                Canvas.SetTop(featuresOfLinkBlock, position.Y);
-            }
-            e.Handled = true;
+            else 
+                e.Handled = true;
         }
 
         private void DragOverDestination(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(ActionBlock)))
+            if (e.Data.GetDataPresent(typeof(Block)))
             {
                 e.Effects = DragDropEffects.Copy;
                 Point position = e.GetPosition(destination);
-                ActionBlock dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
-                UIElement actionBlockOfUIElement;
-                if (dataInformationOfActionBlock.GetUIElementWithoutCreate() == null)
+                Block dataInformationOfBlock = (Block)e.Data.GetData(typeof(Block));
+                UIElement? uIElementOfBlock = dataInformationOfBlock.GetCanvas();
+                if (uIElementOfBlock == null)
                 {
-                    actionBlockOfUIElement = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
-                    destination.Children.Add(actionBlockOfUIElement);
+                    uIElementOfBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
+                    destination.Children.Add(uIElementOfBlock);
                 }
                 else
-                    actionBlockOfUIElement = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
+                    uIElementOfBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
 
-                Canvas.SetLeft(actionBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(actionBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationConditionBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock));
-                UIElement conditionBlockOfUIElement;
-                if (dataInformationConditionBlock.GetUIElementWithoutCreate() == null)
-                {
-                    conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
-                    destination.Children.Add(conditionBlockOfUIElement);
-                }
-                else
-                    conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
-                Canvas.SetLeft(conditionBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(conditionBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfStartEndBlock = (StartEndBlock)e.Data.GetData(typeof(StartEndBlock));
-                UIElement startEndBlockOfUIElement;
-                if (dataInformationOfStartEndBlock.GetUIElementWithoutCreate() == null)
-                {
-                    startEndBlockOfUIElement = ((StartEndBlock)e.Data.GetData(typeof(StartEndBlock))).GetUIElement();
-                    destination.Children.Add(startEndBlockOfUIElement);
-                }
-                else
-                    startEndBlockOfUIElement = ((StartEndBlock)e.Data.GetData(typeof(StartEndBlock))).GetUIElement();
-
-                Canvas.SetLeft(startEndBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(startEndBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(InputOutputBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfInputOutputBlock = (InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock));
-                UIElement inputOutputBlockOfUIElement;
-                if (dataInformationOfInputOutputBlock.GetUIElementWithoutCreate() == null)
-                {
-                    inputOutputBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
-                    destination.Children.Add(inputOutputBlockOfUIElement);
-                }
-                else
-                    inputOutputBlockOfUIElement = ((InputOutputBlock)e.Data.GetData(typeof(InputOutputBlock))).GetUIElement();
-
-                Canvas.SetLeft(inputOutputBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(inputOutputBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfSubroutineBlock = (SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock));
-                UIElement subroutineBlockOfUIElement;
-                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
-                {
-                    subroutineBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
-                    destination.Children.Add(subroutineBlockOfUIElement);
-                }
-                else
-                    subroutineBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
-
-                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfSubroutineBlock = (CycleForBlock)e.Data.GetData(typeof(CycleForBlock));
-                UIElement subroutineBlockOfUIElement;
-                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
-                {
-                    subroutineBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
-                    destination.Children.Add(subroutineBlockOfUIElement);
-                }
-                else
-                    subroutineBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
-
-                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfSubroutineBlock = (CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock));
-                UIElement subroutineBlockOfUIElement;
-                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
-                {
-                    subroutineBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
-                    destination.Children.Add(subroutineBlockOfUIElement);
-                }
-                else
-                    subroutineBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
-
-                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfSubroutineBlock = (CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock));
-                UIElement subroutineBlockOfUIElement;
-                if (dataInformationOfSubroutineBlock.GetUIElementWithoutCreate() == null)
-                {
-                    subroutineBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
-                    destination.Children.Add(subroutineBlockOfUIElement);
-                }
-                else
-                    subroutineBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
-
-                Canvas.SetLeft(subroutineBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(subroutineBlockOfUIElement, position.Y + 1);
-
-            }
-            else if (e.Data.GetDataPresent(typeof(LinkBlock)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                var position = e.GetPosition(destination);
-                var dataInformationOfLinkBlock = (LinkBlock)e.Data.GetData(typeof(LinkBlock));
-                UIElement linkBlockOfUIElement;
-                if (dataInformationOfLinkBlock.GetUIElementWithoutCreate() == null)
-                {
-                    linkBlockOfUIElement = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
-                    destination.Children.Add(linkBlockOfUIElement);
-                }
-                else
-                    linkBlockOfUIElement = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
-
-                Canvas.SetLeft(linkBlockOfUIElement, position.X + 1);
-                Canvas.SetTop(linkBlockOfUIElement, position.Y + 1);
-
+                Canvas.SetLeft(uIElementOfBlock, position.X + 1);
+                Canvas.SetTop(uIElementOfBlock, position.Y + 1);
             }
             else if (e.Data.GetDataPresent(typeof(BlockForMovements)))
             {
@@ -435,21 +137,26 @@ namespace Flowchart_Editor
 
                 int numberOfOccurrencesInBlock = resultTransferInformation.GetBlock().GetNumberOfOccurrencesInBlock();
                 Block block = resultTransferInformation.GetBlock();
-               
 
                 if (numberOfOccurrencesInBlock == 1)
                     ChangeLine(block);
-                //else if (numberOfOccurrencesInBlock == 2)
-                //{
-                //    ChangeLine(block);
-                //    ChangeLine(block);
-                //}
             }
-            else 
+            else
                 e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
 
+        private void DragLeaveDestination(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(Block)))
+            {
+                UIElement uIElementOfBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
+                destination.Children.Remove(uIElementOfBlock);
+                Block dataInformationOfBlock = (Block)e.Data.GetData(typeof(Block));
+                dataInformationOfBlock.Reset();
+            }
+            e.Handled = true;
+        }
 
         private void ChangeLine1(Line[] masLine, double x1, double y1, double x2, double y2)
         {
@@ -1780,67 +1487,6 @@ namespace Flowchart_Editor
             }
         }
 
-        private void DragLeaveDestination(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(typeof(ActionBlock)))
-            {
-                var actionBlockOfUIElement = ((ActionBlock)e.Data.GetData(typeof(ActionBlock))).GetUIElement();
-                destination.Children.Remove(actionBlockOfUIElement);
-                var dataInformationOfActionBlock = (ActionBlock)e.Data.GetData(typeof(ActionBlock));
-                dataInformationOfActionBlock.Reset();
-            } 
-            else if (e.Data.GetDataPresent(typeof(ConditionBlock)))
-            {
-                var conditionBlockOfUIElement = ((ConditionBlock)e.Data.GetData(typeof(ConditionBlock))).GetUIElement();
-                destination.Children.Remove(conditionBlockOfUIElement);
-                var dataInformationOfconditionBlock = (ConditionBlock)e.Data.GetData(typeof(ConditionBlock));
-                dataInformationOfconditionBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(StartEndBlock)))
-            {
-                var startEndBlockOfUIElement = ((StartEndBlock)e.Data.GetData(typeof(StartEndBlock))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (StartEndBlock)e.Data.GetData(typeof(StartEndBlock));
-                dataInformationOfStartEndBlock.Reset();
-            } 
-            else if (e.Data.GetDataPresent(typeof(SubroutineBlock)))
-            {
-                var startEndBlockOfUIElement = ((SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (SubroutineBlock)e.Data.GetData(typeof(SubroutineBlock));
-                dataInformationOfStartEndBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleForBlock)))
-            {
-                var startEndBlockOfUIElement = ((CycleForBlock)e.Data.GetData(typeof(CycleForBlock))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (CycleForBlock)e.Data.GetData(typeof(CycleForBlock));
-                dataInformationOfStartEndBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileBeginBlock)))
-            {
-                var startEndBlockOfUIElement = ((CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (CycleWhileBeginBlock)e.Data.GetData(typeof(CycleWhileBeginBlock));
-                dataInformationOfStartEndBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(CycleWhileEndBlock)))
-            {
-                var startEndBlockOfUIElement = ((CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (CycleWhileEndBlock)e.Data.GetData(typeof(CycleWhileEndBlock));
-                dataInformationOfStartEndBlock.Reset();
-            }
-            else if (e.Data.GetDataPresent(typeof(LinkBlock)))
-            {
-                var startEndBlockOfUIElement = ((LinkBlock)e.Data.GetData(typeof(LinkBlock))).GetUIElement();
-                destination.Children.Remove(startEndBlockOfUIElement);
-                var dataInformationOfStartEndBlock = (LinkBlock)e.Data.GetData(typeof(LinkBlock));
-                dataInformationOfStartEndBlock.Reset();
-            }
-            e.Handled = true;
-        }
-
         private void ButtonOpenMenuClick(object sender, RoutedEventArgs e)
         {
             buttonOpenMenu.Visibility = Visibility.Collapsed;
@@ -2851,9 +2497,9 @@ namespace Flowchart_Editor
             WriteIndented = true
         };
 
-        private BlockModel GetDataOfBlockModel(Block itemBlock, string nameOfBlock)
+        private static BlockModel GetDataOfBlockModel(Block itemBlock, string nameOfBlock)
         {
-            UIElement? itemBlockUIElement = itemBlock.GetUIElementWithoutCreate();
+            UIElement? itemBlockUIElement = itemBlock.GetUIElement();
             int height = 0;
             int width = 0;
             if (itemBlockUIElement != null)
@@ -2862,21 +2508,24 @@ namespace Flowchart_Editor
                 width = (int)((Canvas)itemBlockUIElement).Width;
             }
             string textOfBlock = "";
-            if (itemBlock.textBlock != null)
-                textOfBlock = itemBlock.textBlock.Text;
-            if (itemBlock.textBox != null && textOfBlock == "")
-                textOfBlock = itemBlock.textBox.Text;
+            if (itemBlock.TextBlock != null)
+                textOfBlock = itemBlock.TextBlock.Text;
+            if (itemBlock.TextBox != null && textOfBlock == "")
+                textOfBlock = itemBlock.TextBox.Text;
             double topСoordinates = Canvas.GetTop(itemBlockUIElement);
             double leftСoordinates = Canvas.GetLeft(itemBlockUIElement);
             BlockModel conditionBlockModel = new(nameOfBlock, height, width, textOfBlock, topСoordinates, leftСoordinates);
             return conditionBlockModel;
         }
 
+        private static LineModel GetDataOfLineModel(Line itemLine) => new(itemLine.X1, itemLine.Y1, itemLine.X2, itemLine.Y2);
+
         private async void SelectedItemViewSave(object sender, RoutedEventArgs e)
         {
             numberOfSavedFilesInCurrentSession++;
             List<BlockModel> listBlockModels = new();
-            BlockModel blockModel;
+            List<LineModel> listLineModels = new();
+            List<CommentModel> listCommentModels = new();
             WinForms.FolderBrowserDialog folderBrowserDialog = new();
             if (folderBrowserDialog.ShowDialog() == WinForms.DialogResult.OK)
             {
@@ -2885,46 +2534,94 @@ namespace Flowchart_Editor
                 foreach (Block itemBlock in listOfBlock)
                 {
                     Type typeOfBlock = itemBlock.GetType();
-                    switch (typeOfBlock.Name)
-                    {
-                        case "ActionBlock":
-                            blockModel = GetDataOfBlockModel(itemBlock, "ActionBlock");
-                            listBlockModels.Add(blockModel);
-                            break;
-                        case "ConditionBlock":
-                            blockModel = GetDataOfBlockModel(itemBlock, "ConditionBlock");
-                            listBlockModels.Add(blockModel);
-                            break;
-                    }
+                    BlockModel blockModel = GetDataOfBlockModel(itemBlock, typeOfBlock.Name);
+                    listBlockModels.Add(blockModel);
                 }
-                await System.Text.Json.JsonSerializer.SerializeAsync(fileStream, listBlockModels, jsonSerializerOptions);
+                foreach (Line itemLine in listLineConnection)
+                {
+                    LineModel lineModel = GetDataOfLineModel(itemLine);
+                    listLineModels.Add(lineModel);
+                }
+
+                foreach (Comment itemComment in listComment)
+                {
+                    LineModel? firstLine = null;
+                    if (itemComment.FirstLine != null)
+                    {
+                        firstLine = GetDataOfLineModel(itemComment.FirstLine);
+                        listLineModels.Add(firstLine);
+                    }
+                    if (itemComment.SecondLine != null)
+                    {
+                        firstLine = GetDataOfLineModel(itemComment.SecondLine);
+                        listLineModels.Add(firstLine);
+                    }
+                    if (itemComment.ThirdLine != null)
+                    {
+                        firstLine = GetDataOfLineModel(itemComment.ThirdLine);
+                        listLineModels.Add(firstLine);
+                    }
+                    if (itemComment.FourthLine != null)
+                    {
+                        firstLine = GetDataOfLineModel(itemComment.FourthLine);
+                        listLineModels.Add(firstLine);
+                    }
+                    if (itemComment.FifthLine != null)
+                    {
+                        firstLine = GetDataOfLineModel(itemComment.FifthLine);
+                        listLineModels.Add(firstLine);
+                    }
+                    if (itemComment.SixthtLine != null)
+                    {
+                        firstLine = GetDataOfLineModel(itemComment.SixthtLine);
+                        listLineModels.Add(firstLine);
+                    }
+                    CommentModel commentModel = new(listLineModels);
+                    listCommentModels.Add(commentModel);
+                }
+                BlockAndLineModek blockAndLineModek = new(listBlockModels, listLineModels, listCommentModels);
+                await JsonSerializer.SerializeAsync(fileStream, blockAndLineModek, jsonSerializerOptions);
             }
         }
 
-        public ActionBlock SetPropertyForActionBlock(BlockModel actionBlockModel)
+        public Block? SetPropertyFor(Type type, BlockModel blockModel)
         {
-            ActionBlock actionBlock = new(this, 0);
-            UIElement uIElementOfBlock = actionBlock.GetUIElement();
-            if (actionBlock.textBox != null)
-                actionBlock.textBox.Text = actionBlockModel.textOfBlock.ToString();
-            actionBlock.SetWidth(actionBlockModel.width);
-            actionBlock.SetHeight(actionBlockModel.height);
-            Canvas.SetTop(uIElementOfBlock, actionBlockModel.topCoordinates);
-            Canvas.SetLeft(uIElementOfBlock, actionBlockModel.leftCoordinates);
-            return actionBlock;
+            Block? block = null;
+            ConstructorInfo? constructorInfo = type.GetConstructor(new Type[] { typeof(MainWindow), typeof(int) });
+            if (constructorInfo != null)
+            {
+                block = (Block)constructorInfo.Invoke(new object[] { this, 0 });
+                UIElement uIElementOfBlock = block.GetUIElement();
+                if (block.TextBox != null)
+                    block.TextBox.Text = blockModel.textOfBlock.ToString();
+                block.SetWidth(blockModel.width);
+                block.SetHeight(blockModel.height);
+                Canvas.SetTop(uIElementOfBlock, blockModel.topCoordinates);
+                Canvas.SetLeft(uIElementOfBlock, blockModel.leftCoordinates);
+            }
+            return block;
         }
 
-        public ConditionBlock SetPropertyForConditionBlock(BlockModel actionBlockModel)
+        private static Line SetPropertyForLine(LineModel lineModel)
         {
-            ConditionBlock conditionBlock = new(this, 0);
-            UIElement uIElementOfBlock = conditionBlock.GetUIElement();
-            if (conditionBlock.textBox != null)
-                conditionBlock.textBox.Text = actionBlockModel.textOfBlock.ToString();
-            conditionBlock.SetWidth(actionBlockModel.width);
-            conditionBlock.SetHeight(actionBlockModel.height);
-            Canvas.SetTop(uIElementOfBlock, actionBlockModel.topCoordinates);
-            Canvas.SetLeft(uIElementOfBlock, actionBlockModel.leftCoordinates);
-            return conditionBlock;
+            Line line = new();
+            line.X1 = lineModel.x1;
+            line.Y1 = lineModel.y1;
+            line.X2 = lineModel.x2;
+            line.Y2 = lineModel.y2;
+            line.Stroke = Brushes.Black;
+            return line;
+        }
+
+        private static Dictionary<string, Type> GetBlockDictionary()
+        {
+            var result =
+                from a in AppDomain.CurrentDomain.GetAssemblies()
+                from t in a.GetTypes()
+                let attributes = t.GetCustomAttributes(typeof(BlockName), false)
+                where attributes != null && attributes.Length > 0
+                select new { name = (attributes[0] as BlockName).Name, type = t };
+            return result.ToDictionary(x => x.name, x => x.type);    
         }
 
         private async void SelectedItemViewUpload(object sender, RoutedEventArgs e)
@@ -2933,36 +2630,52 @@ namespace Flowchart_Editor
             {
                 Filter = "File json|*.json"
             };
-            List<BlockModel>? listBlockModels = new();
             if (openFileDialog.ShowDialog() == WinForms.DialogResult.OK)
             {
+                var blockDictionary = GetBlockDictionary();
                 string fileName = openFileDialog.FileName;
                 using FileStream fileStream = new(fileName, FileMode.OpenOrCreate);
-                listBlockModels = await System.Text.Json.JsonSerializer.DeserializeAsync<List<BlockModel>>(fileStream);
-                if (listBlockModels != null)
+                BlockAndLineModek? blockAndLineModels = await JsonSerializer.DeserializeAsync<BlockAndLineModek>(fileStream);
+                if (blockAndLineModels != null)
                 {
-                    foreach (Block block in listOfBlock)
-                        destination.Children.Remove(block.GetUIElementWithoutCreate());
+                    destination.Children.Clear();
+                    listLineConnection.Clear();
 
-                    foreach (BlockModel itemBlockModel in listBlockModels)
+                    if (blockAndLineModels.listBlockModels != null)
                     {
-                        switch (itemBlockModel.nameOfBlock)
+                        foreach (BlockModel itemBlockModel in blockAndLineModels.listBlockModels)
                         {
-                            case "ActionBlock":
-                                ActionBlock actionBlock = SetPropertyForActionBlock(itemBlockModel);
-                                listOfBlock.Add(actionBlock);
-                                destination.Children.Add(actionBlock.GetUIElement());
-                                break;
-                            case "ConditionBlock":
-                                ConditionBlock condition = SetPropertyForConditionBlock(itemBlockModel);
-                                listOfBlock.Add(condition);
-                                destination.Children.Add(condition.GetUIElement());
-                                break;
+                            Block? block = SetPropertyFor(blockDictionary[itemBlockModel.nameOfBlock], itemBlockModel);
+                            if (block != null)
+                            {
+                                listOfBlock.Add(block);
+                                destination.Children.Add(block.GetUIElement());
+                            }
+                        }
+                    }
+                    if (blockAndLineModels.listLinekModels != null)
+                    {
+                        foreach (LineModel itemBlockModel in blockAndLineModels.listLinekModels)
+                        {
+                            Line line = SetPropertyForLine(itemBlockModel);
+                            destination.Children.Add(line);
+                        }
+                    }
+                    if (blockAndLineModels.listCommentsModels != null)
+                    {
+                        foreach (CommentModel itemBlockModel in blockAndLineModels.listCommentsModels)
+                        {
+                            Line line = new();
+                            foreach (LineModel itemLine in itemBlockModel.listModel)
+                            {
+                                line = SetPropertyForLine(itemLine);
+                                listLineConnection.Add(line);
+                                destination.Children.Add(line);
+                            }
                         }
                     }
                 }
             }
-            
         }
     }
 }
