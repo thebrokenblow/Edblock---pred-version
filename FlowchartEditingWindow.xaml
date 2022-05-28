@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:control="clr-namespace:Flowchart_Editor.View"
+        xmlns:control="clr-namespace:Flowchart_Editor.View" 
+        xmlns:control1="clr-namespace:Flowchart_Editor.View.ConditionCaseFirstOption"
+        xmlns:control2="clr-namespace:Flowchart_Editor.View.ConditionCaseSecondOption"
         mc:Ignorable="d"
-        Title="Flowchart Editor" Height="850" Width="1820">
+        Title="Flowchart Editor" Height="1200" Width="1820">
     <Window.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="blockLayoutMenu">
@@ -330,16 +332,6 @@
             <Grid Style="{DynamicResource GridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -347,157 +339,251 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="160"/>
-                    <ColumnDefinition Width="1"/>
+                   
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <control:ActionBlockView 
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveActionBlock"/>
-                
-                <TextBlock 
-                    Text="Блок (1)" 
-                    FontSize="10" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Grid.Row="1"
-                    Grid.Column="2" 
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:ConditionBlockView
+                <ScrollViewer 
                     Grid.Row="2"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveConditionBlock"/>
+                    Grid.ColumnSpan="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="175"/>
+                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="160"/>
+                        </Grid.ColumnDefinitions>
+
+                        
+                            <control:ActionBlockView 
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                MouseMove="MouseMoveBlock"/>
+
+                            <TextBlock 
+                            Text="Блок (1)" 
+                            FontSize="10" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Grid.Row="0"
+                            Grid.Column="1" 
+                            Style="{DynamicResource TextBlockStyle}"/>
+                        
+
+                        <control:ConditionBlockView
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+                        
+                        <TextBlock 
+                            Text="Условие (2)" 
+                            FontSize="10" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Grid.Row="1"
+                            Grid.Column="1" 
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control1:ConditionCaseFirstOption
+                            Grid.Row="2"
+                            Grid.Column="0" />
+
+                        <StackPanel
+                            Grid.Row="2"
+                            Grid.Column="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock 
+                                    Text="Условие с несколькими 
+                                          выходами case(3)" 
+                                    FontSize="10"
+                                    Grid.Row="0"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Left" 
+                                    TextWrapping="Wrap"
+                                    Style="{DynamicResource TextBlockStyle}"/>
+                                <TextBox 
+                                    Grid.Row="1"
+                                    materialDesign:HintAssist.Hint = "Количесво линий"
+                                    Style = "{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                                <Button 
+                                    Background="#4e6775"
+                                    Grid.Row="2"
+                                    Width="120"
+                                    Foreground="White"
+                                    Content="Добавить"/>
+                            </Grid>
+                        </StackPanel>
+
+
+                        <control2:ConditionCaseSecondOption
+                            Grid.Row="3"
+                            Grid.Column="0" />
+
+                        <StackPanel
+                            Grid.Row="3"
+                            Grid.Column="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock 
+                                    Text="Условие с несколькими 
+                                          выходами case(4)" 
+                                    FontSize="10"
+                                    Grid.Row="0"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Left" 
+                                    TextWrapping="Wrap"
+                                    Style="{DynamicResource TextBlockStyle}"/>
+                                <TextBox 
+                                    Grid.Row="1"
+                                    materialDesign:HintAssist.Hint = "Количесво линий"
+                                    Style = "{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                                <Button 
+                                    Background="#4e6775"
+                                    Grid.Row="2"
+                                    Width="120"
+                                    Foreground="White"
+                                    Content="Добавить"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <control:StartEndBlockView
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock
+                            Text="Начало / Конец (5)" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="4" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:InputOutputBlockView
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock 
+                            Text="Ввод / Вывод (6)" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="5" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:SubroutineBlockView
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock
+                            Text="Подпрограмма (7)" 
+                            FontSize="10" 
+                            Grid.Column="2" 
+                            Grid.Row="6" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:CycleBlockForView
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock
+                            Text="Цикл (8) for" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="7" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:CycleBlockWhileBeginView
+                            Grid.Row="8"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock 
+                            Text="Цикл (9) do while, while (Начало)" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="8" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:CycleBlockWhileEndView
+                            Grid.Row="9"
+                            Grid.Column="0"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock 
+                            Text="Цикл (10) do while, while (Конец)" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="9" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:LinkBlockView
+                            Grid.Column="0"
+                            Grid.Row="10"
+                            MouseMove="MouseMoveBlock"/>
+
+                        <TextBlock 
+                            Text="Ссылка (11)" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="10" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            Style="{DynamicResource TextBlockStyle}"/>
+
+                        <control:CommentView
+                            Grid.Column="0" 
+                            Grid.Row="11" 
+                            MouseLeftButtonDown="MouseLeftButtonDownComment"/>
+
+                        <TextBlock 
+                            Text="Комментарий(12)" 
+                            FontSize="10" 
+                            Grid.Column="1" 
+                            Grid.Row="11" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource TextBlockStyle}"/>
+                    </Grid>
+                </ScrollViewer>
                 
-                <TextBlock 
-                    Text="Условие (2)" 
-                    FontSize="10" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Grid.Column="2" 
-                    Grid.Row="2"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:StartEndBlockView
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveStartEndBlock"/>
-                
-                <TextBlock
-                    Text="Начало / Конец (3)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="3" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-
-                <control:InputOutputBlockView
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveInputOutputBlock"/>
-
-                <TextBlock 
-                    Text="Ввод / Вывод (4)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="4" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:SubroutineBlockView
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveSubroutineBlock"/> 
-
-                <TextBlock
-                    Text="Подпрограмма (5)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="5" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:CycleBlockForView
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveCycleBlockFor"/>
-                
-                <TextBlock
-                    Text="Цикл (6) for" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="6" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:CycleBlockWhileBeginView
-                    Grid.Row="7"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveCycleBlockWhileBegin"/>
-                
-                <TextBlock 
-                    Text="Цикл (7) do while, while (Начало)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="7" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:CycleBlockWhileEndView
-                    Grid.Row="8"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveCycleBlockWhileEnd"/>
-
-                <TextBlock 
-                    Text="Цикл (8) do while, while (Конец)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="8" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:LinkBlockView
-                    Grid.Row="9"
-                    Grid.Column="1"
-                    MouseMove="MouseMoveLinkBlock"/>
-                
-                <TextBlock 
-                    Text="Ссылка (9)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="9" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Style="{DynamicResource TextBlockStyle}"/>
-
-                <control:CommentView
-                    Grid.Row="10" 
-                    Grid.Column="1" 
-                    MouseLeftButtonDown="MouseLeftButtonDownComment"/>
-                
-                <TextBlock 
-                    Text="Комментарий(10)" 
-                    FontSize="10" 
-                    Grid.Column="2" 
-                    Grid.Row="10" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource TextBlockStyle}"/>
-                
-                <Canvas 
-                    Style="{DynamicResource DividingLineStyle}"
-                    Grid.RowSpan="12" 
-                    Grid.Column="3"/>
-
-                <Grid Grid.Column="4" Grid.RowSpan="12">
+                <Grid Grid.Column="4" 
+                      Grid.RowSpan="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="150"/>
@@ -538,16 +624,16 @@
                         Style="{DynamicResource TextBlockStyle}"/>
 
                     <ComboBox 
-                        Name="listOfFontsComboBox" 
-                        SelectionChanged="SelectionChangedListOfFontsComboBox" 
-                        Foreground="Black" 
                         Grid.Column="1" 
-                        Width="130" 
-                        HorizontalAlignment="Center" 
+                        Name="listOfFontFamily"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Top"
-                        Margin="0,5">
-                            <ComboBoxItem>Times New Roman</ComboBoxItem>
-                            <ComboBoxItem>Calibri (Основной текст)</ComboBoxItem>
+                        Foreground="Black" 
+                        Margin="0,5"
+                        Width="130">
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontFamily>Arial</FontFamily>
                     </ComboBox>
 
                     <TextBlock 
@@ -560,13 +646,23 @@
 
                     <ComboBox 
                         Name="fontSizeComboBox" 
-                        SelectionChanged="SelectionChangedFontSizeComboBox"
                         Foreground="Black" 
                         Grid.Column="3" 
                         Width="60" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
-                        Margin="0,5" />
+                        Margin="0,5">
+                        <ComboBoxItem>8</ComboBoxItem>
+                        <ComboBoxItem>10</ComboBoxItem>
+                        <ComboBoxItem>12</ComboBoxItem>
+                        <ComboBoxItem>14</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                        <ComboBoxItem>18</ComboBoxItem>
+                        <ComboBoxItem>20</ComboBoxItem>
+                        <ComboBoxItem>22</ComboBoxItem>
+                        <ComboBoxItem>24</ComboBoxItem>
+                        <ComboBoxItem>26</ComboBoxItem>
+                    </ComboBox>
 
                     <TextBlock 
                         Text="Ширина:" 
@@ -605,7 +701,7 @@
                         Margin="0,5"/>
 
                     <TextBlock 
-                        Text="Первый блок:" 
+                        Text="Первый блок:"
                         Grid.Column="8"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
