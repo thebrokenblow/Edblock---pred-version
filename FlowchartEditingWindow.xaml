@@ -38,35 +38,40 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem3">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="itemViewSaveImg">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem4">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem3">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem5">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem4">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.7" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem6">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem5">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem7">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem6">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem8">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem7">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:2.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem8">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="CloseMenu">
@@ -150,7 +155,7 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Сохранить" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <TextBlock Text="Сохранить проект" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Name="itemViewUpload" Height="60" RenderTransformOrigin="0.5,0.5" Selected="SelectedItemViewUpload">
@@ -175,7 +180,32 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Загрузить" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <TextBlock Text="Загрузить проект" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Name="itemViewSaveImg" Height="60" RenderTransformOrigin="0.5,0.5" Selected="SelectedItemViewSaveImg">
+                    <ListViewItem.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ListViewItem.RenderTransform>
+                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                        <materialDesign:PackIcon Kind="Image" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="Save as img" Margin="10" VerticalAlignment="Center"  Style="{DynamicResource TextBlockStyle}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -411,8 +441,7 @@
                                     <RowDefinition Height="35"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock 
-                                    Text="Условие с несколькими 
-                                          выходами case(3)" 
+                                    Text="Условие (3)" 
                                     FontSize="10"
                                     Grid.Row="0"
                                     VerticalAlignment="Center" 
@@ -422,13 +451,15 @@
                                 <TextBox 
                                     Grid.Row="1"
                                     materialDesign:HintAssist.Hint = "Количесво линий"
+                                    Name="CountLineOfConditionCaseFirstOption"
                                     Style = "{StaticResource MaterialDesignFloatingHintTextBox}"/>
                                 <Button 
                                     Background="#4e6775"
                                     Grid.Row="2"
                                     Width="120"
                                     Foreground="White"
-                                    Content="Добавить"/>
+                                    Content="Добавить" 
+                                    Click="AddConditionCaseFirstOption"/>
                             </Grid>
                         </StackPanel>
 
@@ -447,8 +478,7 @@
                                     <RowDefinition Height="35"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock 
-                                    Text="Условие с несколькими 
-                                          выходами case(4)" 
+                                    Text="Условие (4)" 
                                     FontSize="10"
                                     Grid.Row="0"
                                     VerticalAlignment="Center" 
@@ -458,13 +488,15 @@
                                 <TextBox 
                                     Grid.Row="1"
                                     materialDesign:HintAssist.Hint = "Количесво линий"
+                                    Name="CountLineOfConditionCaseSecondOption"
                                     Style = "{StaticResource MaterialDesignFloatingHintTextBox}"/>
                                 <Button 
                                     Background="#4e6775"
                                     Grid.Row="2"
                                     Width="120"
                                     Foreground="White"
-                                    Content="Добавить"/>
+                                    Content="Добавить"
+                                    Click="AddConditionCaseSecondOption"/>
                             </Grid>
                         </StackPanel>
 
