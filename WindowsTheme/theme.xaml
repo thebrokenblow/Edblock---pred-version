@@ -1,0 +1,152 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Foreground" Value="#FFF9F9FB" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Foreground" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="GridStyle" TargetType="Grid">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="#FF262427" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Background" Value="#FFF9F9FB" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="TextBlockToggleButtonStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Foreground" Value="#FFF9F9FB"/>
+                <Setter Property="Text" Value="Светлая тема"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Foreground" Value="#FF040205"/>
+                <Setter Property="Text" Value="Тёмная тема"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="GridLayoutMenuStyle" TargetType="Grid">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="#FF040205"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Background" Value="#FFF9F9FB"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="CanvasStyle" TargetType="Canvas">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="#FF262427"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Background" Value="#FFF9F9FB"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="LineStyle" TargetType="Line">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Fill" Value="#FFF9F9FB" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Fill" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="Stroke" Value="#FF040205" /> 
+    </Style>
+    <Style x:Key="EllipseStyle" TargetType="Ellipse">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Fill" Value="#FFF9F9FB" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Fill" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="#FFF9F9FB" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Background" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DividingLineStyle" TargetType="Canvas">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Background" Value="#FFF9F9FB" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Background" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="TextBoxStyleForBlock" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="{Binding ElementName=listOfFontFamily, Path=SelectedItem}" />
+        <Setter Property="FontSize" Value="{Binding ElementName=fontSizeComboBox, Path=SelectedItem.Content}"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="AcceptsReturn" Value="True" />
+    </Style>
+    <Style x:Key="TextBoxStyleForComment" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="{Binding ElementName=listOfFontFamily, Path=SelectedItem}" />
+        <Setter Property="FontSize" Value="{Binding ElementName=fontSizeComboBox, Path=SelectedItem.Content}"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Foreground" Value="#FFF9F9FB" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Foreground" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="TextBlockStyleForBlock" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{Binding ElementName=listOfFontFamily, Path=SelectedItem}" />
+        <Setter Property="FontSize" Value="{Binding ElementName=fontSizeComboBox, Path=SelectedItem.Content}"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style x:Key="ButtonStyleMenu" TargetType="Button">
+        <Setter Property="Width" Value="175"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <Setter Property="Foreground" Value="#FFF9F9FB" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <Setter Property="Foreground" Value="#FF040205" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

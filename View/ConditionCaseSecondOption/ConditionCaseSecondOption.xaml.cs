@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Flowchart_Editor.View
+namespace Flowchart_Editor.View.ConditionCaseSecondOption
 {
     /// <summary>
-    /// Логика взаимодействия для ConditionBlockView.xaml
+    /// Логика взаимодействия для ConditionCaseFSecondOption.xaml
     /// </summary>
-    public partial class ConditionBlockView : UserControl
+    public partial class ConditionCaseSecondOption : UserControl
     {
-        public ConditionBlockView()
+        public ConditionCaseSecondOption()
         {
             InitializeComponent();
         }

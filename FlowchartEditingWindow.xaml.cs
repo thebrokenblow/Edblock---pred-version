@@ -37,16 +37,53 @@ namespace Flowchart_Editor
             toggleButtonStyleTheme.Click += ThemeChange;
             ThemeChange();
 
-            for (int i = 90; i <= 250; i += 10)
+            for (int i = 110; i <= 250; i += 10)
                 blockWidthComboBox.Items.Add(i);
 
             for (int i = 60; i <= 250; i += 10)
                 blockHeightComboBox.Items.Add(i);
         }
-        public void RemoveBlock(UIElement? uIElement, Block block)
+        public void RemoveUIElemet(UIElement? uIElement)
+        {
+            destination.Children.Remove(uIElement);
+        }
+        public void RemoveBlock(UIElement? uIElement, Block block, Line[]? firstLine, Line[]? secondLine, Line[]? thirdLine, Line[]? fourthLine)
         {
             destination.Children.Remove(uIElement);
             listOfBlock.Remove(block);
+
+            if (firstLine != null)
+            {
+                foreach (Line line in firstLine)
+                {
+                    destination.Children.Remove(line);
+                    listLineConnection.Remove(line);
+                }
+            }
+            if (secondLine != null)
+            {
+                foreach (Line line in secondLine)
+                {
+                    destination.Children.Remove(line);
+                    listLineConnection.Remove(line);
+                }
+            }
+            if (thirdLine != null)
+            {
+                foreach (Line line in thirdLine)
+                {
+                    destination.Children.Remove(line);
+                    listLineConnection.Remove(line);
+                }
+            }
+            if (fourthLine != null)
+            {
+                foreach (Line line in fourthLine)
+                {
+                    destination.Children.Remove(line);
+                    listLineConnection.Remove(line);
+                }
+            }
         }
 
         private void ThemeChange(object? sender = null, RoutedEventArgs? e = null)
@@ -316,6 +353,12 @@ namespace Flowchart_Editor
                 i++;
             }
         }
+
+        public void CommectionDone()
+        {
+            MessageBox.Show("Соединился");
+        }
+
         public void ChangeLine3(Line[] masLine, double x1, double y1, double x2, double y2)
         {
             int i = 0;
@@ -1348,158 +1391,6 @@ namespace Flowchart_Editor
             }
         }
 
-        //private void ChangeLine(Block firstBlock)
-        //{
-        //    firstBlock = firstBlock.GetMyLine().GetFirstBlock();
-        //    Block secondBlock = firstBlock.GetMyLine().GetSecondBlock();
-
-        //    double x1 = Canvas.GetLeft((Ellipse)firstBlock.GetFirstSender()) + Canvas.GetLeft(firstBlock.GetCanvas()) + 3;
-        //    double y1 = Canvas.GetTop((Ellipse)firstBlock.GetFirstSender()) + Canvas.GetTop(firstBlock.GetCanvas()) + 3;
-
-        //    double x2 = Canvas.GetLeft((Ellipse)secondBlock.GetFirstSender()) + Canvas.GetLeft(secondBlock.GetCanvas()) + 3;
-        //    double y2 = Canvas.GetTop((Ellipse)secondBlock.GetFirstSender()) + Canvas.GetTop(secondBlock.GetCanvas()) + 3;
-
-        //    Line[] masLine;
-        //    if (firstBlock.flag != null)
-        //    {
-        //        bool flagFirstBlock = (bool)firstBlock.flag;
-
-        //        if (flagFirstBlock)
-        //            masLine = firstBlock.GetMyLine().GetFirtLine();
-        //        else
-        //            masLine = secondBlock.GetMyLine().GetFirtLine();
-
-        //        if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-        //        {
-        //            if (x1 != x2 && y1 > y2)
-        //                ChangeLine1(masLine, x2, y2, x1, y1);
-        //            else if (x1 != x2 && y1 < y2)
-        //                ChangeLine2(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-        //        {
-        //            if (x1 != x2 && y1 < y2)
-        //                ChangeLine1(masLine, x1, y1, x2, y2);
-        //            else if (x1 != x2 && y1 > y2)
-        //                ChangeLine2(masLine, x2, y2, x1, y1);
-        //        }
-        //        if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-        //        {
-        //            if (y2 < y1 && x1 - valueOffsetOfLineFromTheBlockToSides <= x2)
-        //                ChangeLine3(masLine, x1, y1, x2, y2);
-        //            else if (y2 < y1 && x1 >= x2)
-        //                ChangeLine4(masLine, x1, y1, x2, y2);
-        //            else if (y2 > y1 - valueOffsetOfLineFromTheBlockToSides)
-        //                ChangeLine5(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-        //        {
-        //            if (y2 > y1 && x1 >= x2 - valueOffsetOfLineFromTheBlockToSides)
-        //                ChangeLine3(masLine, x2, y2, x1, y1);
-        //            else if (y2 > y1 && x1 <= x2)
-        //                ChangeLine4(masLine, x2, y2, x1, y1);
-        //            else if (y2 < y1 - valueOffsetOfLineFromTheBlockToSides)
-        //                ChangeLine5(masLine, x2, y2, x1, y1);
-        //        }
-        //        if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-        //        {
-        //            if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
-        //            {
-        //                if (y1 > y2)
-        //                    ChangeLine7(masLine, x1, y1, x2, y2);
-        //                else
-        //                    ChangeLine7(masLine, x2, y2, x1, y1);
-        //            }
-        //            else ChangeLine6(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-        //        {
-        //            if (x1 <= x2 && y1 > y2)
-        //                ChangeLine4(masLine, x1, y1, x2, y2);
-        //            else
-        //                ChangeLine8(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-        //        {
-        //            if (x1 >= x2 && y1 < y2)
-        //                ChangeLine4(masLine, x2, y2, x1, y1);
-        //            else
-        //                ChangeLine8(masLine, x2, y2, x1, y1);
-        //        }
-        //        if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-        //        {
-        //            if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
-        //                ChangeLine10(masLine, x2, y2, x1, y1);
-        //            else if (x2 < x1)
-        //                ChangeLine9(masLine, x2, y2, x1, y1);
-        //            else if (x2 > x1)
-        //                ChangeLine9(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-        //        {
-        //            if (x1 > x2 && y2 < y1)
-        //                ChangeLine4(masLine, x2, y2, x1, y1);
-        //            else
-        //                ChangeLine11(masLine, x2, y2, x1, y1);
-        //        }
-        //        if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-        //        {
-        //            if (x1 < x2 && y2 > y1)
-        //                ChangeLine4(masLine, x1, y1, x2, y2);
-        //            else
-        //                ChangeLine11(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-        //        {
-        //            if (x2 < x1)
-        //                ChangeLine13(masLine, x2, y2, x1, y1);
-        //            else
-        //                ChangeLine12(masLine, x2, y2, x1, y1);
-        //        }
-        //        if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-        //        {
-        //            if (x2 > x1)
-        //                ChangeLine13(masLine, x2, y2, x1, y1);
-        //            else
-        //                ChangeLine12(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-        //        {
-        //            if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
-        //            {
-        //                if (y1 > y2)
-        //                    ChangeLine15(masLine, x1, y1, x2, y2);
-        //                else
-        //                    ChangeLine15(masLine, x2, y2, x1, y1);
-        //            }
-        //            else ChangeLine14(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-        //        {
-        //            if (x1 > x2 && y2 > y1)
-        //                ChangeLine4(masLine, x1, y1, x2, y2);
-        //            else
-        //                ChangeLine16(masLine, x1, y1, x2, y2);
-        //        }
-        //        if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-        //        {
-        //            if (x1 < x2 && y2 < y1)
-        //                ChangeLine4(masLine, x2, y2, x1, y1);
-        //            else
-        //                ChangeLine16(masLine, x2, y2, x1, y1);
-        //        }
-        //        if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-        //        {
-        //            if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
-        //                ChangeLine19(masLine, x2, y2, x1, y1);
-        //            else if (x2 > x1) 
-        //                ChangeLine17(masLine, x2, y2, x1, y1);
-        //            else if (x2 < x1)
-        //                ChangeLine17(masLine, x1, y1, x2, y2);
-        //        }
-        //    }
-        //}
-
         private void ButtonOpenMenuClick(object sender, RoutedEventArgs e)
         {
             buttonOpenMenu.Visibility = Visibility.Collapsed;
@@ -1515,7 +1406,6 @@ namespace Flowchart_Editor
         const string darkWhite = "#FFF9F9FB";
         const string darkBlack = "#FF040205";
 
-
         private void SelectionChangedBlockWidthComboBox(object sender, SelectionChangedEventArgs e)
         {
             int valueBlockWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
@@ -1525,7 +1415,7 @@ namespace Flowchart_Editor
                 itemListOfBlock.SetWidth(valueBlockWidth);
 
             foreach (CommentControls itemListComment in listComment)
-                itemListComment.SetWidtht(valueBlockWidth);
+                itemListComment.SetWidth(valueBlockWidth);
         }
 
         private void SelectionChangedBlockHeightComboBox(object sender, SelectionChangedEventArgs e)
@@ -2420,143 +2310,146 @@ namespace Flowchart_Editor
             }
             else
             {
-                if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
+                if (secondBlock.numberOfOccurrencesInBlock >= 1 && firstBlock.numberOfOccurrencesInBlock >= 1) //костыль надо исправить
                 {
-                    if (y2 < y1 && x1 <= x2)
-                        lines = DrawConnectionLine4(x1, y1, x2, y2);
-                    else if (y2 < y1 && x1 >= x2)
-                        lines = DrawConnectionLine5(x1, y1, x2, y2);
-                    else if (y1 < y2)
-                        lines = DrawConnectionLine6(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
-                {
-                    if (y2 > y1 && x1 >= x2)
-                        lines = DrawConnectionLine4(x2, y2, x1, y1);
-                    else if (y2 > y1 && x1 <= x2)
-                        lines = DrawConnectionLine5(x2, y2, x1, y1);
-                    else if (y1 > y2)
-                        lines = DrawConnectionLine6(x2, y2, x1, y1);
-                }
-                else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
-                {
-                    firstBlock.flagForEnteringThirdConnectionPointAndFirst = true;
-                    secondBlock.flagForEnteringFirstConnectionPointAndThird = true;
-                    if (x1 != x2 && y2 > y1)
-                        lines = DrawConnectionLine1(x1, y1, x2, y2);
-                    else if ((x2 - x1) > DefaultPropertyForBlock.height)
-                        lines = DrawConnectionLine2(x2, y2, x1, y1);
-                    else if (x1 == x2)
-                        lines = DrawConnectionLine3(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
-                {
-                    firstBlock.flagForEnteringFirstConnectionPointAndThird = true;
-                    secondBlock.flagForEnteringThirdConnectionPointAndFirst = true;
-                    if (x1 != x2 && y2 < y1)
-                        lines = DrawConnectionLine1(x1, y1, x2, y2);
-                    else if ((x2 - x1) < DefaultPropertyForBlock.height)
-                        lines = DrawConnectionLine2(x1, y1, x2, y2);
-                    else if (x1 == x2)
-                        lines = DrawConnectionLine3(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
-                {
-                    if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+                    if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
                     {
-                        if (y1 > y2)
-                            lines = DrawConnectionLine8(x1, y1, x2, y2);
-                        else
-                            lines = DrawConnectionLine8(x2, y2, x1, y1);
+                        if (y2 < y1 && x1 <= x2)
+                            lines = DrawConnectionLine4(x1, y1, x2, y2);
+                        else if (y2 < y1 && x1 >= x2)
+                            lines = DrawConnectionLine5(x1, y1, x2, y2);
+                        else if (y1 < y2)
+                            lines = DrawConnectionLine6(x1, y1, x2, y2);
                     }
-                    else lines = DrawConnectionLine7(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
-                {
-                    if (x1 <= x2)
-                        lines = DrawConnectionLine5(x1, y1, x2, y2);
-                    else if (y2 > y1)
-                        lines = DrawConnectionLine9(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
-                {
-                    if (x1 >= x2)
-                        lines = DrawConnectionLine5(x2, y2, x1, y1);
-                    else if (y2 < y1)
-                        lines = DrawConnectionLine9(x2, y2, x1, y1);
-                    else if (x1 <= x2 && y2 > y1)
-                        lines = DrawConnectionLine9(x2, y2, x1, y1);
-                }
-                else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
-                {
-                    if ((y2 + DefaultPropertyForBlock.height / 2 <= y1) || (y1 + DefaultPropertyForBlock.width / 2 >= y2))
-                        lines = DrawConnectionLine11(x2, y2, x1, y1);
-                    else if (x2 < x1)
-                        lines = DrawConnectionLine10(x2, y2, x1, y1);
-                    else if (x2 > x1)
-                        lines = DrawConnectionLine10(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
-                {
-                    if (x1 > x2 && y2 < y1)
-                        lines = DrawConnectionLine5(x2, y2, x1, y1);
-                    else
-                        lines = DrawConnectionLine12(x2, y2, x1, y1);
-                }
-                else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
-                {
-                    if (x1 < x2 && y2 > y1)
-                        lines = DrawConnectionLine5(x1, y1, x2, y2);
-                    else
-                        lines = DrawConnectionLine12(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
-                {
-                    if (x2 < x1)
-                        lines = DrawConnectionLine14(x2, y2, x1, y1);
-                    else
-                        lines = DrawConnectionLine13(x2, y2, x1, y1);
-                }
-                else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
-                {
-                    if (x2 > x1)
-                        lines = DrawConnectionLine14(x1, y1, x2, y2);
-                    else
-                        lines = DrawConnectionLine13(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
-                {
-                    if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+                    else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
                     {
-                        if (y1 > y2)
-                            lines = DrawConnectionLine16(x1, y1, x2, y2);
-                        else
-                            lines = DrawConnectionLine16(x2, y2, x1, y1);
+                        if (y2 > y1 && x1 >= x2)
+                            lines = DrawConnectionLine4(x2, y2, x1, y1);
+                        else if (y2 > y1 && x1 <= x2)
+                            lines = DrawConnectionLine5(x2, y2, x1, y1);
+                        else if (y1 > y2)
+                            lines = DrawConnectionLine6(x2, y2, x1, y1);
                     }
-                    else lines = DrawConnectionLine15(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
-                {
-                    if (x1 > x2 && y2 > y1)
-                        lines = DrawConnectionLine5(x1, y1, x2, y2);
-                    else
-                        lines = DrawConnectionLine17(x1, y1, x2, y2);
-                }
-                else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
-                {
-                    if (x1 < x2 && y2 < y1)
-                        lines = DrawConnectionLine5(x2, y2, x1, y1);
-                    else
-                        lines = DrawConnectionLine17(x2, y2, x1, y1);
-                }
-                else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
-                {
-                    if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
-                        lines = DrawConnectionLine20(x2, y2, x1, y1);
-                    else if (x2 > x1)
-                        lines = DrawConnectionLine18(x2, y2, x1, y1);
-                    else if (x2 < x1)
-                        lines = DrawConnectionLine18(x1, y1, x2, y2);
+                    else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
+                    {
+                        firstBlock.flagForEnteringThirdConnectionPointAndFirst = true;
+                        secondBlock.flagForEnteringFirstConnectionPointAndThird = true;
+                        if (x1 != x2 && y2 > y1)
+                            lines = DrawConnectionLine1(x1, y1, x2, y2);
+                        else if ((x2 - x1) > DefaultPropertyForBlock.height)
+                            lines = DrawConnectionLine2(x2, y2, x1, y1);
+                        else if (x1 == x2)
+                            lines = DrawConnectionLine3(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+                    {
+                        firstBlock.flagForEnteringFirstConnectionPointAndThird = true;
+                        secondBlock.flagForEnteringThirdConnectionPointAndFirst = true;
+                        if (x1 != x2 && y2 < y1)
+                            lines = DrawConnectionLine1(x1, y1, x2, y2);
+                        else if ((x2 - x1) < DefaultPropertyForBlock.height)
+                            lines = DrawConnectionLine2(x1, y1, x2, y2);
+                        else if (x1 == x2)
+                            lines = DrawConnectionLine3(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
+                    {
+                        if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+                        {
+                            if (y1 > y2)
+                                lines = DrawConnectionLine8(x1, y1, x2, y2);
+                            else
+                                lines = DrawConnectionLine8(x2, y2, x1, y1);
+                        }
+                        else lines = DrawConnectionLine7(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "firstPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
+                    {
+                        if (x1 <= x2)
+                            lines = DrawConnectionLine5(x1, y1, x2, y2);
+                        else if (y2 > y1)
+                            lines = DrawConnectionLine9(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "firstPointToConnect")
+                    {
+                        if (x1 >= x2)
+                            lines = DrawConnectionLine5(x2, y2, x1, y1);
+                        else if (y2 < y1)
+                            lines = DrawConnectionLine9(x2, y2, x1, y1);
+                        else if (x1 <= x2 && y2 > y1)
+                            lines = DrawConnectionLine9(x2, y2, x1, y1);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
+                    {
+                        if ((y2 + DefaultPropertyForBlock.height / 2 <= y1) || (y1 + DefaultPropertyForBlock.width / 2 >= y2))
+                            lines = DrawConnectionLine11(x2, y2, x1, y1);
+                        else if (x2 < x1)
+                            lines = DrawConnectionLine10(x2, y2, x1, y1);
+                        else if (x2 > x1)
+                            lines = DrawConnectionLine10(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+                    {
+                        if (x1 > x2 && y2 < y1)
+                            lines = DrawConnectionLine5(x2, y2, x1, y1);
+                        else
+                            lines = DrawConnectionLine12(x2, y2, x1, y1);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
+                    {
+                        if (x1 < x2 && y2 > y1)
+                            lines = DrawConnectionLine5(x1, y1, x2, y2);
+                        else
+                            lines = DrawConnectionLine12(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "secondPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
+                    {
+                        if (x2 < x1)
+                            lines = DrawConnectionLine14(x2, y2, x1, y1);
+                        else
+                            lines = DrawConnectionLine13(x2, y2, x1, y1);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "secondPointToConnect")
+                    {
+                        if (x2 > x1)
+                            lines = DrawConnectionLine14(x1, y1, x2, y2);
+                        else
+                            lines = DrawConnectionLine13(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+                    {
+                        if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+                        {
+                            if (y1 > y2)
+                                lines = DrawConnectionLine16(x1, y1, x2, y2);
+                            else
+                                lines = DrawConnectionLine16(x2, y2, x1, y1);
+                        }
+                        else lines = DrawConnectionLine15(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "thirdPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
+                    {
+                        if (x1 > x2 && y2 > y1)
+                            lines = DrawConnectionLine5(x1, y1, x2, y2);
+                        else
+                            lines = DrawConnectionLine17(x1, y1, x2, y2);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "thirdPointToConnect")
+                    {
+                        if (x1 < x2 && y2 < y1)
+                            lines = DrawConnectionLine5(x2, y2, x1, y1);
+                        else
+                            lines = DrawConnectionLine17(x2, y2, x1, y1);
+                    }
+                    else if (StaticBlock.firstPointToConnect == "fourthPointToConnect" && StaticBlock.secondPointToConnect == "fourthPointToConnect")
+                    {
+                        if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
+                            lines = DrawConnectionLine20(x2, y2, x1, y1);
+                        else if (x2 > x1)
+                            lines = DrawConnectionLine18(x2, y2, x1, y1);
+                        else if (x2 < x1)
+                            lines = DrawConnectionLine18(x1, y1, x2, y2);
+                    }
                 }
             }
             StaticBlock.firstPointToConnect = "";
@@ -2570,10 +2463,7 @@ namespace Flowchart_Editor
             textNameOfSecondBlockToConnect.Text = "";
         }
 
-        public void WriteSecondNameOfBlockToConect(string nameOfSecondBlockToConnect)
-        {
-            textNameOfSecondBlockToConnect.Text = nameOfSecondBlockToConnect;
-        }
+        public void WriteSecondNameOfBlockToConect(string nameOfSecondBlockToConnect) => textNameOfSecondBlockToConnect.Text = nameOfSecondBlockToConnect;
         
         private void MouseLeftButtonDownComment(object sender, MouseButtonEventArgs e)
         {
@@ -2591,47 +2481,6 @@ namespace Flowchart_Editor
             WriteIndented = true
         };
 
-        private static CommentModel SaveCommentControlsForBlock(Block block)
-        {
-            CommentControls? commentControls = block.comment;
-            List<LineModel> listLineModels = new();
-            LineModel? lineModel = null;
-            if (commentControls != null && commentControls.textBox != null)
-            {
-                if (commentControls.FirstLine != null)
-                {
-                    lineModel = GetDataOfLineModel(commentControls.FirstLine);
-                    listLineModels.Add(lineModel);
-                }
-                if (commentControls.SecondLine != null)
-                {
-                    lineModel = GetDataOfLineModel(commentControls.SecondLine);
-                    listLineModels.Add(lineModel);
-                }
-                if (commentControls.ThirdLine != null)
-                {
-                    lineModel = GetDataOfLineModel(commentControls.ThirdLine);
-                    listLineModels.Add(lineModel);
-                }
-                if (commentControls.FourthLine != null)
-                {
-                    lineModel = GetDataOfLineModel(commentControls.FourthLine);
-                    listLineModels.Add(lineModel);
-                }
-                if (commentControls.FifthLine != null)
-                {
-                    lineModel = GetDataOfLineModel(commentControls.FifthLine);
-                    listLineModels.Add(lineModel);
-                }
-                if (commentControls.SixthtLine != null)
-                {
-                    lineModel = GetDataOfLineModel(commentControls.SixthtLine);
-                    listLineModels.Add(lineModel);
-                }
-            }
-            return new CommentModel(listLineModels, commentControls.textBox.Text);
-        }
-
         private static BlockModel GetDataOfBlockModel(Block itemBlock, string nameOfBlock)
         {
             UIElement? itemBlockUIElement = itemBlock.GetUIElement();
@@ -2642,9 +2491,6 @@ namespace Flowchart_Editor
                 height = (int)((Canvas)itemBlockUIElement).Height;
                 width = (int)((Canvas)itemBlockUIElement).Width;
             }
-            CommentModel? commentModel = null;
-            if (itemBlock.comment != null)
-                commentModel = SaveCommentControlsForBlock(itemBlock);
             string textOfBlock = "";
             if (itemBlock.TextBlock != null)
                 textOfBlock = itemBlock.TextBlock.Text;
@@ -2652,48 +2498,86 @@ namespace Flowchart_Editor
                 textOfBlock = itemBlock.TextBox.Text;
             double topСoordinates = Canvas.GetTop(itemBlockUIElement);
             double leftСoordinates = Canvas.GetLeft(itemBlockUIElement);
-            BlockModel conditionBlockModel = new(nameOfBlock, height, width, textOfBlock, topСoordinates, leftСoordinates, commentModel);
+
+            bool flagPresenceСomment = false;
+            if (itemBlock.comment != null)
+                flagPresenceСomment = true;
+
+            BlockModel conditionBlockModel = new(nameOfBlock, height, width, textOfBlock, topСoordinates, leftСoordinates, flagPresenceСomment);
             return conditionBlockModel;
         }
 
         private static LineModel GetDataOfLineModel(Line itemLine) => new(itemLine.X1, itemLine.Y1, itemLine.X2, itemLine.Y2);
 
         int numberFilesInSession = 0;
-        private async void SelectedItemViewSave(object sender, RoutedEventArgs e)
+
+        private void DeleteFile(SaveFileDialog saveFileDialog)
+        {
+            FileInfo fileInfo = new(saveFileDialog.FileName);
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+            }
+        }
+
+        private List<BlockModel> SaveBlockModel(List<BlockModel> listBlockModels)
+        {
+            foreach (Block itemBlock in listOfBlock)
+            {
+                Type typeOfBlock = itemBlock.GetType();
+                BlockModel blockModel = GetDataOfBlockModel(itemBlock, typeOfBlock.Name);
+                listBlockModels.Add(blockModel);
+            }
+            return listBlockModels;
+        }
+
+        private List<LineModel> SaveLineModel(List<LineModel> listLineModels)
+        {
+            foreach (Line itemLine in listLineConnection)
+            {
+                LineModel lineModel = GetDataOfLineModel(itemLine);
+                listLineModels.Add(lineModel);
+            }
+            return listLineModels;
+        }
+
+        private string? GetFontFamily() => listOfFontFamily.SelectedValue?.ToString();
+
+        public string? GetFontSize() => ((ComboBoxItem)fontSizeComboBox.SelectedItem)?.Content.ToString();
+
+        private async void ClickSaveProject(object sender, RoutedEventArgs e)
         {
             numberFilesInSession++;
+
             List<BlockModel> listBlockModels = new();
             List<LineModel> listLineModels = new();
-            List<CommentModel> listCommentModels = new();
 
             SaveFileDialog saveFileDialog = new()
             {
                 Filter = "Files(*.json)|*.json|All(*.*)|*"
             };
+
             FileInfo file = new("Flowchart" + numberFilesInSession.ToString() + ".json");
             saveFileDialog.FileName = file.Name;
             if (saveFileDialog.ShowDialog() == true)
             {
+                DeleteFile(saveFileDialog);
                 using FileStream fileStream = new(saveFileDialog.FileName.ToString(), FileMode.OpenOrCreate);
-                foreach (Block itemBlock in listOfBlock)
-                {
-                    Type typeOfBlock = itemBlock.GetType();
-                    BlockModel blockModel = GetDataOfBlockModel(itemBlock, typeOfBlock.Name);
-                    listBlockModels.Add(blockModel);
-                }
                 
-                foreach (Line itemLine in listLineConnection)
-                {
-                    LineModel lineModel = GetDataOfLineModel(itemLine);
-                    listLineModels.Add(lineModel);
-                }
+                SaveBlockModel(listBlockModels);
 
-                ModelControls blockAndLineModek = new(listBlockModels, listLineModels, listCommentModels);
+                SaveLineModel(listLineModels);
+
+                string? comboBoxItemFontFamily = GetFontFamily();
+                string? comboBoxItemFontSize = GetFontSize();
+
+                StyleModel styleModel = new(comboBoxItemFontFamily, comboBoxItemFontSize);
+                ModelControls blockAndLineModek = new(listBlockModels, listLineModels, styleModel);
                 await JsonSerializer.SerializeAsync(fileStream, blockAndLineModek, jsonSerializerOptions);
             }
         }
 
-        public Block? SetPropertyFor(Type type, BlockModel blockModel)
+        public Block? SetPropertyForBlock(Type type, BlockModel blockModel)
         {
             Block? block = null;
             ConstructorInfo? constructorInfo = type.GetConstructor(new Type[] { typeof(MainWindow), typeof(int) });
@@ -2712,8 +2596,8 @@ namespace Flowchart_Editor
                 Canvas.SetTop(uIElementOfBlock, blockModel.topCoordinates);
                 Canvas.SetLeft(uIElementOfBlock, blockModel.leftCoordinates);
 
-                if (blockModel.comment != null)
-                    block.SetComment(blockModel.comment, blockModel.height, blockModel.width);
+                if (blockModel.flagPresenceСomment)
+                    block.SetComment();
             }
             return block;
         }
@@ -2739,63 +2623,76 @@ namespace Flowchart_Editor
                 select new { name = (attributes[0] as BlockName).Name, type = t };
             return result.ToDictionary(x => x.name, x => x.type);    
         }
-       
-        private async void SelectedItemViewUpload(object sender, RoutedEventArgs e)
+
+        private void ClearData()
         {
-            WinForms.OpenFileDialog openFileDialog = new()
+            destination.Children.Clear();
+            listOfBlock.Clear();
+            listLineConnection.Clear();
+            listComment.Clear();
+        }
+
+        private static string? GetBlockWidth(ModelControls modelControls) => modelControls.listBlockModels?.Count > 0 ? modelControls.listBlockModels?[0].width.ToString() : "";
+
+        private static string? GetBlockHeight(ModelControls modelControls) => modelControls.listBlockModels?.Count > 0 ? modelControls.listBlockModels?[0].height.ToString() : "";
+
+        private async void ClickUploadProject(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new()
             {
                 Filter = "File json|*.json"
             };
-            if (openFileDialog.ShowDialog() == WinForms.DialogResult.OK)
+
+            if (saveFileDialog.ShowDialog() == true)
             {
                 var blockDictionary = GetBlockDictionary();
-                string fileName = openFileDialog.FileName;
+                string fileName = saveFileDialog.FileName;
                 using FileStream fileStream = new(fileName, FileMode.OpenOrCreate);
-                ModelControls? blockAndLineModels = await JsonSerializer.DeserializeAsync<ModelControls>(fileStream);
-                if (blockAndLineModels != null)
+                ModelControls? modelControls = null;
+                try
                 {
-                    destination.Children.Clear();
-                    listLineConnection.Clear();
+                    modelControls = await JsonSerializer.DeserializeAsync<ModelControls>(fileStream);
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка загруски проекта, файл испорчен");
+                }
+                if (modelControls != null)
+                {
+                    ClearData();
 
-                    if (blockAndLineModels.listBlockModels != null)
+                    listOfFontFamily.Text = modelControls.styleModel.fontFamily;
+                    fontSizeComboBox.Text = modelControls.styleModel.fontSize;
+                    blockWidthComboBox.Text = GetBlockWidth(modelControls);
+                    blockHeightComboBox.Text = GetBlockHeight(modelControls);
+
+                    if (modelControls.listBlockModels != null)
                     {
-                        foreach (BlockModel itemBlockModel in blockAndLineModels.listBlockModels)
+                        foreach (BlockModel itemBlockModel in modelControls.listBlockModels)
                         {
-                            Block? block = SetPropertyFor(blockDictionary[itemBlockModel.nameOfBlock], itemBlockModel);
+                            Block? block = SetPropertyForBlock(blockDictionary[itemBlockModel.nameOfBlock], itemBlockModel);
                             if (block != null)
                             {
                                 listOfBlock.Add(block);
+                                if (block.comment != null)
+                                    listComment.Add(block.comment);
                                 destination.Children.Add(block.GetUIElement());
                             }
                         }
                     }
-                    if (blockAndLineModels.listLineModels != null)
+
+                    if (modelControls.listLineModels != null)
                     {
-                        foreach (LineModel itemBlockModel in blockAndLineModels.listLineModels)
+                        foreach (LineModel itemBlockModel in modelControls.listLineModels)
                         {
                             Line line = SetPropertyForLine(itemBlockModel);
                             destination.Children.Add(line);
                         }
                     }
-                    if (blockAndLineModels.listCommentsModels != null)
-                    {
-                        foreach (CommentModel itemBlockModel in blockAndLineModels.listCommentsModels)
-                        {
-                            Line line = new();
-                            if (itemBlockModel.listLineModel != null)
-                            {
-                                foreach (LineModel itemLine in itemBlockModel.listLineModel)
-                                {
-                                    line = SetPropertyForLine(itemLine);
-                                    listLineConnection.Add(line);
-                                    destination.Children.Add(line);
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
+
         private void AddConditionCaseFirstOption(object sender, RoutedEventArgs e)
         {
             try
@@ -2803,9 +2700,14 @@ namespace Flowchart_Editor
                 int countLineOfConditionCaseFirstOption = Convert.ToInt32(CountLineOfConditionCaseFirstOption.Text);
                 if (countLineOfConditionCaseFirstOption > 0)
                 {
-                    ConditionCaseFirstOptionBlock block = new(this, 0, countLineOfConditionCaseFirstOption);
-                    listOfBlock.Add(block);
-                    destination.Children.Add(block.GetUIElement());
+                    if (countLineOfConditionCaseFirstOption == 1)
+                        MessageBox.Show("Введите большое число выходов из фигуры Условие");
+                    else
+                    {
+                        ConditionCaseFirstOptionBlock block = new(this, 0, countLineOfConditionCaseFirstOption);
+                        listOfBlock.Add(block);
+                        destination.Children.Add(block.GetUIElement());
+                    }
                 }
                 else
                 {
@@ -2825,9 +2727,14 @@ namespace Flowchart_Editor
                 int countLineOfConditionCaseSecondOption = Convert.ToInt32(CountLineOfConditionCaseSecondOption.Text);
                 if (countLineOfConditionCaseSecondOption > 0)
                 {
-                    ConditionCaseSecondOptionBlock block = new(this, 0, countLineOfConditionCaseSecondOption);
-                    listOfBlock.Add(block);
-                    destination.Children.Add(block.GetUIElement());
+                    if (countLineOfConditionCaseSecondOption == 1)
+                        MessageBox.Show("Введите большое число выходов из фигуры Условие");
+                    else
+                    {
+                        ConditionCaseSecondOptionBlock block = new(this, 0, countLineOfConditionCaseSecondOption);
+                        listOfBlock.Add(block);
+                        destination.Children.Add(block.GetUIElement());
+                    }
                 }
                 else
                 {
@@ -2847,14 +2754,14 @@ namespace Flowchart_Editor
 
             SaveFileDialog saveFileDialog = new()
             {
-                Filter = "Files(*.jpg)|*.jpg|All(*.*)|*"
+                Filter = "Files(*.jpeg)|*.jpeg|All(*.*)|*"
             };
 
             RenderTargetBitmap renderTargetBitmap = new(
-                (int)destination.RenderSize.Width, 
-                (int)destination.RenderSize.Height, 
-                96d, 
-                96d, 
+                (int)destination.RenderSize.Width * 300 / 96, 
+                (int)destination.RenderSize.Height * 300 / 96, 
+                300d, 
+                300d, 
                 PixelFormats.Pbgra32
                 );
 
@@ -2871,15 +2778,19 @@ namespace Flowchart_Editor
             {
                 using FileStream fileStream = File.OpenWrite(saveFileDialog.FileName);
                 jpegBitmapEncoder.Save(fileStream);
-
-                //Пробовал сохранить как растровую
-                //MemoryStream memoryStream = new();
-                //using (FileStream fileStream = File.OpenWrite(saveFileDialog.FileName))
-                //{
-                //    memoryStream.CopyTo(fileStream);
-                //    jpegBitmapEncoder.Save(memoryStream);
-                //}
             }
+        }
+
+        private void SelectionChangedFontSize(object sender, SelectionChangedEventArgs e) =>
+            StaticBlock.fontSize = Convert.ToInt32(((ComboBoxItem)fontSizeComboBox.SelectedItem)?.Content.ToString());
+
+        int numberPrintInSession = 0;
+        private void ClickPrint(object sender, RoutedEventArgs e)
+        {
+            numberPrintInSession++;
+            PrintDialog printDialog = new();
+            if (printDialog.ShowDialog() == true)
+                printDialog.PrintVisual(destination, "Flowchart" + numberPrintInSession.ToString());
         }
     }
 }

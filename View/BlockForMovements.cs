@@ -83,140 +83,140 @@ namespace Flowchart_Editor.Models
         public double GetСoordinatesFourthBlockAndFourthSenderBlockX() => fourthBlock != null && fourthSenderBlock != null ? Canvas.GetLeft((Ellipse)fourthSenderBlock) + Canvas.GetLeft(fourthBlock.GetCanvas()) + 3 : 0;
         public double GetСoordinatesFourthBlockAndFourthSenderBlockY() => fourthBlock != null && fourthSenderBlock != null ? Canvas.GetTop((Ellipse)fourthSenderBlock) + Canvas.GetTop(fourthBlock.GetCanvas()) + 3 : 0;
 
-        public void ChangeLines(double x1, double y1, double x2, double y2, Line[] lines, Block firstBlock, Block secondBlock, int numberOfOccurrencesInBlock = 0)
+        public void ChangeLines(double x1, double y1, double x2, double y2, Line[] lines, Block firstBlock, Block secondBlock)
         {
-            if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-            {
-                if (x1 != x2 && y1 > y2)
-                    firstBlock.mainWindow.ChangeLine1(lines, x2, y2, x1, y1);
-                else if (x1 != x2 && y1 < y2)
-                    firstBlock.mainWindow.ChangeLine2(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-            {
-                if (x1 != x2 && y1 < y2)
-                    firstBlock.mainWindow.ChangeLine1(lines, x1, y1, x2, y2);
-                else if (x1 != x2 && y1 > y2)
-                    firstBlock.mainWindow.ChangeLine2(lines, x2, y2, x1, y1);
-            }
-            else if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-            {
-                if (y2 < y1 && x1 - valueOffsetOfLineFromTheBlockToSides <= x2)
-                    firstBlock.mainWindow.ChangeLine3(lines, x1, y1, x2, y2);
-                else if (y2 < y1 && x1 >= x2)
-                    firstBlock.mainWindow.ChangeLine4(lines, x1, y1, x2, y2);
-                else if (y2 > y1 - valueOffsetOfLineFromTheBlockToSides)
-                    firstBlock.mainWindow.ChangeLine5(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-            {
-                if (y2 > y1 && x1 >= x2 - valueOffsetOfLineFromTheBlockToSides)
-                    firstBlock.mainWindow.ChangeLine3(lines, x2, y2, x1, y1);
-                else if (y2 > y1 && x1 <= x2)
-                    firstBlock.mainWindow.ChangeLine4(lines, x2, y2, x1, y1);
-                else if (y2 < y1 - valueOffsetOfLineFromTheBlockToSides)
-                    firstBlock.mainWindow.ChangeLine5(lines, x2, y2, x1, y1);
-            }
-            else if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-            {
-                if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
-                {
-                    if (y1 > y2)
-                        firstBlock.mainWindow.ChangeLine7(lines, x1, y1, x2, y2);
-                    else
-                        firstBlock.mainWindow.ChangeLine7(lines, x2, y2, x1, y1);
-                }
-                else firstBlock.mainWindow.ChangeLine6(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-            {
-                if (x1 <= x2 && y1 > y2)
-                    firstBlock.mainWindow.ChangeLine4(lines, x1, y1, x2, y2);
-                else
-                    firstBlock.mainWindow.ChangeLine8(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
-            {
-                if (x1 >= x2 && y1 < y2)
-                    firstBlock.mainWindow.ChangeLine4(lines, x2, y2, x1, y1);
-                else
-                    firstBlock.mainWindow.ChangeLine8(lines, x2, y2, x1, y1);
-            }
-            else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-            {
-                if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
-                    firstBlock.mainWindow.ChangeLine10(lines, x2, y2, x1, y1);
-                else if (x2 < x1)
-                    firstBlock.mainWindow.ChangeLine9(lines, x2, y2, x1, y1);
-                else if (x2 > x1)
-                    firstBlock.mainWindow.ChangeLine9(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-            {
-                if (x1 > x2 && y2 < y1)
-                    firstBlock.mainWindow.ChangeLine4(lines, x2, y2, x1, y1);
-                else
-                    firstBlock.mainWindow.ChangeLine11(lines, x2, y2, x1, y1);
-            }
-            else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-            {
-                if (x1 < x2 && y2 > y1)
-                    firstBlock.mainWindow.ChangeLine4(lines, x1, y1, x2, y2);
-                else
-                    firstBlock.mainWindow.ChangeLine11(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-            {
-                if (x2 < x1)
-                    firstBlock.mainWindow.ChangeLine13(lines, x2, y2, x1, y1);
-                else
-                    firstBlock.mainWindow.ChangeLine12(lines, x2, y2, x1, y1);
-            }
-            else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
-            {
-                if (x2 > x1)
-                    firstBlock.mainWindow.ChangeLine13(lines, x2, y2, x1, y1);
-                else
-                    firstBlock.mainWindow.ChangeLine12(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-            {
-                if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
-                {
-                    if (y1 > y2)
-                        firstBlock.mainWindow.ChangeLine15(lines, x1, y1, x2, y2);
-                    else
-                        firstBlock.mainWindow.ChangeLine15(lines, x2, y2, x1, y1);
-                }
-                else firstBlock.mainWindow.ChangeLine14(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-            {
-                if (x1 > x2 && y2 > y1)
-                    firstBlock.mainWindow.ChangeLine4(lines, x1, y1, x2, y2);
-                else
-                    firstBlock.mainWindow.ChangeLine16(lines, x1, y1, x2, y2);
-            }
-            else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
-            {
-                if (x1 < x2 && y2 < y1)
-                    firstBlock.mainWindow.ChangeLine4(lines, x2, y2, x1, y1);
-                else
-                    firstBlock.mainWindow.ChangeLine16(lines, x2, y2, x1, y1);
-            }
-            else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
-            {
-                if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
-                    firstBlock.mainWindow.ChangeLine19(lines, x2, y2, x1, y1);
-                else if (x2 > x1)
-                    firstBlock.mainWindow.ChangeLine17(lines, x2, y2, x1, y1);
-                else if (x2 < x1)
-                    firstBlock.mainWindow.ChangeLine17(lines, x1, y1, x2, y2);
-            }
+            //if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
+            //{
+            //    if (x1 != x2 && y1 > y2)
+            //        firstBlock.MainWindow.ChangeLine1(lines, x2, y2, x1, y1);
+            //    else if (x1 != x2 && y1 < y2)
+            //        firstBlock.MainWindow.ChangeLine2(lines, x1, y1, x2, y2);
+            //}
+            //if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
+            //{
+            //    if (x1 != x2 && y1 < y2)
+            //        firstBlock.MainWindow.ChangeLine1(lines, x1, y1, x2, y2);
+            //    else if (x1 != x2 && y1 > y2)
+            //        firstBlock.MainWindow.ChangeLine2(lines, x2, y2, x1, y1);
+            //}
+            //else if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
+            //{
+            //    if (y2 < y1 && x1 - valueOffsetOfLineFromTheBlockToSides <= x2)
+            //        firstBlock.MainWindow.ChangeLine3(lines, x1, y1, x2, y2);
+            //    else if (y2 < y1 && x1 >= x2)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x1, y1, x2, y2);
+            //    else if (y2 > y1 - valueOffsetOfLineFromTheBlockToSides)
+            //        firstBlock.MainWindow.ChangeLine5(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
+            //{
+            //    if (y2 > y1 && x1 >= x2 - valueOffsetOfLineFromTheBlockToSides)
+            //        firstBlock.MainWindow.ChangeLine3(lines, x2, y2, x1, y1);
+            //    else if (y2 > y1 && x1 <= x2)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x2, y2, x1, y1);
+            //    else if (y2 < y1 - valueOffsetOfLineFromTheBlockToSides)
+            //        firstBlock.MainWindow.ChangeLine5(lines, x2, y2, x1, y1);
+            //}
+            //else if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
+            //{
+            //    if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+            //    {
+            //        if (y1 > y2)
+            //            firstBlock.MainWindow.ChangeLine7(lines, x1, y1, x2, y2);
+            //        else
+            //            firstBlock.MainWindow.ChangeLine7(lines, x2, y2, x1, y1);
+            //    }
+            //    else firstBlock.MainWindow.ChangeLine6(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringFirstConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
+            //{
+            //    if (x1 <= x2 && y1 > y2)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x1, y1, x2, y2);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine8(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringFirstConnectionPoint)
+            //{
+            //    if (x1 >= x2 && y1 < y2)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x2, y2, x1, y1);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine8(lines, x2, y2, x1, y1);
+            //}
+            //else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
+            //{
+            //    if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
+            //        firstBlock.MainWindow.ChangeLine10(lines, x2, y2, x1, y1);
+            //    else if (x2 < x1)
+            //        firstBlock.MainWindow.ChangeLine9(lines, x2, y2, x1, y1);
+            //    else if (x2 > x1)
+            //        firstBlock.MainWindow.ChangeLine9(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
+            //{
+            //    if (x1 > x2 && y2 < y1)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x2, y2, x1, y1);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine11(lines, x2, y2, x1, y1);
+            //}
+            //else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
+            //{
+            //    if (x1 < x2 && y2 > y1)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x1, y1, x2, y2);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine11(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringSecondConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
+            //{
+            //    if (x2 < x1)
+            //        firstBlock.MainWindow.ChangeLine13(lines, x2, y2, x1, y1);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine12(lines, x2, y2, x1, y1);
+            //}
+            //else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringSecondConnectionPoint)
+            //{
+            //    if (x2 > x1)
+            //        firstBlock.MainWindow.ChangeLine13(lines, x2, y2, x1, y1);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine12(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
+            //{
+            //    if ((x2 + DefaultPropertyForBlock.width / 2 < x1) || (x1 + DefaultPropertyForBlock.width / 2 < x2))
+            //    {
+            //        if (y1 > y2)
+            //            firstBlock.MainWindow.ChangeLine15(lines, x1, y1, x2, y2);
+            //        else
+            //            firstBlock.MainWindow.ChangeLine15(lines, x2, y2, x1, y1);
+            //    }
+            //    else firstBlock.MainWindow.ChangeLine14(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringThirdConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
+            //{
+            //    if (x1 > x2 && y2 > y1)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x1, y1, x2, y2);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine16(lines, x1, y1, x2, y2);
+            //}
+            //else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringThirdConnectionPoint)
+            //{
+            //    if (x1 < x2 && y2 < y1)
+            //        firstBlock.MainWindow.ChangeLine4(lines, x2, y2, x1, y1);
+            //    else
+            //        firstBlock.MainWindow.ChangeLine16(lines, x2, y2, x1, y1);
+            //}
+            //else if (firstBlock.flagForEnteringFourthConnectionPoint && secondBlock.flagForEnteringFourthConnectionPoint)
+            //{
+            //    if ((y1 + DefaultPropertyForBlock.height / 2 <= y2 && y1 > y2) || (y1 <= y2 && y1 >= y2 - DefaultPropertyForBlock.height) || (y1 == y2))
+            //        firstBlock.MainWindow.ChangeLine19(lines, x2, y2, x1, y1);
+            //    else if (x2 > x1)
+            //        firstBlock.MainWindow.ChangeLine17(lines, x2, y2, x1, y1);
+            //    else if (x2 < x1)
+            //        firstBlock.MainWindow.ChangeLine17(lines, x1, y1, x2, y2);
+            //}
         }
-        public void SetCoordinateForFirstLine(double x1, double y1, double x2, double y2, Line[] lines, Block firstBlock, Block secondBlock, int numberOfOccurrencesInBlock)
+        public void SetCoordinateForFirstLine(double x1, double y1, double x2, double y2, Line[] lines, Block firstBlock, Block secondBlock)
         {
-            ChangeLines(x1, y1, x2, y2, lines, firstBlock, secondBlock, numberOfOccurrencesInBlock);
+            ChangeLines(x1, y1, x2, y2, lines, firstBlock, secondBlock);
         }
         public void SetCoordinateForSecondLine(double x1, double y1, double x2, double y2, Line[] lines, Block firstBlock, Block secondBlock)
         {

@@ -130,10 +130,11 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Главная" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Content="Главная" FontSize="12" Width="175" Background="Transparent">
+                        </Button>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Name="itemViewSave" Height="60" RenderTransformOrigin="0.5,0.5" Selected="SelectedItemViewSave">
+                <ListViewItem Name="itemViewSave" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -155,10 +156,10 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Сохранить проект" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Content="Сохранить проект" FontSize="12" Width="175" Background="Transparent" Click="ClickSaveProject"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Name="itemViewUpload" Height="60" RenderTransformOrigin="0.5,0.5" Selected="SelectedItemViewUpload">
+                <ListViewItem Name="itemViewUpload" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -180,7 +181,7 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Загрузить проект" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Загрузить проект" Background="Transparent" FontSize="12" Click="ClickUploadProject"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Name="itemViewSaveImg" Height="60" RenderTransformOrigin="0.5,0.5" Selected="SelectedItemViewSaveImg">
@@ -205,7 +206,7 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Save as img" Margin="10" VerticalAlignment="Center"  Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Сохранить изображение" Background="Transparent" FontSize="12" Click="ClickUploadProject"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -230,10 +231,35 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Авторизация" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Авторизация" Background="Transparent" FontSize="12"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem4" Height="60" RenderTransformOrigin="0.5,0.5">
+                    <ListViewItem.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ListViewItem.RenderTransform>
+                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                        <materialDesign:PackIcon Kind="Printer" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" >
+                                    <Setter Property="Foreground" Value="#FF040205" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                        <Button Width="175" Content="Печать" Background="Transparent" FontSize="12" Click="ClickPrint"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="listViewItem5" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -255,10 +281,10 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Регистрация" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Регистрация" Background="Transparent" FontSize="12"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem x:Name="listViewItem5" Height="60" RenderTransformOrigin="0.5,0.5">
+                <ListViewItem x:Name="listViewItem6" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -280,10 +306,10 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Список проектов" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Список проектов" Background="Transparent" FontSize="12"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem x:Name="listViewItem6" Height="60" RenderTransformOrigin="0.5,0.5">
+                <ListViewItem x:Name="listViewItem7" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -305,10 +331,10 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Информация" Margin="10" VerticalAlignment="Center" Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Информация" Background="Transparent" FontSize="12"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem x:Name="listViewItem7" Height="60" RenderTransformOrigin="0.5,0.5">
+                <ListViewItem x:Name="listViewItem8" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -330,10 +356,10 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Поддержка" Margin="10" VerticalAlignment="Center"  Style="{DynamicResource TextBlockStyle}"/>
+                        <Button Width="175" Content="Поддержка" Background="Transparent" FontSize="12"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem x:Name="listViewItem8" Height="60" RenderTransformOrigin="0.5,0.5">
+                <ListViewItem x:Name="listViewItem9" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -598,10 +624,15 @@
                             HorizontalAlignment="Left" 
                             Style="{DynamicResource TextBlockStyle}"/>
 
-                        <control:CommentView
+                        <StackPanel
                             Grid.Column="0" 
                             Grid.Row="11" 
-                            MouseLeftButtonDown="MouseLeftButtonDownComment"/>
+                            MouseLeftButtonDown="MouseLeftButtonDownComment"
+                            Height="75"
+                            Width="150">
+                            <control:CommentView/>
+                        </StackPanel>
+                        
 
                         <TextBlock 
                             Text="Комментарий(12)" 
@@ -683,7 +714,8 @@
                         Width="60" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
-                        Margin="0,5">
+                        Margin="0,5"
+                        SelectionChanged="SelectionChangedFontSize">
                         <ComboBoxItem>8</ComboBoxItem>
                         <ComboBoxItem>10</ComboBoxItem>
                         <ComboBoxItem>12</ComboBoxItem>
