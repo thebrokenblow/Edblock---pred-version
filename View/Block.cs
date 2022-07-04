@@ -92,18 +92,9 @@ namespace Flowchart_Editor.Models
         protected void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-            {
                 if (!flagCase && !(e.OriginalSource is TextBox))
-                {
-                    BlockForMovements instanceOfBlockForMovements = new(sender,
-                                mainBlock, firstBlock, secondBlock, thirdBlock, fourthBlock, firstSenderMainBlock,
-                                secondSenderMainBlock, thirdSenderMainBlock, fourthSenderMainBlock, firstSenderBlock, secondSenderBlock,
-                                thirdSenderBlock, fourthSenderBlock, FirstLineConnectionBlock, SecondLineConnectionBlock, ThirdLineConnectionBlock,
-                                FourthLineConnectionBlock, numberOfOccurrencesInBlock);
-                    var dataObjectInformationOfActionBlock = new DataObject(typeof(BlockForMovements), instanceOfBlockForMovements);
-                    DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
-                }
-            }
+                    Edblock.DoDragDropControlElement(typeof(Canvas), sender, sender);
+
             e.Handled = true;
         }
         protected void SetPropertyForFirstPointToConnect(double valueForSetLeft, double valueForSetTop)
