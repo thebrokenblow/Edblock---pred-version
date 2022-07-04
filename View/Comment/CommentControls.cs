@@ -248,5 +248,13 @@ namespace Flowchart_Editor.Models.Comment
         public override double GetWidthCoefficient() => 0;
 
         public override double GetHeightCoefficient() => 0;
+
+        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) { }
+
+        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) { }
+
+        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft) { }
+
+        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop) { }
     }
 }

@@ -1,28 +1,28 @@
-﻿using Flowchart_Editor.Models;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Flowchart_Editor.Models;
+using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows.Input;
+using System;
+using System.Linq;
+using Flowchart_Editor.View.Condition.Case;
 
 namespace Flowchart_Editor.View.ConditionCaseFirstOption
 {
-    public class ConditionCaseFirstOptionBlock : ConditionBlock
+    public class CaseFirstOption : CaseBlock
     {
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
-        private List<Line>? listLine;
-        private List<TextBox>? listTextBox;
-        private Style? styleLine;
-        private Style? styleTextBox;
-        private readonly int countLineOfConditionCaseFirstOption = 0;
-        private readonly Dictionary<Line, Block> dictionaryLineAndBlock = new();
+        private readonly Line firstLine = new();
 
-        public ConditionCaseFirstOptionBlock(MainWindow mainWindow, int keyBlock, int countLineOfConditionCaseFirstOption) : base(mainWindow, keyBlock)
+
+        public CaseFirstOption(Edblock mainWindow, int keyBlock, int countLine) : base(mainWindow, keyBlock)
         {
             MainWindow = mainWindow;
             keyOfBlock = keyBlock;
-            this.countLineOfConditionCaseFirstOption = countLineOfConditionCaseFirstOption;
+            this.countLine = countLine;
             initialText = "Условие";
         }
 
@@ -80,24 +80,22 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
                 {
                     styleLine = resourceDict["LineStyle"] as Style;
-                    styleTextBox = resourceDict["TextBoxStyleForComment"] as Style;
+                    styleTextBox = resourceDict["TextBoxStyleForCase"] as Style;
                 }
                     
                 listLine = new List<Line>();
                 listTextBox = new List<TextBox>();
 
-                Line line = new();
-                line.X1 = DefaultPropertyForBlock.width / 2;
-                line.Y1 = DefaultPropertyForBlock.height;
-                line.X2 = DefaultPropertyForBlock.width / 2;
-                line.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLineOfConditionCaseFirstOption;
-                line.Style = styleLine;
-                
-                listLine.Add(line);
-                canvas.Children.Add(line);
-                for (int i = 1; i <= countLineOfConditionCaseFirstOption; i++)
+                firstLine.X1 = DefaultPropertyForBlock.width / 2;
+                firstLine.Y1 = DefaultPropertyForBlock.height;
+                firstLine.X2 = DefaultPropertyForBlock.width / 2;
+                firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
+                firstLine.Style = styleLine;
+                canvas.Children.Add(firstLine);
+
+                for (int i = 1; i <= countLine; i++)
                 {
-                    line = new();
+                    Line line = new();
                     line.X1 = DefaultPropertyForBlock.width / 2;
                     line.Y1 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
                     line.X2 = DefaultPropertyForBlock.width;
@@ -133,18 +131,7 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
         {
             if (polygon != null)
             {
-                Point Point1 = new(0, DefaultPropertyForBlock.height / 2);
-                Point Point2 = new(valueBlockWidth / 2, DefaultPropertyForBlock.height);
-                Point Point3 = new(valueBlockWidth, DefaultPropertyForBlock.height / 2);
-                Point Point4 = new(valueBlockWidth / 2, 0);
-                Point Point5 = new(0, DefaultPropertyForBlock.height / 2);
-                PointCollection myPointCollection = new();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                polygon.Points = myPointCollection;
+                SetSizeForPolygon(DefaultPropertyForBlock.height, valueBlockWidth);
 
                 double valueForSetLeftTextBoxAndTextBlock = valueBlockWidth / 2 - valueBlockWidth / 4;
                 double valueForSetTopTextBoxAndTextBlock = DefaultPropertyForBlock.height / 4;
@@ -157,12 +144,11 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 Canvas.SetLeft(thirdPointToConnect, valueBlockWidth / 2 - 3);
                 Canvas.SetLeft(fourthPointToConnect, valueBlockWidth - 6);
 
+                firstLine.X1 = DefaultPropertyForBlock.width / 2;
+                firstLine.X2 = DefaultPropertyForBlock.width / 2;
                 if (listLine != null)
                 {
-                    listLine[0].X1 = DefaultPropertyForBlock.width / 2;
-                    listLine[0].X2 = DefaultPropertyForBlock.width / 2;
-
-                    for (int i = 1; i < listLine.Count; i++)
+                    for (int i = 0; i < listLine.Count; i++)
                     {
                         listLine[i].X1 = DefaultPropertyForBlock.width / 2;
                         listLine[i].X2 = DefaultPropertyForBlock.width;
@@ -174,7 +160,10 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                         Canvas.SetLeft(textBox, DefaultPropertyForBlock.width / 2);
 
                 foreach (KeyValuePair<Line, Block> itemLineAndBlock in dictionaryLineAndBlock)
-                    Canvas.SetLeft(itemLineAndBlock.Value.GetUIElement(), DefaultPropertyForBlock.width);
+                {
+                    itemLineAndBlock.Value.SetWidth(valueBlockWidth);
+                    itemLineAndBlock.Value.SetLeftBlockForConditionCaseFirstOption(itemLineAndBlock.Value.GetUIElement(), itemLineAndBlock.Key.X2);
+                }
             }
         }
 
@@ -182,18 +171,7 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
         {
             if (polygon != null)
             {
-                Point Point1 = new(0, valueBlockHeight / 2);
-                Point Point2 = new(DefaultPropertyForBlock.width / 2, valueBlockHeight);
-                Point Point3 = new(DefaultPropertyForBlock.width, valueBlockHeight / 2);
-                Point Point4 = new(DefaultPropertyForBlock.width / 2, 0);
-                Point Point5 = new(0, valueBlockHeight / 2);
-                PointCollection myPointCollection = new();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                polygon.Points = myPointCollection;
+                SetSizeForPolygon(valueBlockHeight, DefaultPropertyForBlock.width);
 
                 double valueForSetLeftTextBoxAndTextBlock = DefaultPropertyForBlock.width / 2 - DefaultPropertyForBlock.width / 4;
                 double valueForSetTopTextBoxAndTextBlock = valueBlockHeight / 4;
@@ -206,14 +184,15 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 Canvas.SetTop(thirdPointToConnect, valueBlockHeight - 3);
                 Canvas.SetTop(fourthPointToConnect, valueBlockHeight / 2 - 3);
 
+                firstLine.Y1 = DefaultPropertyForBlock.height;
+                firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
+
                 if (listLine != null)
                 {
-                    listLine[0].Y1 = DefaultPropertyForBlock.height;
-                    listLine[0].Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLineOfConditionCaseFirstOption;
-                    for (int i = 1; i < listLine.Count; i++)
+                    for (int i = 1; i <= listLine.Count; i++)
                     {
-                        listLine[i].Y1 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
-                        listLine[i].Y2 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
+                        listLine[i - 1].Y1 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
+                        listLine[i - 1].Y2 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
                     }
                 }
 
@@ -222,26 +201,63 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                         Canvas.SetTop(listTextBox[i - 1], (DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10)) - 25);
 
                 foreach (KeyValuePair<Line, Block> itemLineAndBlock in dictionaryLineAndBlock)
-                    Canvas.SetTop(itemLineAndBlock.Value.GetUIElement(), itemLineAndBlock.Key.Y2 - DefaultPropertyForBlock.height / 2 - 1);
-
+                {
+                    itemLineAndBlock.Value.SetHeight(valueBlockHeight);
+                    itemLineAndBlock.Value.SetTopBlockForConditionCaseFirstOption(itemLineAndBlock.Value.GetUIElement(), itemLineAndBlock.Key.Y2);
+                }
             }
         }
         private void MouseDown(object sender, RoutedEventArgs e)
         {
-            if (StaticBlock.block != null)
+            if (StaticBlock.block != null && MainWindow != null && canvas != null)
             {
-                //TODO: Валидация линии, так как сейччас к одной лиинии можно приделать два блока
                 //TODO: Неправильно соединятеся с блоком ссылка
-                StaticBlock.block.numberOfOccurrencesInBlock--;
-                MainWindow.RemoveUIElemet(StaticBlock.block.GetUIElement());
-                Canvas.SetLeft(StaticBlock.block.GetUIElement(), ((Line)sender).X2 - 1);
-                Canvas.SetTop(StaticBlock.block.GetUIElement(), ((Line)sender).Y2 - DefaultPropertyForBlock.height / 2 - 1);
-                StaticBlock.block.flagCase = true;
-                canvas.Children.Remove(StaticBlock.block.GetUIElement());
-                canvas.Children.Add(StaticBlock.block.GetUIElement());
-                dictionaryLineAndBlock.Add((Line)sender, StaticBlock.block);
-                MainWindow.CommectionDone();
-                StaticBlock.block = null;
+                double coordinateLeft = ((Line)sender).X2;
+                double coordinateTop = ((Line)sender).Y2;
+                try
+                {
+                    if (StaticBlock.block is CaseFirstOption option)
+                        MainWindow.RemoveItemFromListCaseBlock(option);
+                    dictionaryLineAndBlock.Add((Line)sender, StaticBlock.block);
+                    UIElement uIElementBlock = StaticBlock.block.GetUIElement();
+                    StaticBlock.block.SetLeftBlockForConditionCaseFirstOption(uIElementBlock, coordinateLeft);
+                    StaticBlock.block.SetTopBlockForConditionCaseFirstOption(uIElementBlock, coordinateTop);
+                    StaticBlock.block.flagCase = true;
+                    MainWindow.RemoveBlockFormList(StaticBlock.block);
+                    StaticBlock.block.GetUIElement().MouseRightButtonDown += ClickRightButtonOnBlock;
+                    MainWindow.RemoveUIElemet(uIElementBlock);
+                    canvas.Children.Remove(uIElementBlock);
+                    canvas.Children.Add(uIElementBlock);
+                    MainWindow.WriteSecondNameOfBlockToConect(initialText);
+                    StaticBlock.block = null;
+                }
+                catch
+                {
+                    MainWindow.MessageThisLineIsAlreadyOccupied();
+                }
+            }
+        }
+
+        public void PindingBlock(Block block, Line line)
+        {
+            block.flagCase = true;
+            double coordinateLeft = line.X2;
+            double coordinateTop = line.Y2;
+            UIElement uIElementBlock = block.GetUIElement();
+            block.SetLeftBlockForConditionCaseFirstOption(uIElementBlock, coordinateLeft);
+            block.SetTopBlockForConditionCaseFirstOption(uIElementBlock, coordinateTop);
+            if (canvas != null)
+                canvas.Children.Add(block.GetUIElement());
+            dictionaryLineAndBlock.Add(line, block);
+        }
+
+        private void ClickRightButtonOnBlock(object sender, MouseEventArgs e)
+        {
+            if (MessageBox.Show("Вы действиетельно хотите удалить фигуру", "Удаление блока", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                if (canvas != null)
+                    canvas.Children.Remove((UIElement)sender);
+                StaticBlock.flagDeleteBlockOfCase = false;
             }
         }
     }

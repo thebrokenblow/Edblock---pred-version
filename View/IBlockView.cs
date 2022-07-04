@@ -4,6 +4,6 @@ namespace Flowchart_Editor.View
 {
     public interface IBlockView
     {
-        Block GetBlock(MainWindow mainWindow, int key);
+        Block GetBlock(Edblock mainWindow, int key);
     }
 }

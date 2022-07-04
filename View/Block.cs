@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Flowchart_Editor.Model;
 using Flowchart_Editor.Models.Comment;
 
 namespace Flowchart_Editor.Models
@@ -13,7 +12,7 @@ namespace Flowchart_Editor.Models
     {
         protected Canvas? canvas;
         public TextBox? TextBox { get; set; }
-        public MainWindow? MainWindow { get; set; }
+        public Edblock? MainWindow { get; set; }
         public TextBlock? TextBlock { get; set; }
         public CommentControls? comment;
         protected Ellipse? firstPointToConnect;
@@ -59,16 +58,21 @@ namespace Flowchart_Editor.Models
 
         abstract public UIElement GetUIElement();
 
-        public void SetComment()
+        public void SetComment(string textOfComment)
         {
             CommentControls commentControls = new(blockWidthCoefficient, blockHeightCoefficient);
             comment = commentControls;
             UIElement commentUIElement = comment.GetUIElement();
             SetСoordinatesComment(commentUIElement);
+            comment.TextBox.Text = textOfComment;
             if (canvas != null)
                 canvas.Children.Add(commentUIElement); 
         }
 
+        public abstract void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft);
+        public abstract void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop);
+        public abstract void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft);
+        public abstract void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop);
         public abstract double GetWidthCoefficient();
         public abstract double GetHeightCoefficient();
         public Canvas? GetCanvas() => canvas;
@@ -87,16 +91,16 @@ namespace Flowchart_Editor.Models
       
         protected void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && textChangeStatus)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (textChangeStatus && !flagCase)
+                if (!flagCase && !(e.OriginalSource is TextBox))
                 {
-                    BlockForMovements instanceOfActionBlockForMovements = new(sender,
-                        mainBlock, firstBlock, secondBlock, thirdBlock, fourthBlock, firstSenderMainBlock,
-                        secondSenderMainBlock, thirdSenderMainBlock, fourthSenderMainBlock, firstSenderBlock, secondSenderBlock,
-                        thirdSenderBlock, fourthSenderBlock, FirstLineConnectionBlock, SecondLineConnectionBlock, ThirdLineConnectionBlock,
-                        FourthLineConnectionBlock, numberOfOccurrencesInBlock);
-                    var dataObjectInformationOfActionBlock = new DataObject(typeof(BlockForMovements), instanceOfActionBlockForMovements);
+                    BlockForMovements instanceOfBlockForMovements = new(sender,
+                                mainBlock, firstBlock, secondBlock, thirdBlock, fourthBlock, firstSenderMainBlock,
+                                secondSenderMainBlock, thirdSenderMainBlock, fourthSenderMainBlock, firstSenderBlock, secondSenderBlock,
+                                thirdSenderBlock, fourthSenderBlock, FirstLineConnectionBlock, SecondLineConnectionBlock, ThirdLineConnectionBlock,
+                                FourthLineConnectionBlock, numberOfOccurrencesInBlock);
+                    var dataObjectInformationOfActionBlock = new DataObject(typeof(BlockForMovements), instanceOfBlockForMovements);
                     DragDrop.DoDragDrop(sender as DependencyObject, dataObjectInformationOfActionBlock, DragDropEffects.Copy);
                 }
             }
@@ -219,9 +223,9 @@ namespace Flowchart_Editor.Models
                 {
                     canvas.Children.Remove(TextBox);
                     canvas.Children.Remove(TextBlock);
+                    if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
+                        TextBlock.Style = resourceDict["TextBlockStyleForBlock"] as Style;
                     TextBlock.Text = TextBox.Text;
-                    TextBlock.FontSize = TextBox.FontSize;
-                    TextBlock.FontFamily = TextBox.FontFamily;
                     canvas.Children.Add(TextBlock);
                     textChangeStatus = true;
                 }
@@ -260,7 +264,7 @@ namespace Flowchart_Editor.Models
             }
         }
 
-        protected void GetDataForCoordinates(object sender, string initialText, MainWindow mainWindow)
+        protected void GetDataForCoordinates(object sender, string initialText, Edblock mainWindow)
         {
             //bool checkForZeroCoordinates = CheckForZeroCoordinates(CoordinatesBlock.coordinatesBlockPointX, CoordinatesBlock.coordinatesBlockPointY);
             //TODO: Обновлять сендер при перемещении блока
@@ -419,8 +423,8 @@ namespace Flowchart_Editor.Models
         {
             fourthBlock = block;
         }
-        public void Reset() => canvas = null;
-       
+        public void Reset() => 
+            canvas = null;
 
         protected void ClickOnFirstConnectionPoint(object sender, MouseEventArgs e)
         {
@@ -480,7 +484,6 @@ namespace Flowchart_Editor.Models
                     CommentControls instanceOfComment = new(blockWidthCoefficient, blockHeightCoefficient);
                     UIElement commentUIElement = instanceOfComment.GetUIElement();
                     comment = instanceOfComment;
-                    MainWindow.listComment.Add(instanceOfComment);
                     canvas.Children.Add(commentUIElement);
                     SetСoordinatesComment(commentUIElement);
                     if (MainWindow != null)
@@ -498,16 +501,20 @@ namespace Flowchart_Editor.Models
 
         protected void ClickRightButton(object sender, MouseEventArgs e)
         {
-            if (MessageBox.Show("Вы действиетельно хотите удалить фигуру", "Удаление блока", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (!flagCase && !StaticBlock.flagDeleteBlockOfCase)
             {
-                if (MainWindow != null)
+                if (MessageBox.Show("Вы действиетельно хотите удалить фигуру", "Удаление блока", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    MainWindow.RemoveBlock(canvas, this, FirstLineConnectionBlock, SecondLineConnectionBlock, ThirdLineConnectionBlock, FourthLineConnectionBlock);
-                    FirstLineConnectionBlock = null;
-                    SecondLineConnectionBlock = null;
-                    ThirdLineConnectionBlock = null;
-                    FourthLineConnectionBlock = null;
-                    numberOfOccurrencesInBlock = 0;
+                    if (MainWindow != null)
+                    {
+                        MainWindow.RemoveBlock(canvas, this, FirstLineConnectionBlock, SecondLineConnectionBlock, ThirdLineConnectionBlock, FourthLineConnectionBlock);
+                        FirstLineConnectionBlock = null;
+                        SecondLineConnectionBlock = null;
+                        ThirdLineConnectionBlock = null;
+                        FourthLineConnectionBlock = null;
+                        numberOfOccurrencesInBlock = 0;
+                        StaticBlock.flagDeleteBlockOfCase = true;
+                    }
                 }
             }
         }

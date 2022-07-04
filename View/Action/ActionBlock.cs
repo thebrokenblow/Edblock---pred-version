@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
-using Flowchart_Editor.Models.Comment;
 
 namespace Flowchart_Editor.Models
 {
@@ -12,7 +11,7 @@ namespace Flowchart_Editor.Models
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
 
-        public ActionBlock(MainWindow mainWindow, int keyBlock)
+        public ActionBlock(Edblock mainWindow, int keyBlock)
         {
             MainWindow = mainWindow;
             keyOfBlock = keyBlock;
@@ -54,6 +53,7 @@ namespace Flowchart_Editor.Models
                 SetPropertyForFourthPointToConnect(defaultWidth - 4, defaulHeight / 2 - 2);
                 fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
+                canvas.Tag = true;
                 canvas.MouseRightButtonDown += ClickRightButton;
                 AddChildrenForCanvas();
             }
@@ -92,8 +92,22 @@ namespace Flowchart_Editor.Models
             Canvas.SetLeft(comment, DefaultPropertyForBlock.width);
         }
 
-        public override double GetWidthCoefficient() => blockWidthCoefficient;
+        public override double GetWidthCoefficient() => 
+            blockWidthCoefficient;
 
-        public override double GetHeightCoefficient() => blockHeightCoefficient;
+        public override double GetHeightCoefficient() => 
+            blockHeightCoefficient;
+
+        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) =>
+            Canvas.SetLeft(uIElementBlock, coordinateLeft - 1);
+
+        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop);
+
+        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft) =>
+             Canvas.SetLeft(uIElementBlock, coordinateLeft - 1);
+
+        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop - DefaultPropertyForBlock.height / 2 + 0.5);
     }
 }

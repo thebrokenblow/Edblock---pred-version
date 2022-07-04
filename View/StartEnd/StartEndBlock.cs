@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Flowchart_Editor.Models.Comment;
 
 namespace Flowchart_Editor.Models
 {
@@ -14,7 +13,7 @@ namespace Flowchart_Editor.Models
         private readonly int defaulHeight = DefaultPropertyForBlock.height / 2;
         private const int radiusOfRectangleStartEndBlock = 20;
 
-        public StartEndBlock(MainWindow mainWindow, int keyBlock)
+        public StartEndBlock(Edblock mainWindow, int keyBlock)
         {
             MainWindow = mainWindow;
             keyOfBlock = keyBlock;
@@ -112,5 +111,17 @@ namespace Flowchart_Editor.Models
         public override double GetWidthCoefficient() => blockWidthCoefficient;
 
         public override double GetHeightCoefficient() => blockHeightCoefficient;
+
+        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) =>
+            Canvas.SetLeft(uIElementBlock, coordinateLeft - 0.5);
+
+        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop);
+
+        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft) =>
+              Canvas.SetLeft(uIElementBlock, coordinateLeft - 1);
+
+        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop - DefaultPropertyForBlock.height / 4);
     }
 }

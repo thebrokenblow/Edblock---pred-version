@@ -13,6 +13,6 @@ namespace Flowchart_Editor.View
             InitializeComponent();
         }
 
-        public Block GetBlock(MainWindow mainWindow, int keyBlock) => new ActionBlock(mainWindow, keyBlock);
+        public Block GetBlock(Edblock mainWindow, int keyBlock) => new ActionBlock(mainWindow, keyBlock);
     }
 }

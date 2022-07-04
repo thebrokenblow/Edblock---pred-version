@@ -1,7 +1,5 @@
-﻿using Flowchart_Editor.Models.Comment;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -14,7 +12,7 @@ namespace Flowchart_Editor.Models
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
 
-        public ConditionBlock(MainWindow mainWindow, int keyBlock)
+        public ConditionBlock(Edblock mainWindow, int keyBlock)
         {
             MainWindow = mainWindow;
             keyOfBlock = keyBlock;
@@ -98,19 +96,7 @@ namespace Flowchart_Editor.Models
         {
             if (polygon != null)
             {
-                Point Point1 = new (0, DefaultPropertyForBlock.height / 2);
-                Point Point2 = new (valueBlockWidth / 2, DefaultPropertyForBlock.height);
-                Point Point3 = new (valueBlockWidth, DefaultPropertyForBlock.height / 2);
-                Point Point4 = new (valueBlockWidth / 2, 0);
-                Point Point5 = new (0, DefaultPropertyForBlock.height / 2);
-                PointCollection myPointCollection = new();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                polygon.Points = myPointCollection;
-
+                SetSizeForPolygon(DefaultPropertyForBlock.height, valueBlockWidth);
                 double valueForSetLeftTextBoxAndTextBlock = valueBlockWidth / 2 - valueBlockWidth / 4;
                 double valueForSetTopTextBoxAndTextBlock = DefaultPropertyForBlock.height / 4;
 
@@ -124,23 +110,27 @@ namespace Flowchart_Editor.Models
             }
         }
 
+        protected void SetSizeForPolygon(int valueBlockHeight, int valueBlockWidth)
+        {
+            Point Point1 = new(0, valueBlockHeight / 2);
+            Point Point2 = new(valueBlockWidth / 2, valueBlockHeight);
+            Point Point3 = new(valueBlockWidth, valueBlockHeight / 2);
+            Point Point4 = new(valueBlockWidth / 2, 0);
+            Point Point5 = new(0, valueBlockHeight / 2);
+            PointCollection myPointCollection = new();
+            myPointCollection.Add(Point1);
+            myPointCollection.Add(Point2);
+            myPointCollection.Add(Point3);
+            myPointCollection.Add(Point4);
+            myPointCollection.Add(Point5);
+            if (polygon != null)
+                polygon.Points = myPointCollection;
+        }
         public override void SetHeight(int valueBlockHeight)
         {
             if (polygon != null)
             {
-                Point Point1 = new(0, valueBlockHeight / 2);
-                Point Point2 = new(DefaultPropertyForBlock.width / 2, valueBlockHeight);
-                Point Point3 = new(DefaultPropertyForBlock.width, valueBlockHeight / 2);
-                Point Point4 = new(DefaultPropertyForBlock.width / 2, 0);
-                Point Point5 = new(0, valueBlockHeight / 2);
-                PointCollection myPointCollection = new();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
-                polygon.Points = myPointCollection;
-
+                SetSizeForPolygon(valueBlockHeight, DefaultPropertyForBlock.width);
                 double valueForSetLeftTextBoxAndTextBlock = DefaultPropertyForBlock.width / 2 - DefaultPropertyForBlock.width / 4;
                 double valueForSetTopTextBoxAndTextBlock = valueBlockHeight / 4;
 
@@ -158,5 +148,16 @@ namespace Flowchart_Editor.Models
 
         public override double GetHeightCoefficient() => blockHeightCoefficient;
 
+        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) => 
+            Canvas.SetLeft(uIElementBlock, coordinateLeft);
+
+        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop);
+
+        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft) =>
+             Canvas.SetLeft(uIElementBlock, coordinateLeft - 1);
+
+        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop - DefaultPropertyForBlock.height / 2);
     }
 }

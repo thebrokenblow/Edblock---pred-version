@@ -13,6 +13,6 @@ namespace Flowchart_Editor.View
             InitializeComponent();
         }
 
-        public Block GetBlock(MainWindow mainWindow, int key) => new CycleWhileBeginBlock(mainWindow, key);
+        public Block GetBlock(Edblock mainWindow, int key) => new CycleWhileBeginBlock(mainWindow, key);
     }
 }

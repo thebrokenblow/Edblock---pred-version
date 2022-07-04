@@ -8,10 +8,11 @@ namespace Flowchart_Editor.Models
     [BlockName("LinkBlock")]
     public class LinkBlock : Block
     {
+        private readonly int width = DefaultPropertyForBlock.width / 2;
         private readonly int defaultWidth = DefaultPropertyForBlock.height / 2;
         private readonly int defaulHeight = DefaultPropertyForBlock.height / 2;
 
-        public LinkBlock(MainWindow mainWindow, int keyBlock)
+        public LinkBlock(Edblock mainWindow, int keyBlock)
         {
             MainWindow = mainWindow;
             keyOfBlock = keyBlock;
@@ -105,8 +106,26 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(fourthPointToConnect, valueBlockHeight / 4 - 3);
             }
         }
-        public override double GetWidthCoefficient() => blockWidthCoefficient;
+        public override double GetWidthCoefficient() => 
+            blockWidthCoefficient;
 
-        public override double GetHeightCoefficient() => blockHeightCoefficient;
+        public override double GetHeightCoefficient() => 
+            blockHeightCoefficient;
+
+        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) =>
+            Canvas.SetLeft(uIElementBlock, coordinateLeft + DefaultPropertyForBlock.height);
+
+        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) =>
+            Canvas.SetTop(uIElementBlock, coordinateTop);
+
+        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
