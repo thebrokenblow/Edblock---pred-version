@@ -65,15 +65,15 @@ namespace Flowchart_Editor.View.ConditionCaseSecondOption
                 
                 SetPropertyForTextBlock(defaultWidth / 2, defaulHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
 
-                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 3, -2);
+                SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - 3, -2);
                 firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                SetPropertyForSecondPointToConnect(0, defaulHeight / 2 - 3);
+                SetPropertyPointConnect(secondPointToConnect, 0, defaulHeight / 2 - 3);
                 secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                SetPropertyForThirdPointToConnect(defaultWidth / 2 - 3, defaulHeight - 3);
+                SetPropertyPointConnect(thirdPointToConnect, defaultWidth / 2 - 3, defaulHeight - 3);
 
-                SetPropertyForFourthPointToConnect(defaultWidth - 6, defaulHeight / 2 - 3);
+                SetPropertyPointConnect(fourthPointToConnect, defaultWidth - 6, defaulHeight / 2 - 3);
                 fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
                 listLine = new List<Line>();

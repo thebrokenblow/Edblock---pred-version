@@ -47,16 +47,16 @@ namespace Flowchart_Editor.Models
 
                 SetPropertyForTextBlock(defaulHeight / 2, defaulHeight / 2, 7, 5);
 
-                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 3, -2);
+                SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - 3, -2);
                 firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                SetPropertyForSecondPointToConnect(-2, defaulHeight / 2 - 3);
+                SetPropertyPointConnect(secondPointToConnect, -2, defaulHeight / 2 - 3);
                 secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                SetPropertyForThirdPointToConnect(defaulHeight / 2 - 3, defaulHeight - 3);
+                SetPropertyPointConnect(thirdPointToConnect, defaulHeight / 2 - 3, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                SetPropertyForFourthPointToConnect(defaultWidth - 3, defaulHeight / 2 - 3);
+                SetPropertyPointConnect(fourthPointToConnect, defaultWidth - 3, defaulHeight / 2 - 3);
                 fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
                 canvas.Children.Add(ellipse);

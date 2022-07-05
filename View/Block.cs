@@ -97,55 +97,36 @@ namespace Flowchart_Editor.Models
 
             e.Handled = true;
         }
-        protected void SetPropertyForFirstPointToConnect(double valueForSetLeft, double valueForSetTop)
-        {
-            if (firstPointToConnect != null)
-            {
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                    firstPointToConnect.Style = resourceDict["EllipseStyle"] as Style;
 
-                firstPointToConnect.Height = radiusPoint;
-                firstPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(firstPointToConnect, valueForSetLeft);
-                Canvas.SetTop(firstPointToConnect, valueForSetTop);
-            }
-        }
-        protected void SetPropertyForSecondPointToConnect(double valueForSetLeft, double valueForSetTop)
+        protected void SetPropertyPointConnect(Ellipse pointToConnect, double valueForSetLeft, double valueForSetTop)
         {
-            if (secondPointToConnect != null)
+            if (pointToConnect != null)
             {
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                    secondPointToConnect.Style = resourceDict["EllipseStyle"] as Style;
-                secondPointToConnect.Height = radiusPoint;
-                secondPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(secondPointToConnect, valueForSetLeft);
-                Canvas.SetTop(secondPointToConnect, valueForSetTop);
+                SetStyle(pointToConnect, "EllipseStyle");
+                SetSize(pointToConnect, radiusPoint, radiusPoint);
+                SetCoordinates(pointToConnect, valueForSetLeft, valueForSetTop);
             }
         }
-        protected void SetPropertyForThirdPointToConnect(double valueForSetLeft, double valueForSetTop)
+
+        private void SetStyle(FrameworkElement frameworkElement, string nameStyle)
         {
-            if (thirdPointToConnect != null)
-            {
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                    thirdPointToConnect.Style = resourceDict["EllipseStyle"] as Style;
-                thirdPointToConnect.Height = radiusPoint;
-                thirdPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(thirdPointToConnect, valueForSetLeft);
-                Canvas.SetTop(thirdPointToConnect, valueForSetTop);
-            }
+            if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
+                frameworkElement.Style = resourceDict[nameStyle] as Style;
         }
-        protected void SetPropertyForFourthPointToConnect(double valueForSetLeft, double valueForSetTop)
+        private static void SetSize(FrameworkElement pointConnect, int width, int height)
         {
-            if (fourthPointToConnect != null)
-            {
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                    fourthPointToConnect.Style = resourceDict["EllipseStyle"] as Style;
-                fourthPointToConnect.Height = radiusPoint;
-                fourthPointToConnect.Width = radiusPoint;
-                Canvas.SetLeft(fourthPointToConnect, valueForSetLeft);
-                Canvas.SetTop(fourthPointToConnect, valueForSetTop);
-            }
+            pointConnect.Width = radiusPoint;
+            pointConnect.Height = radiusPoint;
         }
+
+        private static void SetCoordinates(UIElement uIElement, double valueForSetLeft, double valueForSetTop)
+        {
+            if (valueForSetLeft != 0)
+                Canvas.SetLeft(uIElement, valueForSetLeft);
+            if (valueForSetTop != 0)
+                Canvas.SetTop(uIElement, valueForSetTop);
+        }
+
         protected void AddChildrenForCanvas()
         {
             if (canvas != null)
@@ -165,15 +146,10 @@ namespace Flowchart_Editor.Models
             {
                 if (textOfBlock != null)
                     TextBox.Text = textOfBlock;
-                TextBox.Width = defaultWidth;
-                TextBox.Height = defaulHeight;
                 TextBox.MouseDoubleClick += ChangeTextBoxToTextBlock;
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                    TextBox.Style = resourceDict["TextBoxStyleForBlock"] as Style;
-                if (valueForSetLeft != 0)
-                    Canvas.SetLeft(TextBox, valueForSetLeft);
-                if (valueForSetTop != 0)
-                    Canvas.SetTop(TextBox, valueForSetTop);
+                SetSize(TextBox, defaultWidth, defaulHeight);
+                SetStyle(TextBox, "TextBoxStyleForBlock");
+                SetCoordinates(TextBox, valueForSetLeft, valueForSetTop);
             }
         }
 
@@ -181,15 +157,10 @@ namespace Flowchart_Editor.Models
         {
             if (TextBlock != null)
             {
-                TextBlock.Width = defaultWidth;
-                TextBlock.Height = defaulHeight;
                 TextBlock.MouseDown += ChangeTextBoxToTextBlock;
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                    TextBlock.Style = resourceDict["TextBlockStyleForBlock"] as Style;
-                if (valueForSetLeft != 0)
-                    Canvas.SetLeft(TextBlock, valueForSetLeft);
-                if (valueForSetTop != 0)
-                    Canvas.SetTop(TextBlock, valueForSetTop);
+                SetSize(TextBlock, defaultWidth, defaulHeight);
+                SetStyle(TextBlock, "TextBlockStyleForBlock");
+                SetCoordinates(TextBlock, valueForSetLeft, valueForSetTop);
             }
         }
 

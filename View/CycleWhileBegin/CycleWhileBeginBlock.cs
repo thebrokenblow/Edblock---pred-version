@@ -60,16 +60,16 @@ namespace Flowchart_Editor.Models
 
                 SetPropertyForTextBlock(defaultWidth - 20, defaulHeight, 10);
 
-                SetPropertyForFirstPointToConnect(defaultWidth / 2 - 2, -2);
+                SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - 2, -2);
                 firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
 
-                SetPropertyForSecondPointToConnect(-2, defaulHeight / 2 - 2);
+                SetPropertyPointConnect(secondPointToConnect, -2, defaulHeight / 2 - 2);
                 secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
 
-                SetPropertyForThirdPointToConnect(defaultWidth / 2 - 2, defaulHeight - 3);
+                SetPropertyPointConnect(thirdPointToConnect, defaultWidth / 2 - 2, defaulHeight - 3);
                 thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
 
-                SetPropertyForFourthPointToConnect(defaultWidth - 4, defaulHeight / 2 - 2);
+                SetPropertyPointConnect(fourthPointToConnect, defaultWidth - 4, defaulHeight / 2 - 2);
                 fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
 
                 canvas.Children.Add(polygon);
