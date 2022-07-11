@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Windows.Controls;
 
 namespace Flowchart_Editor.Models
@@ -10,11 +9,11 @@ namespace Flowchart_Editor.Models
     {
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
+        const int offsetConnectionPoint = 2;
 
-        public ActionBlock(Edblock mainWindow, int keyBlock)
+        public ActionBlock(Canvas destination)
         {
-            MainWindow = mainWindow;
-            keyOfBlock = keyBlock;
+            Destination = destination;
             blockWidthCoefficient = 1;
             blockHeightCoefficient = 1;
             initialText = "Действие";
@@ -22,16 +21,8 @@ namespace Flowchart_Editor.Models
 
         override public UIElement GetUIElement()
         {
-            if (canvas == null)
+            if (Canvas == null)
             {
-                canvas = new Canvas();
-                TextBox = new TextBox();
-                TextBlock = new TextBlock();
-                firstPointToConnect = new Ellipse();
-                secondPointToConnect = new Ellipse();
-                thirdPointToConnect = new Ellipse();
-                fourthPointToConnect = new Ellipse();
-
                 BrushConverter brushConverter = new();
                 Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF52C0AA");
 
@@ -41,48 +32,46 @@ namespace Flowchart_Editor.Models
 
                 SetPropertyForTextBlock(defaultWidth, defaulHeight);
 
-                SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - 2, -2);
-                firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
+                InitializingConnectionPoints();
 
-                SetPropertyPointConnect(secondPointToConnect, -2, defaulHeight / 2 - 2);
-                secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
+                SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - offsetConnectionPoint, -offsetConnectionPoint);
+                
+                SetPropertyPointConnect(secondPointToConnect, -offsetConnectionPoint, defaulHeight / 2 - offsetConnectionPoint);
 
-                SetPropertyPointConnect(thirdPointToConnect, defaultWidth / 2 - 2, defaulHeight - 3);
-                thirdPointToConnect.MouseDown += ClickOnThirdConnectionPoint;
+                SetPropertyPointConnect(thirdPointToConnect, defaultWidth / 2 - offsetConnectionPoint, defaulHeight - offsetConnectionPoint);
 
-                SetPropertyPointConnect(fourthPointToConnect, defaultWidth - 4, defaulHeight / 2 - 2);
-                fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
+                SetPropertyPointConnect(fourthPointToConnect, defaultWidth - offsetConnectionPoint * 2, defaulHeight / 2 - offsetConnectionPoint);
 
-                canvas.Tag = true;
-                canvas.MouseRightButtonDown += ClickRightButton;
-                AddChildrenForCanvas();
+                AddTextFields();
+
+                AddConnectionPoints();
             }
-            return canvas;
+            return Canvas;
         }
 
         public override void SetWidth(int valueBlockWidth)
         {
-            if (canvas != null && TextBox != null && TextBlock != null)
+            if (Canvas != null && TextBoxOfBlock != null && TextBlockOfBlock != null)
             {
-                canvas.Width = valueBlockWidth;
-                TextBox.Width = valueBlockWidth;
-                TextBlock.Width = valueBlockWidth;
-                Canvas.SetLeft(firstPointToConnect, valueBlockWidth / 2 - 2);
-                Canvas.SetLeft(thirdPointToConnect, valueBlockWidth / 2 - 2);
-                Canvas.SetLeft(fourthPointToConnect, valueBlockWidth - 4);
+                Canvas.Width = valueBlockWidth;
+                TextBoxOfBlock.Width = valueBlockWidth;
+                TextBlockOfBlock.Width = valueBlockWidth;
+                Canvas.SetLeft(firstPointToConnect, valueBlockWidth / 2 - offsetConnectionPoint);
+                Canvas.SetLeft(thirdPointToConnect, valueBlockWidth / 2 - offsetConnectionPoint);
+                Canvas.SetLeft(fourthPointToConnect, valueBlockWidth - offsetConnectionPoint * 2);
             }
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
-            if (canvas != null && TextBox != null && TextBlock != null)
+            if (Canvas != null && TextBoxOfBlock != null && TextBlockOfBlock != null)
             {
-                canvas.Height = valueBlockHeight;
-                TextBox.Height = valueBlockHeight;
-                TextBlock.Height = valueBlockHeight;
-                Canvas.SetTop(secondPointToConnect, valueBlockHeight / 2 - 2);
-                Canvas.SetTop(thirdPointToConnect, valueBlockHeight - 3);
-                Canvas.SetTop(fourthPointToConnect, valueBlockHeight / 2 - 2);
+                Canvas.Height = valueBlockHeight;
+                TextBoxOfBlock.Height = valueBlockHeight;
+                TextBlockOfBlock.Height = valueBlockHeight;
+                Canvas.SetTop(secondPointToConnect, valueBlockHeight / 2 - offsetConnectionPoint);
+                Canvas.SetTop(thirdPointToConnect, valueBlockHeight - offsetConnectionPoint);
+                Canvas.SetTop(fourthPointToConnect, valueBlockHeight / 2 - offsetConnectionPoint);
             }
         }
 
