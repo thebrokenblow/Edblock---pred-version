@@ -1,9 +1,12 @@
 ﻿using Flowchart_Editor.Command;
 using Flowchart_Editor.Menu.Print;
 using Flowchart_Editor.Menu.SaveImg;
+using Flowchart_Editor.Models;
 using Flowchart_Editor.View.ConditionCaseFirstOption;
 using Flowchart_Editor.View.ConditionCaseSecondOption;
 using Flowchart_Editor.View.Menu.OpenCloseMenu;
+using Flowchart_Editor.View.СontrolsScaling;
+using System;
 using System.ComponentModel;
 
 namespace Flowchart_Editor.ViewModel
@@ -95,6 +98,31 @@ namespace Flowchart_Editor.ViewModel
                 });
             }
         }
+        private int blockWidth;
+
+        public int BlockWidth
+        {
+            get { return blockWidth; }
+            set
+            {
+                blockWidth = value;
+                DefaultPropertyForBlock.width = blockWidth;
+                ControlsScaling.ScaleWidth(Edblock.ListControlls, blockWidth);
+            }
+        }
+
+        private int blockHeight;
+
+        public int BlockHeight
+        {
+            get { return blockHeight; }
+            set
+            {
+                blockHeight = value;
+                DefaultPropertyForBlock.height = blockHeight;
+                ControlsScaling.ScaleHeight(Edblock.ListControlls, blockHeight);
+            }
+        }
 
         public string this[string columnName]
         {
@@ -126,6 +154,6 @@ namespace Flowchart_Editor.ViewModel
             }
         }
 
-        public string Error => throw new System.NotImplementedException();
+        public string Error => throw new NotImplementedException();
     }
 }

@@ -12,7 +12,6 @@ using Flowchart_Editor.View.Condition.Case;
 using Flowchart_Editor.Menu.UploadProject;
 using Flowchart_Editor.Menu.Theme;
 using Flowchart_Editor.ViewModel;
-using Flowchart_Editor.View.СontrolsScaling;
 using Flowchart_Editor.View.ListControllsElement;
 
 namespace Flowchart_Editor
@@ -25,7 +24,7 @@ namespace Flowchart_Editor
         public static Button? ButtonOpenMenu { get; private set; }
         public static Button? ButtonCloseMenu { get; private set; }
 
-
+        public static ListControlls ListControlls { get; private set; }
         public Edblock()
         {
             InitializeComponent();
@@ -33,16 +32,11 @@ namespace Flowchart_Editor
             EditField = editField;
             ButtonOpenMenu = buttonOpenMenu;
             ButtonCloseMenu = buttonCloseMenu;
+            ListControlls = new(listOfBlock, listComment, listCaseBlock);
             MinHeight = minHeight;
             MinWidth = minWidth;
             toggleButtonStyleTheme.Click += ThemeChange;
             ThemeChange();
-
-            for (int i = 110; i <= 250; i += 10)
-                blockWidthComboBox.Items.Add(i);
-
-            for (int i = 60; i <= 250; i += 10)
-                blockHeightComboBox.Items.Add(i);
         }
 
         private void ThemeChange(object? sender = null, RoutedEventArgs? e = null) => // Установление темы (светлая, тёмная)
@@ -120,30 +114,14 @@ namespace Flowchart_Editor
             e.Handled = true;
         }
 
-        private void SelectionChangedBlockWidthComboBox(object sender, SelectionChangedEventArgs e) //
-        {
-            int valueBlockWidth = Convert.ToInt32(blockWidthComboBox.SelectedItem);
-            DefaultPropertyForBlock.width = valueBlockWidth;
-            ListControlls listControlls = new(listOfBlock, listComment, listCaseBlock);
-            ControlsScaling.ScaleWidth(listControlls, valueBlockWidth);
-        }
-
-        private void SelectionChangedBlockHeightComboBox(object sender, SelectionChangedEventArgs e)
-        {
-            int valueBlokHeight = Convert.ToInt32(blockHeightComboBox.SelectedItem);
-            DefaultPropertyForBlock.height = valueBlokHeight;
-            ListControlls listControlls = new(listOfBlock, listComment, listCaseBlock);
-            ControlsScaling.ScaleHeight(listControlls, valueBlokHeight);
-        }
-
         public static readonly List<Line> listLineConnection = new();
-        
+
         private void MouseLeftButtonDownComment(object sender, MouseButtonEventArgs e)
         {
             PinningComment.flagPinningComment = true;
         }
 
-        private string? GetFontFamily() => 
+        private string? GetFontFamily() =>
             listOfFontFamily.SelectedValue?.ToString();
 
         public string? GetFontSize() =>
@@ -155,7 +133,7 @@ namespace Flowchart_Editor
         private void ClickUploadProject(object sender, RoutedEventArgs e)
         {
             UploadProject.Upload(editField, listOfBlock, listLineConnection, listComment,
-                listCaseBlock, listOfFontFamily, fontSizeComboBox, blockWidthComboBox, blockHeightComboBox);
+                listCaseBlock, listOfFontFamily, fontSizeComboBox, widthComboBox, heightComboBox);
         }
 
         public static readonly List<CaseBlock> listCaseBlock = new();
@@ -170,6 +148,18 @@ namespace Flowchart_Editor
         {
             Settings settings = new();
             settings.Show();
+        }
+
+        private void LoadedWidthComboBox(object sender, RoutedEventArgs e)
+        {
+            for (int i = 110; i <= 250; i += 10)
+                widthComboBox.Items.Add(i);
+        }
+
+        private void LoadedHeightComboBox(object sender, RoutedEventArgs e)
+        {
+            for (int i = 60; i <= 250; i += 10)
+                heightComboBox.Items.Add(i);
         }
     }
 }

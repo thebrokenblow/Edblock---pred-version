@@ -803,8 +803,10 @@
                         Margin="0,9"/>
 
                     <ComboBox 
-                        Name="blockWidthComboBox" 
-                        SelectionChanged="SelectionChangedBlockWidthComboBox"
+                        Name="widthComboBox"
+                        Loaded="LoadedWidthComboBox"
+                        SelectedValue="{Binding Path=BlockWidth}"
+                        IsEditable="True"
                         Foreground="Black" 
                         Grid.Column="5" 
                         Width="60" 
@@ -821,8 +823,9 @@
                         Margin="0,9"/>
 
                     <ComboBox 
-                        Name="blockHeightComboBox" 
-                        SelectionChanged="SelectionChangedBlockHeightComboBox"
+                        Name="heightComboBox"
+                        Loaded="LoadedHeightComboBox"
+                        SelectedValue="{Binding Path=BlockHeight}"
                         Foreground="Black" 
                         Grid.Column="7" 
                         Width="60" 
