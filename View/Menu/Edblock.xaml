@@ -197,7 +197,7 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Сохранить проект" Click="ClickSaveProject"/>
+                        <Button Style="{DynamicResource ButtonStyle}" Content="Сохранить проект" Command="{Binding SaveProjectCommand}"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Name="itemViewUpload" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -222,7 +222,7 @@
                                 </Style>
                             </materialDesign:PackIcon.Style>
                         </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Загрузить проект" Click="ClickUploadProject"/>
+                        <Button Style="{DynamicResource ButtonStyle}" Command="{Binding UploadProjectCommand}" Content="Загрузить проект"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Name="itemViewSaveImg" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -693,7 +693,6 @@
                         <StackPanel
                             Grid.Column="0" 
                             Grid.Row="11" 
-                            MouseLeftButtonDown="MouseLeftButtonDownComment"
                             Height="75"
                             Width="150">
                             <control:CommentView/>
@@ -718,18 +717,16 @@
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="90"/>
                         <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="70"/>
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="70"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition Height="850*"/>
                     </Grid.RowDefinitions>
 
@@ -749,16 +746,17 @@
                         HorizontalAlignment="Center" 
                         Grid.Column="0"
                         Grid.Row="0"
-                        Margin="0,9"
+                        Margin="0,15"
                         Style="{DynamicResource TextBlockStyle}"/>
 
                     <ComboBox 
                         Grid.Column="1" 
-                        Name="listOfFontFamily"
+                        Name="listFontFamily"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Foreground="Black" 
-                        Margin="0,5"
+                        Margin="0,10"
+                        IsEditable="True" 
                         Width="130">
                         <FontFamily>Times New Roman</FontFamily>
                         <FontFamily>Calibri</FontFamily>
@@ -770,18 +768,18 @@
                         Grid.Column="2" 
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
+                        Style="{DynamicResource TextBlockStyle}"
                         Margin="0,9"/>
 
                     <ComboBox 
-                        Name="fontSizeComboBox" 
+                        Name="listFontSize"
                         Foreground="Black" 
                         Grid.Column="3" 
+                        IsEditable="True" 
                         Width="60" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
-                        Margin="0,5"
-                        SelectionChanged="SelectionChangedFontSize">
+                        Margin="0,10">
                         <ComboBoxItem>8</ComboBoxItem>
                         <ComboBoxItem>10</ComboBoxItem>
                         <ComboBoxItem>12</ComboBoxItem>
@@ -796,74 +794,73 @@
 
                     <TextBlock 
                         Text="Ширина:" 
-                        Grid.Column="4"
+                        Grid.Column="6"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
                         Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0,9"/>
+                        Margin="0,15"/>
 
                     <ComboBox 
                         Name="widthComboBox"
                         Loaded="LoadedWidthComboBox"
                         SelectedValue="{Binding Path=BlockWidth}"
-                        IsEditable="True"
+                        IsEditable="True" 
+                        Cursor="Arrow"
                         Foreground="Black" 
-                        Grid.Column="5" 
+                        Grid.Column="7" 
                         Width="60" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
-                        Margin="0,5" />
+                        Margin="0,10" >
+                    </ComboBox>
 
                     <TextBlock 
                         Text="Высота:" 
-                        Grid.Column="6"
+                        Grid.Column="8"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Center"
                         Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0,9"/>
+                        Margin="0,15"/>
 
                     <ComboBox 
                         Name="heightComboBox"
                         Loaded="LoadedHeightComboBox"
                         SelectedValue="{Binding Path=BlockHeight}"
                         Foreground="Black" 
-                        Grid.Column="7" 
+                        IsEditable="True" 
+                        Grid.Column="9" 
                         Width="60" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
-                        Margin="0 5"/>
+                        Margin="0, 10"/>
 
-                    <TextBlock 
-                        Text="Первый блок:"
-                        Grid.Column="8"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0 9"/>
+                    <ListBox Grid.Column="4" Height="35" Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="4">
+                        <ListBoxItem Name="textAlignLeft">
+                            <materialDesign:PackIcon Kind="FormatAlignLeft"/>
+                        </ListBoxItem>
+                        <ListBoxItem Name="textAlignCenter">
+                            <materialDesign:PackIcon Kind="FormatAlignCenter"/>
+                        </ListBoxItem>
+                        <ListBoxItem Name="textAlignRight">
+                            <materialDesign:PackIcon Kind="FormatAlignRight"/>
+                        </ListBoxItem>
+                        <ListBoxItem Name="textAlignJustify"> 
+                            <materialDesign:PackIcon Kind="FormatAlignJustify"/>
+                        </ListBoxItem>
+                    </ListBox>
 
-                    <TextBlock 
-                        Name="textNameOfFirstBlockToConnect"
-                        Grid.Column="9"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0 9" />
-
-                    <TextBlock 
-                        Text="Второй блок:" 
-                        Grid.Column="10"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0 9"/>
-
-                    <TextBlock 
-                        Name="textNameOfSecondBlockToConnect"
-                        Grid.Column="11"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0 9"/>
+                    <ListBox Grid.Column="5" Height="35" SelectionMode="Extended" Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+                        <ListBoxItem Name="textBold">
+                            <materialDesign:PackIcon Kind="FormatBold"/>
+                        </ListBoxItem>
+                        <ListBoxItem Name="textItalic">
+                            <materialDesign:PackIcon Kind="FormatItalic"/>
+                        </ListBoxItem>
+                        <ListBoxItem Name="textUnderline">
+                            <materialDesign:PackIcon Kind="FormatUnderline"/>
+                        </ListBoxItem>
+                    </ListBox>
+                    
                 </Grid>
 
                 <Button 
