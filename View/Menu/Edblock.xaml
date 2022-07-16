@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:control="clr-namespace:Flowchart_Editor.View"
+        xmlns:control="clr-namespace:Flowchart_Editor.View" 
+        xmlns:toolpar="clr-namespace:Flowchart_Editor.View.Menu.ToolBar"
         mc:Ignorable="d"
         Title="Flowchart Editor" 
         Height="1200" 
@@ -713,16 +714,12 @@
                 <Grid Grid.Column="4" 
                       Grid.RowSpan="12">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="70"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="70"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="160"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -740,126 +737,18 @@
                         Grid.Row="1" 
                         Style="{DynamicResource CanvasStyle}"/>
 
-                    <TextBlock
-                        Text="Шрифт:" 
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Center" 
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        Margin="0,15"
-                        Style="{DynamicResource TextBlockStyle}"/>
 
-                    <ComboBox 
-                        Grid.Column="1" 
-                        Name="listFontFamily"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        Foreground="Black" 
-                        Margin="0,10"
-                        IsEditable="True" 
-                        Width="130">
-                        <FontFamily>Times New Roman</FontFamily>
-                        <FontFamily>Calibri</FontFamily>
-                        <FontFamily>Arial</FontFamily>
-                    </ComboBox>
+                    <toolpar:FontFamily x:Name="listFontFamily" Grid.Column="0"/>
+                    
+                    <toolpar:SizeText Grid.Column="1"/>
 
-                    <TextBlock 
-                        Text="Размер текста:" 
-                        Grid.Column="2" 
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}"
-                        Margin="0,9"/>
+                    <toolpar:FormatAlign Grid.Column="2" />
 
-                    <ComboBox 
-                        Name="listFontSize"
-                        Foreground="Black" 
-                        Grid.Column="3" 
-                        IsEditable="True" 
-                        Width="60" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Top" 
-                        Margin="0,10">
-                        <ComboBoxItem>8</ComboBoxItem>
-                        <ComboBoxItem>10</ComboBoxItem>
-                        <ComboBoxItem>12</ComboBoxItem>
-                        <ComboBoxItem>14</ComboBoxItem>
-                        <ComboBoxItem>16</ComboBoxItem>
-                        <ComboBoxItem>18</ComboBoxItem>
-                        <ComboBoxItem>20</ComboBoxItem>
-                        <ComboBoxItem>22</ComboBoxItem>
-                        <ComboBoxItem>24</ComboBoxItem>
-                        <ComboBoxItem>26</ComboBoxItem>
-                    </ComboBox>
+                    <toolpar:TextStyles Grid.Column="3"/>
 
-                    <TextBlock 
-                        Text="Ширина:" 
-                        Grid.Column="6"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0,15"/>
+                    <toolpar:WidthBlock Grid.Column="4"/>
 
-                    <ComboBox 
-                        Name="widthComboBox"
-                        Loaded="LoadedWidthComboBox"
-                        SelectedValue="{Binding Path=BlockWidth}"
-                        IsEditable="True" 
-                        Cursor="Arrow"
-                        Foreground="Black" 
-                        Grid.Column="7" 
-                        Width="60" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Top" 
-                        Margin="0,10" >
-                    </ComboBox>
-
-                    <TextBlock 
-                        Text="Высота:" 
-                        Grid.Column="8"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Center"
-                        Style="{DynamicResource TextBlockStyle}" 
-                        Margin="0,15"/>
-
-                    <ComboBox 
-                        Name="heightComboBox"
-                        Loaded="LoadedHeightComboBox"
-                        SelectedValue="{Binding Path=BlockHeight}"
-                        Foreground="Black" 
-                        IsEditable="True" 
-                        Grid.Column="9" 
-                        Width="60" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Top" 
-                        Margin="0, 10"/>
-
-                    <ListBox Grid.Column="4" Height="35" Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="4">
-                        <ListBoxItem Name="textAlignLeft">
-                            <materialDesign:PackIcon Kind="FormatAlignLeft"/>
-                        </ListBoxItem>
-                        <ListBoxItem Name="textAlignCenter">
-                            <materialDesign:PackIcon Kind="FormatAlignCenter"/>
-                        </ListBoxItem>
-                        <ListBoxItem Name="textAlignRight">
-                            <materialDesign:PackIcon Kind="FormatAlignRight"/>
-                        </ListBoxItem>
-                        <ListBoxItem Name="textAlignJustify"> 
-                            <materialDesign:PackIcon Kind="FormatAlignJustify"/>
-                        </ListBoxItem>
-                    </ListBox>
-
-                    <ListBox Grid.Column="5" Height="35" SelectionMode="Extended" Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
-                        <ListBoxItem Name="textBold">
-                            <materialDesign:PackIcon Kind="FormatBold"/>
-                        </ListBoxItem>
-                        <ListBoxItem Name="textItalic">
-                            <materialDesign:PackIcon Kind="FormatItalic"/>
-                        </ListBoxItem>
-                        <ListBoxItem Name="textUnderline">
-                            <materialDesign:PackIcon Kind="FormatUnderline"/>
-                        </ListBoxItem>
-                    </ListBox>
+                    <toolpar:HeightBlock Grid.Column="5"/>
                     
                 </Grid>
 
