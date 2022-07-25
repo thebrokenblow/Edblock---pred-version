@@ -4,420 +4,222 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:control="clr-namespace:Flowchart_Editor.View" 
-        xmlns:toolpar="clr-namespace:Flowchart_Editor.View.Menu.ToolBar"
+        xmlns:block="clr-namespace:Flowchart_Editor.View"
         mc:Ignorable="d"
         Title="Flowchart Editor" 
         Height="1200" 
         Width="1820">
     <Window.Resources>
-        <Storyboard x:Key="OpenMenu">
+        <Style x:Key="Style" TargetType="StackPanel">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsSelected}" Value="True">
+                    <Setter Property="Background" Value="#FF262427" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                    <Setter Property="Background" Value="#FFF9F9FB" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames 
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" 
-                Storyboard.TargetName="blockLayoutMenu">
-                <EasingDoubleKeyFrame 
-                    KeyTime="0" 
-                    Value="0"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.5" 
-                    Value="250"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames 
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" 
-                Storyboard.TargetName="blockLayoutMenu">
-                <EasingDoubleKeyFrame 
-                    KeyTime="0" 
-                    Value="0"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.5" 
-                    Value="50"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames 
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                Storyboard.TargetName="StackPanelMenu">
-                <EasingDoubleKeyFrame 
-                    KeyTime="0"
-                    Value="0"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.5"
-                    Value="250"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames 
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                Storyboard.TargetName="listViewItem">
-                <EasingDoubleKeyFrame 
-                    KeyTime="0"
-                    Value="-250"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.5"
-                    Value="-250"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.7"
-                    Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames 
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                Storyboard.TargetName="itemViewSave">
-                <EasingDoubleKeyFrame 
-                    KeyTime="0" 
-                    Value="-250"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.5"
-                    Value="-250"/>
-                <EasingDoubleKeyFrame
-                    KeyTime="0:0:0.9" 
-                    Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames 
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" 
-                Storyboard.TargetName="itemViewUpload">
-                <EasingDoubleKeyFrame
-                    KeyTime="0"
-                    Value="-250"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:0.5" 
-                    Value="-250"/>
-                <EasingDoubleKeyFrame 
-                    KeyTime="0:0:1.1" 
-                    Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="itemViewSaveImg">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem3">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem4">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.7" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem5">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem6">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem7">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.3" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem8">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0"/>
+                Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="350"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="CloseMenu">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="blockLayoutMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="blockLayoutMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="StackPanelMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="350"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
     <Window.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="buttonOpenMenu">
-            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="buttonCloseMenu">
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpen">
+            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
     </Window.Triggers>
-    <Grid Style="{DynamicResource GridLayoutMenuStyle}">
-        <StackPanel Name="StackPanelMenu" Width="250" HorizontalAlignment="Left" Margin="-250 0 0 0" RenderTransformOrigin="0.5,0.5">
-            <StackPanel.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </StackPanel.RenderTransform>
-            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListViewItem Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Home" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Главная" />
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Name="itemViewSave" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="ContentSave" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Сохранить проект" Command="{Binding SaveProjectCommand}"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Name="itemViewUpload" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="upload" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Command="{Binding UploadProjectCommand}" Content="Загрузить проект"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem Name="itemViewSaveImg" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Image" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Command="{Binding ImgCommand}" Content="Сохранить изображение"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="User" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Авторизация" />
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem4" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Printer" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Command="{Binding PrintCommand}" Content="Печать" />
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem5" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="UserAdd" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Регистрация"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem6" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Settings" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Настройки" Click="ClickSettings"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem7" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Information" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Информация"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem8" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
-                        <materialDesign:PackIcon Kind="Chat" Width="30" Height="30" VerticalAlignment="Center" Margin="5">
-                            <materialDesign:PackIcon.Style>
-                                <Style TargetType="materialDesign:PackIcon" >
-                                    <Setter Property="Foreground" Value="#FF040205" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
-                                            <Setter Property="Foreground" Value="#FFF9F9FB" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </materialDesign:PackIcon.Style>
-                        </materialDesign:PackIcon>
-                        <Button Style="{DynamicResource ButtonStyle}" Content="Поддержка"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem x:Name="listViewItem9" Height="60" RenderTransformOrigin="0.5,0.5">
-                    <ListViewItem.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal">
-                        <ToggleButton Style="{DynamicResource ToggleButtonStyle}" Margin="5" Name="toggleButtonStyleTheme"/>
-                        <TextBlock Margin="10" Style="{DynamicResource TextBlockToggleButtonStyle}"/>
-                    </StackPanel>
-                </ListViewItem>
-            </ListView>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBarTray Grid.ColumnSpan="2" Grid.Row="0" Margin="-10 0">
+            <ToolBar
+                        
+                            
+                            ClipToBounds="False">
+
+                <Label
+                            Content="Шрифт:"
+                            VerticalAlignment="Center"/>
+
+                <ComboBox 
+                    Name="listFontFamily"
+                    Loaded="LoadedListFontFamily"
+                    HorizontalAlignment="Center"
+                    IsEditable="True" 
+                    Width="130"/>
+
+                <Separator/>
+
+                <Label
+                    Content="Расмер шрифта:"
+                    VerticalAlignment="Center"/>
+
+                <ComboBox 
+                    Name="listFontSize" 
+                    SelectedValue="{Binding Path=FontFamily}"
+                    Loaded="listFontSize_Loaded"
+                    HorizontalAlignment="Center"
+                    Foreground="Black" 
+                    IsEditable="True" 
+                    Width="40">
+                    <!--<ComboBoxItem>8</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                    <ComboBoxItem>12</ComboBoxItem>
+                    <ComboBoxItem>14</ComboBoxItem>
+                    <ComboBoxItem>16</ComboBoxItem>
+                    <ComboBoxItem>18</ComboBoxItem>
+                    <ComboBoxItem>20</ComboBoxItem>
+                    <ComboBoxItem>22</ComboBoxItem>
+                    <ComboBoxItem>24</ComboBoxItem>
+                    <ComboBoxItem>26</ComboBoxItem>-->
+                    <ComboBoxItem Content="28"></ComboBoxItem>
+                </ComboBox>
+
+
+
+
+                <Separator/>
+
+                <ListBox SelectedIndex="1">
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"/>
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}"/>
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignJustify}"/>
+                </ListBox>
+
+                <Separator/>
+
+                <ListBox SelectionMode="Extended">
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}"/>
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}"/>
+                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}"/>
+                </ListBox>
+
+                <Separator/>
+
+                <Label
+                    Content="Ширина:"
+                    VerticalAlignment="Center"/>
+
+                <ComboBox 
+                    Name="listWidthBlock"
+                    SelectedValue="{Binding Path=BlockWidth}"
+                    Loaded="listWidthBlock_Loaded"
+                    HorizontalAlignment="Center"
+                    Foreground="Black" 
+                    IsEditable="True" 
+                    Width="130"/>
+
+                <Separator />
+
+                <Label 
+                    Content="Высота:" 
+                    VerticalAlignment="Center"/>
+
+                <ComboBox 
+                    Name="listHeightBlock"
+                    SelectedValue="{Binding Path=BlockHeight}"
+                    Loaded="listHeightBlock_Loaded"
+                    Foreground="Black" 
+                    IsEditable="True" 
+                    Width="60" 
+                    HorizontalAlignment="Center"/>
+
+                <materialDesign:PopupBox 
+                    StaysOpen="True">
+                    <Grid Margin="10" >
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Светлая"/>
+
+                        <ToggleButton
+                            Name="toggleButtonStyleTheme"
+                            Click="MenuDarkModeButton_Click"
+                            HorizontalAlignment="Center"/>
+
+                        <TextBlock
+                            Text="Тёмная"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <materialDesign:PackIcon Kind="ContentSave" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5 0 0"/>
+                            <Button Content="Сохранить проект" Command="{Binding SaveProjectCommand}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="2">
+                            <materialDesign:PackIcon Kind="upload" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5"/>
+                            <Button Content="Загрузить проект" Command="{Binding UploadProjectCommand}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <materialDesign:PackIcon Kind="Image" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5"/>
+                            <Button Content="Сохранить изображение" Command="{Binding SaveProjectCommand}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4">
+                            <materialDesign:PackIcon Kind="Printer" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5"/>
+                            <Button Content="Печать" Command="{Binding PrintCommand}" />
+                        </StackPanel>
+
+
+                    </Grid>
+                </materialDesign:PopupBox>
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Background="#f5f5f5">
+            <Button x:Name="ButtonOpen" Margin="5 0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="40" Height="40" Padding="0">
+                <materialDesign:PackIcon Kind="FlowchartOutline" Foreground="Black" Width="25" Height="25"/>
+            </Button>
         </StackPanel>
-        <Grid Name="blockLayoutMenu" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource GridStyle}">
+
+        <Canvas
+                        AllowDrop="True" 
+                        DragOver="DragOverDestination" 
+                        DragLeave="DragLeaveDestination" 
+                        Drop="DropDestination"
+                        MouseDown="MouseDownEditField"
+                        Name="editField" 
+                        Grid.Row="1" 
+                        Grid.Column="1"
+                       Background="White"
+                       />
+
+        <Grid Background="#f5f5f5" x:Name="GridMenu" Width="350" HorizontalAlignment="Left" Margin="-350 0 0 0" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -426,355 +228,270 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
+            <ScrollViewer>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="175"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="160"/>
+                    </Grid.ColumnDefinitions>
 
-            <Grid Style="{DynamicResource GridStyle}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="170"/>
-                    <ColumnDefinition Width="170"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <ScrollViewer 
-                    Grid.Row="2"
-                    Grid.ColumnSpan="3">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="175"/>
-                            <RowDefinition Height="120"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="170"/>
-                            <ColumnDefinition Width="180"/>
-                        </Grid.ColumnDefinitions>
-
+                    <block:ActionBlockView 
+                        Grid.Row="0"
+                        Grid.Column="0" 
+                        MouseMove="MouseMoveBlock"/>
+                    
+                    <Label 
                         
-                            <control:ActionBlockView 
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="10 0"
-                                MouseMove="MouseMoveBlock"/>
-
-                            <TextBlock 
-                            Text="Блок (1)" 
+                            Content="Действие (1)" 
                             FontSize="10" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
+                            HorizontalAlignment="Center"
                             Grid.Row="0"
                             Grid.Column="1" 
-                            Style="{DynamicResource TextBlockStyle}"/>
-                        
-
-                        <control:ConditionBlockView
+                           />
+                    
+                    <block:ConditionBlockView
                             Grid.Row="1"
                             Grid.Column="0"
                             Margin="10 0"
                             MouseMove="MouseMoveBlock"/>
-                        
-                        <TextBlock 
-                            Text="Условие (2)" 
+
+                    <Label 
+                            Content="Условие (2)" 
                             FontSize="10" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
+                            HorizontalAlignment="Center"
                             Grid.Row="1"
-                            Grid.Column="1" 
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            Grid.Column="1" />
 
 
-                        <control:CaseFirstOptionView
+                    <block:CaseFirstOptionView
                             Grid.Row="2"
                             Grid.Column="0" 
                             Margin="10 0"/>
 
-                        <StackPanel
+                    <StackPanel
                             Grid.Row="2"
                             Grid.Column="1">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="35"/>
-                                    <RowDefinition Height="35"/>
-                                    <RowDefinition Height="35"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock 
-                                    Text="Условие (3)" 
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Label 
+                                    Content="Условие (3)" 
                                     FontSize="10"
                                     Grid.Row="0"
                                     VerticalAlignment="Center" 
-                                    HorizontalAlignment="Left" 
-                                    TextWrapping="Wrap"
-                                    Style="{DynamicResource TextBlockStyle}"/>
+                                    HorizontalAlignment="Center" />
 
-                                <TextBox Grid.Row="1" 
+                            <TextBox Grid.Row="1" 
                                          materialDesign:HintAssist.Hint = "Количесво линий"
                                          Style = "{StaticResource MaterialDesignFloatingHintTextBox}">
-                                    <TextBox.Text>
-                                        <Binding Path="CountLineConditionFirst">
-                                            <Binding.ValidationRules>
-                                                <DataErrorValidationRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                
-                                <Button 
-                                    Background="#4e6775"
+                                <TextBox.Text>
+                                    <Binding Path="CountLineConditionFirst">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+                            <Button 
                                     Grid.Row="2"
                                     Width="120"
-                                    Foreground="White"
                                     Content="Добавить" 
                                     Command="{Binding AddConditionFirst}"/>
-                            </Grid>
-                        </StackPanel>
+                        </Grid>
+                    </StackPanel>
 
 
-                        <control:CaseSecondOptionView
+                    <block:CaseSecondOptionView
                             Grid.Row="3"
                             Grid.Column="0" 
                             Margin="10 0"/>
 
-                        <StackPanel
+                    <StackPanel
                             Grid.Row="3"
                             Grid.Column="1">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="35"/>
-                                    <RowDefinition Height="35"/>
-                                    <RowDefinition Height="35"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock 
-                                    Text="Условие (4)" 
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Label 
+                                    Content="Условие (4)" 
                                     FontSize="10"
                                     Grid.Row="0"
                                     VerticalAlignment="Center" 
-                                    HorizontalAlignment="Left" 
-                                    TextWrapping="Wrap"
-                                    Style="{DynamicResource TextBlockStyle}"/>
-                                <TextBox Grid.Row="1" 
+                                    HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="1" 
                                          materialDesign:HintAssist.Hint = "Количесво линий"
                                          Style = "{StaticResource MaterialDesignFloatingHintTextBox}">
-                                    <TextBox.Text>
-                                        <Binding Path="CountLineConditionSecond">
-                                            <Binding.ValidationRules>
-                                                <DataErrorValidationRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <Button 
-                                    Background="#4e6775"
+                                <TextBox.Text>
+                                    <Binding Path="CountLineConditionSecond">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <Button 
+                                    
                                     Grid.Row="2"
                                     Width="120"
-                                    Foreground="White"
+                                   
                                     Content="Добавить"
                                     Command="{Binding AddConditionSecond}"/>
-                            </Grid>
-                        </StackPanel>
+                        </Grid>
+                    </StackPanel>
 
-                        <control:StartEndBlockView
+                    <block:StartEndBlockView
                             Grid.Row="4"
                             Grid.Column="0"
                             MouseMove="MouseMoveBlock"
                             Margin="10 0"/>
 
-                        <TextBlock
-                            Text="Начало / Конец (5)" 
+                    <Label
+                            Content="Начало / Конец (5)" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="4" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <control:InputOutputBlockView
+                    <block:InputOutputBlockView
                             Grid.Row="5"
                             Grid.Column="0"
                             MouseMove="MouseMoveBlock"
                             Margin="10 0"/>
 
-                        <TextBlock 
-                            Text="Ввод / Вывод (6)" 
+                    <Label 
+                            Content="Ввод / Вывод (6)" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="5" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <control:SubroutineBlockView
+                    <block:SubroutineBlockView
                             Grid.Row="6"
                             Grid.Column="0"
                             MouseMove="MouseMoveBlock"
                             Margin="10 0"/>
 
-                        <TextBlock
-                            Text="Подпрограмма (7)" 
+                    <Label
+                            Content="Подпрограмма (7)" 
                             FontSize="10" 
                             Grid.Column="2" 
                             Grid.Row="6" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <control:CycleBlockForView
+                    <block:CycleBlockForView
                             Grid.Row="7"
                             Grid.Column="0"
                             MouseMove="MouseMoveBlock"
                             Margin="5 0"/>
 
-                        <TextBlock
-                            Text="Цикл (8) for" 
+                    <Label
+                            Content="Цикл (8) for" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="7" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <control:CycleBlockWhileBeginView
+                    <block:CycleBlockWhileBeginView
                             Grid.Row="8"
                             Grid.Column="0"
                             Margin="5 0"
                             MouseMove="MouseMoveBlock"/>
 
-                        <TextBlock 
-                            Text="Цикл (9) do while, while (Начало)" 
+                    <Label 
+                            Content="Цикл (9) do while, while (Начало)" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="8" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <control:CycleBlockWhileEndView
+                    <block:CycleBlockWhileEndView
                             Grid.Row="9"
                             Grid.Column="0"
                             Margin="5 0"
                             MouseMove="MouseMoveBlock"/>
 
-                        <TextBlock 
-                            Text="Цикл (10) do while, while (Конец)" 
+                    <Label 
+                            Content="Цикл (10) do while, while (Конец)" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="9" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <control:LinkBlockView
+                    <block:LinkBlockView
                             Grid.Column="0"
                             Grid.Row="10"
                             Margin="5 0"
                             MouseMove="MouseMoveBlock"/>
 
-                        <TextBlock 
-                            Text="Ссылка (11)" 
+                    <Label 
+                            Content="Ссылка (11)" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="10" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left" 
-                            Style="{DynamicResource TextBlockStyle}"/>
+                            HorizontalAlignment="Center"
+                            />
 
-                        <StackPanel
+                    <StackPanel
                             Grid.Column="0" 
                             Grid.Row="11" 
                             Height="75"
                             Width="150">
-                            <control:CommentView/>
-                        </StackPanel>
-                        
+                        <block:CommentView/>
+                    </StackPanel>
 
-                        <TextBlock 
-                            Text="Комментарий(12)" 
+
+                    <Label 
+                            Content="Комментарий(12)" 
                             FontSize="10" 
                             Grid.Column="1" 
                             Grid.Row="11" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Style="{DynamicResource TextBlockStyle}"/>
-                    </Grid>
-                </ScrollViewer>
-                
-                <Grid Grid.Column="4" 
-                      Grid.RowSpan="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="210"/>
-                        <ColumnDefinition Width="170"/>
-                        <ColumnDefinition Width="220"/>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="850*"/>
-                    </Grid.RowDefinitions>
-
-                    <Canvas
-                        AllowDrop="True" 
-                        DragOver="DragOverDestination" 
-                        DragLeave="DragLeaveDestination" 
-                        Drop="DropDestination"
-                        Name="editField" 
-                        Grid.ColumnSpan="13"
-                        Grid.Row="1" 
-                        Style="{DynamicResource CanvasStyle}"/>
-
-
-                    <toolpar:FontFamily x:Name="listFontFamily" Grid.Column="0"/>
-                    
-                    <toolpar:SizeText Grid.Column="1"/>
-
-                    <toolpar:FormatAlign Grid.Column="2" />
-
-                    <toolpar:TextStyles Grid.Column="3"/>
-
-                    <toolpar:WidthBlock Grid.Column="4"/>
-
-                    <toolpar:HeightBlock Grid.Column="5"/>
-                    
+                            HorizontalAlignment="Center"
+                            />
                 </Grid>
-
-                <Button 
-                    Name="buttonCloseMenu"
-                    Grid.Row="0" 
-                    Grid.Column="1" 
-                    Style="{DynamicResource ButtonOpenCloseMenuStyle}" 
-                    Margin="5"
-                    Command="{Binding CloseMenu}">
-                    <materialDesign:PackIcon
-                            Kind="Menu"/>
-                </Button>
-
-                <Button 
-                    Name="buttonOpenMenu" 
-                    Grid.Row="0" 
-                    Grid.Column="1"
-                    Style="{DynamicResource ButtonOpenCloseMenuStyle}" 
-                    Margin="5"
-                    Command="{Binding OpenMenu}">
-                    <materialDesign:PackIcon 
-                        Kind="Menu"/>
-                </Button>
-              
-            </Grid>
+            </ScrollViewer>
+            <Button x:Name="ButtonClose" Margin="10 0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="30" Height="30" Padding="0">
+                <materialDesign:PackIcon Kind="Close"/>
+            </Button>
         </Grid>
+
     </Grid>
 </Window>

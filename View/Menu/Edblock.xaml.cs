@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Flowchart_Editor.View;
 using System.Windows.Shapes;
@@ -7,12 +6,16 @@ using Flowchart_Editor.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.Models.Comment;
-using Flowchart_Editor.Menu.SaveProject;
 using Flowchart_Editor.View.Condition.Case;
-using Flowchart_Editor.Menu.UploadProject;
-using Flowchart_Editor.Menu.Theme;
 using Flowchart_Editor.ViewModel;
 using Flowchart_Editor.View.ListControllsElement;
+using Flowchart_Editor.View.StylyTextField;
+using MaterialDesignThemes.Wpf;
+using Flowchart_Editor.Menu.Theme;
+using System.Data.SqlClient;
+using System.Windows.Media;
+using System;
+using System.Configuration;
 
 namespace Flowchart_Editor
 {
@@ -23,38 +26,40 @@ namespace Flowchart_Editor
         public static Canvas? EditField { get; private set; }
         public static Button? ButtonOpenMenu { get; private set; }
         public static Button? ButtonCloseMenu { get; private set; }
-
         public static ListControlls ListControlls { get; private set; }
+        public static StylyText StylyText { get; private set; }
+        public static List<Block> ListOfBlock { get; private set; } = new();
+        public static List<CommentControls> ListComment { get; private set; } = new();
+        public static List<Line> ListLineConnection { get; private set; } = new();
+        public static List<CaseBlock> ListCaseBlock { get; private set; } = new();
+        string connectionString;
         public Edblock()
         {
             InitializeComponent();
             DataContext = new ApplicationViewModel();
             EditField = editField;
-            ButtonOpenMenu = buttonOpenMenu;
-            ButtonCloseMenu = buttonCloseMenu;
-            ListControlls = new(listOfBlock, listComment, listCaseBlock);
+            ListControlls = new(ListOfBlock, ListComment, ListCaseBlock);
             MinHeight = minHeight;
             MinWidth = minWidth;
-            toggleButtonStyleTheme.Click += ThemeChange;
-            ThemeChange();
+            connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
+            //toggleButtonStyleTheme.Click += ThemeChange;
+            //ThemeChange();
         }
 
         private void ThemeChange(object? sender = null, RoutedEventArgs? e = null) => // Установление темы (светлая, тёмная)
-            Theme.SetTheme(toggleButtonStyleTheme);
+            Theme1.SetTheme(toggleButtonStyleTheme);
 
-        public static readonly List<Block> listOfBlock = new();
         public void MouseMoveBlock(object sender, MouseEventArgs e) //Обработка нахождения курсора на блоке
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Block instanceOfBlock = ((IBlockView)sender).GetBlock(editField);
-                listOfBlock.Add(instanceOfBlock);
+                ListOfBlock.Add(instanceOfBlock);
                 Block.DoDragDropControlElement(typeof(Block), instanceOfBlock, sender);
             }
             e.Handled = true;
         }
 
-        public static List<CommentControls> listComment = new();
         private void DropDestination(object sender, DragEventArgs e) //Отпускание блока
         {
             if (e.Data.GetDataPresent(typeof(Block)))
@@ -66,6 +71,7 @@ namespace Flowchart_Editor
             else
                 e.Handled = true;
         }
+
         private void DragOverDestination(object sender, DragEventArgs e) //Перемещение блока
         {
             if (e.Data.GetDataPresent(typeof(Block)))
@@ -114,52 +120,68 @@ namespace Flowchart_Editor
             e.Handled = true;
         }
 
-        public static readonly List<Line> listLineConnection = new();
-
-        private void MouseLeftButtonDownComment(object sender, MouseButtonEventArgs e)
+        private void MouseDownEditField(object sender, MouseButtonEventArgs e)
         {
-            PinningComment.flagPinningComment = true;
+            if (Keyboard.FocusedElement is TextBox felem)
+                if (sender != felem)
+                    Keyboard.ClearFocus();
         }
 
-        private string? GetFontFamily() =>
-            listOfFontFamily.SelectedValue?.ToString();
+        private void MenuDarkModeButton_Click(object sender, RoutedEventArgs e) =>
+            ModifyTheme(toggleButtonStyleTheme.IsChecked == true);
 
-        public string? GetFontSize() =>
-            ((ComboBoxItem)fontSizeComboBox.SelectedItem)?.Content.ToString();
 
-        private void ClickSaveProject(object sender, RoutedEventArgs e) =>
-            SaveProject.Save(GetFontFamily(), GetFontSize());
-
-        private void ClickUploadProject(object sender, RoutedEventArgs e)
+        private static void ModifyTheme(bool isDarkTheme)
         {
-            UploadProject.Upload(editField, listOfBlock, listLineConnection, listComment,
-                listCaseBlock, listOfFontFamily, fontSizeComboBox, widthComboBox, heightComboBox);
+            PaletteHelper paletteHelper = new();
+            ITheme theme = paletteHelper.GetTheme();
+            theme.SetBaseTheme(isDarkTheme ? Theme.Dark : Theme.Light);
+            paletteHelper.SetTheme(theme);
         }
 
-        public static readonly List<CaseBlock> listCaseBlock = new();
-
-        public static void RemoveItemFromListCaseBlock(CaseBlock caseBlock) =>
-            listCaseBlock.Remove(caseBlock);
-
-        private void SelectionChangedFontSize(object sender, SelectionChangedEventArgs e) =>
-            StaticBlock.fontSize = Convert.ToInt32(((ComboBoxItem)fontSizeComboBox.SelectedItem)?.Content.ToString());
-
-        private void ClickSettings(object sender, RoutedEventArgs e)
+        public async void LoadedListFontFamily(object sender, RoutedEventArgs e)
         {
-            Settings settings = new();
-            settings.Show();
+            SqlConnection sqlConnection = new(connectionString);
+            await sqlConnection.OpenAsync();
+            SqlDataReader? sqlReader = null;
+            SqlCommand command = new("SELECT fontFamily FROM FontFamily", sqlConnection);
+            try
+            {
+                sqlReader = await command.ExecuteReaderAsync();
+                while (await sqlReader.ReadAsync())
+                    listFontFamily.Items.Add(new FontFamily(Convert.ToString(sqlReader["fontFamily"]).Trim()));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
         }
 
-        private void LoadedWidthComboBox(object sender, RoutedEventArgs e)
+        private void listWidthBlock_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 110; i <= 250; i += 10)
-                widthComboBox.Items.Add(i);
+                listWidthBlock.Items.Add(i);
         }
 
-        private void LoadedHeightComboBox(object sender, RoutedEventArgs e)
+        private void listHeightBlock_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 60; i <= 250; i += 10)
-                heightComboBox.Items.Add(i);
+                listHeightBlock.Items.Add(i);
+        }
+
+        private void listFontSize_Loaded(object sender, RoutedEventArgs e)
+        {
+            for (int i = 8; i <= 26; i += 2)
+            {
+                ComboBoxItem comboBoxItem = new();
+                comboBoxItem.Content = i.ToString();
+                listFontSize.Items.Add(comboBoxItem.Content);
+            }
         }
     }
 }
