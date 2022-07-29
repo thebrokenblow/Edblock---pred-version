@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:block="clr-namespace:Flowchart_Editor.View"
+        xmlns:toolBar="clr-namespace:Flowchart_Editor.View.Menu.ToolBar"
         mc:Ignorable="d"
         Title="Flowchart Editor" 
         Height="1200" 
@@ -74,89 +75,33 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ToolBarTray Grid.ColumnSpan="2" Grid.Row="0" Margin="-10 0">
+        <ToolBarTray 
+            Grid.ColumnSpan="2" 
+            Grid.Row="0">
             <ToolBar
-                        
-                            
-                            ClipToBounds="False">
+                ClipToBounds="False">
+                
+                <toolBar:ListFontFamily/>
 
-                <Label
-                            Content="Шрифт:"
-                            VerticalAlignment="Center"/>
+                <Separator/>
+                
+                <toolBar:ListFontSize/>
+                
+                <Separator/>
 
-                <ComboBox 
-                    Name="listFontFamily"
-                    Loaded="LoadedListFontFamily"
-                    HorizontalAlignment="Center"
-                    IsEditable="True" 
-                    Width="130"/>
+                <toolBar:FormatAlign/>
+               
+                <Separator/>
+
+                <toolBar:FormatText/>
 
                 <Separator/>
 
-                <Label
-                    Content="Расмер шрифта:"
-                    VerticalAlignment="Center"/>
-
-                <ComboBox 
-                    
-                    Name="listFontSize" 
-                    SelectedValue="{Binding Path=FontFamily}"
-                    Loaded="listFontSize_Loaded"
-                    HorizontalAlignment="Center"
-                    
-                    IsEditable="True" 
-                    Width="40"/>
-
-
-
-
-
-                <Separator/>
-
-                <ListBox SelectedIndex="1">
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"/>
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}"/>
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignJustify}"/>
-                </ListBox>
-
-                <Separator/>
-
-                <ListBox SelectionMode="Extended">
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}"/>
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}"/>
-                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}"/>
-                </ListBox>
-
-                <Separator/>
-
-                <Label
-                    Content="Ширина:"
-                    VerticalAlignment="Center"/>
-
-                <ComboBox 
-                    Name="listWidthBlock"
-                    SelectedValue="{Binding Path=BlockWidth}"
-                    Loaded="listWidthBlock_Loaded"
-                    HorizontalAlignment="Center"
-                    
-                    IsEditable="True" 
-                    Width="130"/>
+                <toolBar:ListWidthBlock/>
 
                 <Separator />
-
-                <Label 
-                    Content="Высота:" 
-                    VerticalAlignment="Center"/>
-
-                <ComboBox 
-                    Name="listHeightBlock"
-                    SelectedValue="{Binding Path=BlockHeight}"
-                    Loaded="listHeightBlock_Loaded"
-                  
-                    IsEditable="True" 
-                    Width="60" 
-                    HorizontalAlignment="Center"/>
+                
+                <toolBar:ListHeightBlock/>
 
                 <Separator />
 
@@ -329,7 +274,17 @@
 
                             <TextBox Grid.Row="1" 
                                          materialDesign:HintAssist.Hint = "Количесво линий"
-                                         Style = "{StaticResource MaterialDesignFloatingHintTextBox}">
+                                         >
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <Setter Property="Foreground" Value="#212121" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                                <Setter Property="Foreground" Value="#f5f5f5" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
                                 <TextBox.Text>
                                     <Binding Path="CountLineConditionFirst">
                                         <Binding.ValidationRules>
@@ -369,8 +324,17 @@
                                     VerticalAlignment="Center" 
                                     HorizontalAlignment="Center"/>
                             <TextBox Grid.Row="1" 
-                                         materialDesign:HintAssist.Hint = "Количесво линий"
-                                         Style = "{StaticResource MaterialDesignFloatingHintTextBox}">
+                                         materialDesign:HintAssist.Hint = "Количесво линий">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <Setter Property="Foreground" Value="#212121" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                                <Setter Property="Foreground" Value="#f5f5f5" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
                                 <TextBox.Text>
                                     <Binding Path="CountLineConditionSecond">
                                         <Binding.ValidationRules>

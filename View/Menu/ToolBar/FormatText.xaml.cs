@@ -3,11 +3,11 @@
 namespace Flowchart_Editor.View.Menu.ToolBar
 {
     /// <summary>
-    /// Логика взаимодействия для TextStyles.xaml
+    /// Логика взаимодействия для FormatText.xaml
     /// </summary>
-    public partial class TextStyles : UserControl
+    public partial class FormatText : UserControl
     {
-        public TextStyles()
+        public FormatText()
         {
             InitializeComponent();
         }
