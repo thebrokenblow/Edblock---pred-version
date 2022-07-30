@@ -13,35 +13,34 @@
     <Window.Resources>
         <Style x:Key="StyleStackPanel" TargetType="StackPanel">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
                     <Setter Property="Background" Value="#212121" /> 
                 </DataTrigger>
-                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
                     <Setter Property="Background" Value="#f5f5f5" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="StyleGridMenu" TargetType="Grid">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
                     <Setter Property="Background" Value="#212121" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
                     <Setter Property="Background" Value="#f5f5f5" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="StyleGridEditField" TargetType="Canvas">
+        <Style x:Key="StyleCanvasEditField" TargetType="Canvas">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
                     <Setter Property="Background" Value="#1c1c1c" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding  ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
                     <Setter Property="Background" Value="#FFF9F9FB" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames 
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" 
@@ -57,6 +56,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
+    
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
@@ -65,13 +65,14 @@
             <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
     </Window.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="56"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="52"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -80,35 +81,28 @@
             Grid.Row="0">
             <ToolBar
                 ClipToBounds="False">
-                
-                <toolBar:ListFontFamily/>
 
+                <toolBar:ListFontFamily/>
                 <Separator/>
-                
+
                 <toolBar:ListFontSize/>
-                
                 <Separator/>
 
                 <toolBar:FormatAlign/>
-               
                 <Separator/>
 
                 <toolBar:FormatText/>
-
                 <Separator/>
 
                 <toolBar:ListWidthBlock/>
-
                 <Separator />
-                
-                <toolBar:ListHeightBlock/>
 
+                <toolBar:ListHeightBlock/>
                 <Separator />
 
                 <materialDesign:PopupBox 
                     StaysOpen="True">
-                    <Grid Margin="10" >
-
+                    <Grid Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="40"/>
@@ -118,50 +112,95 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="Светлая"/>
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Светлая"/>
 
                         <ToggleButton
-                            Name="toggleButtonStyleTheme"
-                            Click="MenuDarkModeButton_Click"
-                            HorizontalAlignment="Center"/>
+                                Name="toggleButtonStyleTheme"
+                                Click="MenuDarkModeButton_Click"
+                                HorizontalAlignment="Center"/>
 
                         <TextBlock
-                            Text="Тёмная"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right"/>
+                                Text="Тёмная"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right"/>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <materialDesign:PackIcon Kind="ContentSave" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5 0 0"/>
-                            <Button Content="Сохранить проект" Command="{Binding SaveProjectCommand}" />
+                        <StackPanel 
+                            Orientation="Horizontal" 
+                            Grid.Row="1">
+                            <materialDesign:PackIcon 
+                                Kind="ContentSave" 
+                                Width="25" 
+                                Height="25" 
+                                VerticalAlignment="Center" 
+                                Margin="0 5"/>
+                            <Button 
+                                Content="Сохранить проект" 
+                                Command="{Binding SaveProjectCommand}" />
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="2">
-                            <materialDesign:PackIcon Kind="upload" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5"/>
-                            <Button Content="Загрузить проект" Command="{Binding UploadProjectCommand}"/>
+                        <StackPanel 
+                            Orientation="Horizontal"
+                            Grid.Row="2">
+                            <materialDesign:PackIcon 
+                                Kind="upload" 
+                                Width="25" 
+                                Height="25"
+                                VerticalAlignment="Center" 
+                                Margin="0 5"/>
+                            <Button Content="Загрузить проект" 
+                                    Command="{Binding UploadProjectCommand}"/>
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="3">
-                            <materialDesign:PackIcon Kind="Image" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5"/>
-                            <Button Content="Сохранить изображение" Command="{Binding SaveProjectCommand}" />
+                        <StackPanel 
+                            Orientation="Horizontal"
+                            Grid.Row="3">
+                            <materialDesign:PackIcon 
+                                Kind="Image" 
+                                Width="25" 
+                                Height="25"
+                                VerticalAlignment="Center" 
+                                Margin="0 5"/>
+                            <Button 
+                                Content="Сохранить изображение" 
+                                Command="{Binding SaveProjectCommand}" />
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="4">
-                            <materialDesign:PackIcon Kind="Printer" Width="25" Height="25" VerticalAlignment="Center" Margin="0 5"/>
-                            <Button Content="Печать" Command="{Binding PrintCommand}" />
+                        <StackPanel 
+                            Orientation="Horizontal"
+                            Grid.Row="4">
+                            <materialDesign:PackIcon 
+                                Kind="Printer" 
+                                Width="25"
+                                Height="25"
+                                VerticalAlignment="Center"
+                                Margin="0 5"/>
+                            <Button 
+                                Content="Печать"
+                                Command="{Binding PrintCommand}" />
                         </StackPanel>
-
-
                     </Grid>
                 </materialDesign:PopupBox>
-                
             </ToolBar>
         </ToolBarTray>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Style="{StaticResource StyleStackPanel}">
-            <Button x:Name="ButtonOpen" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Width="40" Height="40" Padding="0">
-                <materialDesign:PackIcon Kind="FlowchartOutline" Width="25" Height="25">
+        <StackPanel 
+            Grid.Column="0" 
+            Grid.Row="1" 
+            Style="{StaticResource StyleStackPanel}">
+            <Button 
+                x:Name="ButtonOpen" 
+                HorizontalAlignment="Center" 
+                Background="{x:Null}" 
+                BorderBrush="{x:Null}"
+                Width="40"
+                Height="40" 
+                Padding="0">
+                <materialDesign:PackIcon 
+                    Kind="FlowchartOutline"
+                    Width="25" 
+                    Height="25">
                     <materialDesign:PackIcon.Style>
                         <Style TargetType="materialDesign:PackIcon">
                             <Setter Property="Foreground" Value="#212121" />
@@ -176,20 +215,26 @@
             </Button>
         </StackPanel>
 
-        <Canvas
-                        AllowDrop="True" 
-                        DragOver="DragOverDestination" 
-                        DragLeave="DragLeaveDestination" 
-                        Drop="DropDestination"
-                        MouseDown="MouseDownEditField"
-                        Name="editField" 
-                        Grid.Row="1" 
-                        Grid.Column="1"
-            Style="{StaticResource StyleGridEditField}"
-                       
-                       />
 
-        <Grid Style="{StaticResource StyleGridMenu}" x:Name="GridMenu" Width="350" HorizontalAlignment="Left" Margin="-350 0 0 0" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+        <Canvas
+            AllowDrop="True" 
+            DragOver="DragOverDestination" 
+            DragLeave="DragLeaveDestination" 
+            Drop="DropDestination"
+            MouseDown="MouseDownEditField"
+            Name="editField" 
+            Grid.Row="1" 
+            Grid.Column="1"
+            Style="{StaticResource StyleCanvasEditField}"/>
+
+        <Grid 
+            x:Name="GridMenu" 
+            Width="350" 
+            HorizontalAlignment="Left" 
+            Margin="-350 0 0 0" 
+            Grid.Row="1" 
+            RenderTransformOrigin="0.5,0.5" 
+            Style="{StaticResource StyleGridMenu}">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -199,7 +244,7 @@
                 </TransformGroup>
             </Grid.RenderTransform>
             <ScrollViewer>
-                <Grid  >
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="75"/>
                         <RowDefinition Height="75"/>
@@ -216,65 +261,63 @@
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-
 
                     <block:ActionBlockView 
                         Grid.Row="0"
                         Grid.Column="0" 
                         MouseMove="MouseMoveBlock"/>
-                    
-                    <Label 
-                        
-                            Content="Действие (1)" 
-                            FontSize="10" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            Grid.Row="0"
-                            Grid.Column="1" 
-                           />
-                    
-                    <block:ConditionBlockView
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="10 0"
-                            MouseMove="MouseMoveBlock"/>
 
                     <Label 
-                            Content="Условие (2)" 
-                            FontSize="10" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            Grid.Row="1"
-                            Grid.Column="1" />
+                        Content="Действие (1)" 
+                        FontSize="10" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+
+                    <block:ConditionBlockView
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10 0"
+                        MouseMove="MouseMoveBlock"/>
+
+                    <Label 
+                        Content="Условие (2)" 
+                        FontSize="10" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"
+                        Grid.Row="1"
+                        Grid.Column="1"/>
 
 
                     <block:CaseFirstOptionView
-                            Grid.Row="2"
-                            Grid.Column="0" 
-                            Margin="10 0"/>
+                        Grid.Row="2"
+                        Grid.Column="0" 
+                        Margin="10 0"/>
 
                     <StackPanel
-                            Grid.Row="2"
-                            Grid.Column="1">
+                        Grid.Row="2"
+                        Grid.Column="1">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
+                            
                             <Label 
-                                    Content="Условие (3)" 
-                                    FontSize="10"
-                                    Grid.Row="0"
-                                    VerticalAlignment="Center" 
-                                    HorizontalAlignment="Center" />
+                                Content="Условие (3)" 
+                                FontSize="10"
+                                Grid.Row="0"
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center"/>
 
-                            <TextBox Grid.Row="1" 
-                                         materialDesign:HintAssist.Hint = "Количесво линий"
-                                         >
+                            <TextBox 
+                                Grid.Row="1" 
+                                materialDesign:HintAssist.Hint="Количесво линий">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                                         <Setter Property="Foreground" Value="#212121" />
@@ -295,36 +338,39 @@
                             </TextBox>
 
                             <Button 
-                                    Grid.Row="2"
-                                    Width="120"
-                                    Content="Добавить" 
-                                    Command="{Binding AddConditionFirst}"/>
+                                Grid.Row="2"
+                                Width="120"
+                                Content="Добавить" 
+                                Foreground="White"
+                                Command="{Binding AddConditionFirst}"/>
                         </Grid>
                     </StackPanel>
 
 
                     <block:CaseSecondOptionView
-                            Grid.Row="3"
-                            Grid.Column="0" 
-                            Margin="10 0"/>
+                        Grid.Row="3"
+                        Grid.Column="0" 
+                        Margin="10 0"/>
 
                     <StackPanel
-                            Grid.Row="3"
-                            Grid.Column="1">
+                        Grid.Row="3"
+                        Grid.Column="1">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
+                            
                             <Label 
-                                    Content="Условие (4)" 
-                                    FontSize="10"
-                                    Grid.Row="0"
-                                    VerticalAlignment="Center" 
-                                    HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="1" 
-                                         materialDesign:HintAssist.Hint = "Количесво линий">
+                                Content="Условие (4)" 
+                                FontSize="10"
+                                Grid.Row="0"
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center"/>
+                            <TextBox 
+                                Grid.Row="1" 
+                                materialDesign:HintAssist.Hint="Количесво линий">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                                         <Setter Property="Foreground" Value="#212121" />
@@ -344,140 +390,137 @@
                                 </TextBox.Text>
                             </TextBox>
                             <Button 
-                                    
-                                    Grid.Row="2"
-                                    Width="120"
-                                   
-                                    Content="Добавить"
-                                    Command="{Binding AddConditionSecond}"/>
+                                Grid.Row="2"
+                                Width="120"
+                                Foreground="White"
+                                Content="Добавить"
+                                Command="{Binding AddConditionSecond}"/>
                         </Grid>
                     </StackPanel>
 
                     <block:StartEndBlockView
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            MouseMove="MouseMoveBlock"
-                            Margin="10 0"/>
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        MouseMove="MouseMoveBlock"
+                        Margin="10 0"/>
 
                     <Label
-                            Content="Начало / Конец (5)" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="4" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Начало / Конец (5)" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="4" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <block:InputOutputBlockView
-                            Grid.Row="5"
-                            Grid.Column="0"
-                            MouseMove="MouseMoveBlock"
-                            Margin="10 0"/>
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        MouseMove="MouseMoveBlock"
+                        Margin="10 0"/>
 
                     <Label 
-                            Content="Ввод / Вывод (6)" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="5" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Ввод / Вывод (6)" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="5" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <block:SubroutineBlockView
-                            Grid.Row="6"
-                            Grid.Column="0"
-                            MouseMove="MouseMoveBlock"
-                            Margin="10 0"/>
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        MouseMove="MouseMoveBlock"
+                        Margin="10 0"/>
 
                     <Label
-                            Content="Подпрограмма (7)" 
-                            FontSize="10" 
-                            Grid.Column="2" 
-                            Grid.Row="6" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Подпрограмма (7)" 
+                        FontSize="10" 
+                        Grid.Column="2" 
+                        Grid.Row="6" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <block:CycleBlockForView
-                            Grid.Row="7"
-                            Grid.Column="0"
-                            MouseMove="MouseMoveBlock"
-                            Margin="5 0"/>
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        MouseMove="MouseMoveBlock"
+                        Margin="5 0"/>
 
                     <Label
-                            Content="Цикл (8) for" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="7" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Цикл (8) for" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="7" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <block:CycleBlockWhileBeginView
-                            Grid.Row="8"
-                            Grid.Column="0"
-                            Margin="5 0"
-                            MouseMove="MouseMoveBlock"/>
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        Margin="5 0"
+                        MouseMove="MouseMoveBlock"/>
 
                     <Label 
-                            Content="Цикл (9) do while, while (Начало)" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="8" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Цикл (9) do while, while (Начало)" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="8" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <block:CycleBlockWhileEndView
-                            Grid.Row="9"
-                            Grid.Column="0"
-                            Margin="5 0"
-                            MouseMove="MouseMoveBlock"/>
+                        Grid.Row="9"
+                        Grid.Column="0"
+                        Margin="5 0"
+                        MouseMove="MouseMoveBlock"/>
 
                     <Label 
-                            Content="Цикл (10) do while, while (Конец)" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="9" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Цикл (10) do while, while (Конец)" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="9" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
                     <block:LinkBlockView
-                            Grid.Column="0"
-                            Grid.Row="10"
-                            Margin="5 0"
-                            MouseMove="MouseMoveBlock"/>
+                        Grid.Column="0"
+                        Grid.Row="10"
+                        Margin="5 0"
+                        MouseMove="MouseMoveBlock"/>
 
                     <Label 
-                            Content="Ссылка (11)" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="10" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Ссылка (11)" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="10" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
 
-                    <StackPanel
-                            Grid.Column="0" 
-                            Grid.Row="11" 
-                            Height="75"
-                            Width="150">
-                        <block:CommentView/>
-                    </StackPanel>
-
+                    <block:CommentView
+                        Grid.Column="0" 
+                        Grid.Row="11" 
+                        Height="75"
+                        Width="150"/>
 
                     <Label 
-                            Content="Комментарий(12)" 
-                            FontSize="10" 
-                            Grid.Column="1" 
-                            Grid.Row="11" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            />
+                        Content="Комментарий(12)" 
+                        FontSize="10" 
+                        Grid.Column="1" 
+                        Grid.Row="11" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"/>
                 </Grid>
             </ScrollViewer>
-            <Button x:Name="ButtonClose" Margin="10 0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="30" Height="30" Padding="0">
+            <Button 
+                x:Name="ButtonClose" 
+                Margin="10 0" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top"
+                Background="{x:Null}"
+                BorderBrush="{x:Null}" 
+                Width="30"
+                Height="30" 
+                Padding="0">
                 <materialDesign:PackIcon Kind="Close"/>
             </Button>
         </Grid>
