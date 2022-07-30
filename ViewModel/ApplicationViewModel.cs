@@ -1,6 +1,7 @@
 ﻿using Flowchart_Editor.Command;
 using Flowchart_Editor.Menu.Print;
 using Flowchart_Editor.Menu.SaveImg;
+using Flowchart_Editor.Menu.SaveProject;
 using Flowchart_Editor.Models;
 using Flowchart_Editor.View.ConditionCaseFirstOption;
 using Flowchart_Editor.View.ConditionCaseSecondOption;
@@ -62,7 +63,7 @@ namespace Flowchart_Editor.ViewModel
             }
         }
         private bool flagErrorConditionFirst = false;
-        public int CountLineConditionFirst { get; set; } = 2;
+        public string CountLineConditionFirst { get; set; } = "2";
         private RelayCommand? addConditionFirst;
         public RelayCommand AddConditionFirst
         {
@@ -72,16 +73,16 @@ namespace Flowchart_Editor.ViewModel
                 {
                     if (!flagErrorConditionFirst && Edblock.EditField != null)
                     {
-                        CaseFirstOption conditionCaseFirstOptionBlock = new(Edblock.EditField, CountLineConditionFirst);
+                        CaseFirstOption conditionCaseFirstOptionBlock = new(Edblock.EditField, Convert.ToInt32(CountLineConditionFirst));
                         Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
-                        Edblock.listCaseBlock.Add(conditionCaseFirstOptionBlock);
+                        Edblock.ListCaseBlock.Add(conditionCaseFirstOptionBlock);
                     }
                 });
             }
         }
 
         private bool flagErrorConditionSecond = false;
-        public int CountLineConditionSecond { get; set; } = 2;
+        public string CountLineConditionSecond { get; set; } = "2";
         private RelayCommand? addConditionSecond;
         public RelayCommand AddConditionSecond
         {
@@ -91,9 +92,9 @@ namespace Flowchart_Editor.ViewModel
                 {
                     if (!flagErrorConditionSecond && Edblock.EditField != null)
                     {
-                        CaseSecondOption conditionCaseFirstOptionBlock = new(Edblock.EditField, CountLineConditionSecond);
+                        CaseSecondOption conditionCaseFirstOptionBlock = new(Edblock.EditField, Convert.ToInt32(CountLineConditionSecond));
                         Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
-                        Edblock.listCaseBlock.Add(conditionCaseFirstOptionBlock);
+                        Edblock.ListCaseBlock.Add(conditionCaseFirstOptionBlock);
                     }
                 });
             }
@@ -128,23 +129,32 @@ namespace Flowchart_Editor.ViewModel
         {
             get
             {
+
+                //TODO: разобраться с валидацией, неправильно работает
                 string errorAddCondition = "";
                 switch (columnName)
                 {
                     case "CountLineConditionFirst":
-                        if (CountLineConditionFirst <= 1)
+                        bool isNumeric = int.TryParse(CountLineConditionFirst, out int n);
+                        if (!isNumeric)
                         {
-                            errorAddCondition = "Значение должно быть больше 1";
-                            flagErrorConditionFirst = true;
+                            errorAddCondition = "Вы введи не число";
+                            
+                             flagErrorConditionFirst = true;
                         }
+                        if (n <= 1)
+                            errorAddCondition = "Значение должно быть больше 1";
                         else
                             flagErrorConditionFirst = false;
                         break;
                     case "CountLineConditionSecond":
-                        if (CountLineConditionSecond <= 1)
+                        bool isNumeric1 = int.TryParse(CountLineConditionSecond, out int n1);
+                        if (!isNumeric1)
                         {
-                            errorAddCondition = "Значение должно быть больше 1";
-                            flagErrorConditionSecond = true;
+                            errorAddCondition = "Вы введи не число";
+                            if (n1 <= 1)
+                                errorAddCondition = "Значение должно быть больше 1";
+                            flagErrorConditionFirst = true;
                         }
                         else
                             flagErrorConditionSecond = false;
@@ -155,5 +165,30 @@ namespace Flowchart_Editor.ViewModel
         }
 
         public string Error => throw new NotImplementedException();
+
+        private RelayCommand? saveProjectCommand;
+        public RelayCommand SaveProjectCommand
+        {
+            get
+            {
+                return saveProjectCommand ??= new RelayCommand(obj =>
+                {
+                    string? fontFamily = Edblock.StylyText.GetFontFamily();
+                    string? fonSize = Edblock.StylyText.GetFontSize();
+                    SaveProject.Save(fontFamily, fonSize);
+                });
+            }
+        }
+        private RelayCommand? uploadProjectCommand;
+        public RelayCommand UploadProjectCommand
+        {
+            get
+            {
+                return uploadProjectCommand ??= new RelayCommand(obj =>
+                {
+
+                });
+            }
+        }
     }
 }

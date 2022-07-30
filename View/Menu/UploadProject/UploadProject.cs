@@ -19,99 +19,96 @@ namespace Flowchart_Editor.Menu.UploadProject
     public class UploadProject
     {
         
-        public async static void Upload(Canvas canvas, List<Block> listOfBlock, List<Line> listLineConnection,
-                                        List<CommentControls> listComment, List<CaseBlock> listCaseBlock, 
-                                        ComboBox listOfFontFamily, ComboBox fontSizeComboBox, ComboBox blockWidthComboBox,
-                                        ComboBox blockHeightComboBox)
+        public async static void Upload()
         {
-            OpenFileDialog openFileDialog = new()
-            {
-                Filter = "File json|*.json"
-            };
+            //OpenFileDialog openFileDialog = new()
+            //{
+            //    Filter = "File json|*.json"
+            //};
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                var blockDictionary = GetProperty.GetBlockDictionary();
-                string fileName = openFileDialog.FileName;
-                using FileStream fileStream = new(fileName, FileMode.OpenOrCreate);
-                ModelControls? modelControls = null;
-                try
-                {
-                    modelControls = await JsonSerializer.DeserializeAsync<ModelControls>(fileStream);
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка загруски проекта, вероятно файл испорчен");
-                }
-                if (modelControls != null)
-                {
-                    ClearData.Clear(canvas, listOfBlock, listLineConnection, listComment, listCaseBlock);
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    var blockDictionary = GetProperty.GetBlockDictionary();
+            //    string fileName = openFileDialog.FileName;
+            //    using FileStream fileStream = new(fileName, FileMode.OpenOrCreate);
+            //    ModelControls? modelControls = null;
+            //    try
+            //    {
+            //        modelControls = await JsonSerializer.DeserializeAsync<ModelControls>(fileStream);
+            //    }
+            //    catch
+            //    {
+            //        MessageBox.Show("Ошибка загруски проекта, вероятно файл испорчен");
+            //    }
+            //    if (modelControls != null)
+            //    {
+            //        ClearData.Clear(canvas, listOfBlock, listLineConnection, listComment, listCaseBlock);
 
-                    listOfFontFamily.Text = modelControls.styleModel.fontFamily;
-                    fontSizeComboBox.Text = modelControls.styleModel.fontSize;
+            //        listOfFontFamily.Text = modelControls.styleModel.fontFamily;
+            //        fontSizeComboBox.Text = modelControls.styleModel.fontSize;
 
-                    if (modelControls.listBlockModels?.Count != 0)
-                    {
-                        blockWidthComboBox.Text = GetProperty.GetBlockWidth(modelControls);
-                        blockHeightComboBox.Text = GetProperty.GetBlockHeight(modelControls);
-                    }
-                    if (modelControls.listCaseModel?.Count != 0)
-                    {
-                        blockWidthComboBox.Text = GetProperty.GetCaseWidth(modelControls);
-                        blockHeightComboBox.Text = GetProperty.GetCaseHeight(modelControls);
-                    }
+            //        if (modelControls.listBlockModels?.Count != 0)
+            //        {
+            //            blockWidthComboBox.Text = GetProperty.GetBlockWidth(modelControls);
+            //            blockHeightComboBox.Text = GetProperty.GetBlockHeight(modelControls);
+            //        }
+            //        if (modelControls.listCaseModel?.Count != 0)
+            //        {
+            //            blockWidthComboBox.Text = GetProperty.GetCaseWidth(modelControls);
+            //            blockHeightComboBox.Text = GetProperty.GetCaseHeight(modelControls);
+            //        }
 
-                    if (modelControls.listBlockModels != null)
-                    {
-                        foreach (BlockModel itemBlockModel in modelControls.listBlockModels)
-                        {
-                            Block? block = SetProperty.SetBlock(blockDictionary[itemBlockModel.nameOfBlock], itemBlockModel);
-                            if (block != null)
-                            {
-                                listOfBlock.Add(block);
-                                if (block.comment != null)
-                                    listComment.Add(block.comment);
-                                canvas.Children.Add(block.GetUIElement());
-                            }
-                        }
-                    }
+            //        if (modelControls.listBlockModels != null)
+            //        {
+            //            foreach (BlockModel itemBlockModel in modelControls.listBlockModels)
+            //            {
+            //                Block? block = SetProperty.SetBlock(blockDictionary[itemBlockModel.nameOfBlock], itemBlockModel);
+            //                if (block != null)
+            //                {
+            //                    listOfBlock.Add(block);
+            //                    if (block.comment != null)
+            //                        listComment.Add(block.comment);
+            //                    canvas.Children.Add(block.GetUIElement());
+            //                }
+            //            }
+            //        }
 
-                    if (modelControls.listLineModels != null)
-                    {
-                        foreach (LineModel itemBlockModel in modelControls.listLineModels)
-                        {
-                            Line line = SetProperty.SetLine(itemBlockModel);
-                            canvas.Children.Add(line);
-                        }
-                    }
+            //        if (modelControls.listLineModels != null)
+            //        {
+            //            foreach (LineModel itemBlockModel in modelControls.listLineModels)
+            //            {
+            //                Line line = SetProperty.SetLine(itemBlockModel);
+            //                canvas.Children.Add(line);
+            //            }
+            //        }
 
-                    if (modelControls.listCaseModel != null)
-                    {
-                        foreach (CaseModel itemCaseModel in modelControls.listCaseModel)
-                        {
-                            CaseBlock? caseBlock = SetProperty.SetCaseBlock(itemCaseModel);
-                            if (caseBlock != null)
-                                caseBlock.GetUIElement();
-                            //GetLineOfCase(itemCaseModel, blockDictionary, caseBlock);
-                            foreach (LineOfCase itemLineAndBlockOfCase in itemCaseModel.listLineOfCase)
-                            {
-                                Line line = SetProperty.SetLine(itemLineAndBlockOfCase.lineModel);
-                                Block? block;
-                                if (itemLineAndBlockOfCase.caseModel != null)
-                                    block = SetProperty.SetCaseBlock(itemLineAndBlockOfCase.caseModel);
-                                else
-                                    block = SetProperty.SetBlock(blockDictionary[itemLineAndBlockOfCase.blockModel.nameOfBlock], itemLineAndBlockOfCase.blockModel);
+            //        if (modelControls.listCaseModel != null)
+            //        {
+            //            foreach (CaseModel itemCaseModel in modelControls.listCaseModel)
+            //            {
+            //                CaseBlock? caseBlock = SetProperty.SetCaseBlock(itemCaseModel);
+            //                if (caseBlock != null)
+            //                    caseBlock.GetUIElement();
+            //                //GetLineOfCase(itemCaseModel, blockDictionary, caseBlock);
+            //                foreach (LineOfCase itemLineAndBlockOfCase in itemCaseModel.listLineOfCase)
+            //                {
+            //                    Line line = SetProperty.SetLine(itemLineAndBlockOfCase.lineModel);
+            //                    Block? block;
+            //                    if (itemLineAndBlockOfCase.caseModel != null)
+            //                        block = SetProperty.SetCaseBlock(itemLineAndBlockOfCase.caseModel);
+            //                    else
+            //                        block = SetProperty.SetBlock(blockDictionary[itemLineAndBlockOfCase.blockModel.nameOfBlock], itemLineAndBlockOfCase.blockModel);
 
-                                caseBlock.PindingBlock(caseBlock, block, line);
-                            }
-                            List<string> listTextOfLine = itemCaseModel.listTextOfLine;
-                            caseBlock.SetTextForTextBox(listTextOfLine);
-                            canvas.Children.Add(caseBlock.GetUIElement());
-                            listCaseBlock.Add(caseBlock);
-                        }
-                    }
-                }
-            }
+            //                    caseBlock.PindingBlock(caseBlock, block, line);
+            //                }
+            //                List<string> listTextOfLine = itemCaseModel.listTextOfLine;
+            //                caseBlock.SetTextForTextBox(listTextOfLine);
+            //                canvas.Children.Add(caseBlock.GetUIElement());
+            //                listCaseBlock.Add(caseBlock);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         private static List<CaseModel> GetCaseForCase(CaseModel caseModel, List<CaseModel> listCaseModel, List<LineOfCase> lineModel)

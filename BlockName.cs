@@ -7,7 +7,8 @@ namespace Flowchart_Editor
     {
         private readonly string name;
 
-        public BlockName(string name) => this.name = name;
+        public BlockName(string name) => 
+            this.name = name;
         public string Name => name;
 
     }

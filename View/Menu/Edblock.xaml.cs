@@ -1,20 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Flowchart_Editor.View;
 using System.Windows.Shapes;
-using Flowchart_Editor.Models;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using Flowchart_Editor.ViewModel;
+using Flowchart_Editor.View;
+using Flowchart_Editor.Models;
 using Flowchart_Editor.Models.Comment;
 using Flowchart_Editor.View.Condition.Case;
-using Flowchart_Editor.ViewModel;
 using Flowchart_Editor.View.ListControllsElement;
 using Flowchart_Editor.View.StylyTextField;
 using MaterialDesignThemes.Wpf;
-using Flowchart_Editor.Menu.Theme;
-using System.Data.SqlClient;
 using System.Windows.Media;
-using System;
 using System.Configuration;
 
 namespace Flowchart_Editor
@@ -42,12 +39,7 @@ namespace Flowchart_Editor
             MinHeight = minHeight;
             MinWidth = minWidth;
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
-            //toggleButtonStyleTheme.Click += ThemeChange;
-            //ThemeChange();
         }
-
-        private void ThemeChange(object? sender = null, RoutedEventArgs? e = null) => // Установление темы (светлая, тёмная)
-            Theme1.SetTheme(toggleButtonStyleTheme);
 
         public void MouseMoveBlock(object sender, MouseEventArgs e) //Обработка нахождения курсора на блоке
         {
@@ -108,7 +100,7 @@ namespace Flowchart_Editor
             return uIElement;
         }
 
-        private void DragLeaveDestination(object sender, DragEventArgs e) //Обработка чтобы блок не вылез за границы приложения
+        private void DragLeaveDestination(object sender, DragEventArgs e) //Отображение перемещение блока
         {
             if (e.Data.GetDataPresent(typeof(Block)))
             {
@@ -127,61 +119,22 @@ namespace Flowchart_Editor
                     Keyboard.ClearFocus();
         }
 
-        private void MenuDarkModeButton_Click(object sender, RoutedEventArgs e) =>
-            ModifyTheme(toggleButtonStyleTheme.IsChecked == true);
-
-
-        private static void ModifyTheme(bool isDarkTheme)
+        private void MenuDarkModeButton_Click(object sender, RoutedEventArgs e)
         {
+            bool isDarkTheme = false;
+
+            if (toggleButtonStyleTheme.IsChecked != null)
+                isDarkTheme = (bool)toggleButtonStyleTheme.IsChecked;
+
             PaletteHelper paletteHelper = new();
             ITheme theme = paletteHelper.GetTheme();
             theme.SetBaseTheme(isDarkTheme ? Theme.Dark : Theme.Light);
             paletteHelper.SetTheme(theme);
         }
 
-        public async void LoadedListFontFamily(object sender, RoutedEventArgs e)
+        private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConnection = new(connectionString);
-            await sqlConnection.OpenAsync();
-            SqlDataReader? sqlReader = null;
-            SqlCommand command = new("SELECT fontFamily FROM FontFamily", sqlConnection);
-            try
-            {
-                sqlReader = await command.ExecuteReaderAsync();
-                while (await sqlReader.ReadAsync())
-                    listFontFamily.Items.Add(new FontFamily(Convert.ToString(sqlReader["fontFamily"]).Trim()));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-            finally
-            {
-                if (sqlReader != null)
-                    sqlReader.Close();
-            }
-        }
-
-        private void listWidthBlock_Loaded(object sender, RoutedEventArgs e)
-        {
-            for (int i = 110; i <= 250; i += 10)
-                listWidthBlock.Items.Add(i);
-        }
-
-        private void listHeightBlock_Loaded(object sender, RoutedEventArgs e)
-        {
-            for (int i = 60; i <= 250; i += 10)
-                listHeightBlock.Items.Add(i);
-        }
-
-        private void listFontSize_Loaded(object sender, RoutedEventArgs e)
-        {
-            for (int i = 8; i <= 26; i += 2)
-            {
-                ComboBoxItem comboBoxItem = new();
-                comboBoxItem.Content = i.ToString();
-                listFontSize.Items.Add(comboBoxItem.Content);
-            }
+            MessageBox.Show("Ку-Ку");
         }
     }
 }

@@ -1,6 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="LineStyle" TargetType="Line">
-        <Setter Property="Stroke" Value="#FFF9F9FB" />
-    </Style>
-</ResourceDictionary>

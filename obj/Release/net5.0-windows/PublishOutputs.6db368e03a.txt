@@ -1,0 +1,8 @@
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\Flowchart_Editor.exe
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\Flowchart_Editor.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\Flowchart_Editor.deps.json
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\Flowchart_Editor.runtimeconfig.json
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\Flowchart_Editor.pdb
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\MaterialDesignColors.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\MaterialDesignThemes.Wpf.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Release\net5.0-windows\publish\Newtonsoft.Json.dll

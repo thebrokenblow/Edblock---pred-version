@@ -1,8 +1,7 @@
 ﻿<Application x:Class="Flowchart_Editor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Flowchart_Editor"
-             StartupUri="FlowchartEditingWindow.xaml">
+             StartupUri="View/Menu/Edblock.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,6 +10,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Grey.Primary.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#b87afa" />
+            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#edaaff" />
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#835cc7" />
+            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#b87afa" />
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#edaaff" />
+            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#835cc7" />
+            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#aeea00" />
+            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#e4ff54" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

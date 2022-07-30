@@ -18,7 +18,7 @@ namespace Flowchart_Editor.Menu.SaveProject
 
         private static void SaveBlockModel(List<BlockModel> listBlockModels)
         {
-            foreach (Block itemBlock in Edblock.listOfBlock)
+            foreach (Block itemBlock in Edblock.ListOfBlock)
             {
                 Type typeOfBlock = itemBlock.GetType();
                 BlockModel blockModel = GetProperty.GetProperty.BlockModel(itemBlock, typeOfBlock.Name);
@@ -28,7 +28,7 @@ namespace Flowchart_Editor.Menu.SaveProject
 
         private static void SaveLineModel(List<LineModel> listLineModels)
         {
-            foreach (Line itemLine in Edblock.listLineConnection)
+            foreach (Line itemLine in Edblock.ListLineConnection)
             {
                 LineModel lineModel = GetProperty.GetProperty.LineModel(itemLine);
                 listLineModels.Add(lineModel);
@@ -37,7 +37,7 @@ namespace Flowchart_Editor.Menu.SaveProject
 
         private static void SaveCaseModel(List<CaseModel> listCaseModels)
         {
-            foreach (CaseBlock itemConditionCaseFirstOptionBlock in Edblock.listCaseBlock)
+            foreach (CaseBlock itemConditionCaseFirstOptionBlock in Edblock.ListCaseBlock)
             {
                 CaseModel caseModel = GetProperty.GetProperty.CaseModel(itemConditionCaseFirstOptionBlock);
                 listCaseModels.Add(caseModel);
