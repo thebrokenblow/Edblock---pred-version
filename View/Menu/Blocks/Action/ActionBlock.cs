@@ -1,109 +1,87 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
+using Flowchart_Editor.Model;
 using System;
-using System.Collections.Generic;
 
 namespace Flowchart_Editor.Models
 {
     [BlockName("ActionBlock")]
     public class ActionBlock : Block
     {
-        private readonly int defaultWidth = DefaultPropertyForBlock.width;
-        private readonly int defaulHeight = DefaultPropertyForBlock.height;
-        public Dictionary<int, int> dictionary = new();
-        const int offsetConnectionPoint = 2;
-
-        public ActionBlock(Canvas destination)
+        private const int offsetConnectionPoint = 2;
+        public ActionBlock(Canvas editField)
         {
-            EditField = destination;
-            blockWidthCoefficient = 1;
-            blockHeightCoefficient = 1;
+            EditField = editField;
             initialText = "Действие";
+            Brush backgroundColor = GetBackgroundColor("#FF52C0AA");
+
+            SetPropertyFrameBlock(backgroundColor);
+            
+            SetPropertyTextField(ControlSize, ControlOffset);
+
+            SetCoordinatesConnectionPoints();
+
+            InitializingConnectionPoints(listCoordinatesConnectionPoints);
         }
 
         override public UIElement GetUIElement()
         {
-            if (FrameBlock == null)
-            {
-                FrameBlock = new Canvas();
-                BrushConverter brushConverter = new();
-                Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF52C0AA");
-
-                SetPropertyFrameBlock(defaultWidth, defaulHeight, backgroundColor);
-
-                //SetPropertyForTextBox(defaultWidth, defaulHeight, initialText);
-                TextBoxOfBlock = new();
-                TextBoxOfBlock.Height = 30;
-                TextBoxOfBlock.Width = 140;
-                TextBoxOfBlock.Text = "Действие";
-                
-                FrameBlock.Children.Add(TextBoxOfBlock);
-
-                SetStyle(TextBoxOfBlock, "TextBoxStyleForBlock");
-
-                //SetPropertyForTextBlock(defaultWidth, defaulHeight, initialText);
-
-                //dictionary.Add(defaultWidth / 2 - offsetConnectionPoint, -offsetConnectionPoint);
-                //dictionary.Add(-offsetConnectionPoint, defaulHeight / 2 - offsetConnectionPoint);
-                //dictionary.Add(defaultWidth / 2 - offsetConnectionPoint, defaulHeight - offsetConnectionPoint);
-                //dictionary.Add(defaultWidth - offsetConnectionPoint * 2, defaulHeight / 2 - offsetConnectionPoint);
-
-                //InitializingConnectionPoints(dictionary);
-
-                //AddConnectionPoints();
-            }
             return FrameBlock;
+        }
+
+        protected override void SetCoordinatesConnectionPoints()
+        {
+            double width = ControlSize.Width;
+            double height = ControlSize.Height;
+
+            double connectionPointsX = width / 2 - offsetConnectionPoint;
+            double connectionPointsY = -offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            connectionPointsX = -offsetConnectionPoint;
+            connectionPointsY = height / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            connectionPointsX = width / 2 - offsetConnectionPoint;
+            connectionPointsY = height - offsetConnectionPoint * 2;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            connectionPointsX = width - offsetConnectionPoint * 2;
+            connectionPointsY = height / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
         }
 
         public override void SetWidth(int valueBlockWidth)
         {
-            if (FrameBlock != null && TextBoxOfBlock != null && TextBlockOfBlock != null)
-            {
-                FrameBlock.Width = valueBlockWidth;
-                TextBoxOfBlock.Width = valueBlockWidth;
-                TextBlockOfBlock.Width = valueBlockWidth;
-                //Canvas.SetLeft(firstPointConnect, valueBlockWidth / 2 - offsetConnectionPoint);
-                //Canvas.SetLeft(thirdPointConnect, valueBlockWidth / 2 - offsetConnectionPoint);
-                //Canvas.SetLeft(fourthPointConnect, valueBlockWidth - offsetConnectionPoint * 2);
-            }
+            ControlSize controlSize = new(valueBlockWidth, 0);
+            SetSize(FrameBlock, controlSize);
+            SetSize(TextBoxOfBlock, controlSize);
+            SetSize(TextBlockOfBlock, controlSize);
+            int[] coordinatesConnectionPoints = new int[4];
+            coordinatesConnectionPoints[0] = valueBlockWidth / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints[2] = valueBlockWidth / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints[3] = valueBlockWidth - offsetConnectionPoint * 2;
+            SetLeftCoordinatesConnectionPoints(coordinatesConnectionPoints);
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
-            if (FrameBlock != null && TextBoxOfBlock != null && TextBlockOfBlock != null)
-            {
-                FrameBlock.Height = valueBlockHeight;
-                TextBoxOfBlock.Height = valueBlockHeight;
-                TextBlockOfBlock.Height = valueBlockHeight;
-                //Canvas.SetTop(secondPointConnect, valueBlockHeight / 2 - offsetConnectionPoint);
-                //Canvas.SetTop(thirdPointConnect, valueBlockHeight - offsetConnectionPoint);
-                //Canvas.SetTop(fourthPointConnect, valueBlockHeight / 2 - offsetConnectionPoint);
-            }
+            ControlSize controlSize = new(0, valueBlockHeight);
+            SetSize(FrameBlock, controlSize);
+            SetSize(TextBoxOfBlock, controlSize);
+            SetSize(TextBlockOfBlock, controlSize);
+            int[] coordinatesConnectionPoints = new int[4];
+            coordinatesConnectionPoints[1] = valueBlockHeight / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints[2] = valueBlockHeight - offsetConnectionPoint;
+            coordinatesConnectionPoints[3] = valueBlockHeight / 2 - offsetConnectionPoint;
+            SetTopCoordinatesConnectionPoints(coordinatesConnectionPoints);   
         }
-
-        protected override void SetСoordinatesComment(UIElement comment)
-        {
-            Canvas.SetTop(comment, DefaultPropertyForBlock.height / 2 + 1);
-            Canvas.SetLeft(comment, DefaultPropertyForBlock.width);
-        }
-
-        public override double GetWidthCoefficient() => 
-            blockWidthCoefficient;
-
-        public override double GetHeightCoefficient() => 
-            blockHeightCoefficient;
-
-        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) =>
-            Canvas.SetLeft(uIElementBlock, coordinateLeft - 1);
-
-        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) =>
-            Canvas.SetTop(uIElementBlock, coordinateTop);
-
-        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft) =>
-             Canvas.SetLeft(uIElementBlock, coordinateLeft - 1);
-
-        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop) =>
-            Canvas.SetTop(uIElementBlock, coordinateTop - DefaultPropertyForBlock.height / 2 + 0.5);
     }
 }
