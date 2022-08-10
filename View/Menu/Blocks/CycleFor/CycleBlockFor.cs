@@ -1,31 +1,32 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using Flowchart_Editor.Model;
 
 namespace Flowchart_Editor.Models
 {
-    [BlockName("ConditionBlock")]
-    public class ConditionBlock : Block
+    [BlockName("CycleForBlock")]
+    public class CycleBlockFor : Block
     {
-        protected List<Point> listPoints = new();
-        public ConditionBlock(Canvas destination)
+        private readonly List<Point> listPoints = new();
+        private const int sideProjection = 10; 
+        public CycleBlockFor(Canvas destination)
         {
             EditField = destination;
-            initialText = "Условие";
+            initialText = "Цикл for";
 
             SetPropertyFrameBlock();
-            SetCoordinatesConditionBlock(ControlSize);
+            SetCoordinatesCycleForBlock(ControlSize);
             polygonBlock = SetPointPolygon(listPoints);
             AddPointPolygon(polygonBlock);
 
-            string color = "#FF60B2D3";
+            string color = "#FFFFC618";
             Brush backgroundColor = GetBackgroundColor(color);
             SetFillPolygon(backgroundColor);
 
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
-            ControlOffset offsetTextField = GetOffsetTextField(ControlSize);
+            ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
             SetCoordinatesConnectionPoints(offsetConnectionPoint);
@@ -33,54 +34,66 @@ namespace Flowchart_Editor.Models
         }
 
         override public UIElement GetUIElement()
-        {
+        {            
             return FrameBlock;
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
         {
-            double width = controlSize.Width / 2;
-            double height = controlSize.Height / 2;
+            double width = controlSize.Width - sideProjection * 2;
+            double height = controlSize.Height;
             ControlSize sizeTextField = new(width, height);
             return sizeTextField;
         }
 
-        private static ControlOffset GetOffsetTextField(ControlSize controlSize)
+        private static ControlOffset GetOffsetTextField()
         {
-            double offsetLeft = controlSize.Width / 2 - controlSize.Width / 4;
-            double offsetTop = controlSize.Height / 4;
+            double offsetLeft = sideProjection;
+            double offsetTop = 0;
             ControlOffset offsetTextField = new(offsetLeft, offsetTop);
             return offsetTextField;
         }
 
-        private void SetCoordinatesConditionBlock(ControlSize controlSize)
+        private void SetCoordinatesCycleForBlock(ControlSize controlSize)
         {
-            double defaulWidth = controlSize.Width;
-            double defaulHeight = controlSize.Height;
+            double height = controlSize.Height;
+            double width = controlSize.Width;
 
             listPoints.Clear();
 
-            Point pointConditionBlock = new(0, defaulHeight / 2);
-            listPoints.Add(pointConditionBlock);
+            Point poinCycleForBlock = new(sideProjection, 0);
+            listPoints.Add(poinCycleForBlock);
 
-            pointConditionBlock = new(defaulWidth / 2, defaulHeight);
-            listPoints.Add(pointConditionBlock);
+            poinCycleForBlock = new(sideProjection, 0);
+            listPoints.Add(poinCycleForBlock);
 
-            pointConditionBlock = new(defaulWidth, defaulHeight / 2);
-            listPoints.Add(pointConditionBlock);
+            poinCycleForBlock = new(0, sideProjection);
+            listPoints.Add(poinCycleForBlock);
 
-            pointConditionBlock = new(defaulWidth / 2, 0);
-            listPoints.Add(pointConditionBlock);
+            poinCycleForBlock = new(0, height - sideProjection);
+            listPoints.Add(poinCycleForBlock);
 
-            pointConditionBlock = new(0, defaulHeight / 2);
-            listPoints.Add(pointConditionBlock);
+            poinCycleForBlock = new(sideProjection, height);
+            listPoints.Add(poinCycleForBlock);
+
+            poinCycleForBlock = new(width - sideProjection, height);
+            listPoints.Add(poinCycleForBlock);
+
+            poinCycleForBlock = new(width, height - sideProjection);
+            listPoints.Add(poinCycleForBlock);
+
+            poinCycleForBlock = new(width, sideProjection);
+            listPoints.Add(poinCycleForBlock);
+
+            poinCycleForBlock = new(width - sideProjection, 0);
+            listPoints.Add(poinCycleForBlock);
         }
 
         private void SetPropertyControl(ControlSize blockSize)
         {
             ControlSize textFieldSize = GetSizeTextField(blockSize);
-            ControlOffset textFieldOffset = GetOffsetTextField(blockSize);
-            SetCoordinatesConditionBlock(blockSize);
+            ControlOffset textFieldOffset = GetOffsetTextField();
+            SetCoordinatesCycleForBlock(blockSize);
             SetPointPolygon(listPoints);
             SetSize(FrameBlock, blockSize);
             SetSize(TextBoxOfBlock, textFieldSize);
@@ -111,6 +124,6 @@ namespace Flowchart_Editor.Models
             //coordinatesConnectionPoints[2] = valueBlockHeight - offsetConnectionPoint;
             //coordinatesConnectionPoints[3] = valueBlockHeight / 2 - offsetConnectionPoint;
             //SetTopConnectionPoints(coordinatesConnectionPoints);
-        }
+        } 
     }
 }

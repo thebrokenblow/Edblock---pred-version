@@ -11,7 +11,6 @@ namespace Flowchart_Editor.Models
     {
         private readonly List<Point> listPoints = new();
         private const int sideProjection = 20;
-        private const int offsetConnectionPoint = 2;
 
         public InputOutputBlock(Canvas destination)
         {
@@ -31,7 +30,7 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints();
+            SetCoordinatesConnectionPoints(offsetConnectionPoint, sideProjection);
             InitializingConnectionPoints(listCoordinatesConnectionPoints);
         }
 
@@ -88,32 +87,6 @@ namespace Flowchart_Editor.Models
             //Canvas.SetTop(secondPointConnect, valueBlockHeight / 2 - 5);
             //Canvas.SetTop(thirdPointConnect, valueBlockHeight - 3);
             //Canvas.SetTop(fourthPointConnect, valueBlockHeight / 2 - 5);
-        }
-
-        protected override void SetCoordinatesConnectionPoints()
-        {
-            double width = ControlSize.Width;
-            double height = ControlSize.Height;
-
-            double connectionPointsX = width / 2 - offsetConnectionPoint;
-            double connectionPointsY = -offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = sideProjection / 2 - offsetConnectionPoint;
-            connectionPointsY = height / 2 - offsetConnectionPoint * 2;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width / 2 - offsetConnectionPoint;
-            connectionPointsY = height - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width - sideProjection / 2 - offsetConnectionPoint;
-            connectionPointsY = height / 2 - offsetConnectionPoint * 2;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
         }
     }
 }

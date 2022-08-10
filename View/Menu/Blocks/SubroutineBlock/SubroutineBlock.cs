@@ -7,9 +7,7 @@ namespace Flowchart_Editor.Models
 {
     [BlockName("SubroutineBlock")]
     public class SubroutineBlock : Block
-    {
-        public Border borderLine = new();
-        private const int offsetConnectionPoint = 2;
+    { 
         private const int offsetBorderLine = 20;
 
         public SubroutineBlock(Canvas destination)
@@ -26,12 +24,13 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints();
+            SetCoordinatesConnectionPoints(offsetConnectionPoint);
             InitializingConnectionPoints(listCoordinatesConnectionPoints);
         }
 
         private void SetBorderLine()
         {
+            Border borderLine = new();
             borderLine.BorderBrush = Brushes.Black;
             borderLine.Width = ControlSize.Width - offsetBorderLine * 2;
             borderLine.Height = ControlSize.Height;
@@ -70,33 +69,6 @@ namespace Flowchart_Editor.Models
         public override void SetHeight(int valueBlockHeight)
         {
 
-        }
-
-
-        protected override void SetCoordinatesConnectionPoints()
-        {
-            double width = ControlSize.Width;
-            double height = ControlSize.Height;
-
-            double connectionPointsX = width / 2 - offsetConnectionPoint;
-            double connectionPointsY = -offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = -offsetConnectionPoint;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width / 2 - offsetConnectionPoint;
-            connectionPointsY = height - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width - offsetConnectionPoint * 2;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
         }
     }
 }

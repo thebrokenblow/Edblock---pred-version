@@ -10,8 +10,7 @@ namespace Flowchart_Editor.Models
     public class CycleWhileEndBlock : Block
     {
         private readonly List<Point> listPoints = new();
-        private const int offsetConnectionPoint = 2;
-        private const int sizeClippedCorner = 10; //подумать ещё над названием
+        private const int sideProjection = 10;
         public CycleWhileEndBlock(Canvas destination)
         {
             EditField = destination;
@@ -30,13 +29,13 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints();
+            SetCoordinatesConnectionPoints(offsetConnectionPoint);
             InitializingConnectionPoints(listCoordinatesConnectionPoints);
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
         {
-            double width = controlSize.Width - sizeClippedCorner * 2;
+            double width = controlSize.Width - sideProjection * 2;
             double height = controlSize.Height;
             ControlSize sizeTextField = new(width, height);
             return sizeTextField;
@@ -44,7 +43,7 @@ namespace Flowchart_Editor.Models
 
         private static ControlOffset GetOffsetTextField()
         {
-            double offsetLeft = sizeClippedCorner;
+            double offsetLeft = sideProjection;
             double offsetTop = 0;
             ControlOffset offsetTextField = new(offsetLeft, offsetTop);
             return offsetTextField;
@@ -60,16 +59,16 @@ namespace Flowchart_Editor.Models
             Point poinCycleForBlock = new(0, 0);
             listPoints.Add(poinCycleForBlock);
 
-            poinCycleForBlock = new(0, height - sizeClippedCorner);
+            poinCycleForBlock = new(0, height - sideProjection);
             listPoints.Add(poinCycleForBlock);
 
-            poinCycleForBlock = new(sizeClippedCorner, height);
+            poinCycleForBlock = new(sideProjection, height);
             listPoints.Add(poinCycleForBlock);
 
-            poinCycleForBlock = new(width - sizeClippedCorner, height);
+            poinCycleForBlock = new(width - sideProjection, height);
             listPoints.Add(poinCycleForBlock);
 
-            poinCycleForBlock = new(width, height - sizeClippedCorner);
+            poinCycleForBlock = new(width, height - sideProjection);
             listPoints.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, 0);
@@ -87,33 +86,6 @@ namespace Flowchart_Editor.Models
 
         public override void SetHeight(int valueBlockHeight)
         {
-        }
-        
-
-        protected override void SetCoordinatesConnectionPoints()
-        {
-            double width = ControlSize.Width;
-            double height = ControlSize.Height;
-
-            double connectionPointsX = width / 2 - offsetConnectionPoint;
-            double connectionPointsY = -offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = -offsetConnectionPoint;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width / 2 - offsetConnectionPoint;
-            connectionPointsY = height - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width - offsetConnectionPoint * 2;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
         }
     }
 }

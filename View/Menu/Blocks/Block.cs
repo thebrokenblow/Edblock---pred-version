@@ -19,10 +19,10 @@ namespace Flowchart_Editor.Models
         private const int defaultWidth = 140;
         private const int defaulHeight = 60;
         private const int radiusPoint = 6;
+        protected const int offsetConnectionPoint = 3;
         protected static ControlSize ControlSize { get; private set; } = new(defaultWidth, defaulHeight);
         protected ControlOffset ControlOffset { get; private set; } = new(0, 0);
         protected Polygon polygonBlock = new();
-        
         protected string? initialText;
         protected Tuple<double, double> coordinatesConnectionPoints = new(0, 0);
         protected List<Tuple<double, double>> listCoordinatesConnectionPoints = new();
@@ -33,7 +33,6 @@ namespace Flowchart_Editor.Models
         abstract public UIElement GetUIElement();
         abstract public void SetWidth(int valueBlockWidth);
         abstract public void SetHeight(int valueBlockHeight);
-        abstract protected void SetCoordinatesConnectionPoints();
 
         private void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
@@ -190,6 +189,32 @@ namespace Flowchart_Editor.Models
             {
                 
             }   
+        }
+
+        public void SetCoordinatesConnectionPoints(int offsetConnectionPoint, int sideProjection = 0)
+        {
+            double width = ControlSize.Width;
+            double height = ControlSize.Height;
+
+            double connectionPointsX = width / 2 - offsetConnectionPoint;
+            double connectionPointsY = -offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            connectionPointsX = sideProjection / 2 - offsetConnectionPoint;
+            connectionPointsY = height / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            connectionPointsX = width / 2 - offsetConnectionPoint;
+            connectionPointsY = height - offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
+
+            connectionPointsX = width - sideProjection / 2 - offsetConnectionPoint;
+            connectionPointsY = height / 2 - offsetConnectionPoint;
+            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
+            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
         }
 
         protected static Brush GetBackgroundColor(string color)

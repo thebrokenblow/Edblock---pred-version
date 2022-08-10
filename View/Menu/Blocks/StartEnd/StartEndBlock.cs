@@ -11,7 +11,6 @@ namespace Flowchart_Editor.Models
     {
         private readonly Rectangle? startEndBlock = new();
         private const int radiusOfRectangleStartEndBlock = 20;
-        private const int offsetConnectionPoint = 2;
         private const int valueOffsetTextField = 3;
 
         public StartEndBlock(Canvas destination)
@@ -35,7 +34,7 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints();
+            SetCoordinatesConnectionPoints(offsetConnectionPoint);
             InitializingConnectionPoints(listCoordinatesConnectionPoints);
         }
 
@@ -66,33 +65,6 @@ namespace Flowchart_Editor.Models
 
         public override void SetHeight(int valueBlockHeight)
         {
-        }
-        
-
-        protected override void SetCoordinatesConnectionPoints()
-        {
-            double width = ControlSize.Width;
-            double height = ControlSize.Height;
-
-            double connectionPointsX = width / 2 - offsetConnectionPoint;
-            double connectionPointsY = -offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = -offsetConnectionPoint;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width / 2 - offsetConnectionPoint;
-            connectionPointsY = height - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
-
-            connectionPointsX = width - offsetConnectionPoint * 2;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
-            coordinatesConnectionPoints = new(connectionPointsX, connectionPointsY);
-            listCoordinatesConnectionPoints.Add(coordinatesConnectionPoints);
         }
     }
 }
