@@ -10,34 +10,23 @@
             Width="140" 
             Height="60"
             Background="#FFBA64C8">
-            
+
             <Border 
                 BorderBrush="Black" 
                 Height="60" 
-                Width="140" 
+                Width="100" 
                 BorderThickness="1" 
-                CornerRadius="1">
-                <Canvas>
-                    <Border 
-                        BorderBrush="Black" 
-                        Height="60" 
-                        Width="100" 
-                        BorderThickness="1" 
-                        CornerRadius="1" 
-                        Canvas.Left="20" 
-                        Canvas.Top="-1"/>
+                Canvas.Left="20"/>
 
-                    <TextBlock  
-                        Text="Подпрограмма"
-                        Canvas.Top="20"
-                        FontSize="12"
-                        Foreground="White"
-                        TextAlignment="Center"  
-                        HorizontalAlignment="Center"  
-                        Width="140" 
-                        Height="20" />
-                </Canvas>
-            </Border>
+            <TextBlock  
+                Text="Подпрограмма"
+                Canvas.Top="20"
+                FontSize="12"
+                Foreground="White"
+                TextAlignment="Center"  
+                HorizontalAlignment="Center"  
+                Width="140" 
+                Height="20" />
         </Canvas>
     </Grid>
 </UserControl>
