@@ -26,7 +26,7 @@ namespace Flowchart_Editor.Models
         protected string? initialText;
         protected Tuple<double, double> coordinatesConnectionPoints = new(0, 0);
         protected List<Tuple<double, double>> listCoordinatesConnectionPoints = new();
-        protected List<Ellipse> listConnectionPoints = new();
+        protected List<Ellipse> connectionPoints = new();
         protected readonly FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         protected readonly Uri uri = new("View/Style/style.xaml", UriKind.Relative);
 
@@ -78,8 +78,8 @@ namespace Flowchart_Editor.Models
         protected void SetProperty(FrameworkElement frameworkElement, string nameStyle, ControlOffset controlOffset, ControlSize blockSize)
         {
             SetSize(frameworkElement, blockSize);
-            SetStyle(frameworkElement, nameStyle);
             SetCoordinates(frameworkElement, controlOffset);
+            SetStyle(frameworkElement, nameStyle);
         }
 
         protected void SetPropertyTextField(ControlSize blockSize, ControlOffset controlOffset)
@@ -130,30 +130,30 @@ namespace Flowchart_Editor.Models
             foreach (var itemCoordinatesPoint in coordinatesConnectionPoints)
             {
                 Ellipse connectionPoint = new();
-                ControlSize controlSize = new(radiusPoint, radiusPoint);
-                ControlOffset.ValueSetLeft = itemCoordinatesPoint.Item1;
-                ControlOffset.ValueSetTop = itemCoordinatesPoint.Item2;
-                SetProperty(connectionPoint, nameStyle, ControlOffset, controlSize);
-                listConnectionPoints.Add(connectionPoint);
+                ControlSize sizeConnectionPoints = new(radiusPoint, radiusPoint);
+                ControlOffset offsetConnectionPoints = new(itemCoordinatesPoint.Item1, itemCoordinatesPoint.Item2);
+
+                SetProperty(connectionPoint, nameStyle, offsetConnectionPoints, sizeConnectionPoints);
+
+                connectionPoints.Add(connectionPoint);
                 connectionPoint.MouseMove += ClickOnConnectionPoint;
                 FrameBlock.Children.Add(connectionPoint);
             }
         }
 
-        protected void SetLeftCoordinatesConnectionPoints(int[] coordinatesConnectionPoints)
+        protected void SetLeftConnectionPoints(int[] coordinatesConnectionPoints)
         {
-            for (int i = 0; i < listConnectionPoints.Count; i++)
+            for (int i = 0; i < connectionPoints.Count; i++)
             {
                 if (i != 1) //1 - это левая точка соединения, её не надо смещать при увеличении блока 
-                    Canvas.SetLeft(listConnectionPoints[i], coordinatesConnectionPoints[i]);
+                    Canvas.SetLeft(connectionPoints[i], coordinatesConnectionPoints[i]);
             }
-
         }
 
-        protected void SetTopCoordinatesConnectionPoints(int[] coordinatesConnectionPoints)
+        protected void SetTopConnectionPoints(int[] coordinatesConnectionPoints)
         {
-            for (int i = 1; i < listConnectionPoints.Count; i++) //перебор начинается с 0, так как при масштабировании высоты блока не надо менять самую верхнюю точку соединения
-                Canvas.SetTop(listConnectionPoints[i], coordinatesConnectionPoints[i]);
+            for (int i = 1; i < connectionPoints.Count; i++) //перебор начинается с 0, так как при масштабировании высоты блока не надо менять самую верхнюю точку соединения
+                Canvas.SetTop(connectionPoints[i], coordinatesConnectionPoints[i]);
         }
 
         protected void SetPropertyFrameBlock(Brush? backgroundColor = null)
@@ -164,15 +164,23 @@ namespace Flowchart_Editor.Models
             FrameBlock.MouseMove += MouseMoveBlockForMovements;
         }
 
-
-
-        protected void SetPointPolygon(List<Point> listPoints)
+        protected void SetFillPolygon(Brush backgroundColor)
         {
-            PointCollection myPointCollection = new();
-            foreach (Point itemPoint in listPoints)
-                myPointCollection.Add(itemPoint);
+            polygonBlock.Fill = backgroundColor;
+        }
 
-            polygonBlock.Points = myPointCollection;
+        protected Polygon SetPointPolygon(List<Point> listPoints)
+        {
+            PointCollection pointCollection = new();
+            foreach (Point itemPoint in listPoints)
+                pointCollection.Add(itemPoint);
+
+            polygonBlock.Points = pointCollection;
+            return polygonBlock;
+        }
+
+        protected void AddPointPolygon(Polygon polygonBlock)
+        {
             FrameBlock.Children.Add(polygonBlock);
         }
 
