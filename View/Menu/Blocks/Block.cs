@@ -22,12 +22,10 @@ namespace Flowchart_Editor.Models
         protected const int offsetConnectionPoint = 3;
         protected static ControlSize ControlSize { get; private set; } = new(defaultWidth, defaulHeight);
         protected ControlOffset ControlOffset { get; private set; } = new(0, 0);
-        protected Polygon polygonBlock = new();
         protected string? initialText;
         protected Tuple<double, double> coordinatesConnectionPoints = new(0, 0);
         protected List<Tuple<double, double>> listCoordinatesConnectionPoints = new();
         protected List<Ellipse> connectionPoints = new();
-        protected readonly FontFamily defaultFontFamily = DefaultPropertyForBlock.fontFamily;
         protected readonly Uri uri = new("View/Style/style.xaml", UriKind.Relative);
 
         abstract public UIElement GetUIElement();
@@ -155,32 +153,10 @@ namespace Flowchart_Editor.Models
                 Canvas.SetTop(connectionPoints[i], coordinatesConnectionPoints[i]);
         }
 
-        protected void SetPropertyFrameBlock(Brush? backgroundColor = null)
+        protected void SetPropertyFrameBlock()
         {
             SetSize(FrameBlock, ControlSize);
-            if (backgroundColor != null)
-                FrameBlock.Background = backgroundColor;
             FrameBlock.MouseMove += MouseMoveBlockForMovements;
-        }
-
-        protected void SetFillPolygon(Brush backgroundColor)
-        {
-            polygonBlock.Fill = backgroundColor;
-        }
-
-        protected Polygon SetPointPolygon(List<Point> listPoints)
-        {
-            PointCollection pointCollection = new();
-            foreach (Point itemPoint in listPoints)
-                pointCollection.Add(itemPoint);
-
-            polygonBlock.Points = pointCollection;
-            return polygonBlock;
-        }
-
-        protected void AddPointPolygon(Polygon polygonBlock)
-        {
-            FrameBlock.Children.Add(polygonBlock);
         }
 
         protected void ClickOnConnectionPoint(object sender, MouseEventArgs e)
