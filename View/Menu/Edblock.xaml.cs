@@ -11,8 +11,9 @@ using Flowchart_Editor.View.Condition.Case;
 using Flowchart_Editor.View.ListControllsElement;
 using Flowchart_Editor.View.StylyTextField;
 using MaterialDesignThemes.Wpf;
-using System.Windows.Media;
 using System.Configuration;
+using Flowchart_Editor.Model;
+using System;
 
 namespace Flowchart_Editor
 {
@@ -21,21 +22,20 @@ namespace Flowchart_Editor
         const int minHeight = 760;
         const int minWidth = 1380;
         public static Canvas? EditField { get; private set; }
-        public static Button? ButtonOpenMenu { get; private set; }
-        public static Button? ButtonCloseMenu { get; private set; }
         public static ListControlls ListControlls { get; private set; }
         public static StylyText StylyText { get; private set; }
-        public static List<Block> ListOfBlock { get; private set; } = new();
+        public static List<Block> ListHighlightedBlock { get; private set; } = new();
         public static List<CommentControls> ListComment { get; private set; } = new();
         public static List<Line> ListLineConnection { get; private set; } = new();
         public static List<CaseBlock> ListCaseBlock { get; private set; } = new();
-        string connectionString;
+        private readonly string connectionString;
         public Edblock()
         {
             InitializeComponent();
             DataContext = new ApplicationViewModel();
+            Block.EditField = EditField;
             EditField = editField;
-            ListControlls = new(ListOfBlock, ListComment, ListCaseBlock);
+            ListControlls = new(ListHighlightedBlock, ListComment, ListCaseBlock);
             MinHeight = minHeight;
             MinWidth = minWidth;
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
@@ -45,11 +45,19 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Block instanceOfBlock = ((IBlockView)sender).GetBlock(editField);
-                ListOfBlock.Add(instanceOfBlock);
-                Block.DoDragDropControlElement(typeof(Block), instanceOfBlock, sender);
+                RemoveFocusBlocks();
+                IBlockView blockView = (IBlockView)sender;
+                Block instanceBlock = blockView.GetBlock(editField);
+                Type typeBlock = typeof(Block);
+                Block.DoDragDropControlElement(typeBlock, instanceBlock, sender);
             }
             e.Handled = true;
+        }
+
+        private static void RemoveFocusBlocks()
+        {
+            for (int i = 0; i < ListHighlightedBlock.Count; i++)
+                ListHighlightedBlock[i].RemoveHighlightedBlock();
         }
 
         private void DropDestination(object sender, DragEventArgs e) //Отпускание блока
@@ -57,8 +65,9 @@ namespace Flowchart_Editor
             if (e.Data.GetDataPresent(typeof(Block)))
             {
                 Point point = e.GetPosition(editField);
-                UIElement? uIElementBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
-                Block.SetCoordinates(uIElementBlock, point.X, point.Y);
+                UIElement uIElementBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
+                ControlOffset controlOffset = new(point.X, point.Y);
+                Block.SetCoordinates(uIElementBlock, controlOffset);
             }
             else
                 e.Handled = true;
@@ -71,52 +80,46 @@ namespace Flowchart_Editor
                 e.Effects = DragDropEffects.Copy;
                 Point point = e.GetPosition(editField);
                 Block block = (Block)e.Data.GetData(typeof(Block));
-                UIElement? uIElementOfBlock = CreateUIElement(block, e);
-                Block.SetCoordinates(uIElementOfBlock, point.X + 1, point.Y + 1);
+                UIElement uIElementBlock = CreateUIElement(block, e);
+                ControlOffset controlOffset = new(point.X + 1, point.Y + 1);
+                Block.SetCoordinates(uIElementBlock, controlOffset);
             }
             else if (e.Data.GetDataPresent(typeof(Canvas)))
             {
                 e.Effects = DragDropEffects.Copy;
                 Point point = e.GetPosition(editField);
-                UIElement uIElement = (Canvas)e.Data.GetData(typeof(Canvas));
-                Block.SetCoordinates(uIElement, point.X + 1, point.Y + 1);
+                UIElement uIElementBlock = (Canvas)e.Data.GetData(typeof(Canvas));
+                ControlOffset controlOffset = new(point.X + 1, point.Y + 1);
+                Block.SetCoordinates(uIElementBlock, controlOffset);
             }
             else
                 e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
 
-        private UIElement? CreateUIElement(Block block, DragEventArgs e) //Создание и добавление блока 
+        private UIElement CreateUIElement(Block block, DragEventArgs e) //Создание и добавление блока 
         {
-            UIElement? uIElement;
-            if (block.FrameBlock == null)
-            {
-                uIElement = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
-                editField.Children.Add(uIElement);
-            }
-            else
+            UIElement uIElement;
+            uIElement = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
+            bool containsUIElement = editField.Children.Contains(uIElement);
+
+            if (containsUIElement)
                 uIElement = block.GetUIElement();
+            else
+                editField.Children.Add(uIElement);
 
             return uIElement;
         }
 
-        private void DragLeaveDestination(object sender, DragEventArgs e) //Отображение перемещение блока
-        {
-            if (e.Data.GetDataPresent(typeof(Block)))
-            {
-                UIElement? uIElementOfBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
-                editField.Children.Remove(uIElementOfBlock);
-                Block dataInformationOfBlock = (Block)e.Data.GetData(typeof(Block));
-                dataInformationOfBlock.Reset();
-            }
-            e.Handled = true;
-        }
-
         private void MouseDownEditField(object sender, MouseButtonEventArgs e)
         {
-            if (Keyboard.FocusedElement is TextBox felem)
-                if (sender != felem)
-                    Keyboard.ClearFocus();
+            Keyboard.ClearFocus();
+
+            if (e.Source is not TextBlock)
+            {
+                for (int i = 0; i < ListHighlightedBlock.Count; i++)
+                    ListHighlightedBlock[i].RemoveHighlightedBlock();
+            }
         }
 
         private void MenuDarkModeButton_Click(object sender, RoutedEventArgs e)
@@ -130,11 +133,6 @@ namespace Flowchart_Editor
             ITheme theme = paletteHelper.GetTheme();
             theme.SetBaseTheme(isDarkTheme ? Theme.Dark : Theme.Light);
             paletteHelper.SetTheme(theme);
-        }
-
-        private void ButtonOpen_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Ку-Ку");
-        }
+        } 
     }
 }

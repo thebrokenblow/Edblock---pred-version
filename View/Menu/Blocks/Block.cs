@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-using Flowchart_Editor.Model;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Flowchart_Editor.Model;
+using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace Flowchart_Editor.Models
 {
@@ -20,9 +20,9 @@ namespace Flowchart_Editor.Models
         private const int defaulHeight = 60;
         private const int radiusPoint = 6;
         protected const int offsetConnectionPoint = 3;
-        protected static ControlSize ControlSize { get; private set; } = new(defaultWidth, defaulHeight);
-        protected ControlOffset ControlOffset { get; private set; } = new(0, 0);
-        protected string? initialText;
+        protected string initialText = "";
+        private readonly Border borderHighlightedLine = new();
+        protected static ControlSize ControlSize { get; set; } = new(defaultWidth, defaulHeight);
         protected Tuple<double, double> coordinatesConnectionPoints = new(0, 0);
         protected List<Tuple<double, double>> listCoordinatesConnectionPoints = new();
         protected List<Ellipse> connectionPoints = new();
@@ -35,7 +35,10 @@ namespace Flowchart_Editor.Models
         private void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && e.Source is not TextBox)
-                DoDragDropControlElement(typeof(Canvas), sender, sender);
+            {
+                Type typeBlock = typeof(Canvas);
+                DoDragDropControlElement(typeBlock, sender, sender);
+            }
             e.Handled = true;
         }
 
@@ -87,13 +90,20 @@ namespace Flowchart_Editor.Models
 
         private void SetPropertyTextBox(ControlSize blockSize, ControlOffset controlOffset)
         {
+            TextBoxOfBlock.LostFocus += TextBoxOfBlock_LostFocus; ; ;
             TextBoxOfBlock.MouseDoubleClick += SetTypeTextField;
             string nameStyle = "TextBoxStyleForBlock";
             SetProperty(TextBoxOfBlock, nameStyle, controlOffset, blockSize);
         }
 
+        private void TextBoxOfBlock_LostFocus(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
         private void SetPropertyTextBlock(ControlSize blockSize, ControlOffset controlOffset)
         {
+            
             TextBlockOfBlock.MouseDown += SetTypeTextField;
             TextBlockOfBlock.Text = initialText;
             string nameStyle = "TextBlockStyleForBlock";
@@ -102,11 +112,38 @@ namespace Flowchart_Editor.Models
                 FrameBlock.Children.Add(TextBlockOfBlock);
         }
 
+        private void HighlightedBlock(object sender, MouseButtonEventArgs e)
+        {
+            DrawHighlightedBlock();
+            Edblock.ListHighlightedBlock.Add(this);
+        }
+
+        protected void DrawHighlightedBlock()
+        {
+            borderHighlightedLine.BorderBrush = Brushes.Blue;
+            borderHighlightedLine.Width = ControlSize.Width;
+            borderHighlightedLine.Height = ControlSize.Height;
+            borderHighlightedLine.BorderThickness = new Thickness(1);
+            if (!FrameBlock.Children.Contains(borderHighlightedLine))
+                FrameBlock.Children.Add(borderHighlightedLine);
+            Edblock.ListHighlightedBlock.Add(this);
+        }
+
+        public void RemoveHighlightedBlock()
+        {
+            FrameBlock.Children.Remove(borderHighlightedLine);
+            Edblock.ListHighlightedBlock.Remove(this);
+        }
+
         protected void SetTypeTextField(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is TextBlock)
             {
-                if (e.ClickCount == 2)
+                if (e.ClickCount == 1)
+                {
+                    DrawHighlightedBlock();
+                }
+                else if (e.ClickCount == 2)
                 {
                     FrameBlock.Children.Remove(TextBlockOfBlock);
                     TextBoxOfBlock.Text = TextBlockOfBlock.Text;
@@ -149,7 +186,7 @@ namespace Flowchart_Editor.Models
 
         protected void SetTopConnectionPoints(int[] coordinatesConnectionPoints)
         {
-            for (int i = 1; i < connectionPoints.Count; i++) //перебор начинается с 0, так как при масштабировании высоты блока не надо менять самую верхнюю точку соединения
+            for (int i = 1; i < connectionPoints.Count; i++) //перебор начинается с 1, так как при масштабировании высоты блока не надо менять самую верхнюю точку соединения
                 Canvas.SetTop(connectionPoints[i], coordinatesConnectionPoints[i]);
         }
 
