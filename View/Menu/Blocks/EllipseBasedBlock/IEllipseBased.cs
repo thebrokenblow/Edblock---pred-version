@@ -9,7 +9,7 @@ namespace Flowchart_Editor.View.Menu.Blocks.EllipseBasedBlock
     {
         public void SetPropertyEllipseBlock();
         
-        public static void SetBackground(Ellipse ellipsBlock, Brush backgroundColor)
+        public static void SetFill(Ellipse ellipsBlock, Brush backgroundColor)
         {
             ellipsBlock.Fill = backgroundColor;
         }

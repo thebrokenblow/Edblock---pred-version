@@ -13,30 +13,30 @@
     <Window.Resources>
         <Style x:Key="StyleStackPanel" TargetType="StackPanel">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
                     <Setter Property="Background" Value="#212121" /> 
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="False">
                     <Setter Property="Background" Value="#f5f5f5" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="StyleGridMenu" TargetType="Grid">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
                     <Setter Property="Background" Value="#212121" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="False">
                     <Setter Property="Background" Value="#f5f5f5" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="StyleCanvasEditField" TargetType="Canvas">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
                     <Setter Property="Background" Value="#1c1c1c" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="False">
+                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="False">
                     <Setter Property="Background" Value="#FFF9F9FB" />
                 </DataTrigger>
             </Style.Triggers>
@@ -112,14 +112,14 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="Светлая"/>
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Светлая"/>
 
                         <ToggleButton
-                                Name="toggleButtonStyleTheme"
-                                Click="MenuDarkModeButton_Click"
-                                HorizontalAlignment="Center"/>
+                            Name="styleTheme"
+                            IsChecked="{Binding StyleTheme}"
+                            HorizontalAlignment="Center"/>
 
                         <TextBlock
                                 Text="Тёмная"
@@ -129,12 +129,14 @@
                         <StackPanel 
                             Orientation="Horizontal" 
                             Grid.Row="1">
+                            
                             <materialDesign:PackIcon 
                                 Kind="ContentSave" 
                                 Width="25" 
                                 Height="25" 
                                 VerticalAlignment="Center" 
                                 Margin="0 5"/>
+                            
                             <Button 
                                 Content="Сохранить проект" 
                                 Command="{Binding SaveProjectCommand}" />
@@ -143,14 +145,17 @@
                         <StackPanel 
                             Orientation="Horizontal"
                             Grid.Row="2">
+                            
                             <materialDesign:PackIcon 
                                 Kind="upload" 
                                 Width="25" 
                                 Height="25"
                                 VerticalAlignment="Center" 
                                 Margin="0 5"/>
-                            <Button Content="Загрузить проект" 
-                                    Command="{Binding UploadProjectCommand}"/>
+                            
+                            <Button 
+                                Content="Загрузить проект" 
+                                Command="{Binding UploadProjectCommand}"/>
                         </StackPanel>
 
                         <StackPanel 
@@ -164,7 +169,7 @@
                                 Margin="0 5"/>
                             <Button 
                                 Content="Сохранить изображение" 
-                                Command="{Binding SaveProjectCommand}" />
+                                Command="{Binding ImgCommand}" />
                         </StackPanel>
 
                         <StackPanel 
@@ -205,7 +210,7 @@
                         <Style TargetType="materialDesign:PackIcon">
                             <Setter Property="Foreground" Value="#212121" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=toggleButtonStyleTheme, Path=IsChecked}" Value="True">
+                                <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
                                     <Setter Property="Foreground" Value="#f5f5f5" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -215,11 +220,9 @@
             </Button>
         </StackPanel>
 
-
         <Canvas
             AllowDrop="True" 
             DragOver="DragOverDestination" 
-            DragLeave="DragLeaveDestination" 
             Drop="DropDestination"
             MouseDown="MouseDownEditField"
             Name="editField" 
@@ -402,7 +405,7 @@
                         Grid.Row="4"
                         Grid.Column="0"
                         MouseMove="MouseMoveBlock"
-                        Margin="10 0"/>
+                        Margin="10 5"/>
 
                     <Label
                         Content="Начало / Конец (5)" 

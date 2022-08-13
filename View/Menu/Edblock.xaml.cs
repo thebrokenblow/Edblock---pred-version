@@ -10,7 +10,6 @@ using Flowchart_Editor.Models.Comment;
 using Flowchart_Editor.View.Condition.Case;
 using Flowchart_Editor.View.ListControllsElement;
 using Flowchart_Editor.View.StylyTextField;
-using MaterialDesignThemes.Wpf;
 using System.Configuration;
 using Flowchart_Editor.Model;
 using System;
@@ -121,18 +120,5 @@ namespace Flowchart_Editor
                     ListHighlightedBlock[i].RemoveHighlightedBlock();
             }
         }
-
-        private void MenuDarkModeButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool isDarkTheme = false;
-
-            if (toggleButtonStyleTheme.IsChecked != null)
-                isDarkTheme = (bool)toggleButtonStyleTheme.IsChecked;
-
-            PaletteHelper paletteHelper = new();
-            ITheme theme = paletteHelper.GetTheme();
-            theme.SetBaseTheme(isDarkTheme ? Theme.Dark : Theme.Light);
-            paletteHelper.SetTheme(theme);
-        } 
     }
 }

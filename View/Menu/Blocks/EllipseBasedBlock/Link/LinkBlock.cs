@@ -64,7 +64,7 @@ namespace Flowchart_Editor.Models
 
             string color = "#FF5761A8";
             Brush backgroundColor = GetBackgroundColor(color);
-            IEllipseBased.SetBackground(linkBlock, backgroundColor);
+            IEllipseBased.SetFill(linkBlock, backgroundColor);
             IEllipseBased.SetSize(linkBlock, ControlSize);
             IEllipseBased.AddEllipse(FrameBlock, linkBlock);
         }

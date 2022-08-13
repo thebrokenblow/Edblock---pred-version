@@ -11,5 +11,10 @@ namespace Flowchart_Editor.View.Menu.ToolBar
         {
             InitializeComponent();
         }
+
+        private void ListBoxItem_Selected(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

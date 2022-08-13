@@ -126,11 +126,11 @@ namespace Flowchart_Editor.Models
         {
             SetCoordinatesPoints(ControlSize);
             Polygon cycleForBlock = IPolygonBased.SetPointPolygon(listPoints);
-            IPolygonBased.AddPointPolygon(FrameBlock, cycleForBlock);
+            IPolygonBased.AddPolygon(FrameBlock, cycleForBlock);
 
             string color = "#FFFFC618";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFillPolygon(cycleForBlock, backgroundColor);
+            IPolygonBased.SetFill(cycleForBlock, backgroundColor);
         }
     }
 }

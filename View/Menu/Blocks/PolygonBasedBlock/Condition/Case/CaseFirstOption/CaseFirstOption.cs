@@ -11,6 +11,8 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
 {
     public class CaseFirstOption : CaseBlock
     {
+        private Style styleLine;
+        private Style styleTextBox;
         private readonly int defaultWidth = DefaultPropertyForBlock.width;
         private readonly int defaulHeight = DefaultPropertyForBlock.height;
         private readonly Line firstLine = new();

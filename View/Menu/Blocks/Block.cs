@@ -26,7 +26,7 @@ namespace Flowchart_Editor.Models
         protected Tuple<double, double> coordinatesConnectionPoints = new(0, 0);
         protected List<Tuple<double, double>> listCoordinatesConnectionPoints = new();
         protected List<Ellipse> connectionPoints = new();
-        protected readonly Uri uri = new("View/Style/style.xaml", UriKind.Relative);
+        protected readonly Uri uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
 
         abstract public UIElement GetUIElement();
         abstract public void SetWidth(int valueBlockWidth);

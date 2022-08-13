@@ -9,18 +9,19 @@
         <Canvas>
             <Rectangle 
                 Width="140" 
-                Height="30" 
+                Height="60" 
                 Fill="#FFF25252" 
                 RadiusX="20" 
-                RadiusY="20" 
-                Canvas.Top="25" />
+                RadiusY="20" />
 
             <TextBlock 
+                Text="Ввод/Вывод" 
                 FontSize="12" 
                 Foreground="White" 
-                Canvas.Left="30" 
-                Canvas.Top="30"
-                Text="Начало/Конец" />
+                Width="140" 
+                Height="20" 
+                TextAlignment="Center"
+                Canvas.Top="20"/>
         </Canvas>
     </Grid>
 </UserControl>

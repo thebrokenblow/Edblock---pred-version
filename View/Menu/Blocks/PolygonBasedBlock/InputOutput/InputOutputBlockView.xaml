@@ -19,7 +19,6 @@
                 Width="140" 
                 Height="20" 
                 TextAlignment="Center"
-                HorizontalAlignment="Center" 
                 Canvas.Top="25" />
         </Canvas>
     </Grid>

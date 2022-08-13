@@ -15,10 +15,17 @@ namespace Flowchart_Editor.Models
             initialText = "Действие";
 
             SetPropertyCanvasBlock();
-            SetPropertyTextField(ControlSize, ControlOffset);
+            ControlOffset offsetTextField = new(0, 0);
+            SetPropertyTextField(ControlSize, offsetTextField);
             SetCoordinatesConnectionPoints(offsetConnectionPoint);
             InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            DrawHighlightedBlock();
+
+            FrameBlock.Tag = "Block";
+            Edblock.ListHighlightedBlock.Add(this);
         }
+
+        
 
         override public UIElement GetUIElement()
         {
@@ -45,8 +52,8 @@ namespace Flowchart_Editor.Models
 
         public override void SetHeight(int valueBlockHeight)
         {
-            //ControlSize controlSize = new(ControlSize.Width, valueBlockHeight);
-            //SetPropertyControl(controlSize);
+            ControlSize.Height = valueBlockHeight;
+            SetPropertyControl(ControlSize);
             //int[] coordinatesConnectionPoints = new int[4];
             //coordinatesConnectionPoints[1] = valueBlockHeight / 2 - offsetConnectionPoint;
             //coordinatesConnectionPoints[2] = valueBlockHeight - offsetConnectionPoint;

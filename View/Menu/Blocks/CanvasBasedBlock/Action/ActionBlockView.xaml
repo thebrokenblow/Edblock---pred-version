@@ -7,20 +7,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Canvas 
-            Width="140" 
-            Height="60"
-            Background="#FF52C0AA" 
-            Name="actionBlock">
+            Style="{StaticResource CanvasStyle}"
+            Background="#FF52C0AA">
 
             <TextBlock 
-                Canvas.Top="20"
+                Style="{StaticResource TextBlockStyle}"
                 Text="Действие"
-                FontSize="12"
-                Foreground="White"
-                TextAlignment="Center"  
-                HorizontalAlignment="Center" 
-                Width="140" 
-                Height="20" />
+                Width="140"/>
         </Canvas>
     </Grid>
 </UserControl>

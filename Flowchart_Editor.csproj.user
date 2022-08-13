@@ -9,64 +9,64 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="View\Menu\Settings\Settings.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\Settings\Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\Action\ActionBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\Blocks\Comment\CommentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\Condition\ConditionBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\Condition\ConditionBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\CycleFor\CycleBlockForView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\CycleFor\CycleForViewBlock.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\CycleWhileBegin\CycleBlockWhileBeginView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\CycleWhileBegin\CycleWhileBeginBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\CycleWhileEnd\CycleBlockWhileEndView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\CycleWhileEnd\CycleWhileEndBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\InputOutput\InputOutputBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\Link\LinkBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\SidePanel\Print.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\SidePanel\Print\Print.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\SidePanel\SaveImg.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\SidePanel\SaveImg\SaveImg.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\SidePanel\SaveProject.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\SidePanel\SaveProject\SaveProject.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\SidePanel\UploadProject.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\SidePanel\UploadProject\UploadProject.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\StartEnd\StartEndBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\ToolBar\FormatText.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\ToolBar\ListFontFamily.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\ToolBar\ListFontSize.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\FontSizeTextField\ListFontSize.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\ToolBar\ListHeightBlock.xaml.cs">
@@ -83,64 +83,64 @@
     <Page Update="View\Menu\Edblock.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Settings\Settings.xaml">
+    <Page Update="View\Menu\ToolBar\Settings\Settings.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\Action\ActionBlockView.xaml">
+    <Page Update="View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\Blocks\Comment\CommentView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\Condition\ConditionBlockView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\Condition\ConditionBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\CycleFor\CycleBlockForView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\CycleFor\CycleForViewBlock.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\CycleWhileBegin\CycleBlockWhileBeginView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\CycleWhileBegin\CycleWhileBeginBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\CycleWhileEnd\CycleBlockWhileEndView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\CycleWhileEnd\CycleWhileEndBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\InputOutput\InputOutputBlockView.xaml">
+    <Page Update="View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\Link\LinkBlockView.xaml">
+    <Page Update="View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\SidePanel\Print.xaml">
+    <Page Update="View\Menu\ToolBar\SidePanel\Print\Print.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\SidePanel\SaveImg.xaml">
+    <Page Update="View\Menu\ToolBar\SidePanel\SaveImg\SaveImg.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\SidePanel\SaveProject.xaml">
+    <Page Update="View\Menu\ToolBar\SidePanel\SaveProject\SaveProject.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\SidePanel\UploadProject.xaml">
+    <Page Update="View\Menu\ToolBar\SidePanel\UploadProject\UploadProject.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\StartEnd\StartEndBlockView.xaml">
+    <Page Update="View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.xaml">
+    <Page Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\ToolBar\FormatText.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\ToolBar\ListFontFamily.xaml">
+    <Page Update="View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\ToolBar\ListFontSize.xaml">
+    <Page Update="View\Menu\ToolBar\FontSizeTextField\ListFontSize.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\ToolBar\ListHeightBlock.xaml">
@@ -152,10 +152,7 @@
     <Page Update="View\Menu\ToolBar\FormatAlign.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\WindowsTheme\MaterialDesignDarkTheme.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\WindowsTheme\MaterialDesignLightTheme.xaml">
+    <Page Update="View\СontrolStyle\СontrolsStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -21,8 +21,7 @@ namespace Flowchart_Editor.Models.Comment
 
         public CommentControls(double blockWidthCoefficient, double blockHeightCoefficient)
         {
-            this.blockWidthCoefficient = blockWidthCoefficient;
-            this.blockHeightCoefficient = blockHeightCoefficient;
+            
         }
 
         public static string GetTextOfComment() => textComment;
@@ -31,7 +30,7 @@ namespace Flowchart_Editor.Models.Comment
         {
             if (DottedPartOfTheComment != null && FourthLine != null && FifthLine != null && SixthtLine != null)
             {
-                if (blockHeightCoefficient == 1)
+                if (true)
                 {
                     foreach (Line line in DottedPartOfTheComment)
                     {
@@ -50,7 +49,7 @@ namespace Flowchart_Editor.Models.Comment
 
                     Canvas.SetTop(TextBoxOfBlock, -gapBetweenCommentLines * 2 + (height - minimumHeightOfAllBlocks) / 2);
                 }
-                else if (blockHeightCoefficient == 0.5 && blockWidthCoefficient == 0.5)
+                else if (false)
                 {
                     foreach (Line line in DottedPartOfTheComment)
                     {
@@ -99,7 +98,7 @@ namespace Flowchart_Editor.Models.Comment
             int blockOffset = width - minimumWidthOfAllBlocks;
             if (DottedPartOfTheComment != null && FourthLine != null && FifthLine != null && SixthtLine != null)
             {
-                if (blockWidthCoefficient == 1)
+                if (true)
                 {
                     foreach (Line line in DottedPartOfTheComment)
                     {
@@ -143,8 +142,8 @@ namespace Flowchart_Editor.Models.Comment
 
                 SetPropertyLineOfComment();
                 TextBoxOfBlock.Text = textComment;
-                TextBoxOfBlock.MouseDoubleClick += ChangeTextBoxToTextBlock;
-                TextBlockOfBlock.MouseDown += ChangeTextBoxToTextBlock;
+                TextBoxOfBlock.MouseDoubleClick += SetTypeTextField;
+                TextBlockOfBlock.MouseDown += SetTypeTextField;
 
                 Canvas.SetLeft(TextBoxOfBlock, coordinatesX + gapBetweenCommentLines / 4);
                 Canvas.SetTop(TextBoxOfBlock, -gapBetweenCommentLines * 2);
@@ -243,19 +242,5 @@ namespace Flowchart_Editor.Models.Comment
                 SixthtLine.Style = styleLine;
             }
         }
-
-        protected override void SetСoordinatesComment(UIElement comment) { }
-
-        public override double GetWidthCoefficient() => 0;
-
-        public override double GetHeightCoefficient() => 0;
-
-        public override void SetLeftBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateLeft) { }
-
-        public override void SetTopBlockForConditionCaseSecondOption(UIElement uIElementBlock, double coordinateTop) { }
-
-        public override void SetLeftBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateLeft) { }
-
-        public override void SetTopBlockForConditionCaseFirstOption(UIElement uIElementBlock, double coordinateTop) { }
     }
 }

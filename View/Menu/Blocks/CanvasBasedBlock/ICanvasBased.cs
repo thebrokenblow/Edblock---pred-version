@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Flowchart_Editor.View.Menu.Blocks.CanvasBasedBlock
 {
-    internal class Class1
+    public interface ICanvasBased
     {
+        public void SetPropertyCanvasBlock();
+        public static void SetBackground(Canvas canvasBlock, Brush backgroundColor)
+        {
+            canvasBlock.Background = backgroundColor;
+        }
     }
 }

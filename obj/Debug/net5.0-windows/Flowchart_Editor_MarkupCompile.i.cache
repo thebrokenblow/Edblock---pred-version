@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\App.xaml
-26-2013499078
+251298829503
 
-782063236775
+75-742781155
 209330306493
-View\Menu\Blocks\Action\ActionBlockView.xaml;View\Menu\Blocks\Comment\CommentView.xaml;View\Menu\Blocks\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml;View\Menu\Blocks\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml;View\Menu\Blocks\Condition\ConditionBlockView.xaml;View\Menu\Blocks\CycleFor\CycleBlockForView.xaml;View\Menu\Blocks\CycleWhileBegin\CycleBlockWhileBeginView.xaml;View\Menu\Blocks\CycleWhileEnd\CycleBlockWhileEndView.xaml;View\Menu\Blocks\InputOutput\InputOutputBlockView.xaml;View\Menu\Blocks\Link\LinkBlockView.xaml;View\Menu\Blocks\StartEnd\StartEndBlockView.xaml;View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.xaml;View\Menu\Edblock.xaml;View\Menu\Settings\Settings.xaml;View\Menu\SidePanel\Print.xaml;View\Menu\SidePanel\SaveImg.xaml;View\Menu\SidePanel\SaveProject.xaml;View\Menu\SidePanel\UploadProject.xaml;View\Menu\ToolBar\FormatAlign.xaml;View\Menu\ToolBar\FormatText.xaml;View\Menu\ToolBar\ListFontFamily.xaml;View\Menu\ToolBar\ListFontSize.xaml;View\Menu\ToolBar\ListHeightBlock.xaml;View\Menu\ToolBar\ListWidthBlock.xaml;View\WindowsTheme\MaterialDesignDarkTheme.xaml;View\WindowsTheme\MaterialDesignLightTheme.xaml;
+View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.xaml;View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml;View\Menu\Blocks\Comment\CommentView.xaml;View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml;View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml;View\Menu\Blocks\PolygonBasedBlock\Condition\ConditionBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\CycleFor\CycleForViewBlock.xaml;View\Menu\Blocks\PolygonBasedBlock\CycleWhileBegin\CycleWhileBeginBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\CycleWhileEnd\CycleWhileEndBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.xaml;View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.xaml;View\Menu\Edblock.xaml;View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.xaml;View\Menu\ToolBar\FontSizeTextField\ListFontSize.xaml;View\Menu\ToolBar\FormatAlign.xaml;View\Menu\ToolBar\FormatText.xaml;View\Menu\ToolBar\ListHeightBlock.xaml;View\Menu\ToolBar\ListWidthBlock.xaml;View\Menu\ToolBar\Settings\Settings.xaml;View\Menu\ToolBar\SidePanel\Print\Print.xaml;View\Menu\ToolBar\SidePanel\SaveImg\SaveImg.xaml;View\Menu\ToolBar\SidePanel\SaveProject\SaveProject.xaml;View\Menu\ToolBar\SidePanel\UploadProject\UploadProject.xaml;View\СontrolStyle\СontrolsStyle.xaml;
 
-True
+False
 

@@ -90,11 +90,11 @@ namespace Flowchart_Editor.Models
         {
             SetCoordinatesPoints(ControlSize);
             Polygon polygonBlock = IPolygonBased.SetPointPolygon(pointsConditionBlock);
-            IPolygonBased.AddPointPolygon(FrameBlock, polygonBlock);
+            IPolygonBased.AddPolygon(FrameBlock, polygonBlock);
 
             string color = "#FF60B2D3";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFillPolygon(polygonBlock, backgroundColor);
+            IPolygonBased.SetFill(polygonBlock, backgroundColor);
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)

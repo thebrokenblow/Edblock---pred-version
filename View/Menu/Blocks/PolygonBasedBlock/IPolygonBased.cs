@@ -24,14 +24,14 @@ namespace Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock
             return polygonBlock;
         }
 
-        protected static void SetFillPolygon(Polygon polygonBlock, Brush backgroundColor)
+        protected static void SetFill(Polygon polygonBlock, Brush backgroundColor)
         {
             polygonBlock.Fill = backgroundColor;
         }
 
-        protected static void AddPointPolygon(Canvas FrameBlock, Polygon polygonBlock)
+        protected static void AddPolygon(Canvas frameBlock, Polygon polygonBlock)
         {
-            FrameBlock.Children.Add(polygonBlock);
+            frameBlock.Children.Add(polygonBlock);
         }
     }
 }

@@ -2,18 +2,28 @@
 using Flowchart_Editor.Menu.Print;
 using Flowchart_Editor.Menu.SaveImg;
 using Flowchart_Editor.Menu.SaveProject;
-using Flowchart_Editor.Models;
 using Flowchart_Editor.View.ConditionCaseFirstOption;
 using Flowchart_Editor.View.ConditionCaseSecondOption;
-using Flowchart_Editor.View.Menu.OpenCloseMenu;
+using Flowchart_Editor.View.Menu.ToolBar;
+using Flowchart_Editor.View.Menu.ToolBar.FontSizeTextField;
 using Flowchart_Editor.View.СontrolsScaling;
+using Flowchart_Editor.View.СontrolsStyle;
 using System;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace Flowchart_Editor.ViewModel
 {
     public class ApplicationViewModel : IDataErrorInfo
     {
+        public bool StyleTheme
+        {
+            set
+            {
+                ThemeStyle.SetTheme(value);
+            }
+        }
+
         private RelayCommand? printCommand;
         public RelayCommand PrintCommand
         {
@@ -22,10 +32,11 @@ namespace Flowchart_Editor.ViewModel
                 return printCommand ??= new RelayCommand(obj =>
                 {
                       if (Edblock.EditField != null)
-                        DoPrint.Print(Edblock.EditField);
+                        Print.DoPrint(Edblock.EditField);
                 });
             }
         }
+
         private RelayCommand? imgCommand;
         public RelayCommand ImgCommand
         {
@@ -38,30 +49,7 @@ namespace Flowchart_Editor.ViewModel
                 });
             }
         }
-        private RelayCommand? closeMenu;
-        public RelayCommand CloseMenu
-        {
-            get
-            {
-                return closeMenu ??= new RelayCommand(obj =>
-                {
-                    if (Edblock.ButtonCloseMenu != null && Edblock.ButtonOpenMenu != null)
-                        new MenuCloseOpen(Edblock.ButtonCloseMenu, Edblock.ButtonOpenMenu);
-                });
-            }
-        }
-        private RelayCommand? openMenu;
-        public RelayCommand OpenMenu
-        {
-            get
-            {
-                return openMenu ??= new RelayCommand(obj =>
-                {
-                    if (Edblock.ButtonCloseMenu != null && Edblock.ButtonOpenMenu != null)
-                        new MenuCloseOpen(Edblock.ButtonOpenMenu, Edblock.ButtonCloseMenu);
-                });
-            }
-        }
+
         private bool flagErrorConditionFirst = false;
         public string CountLineConditionFirst { get; set; } = "2";
         private RelayCommand? addConditionFirst;
@@ -99,29 +87,37 @@ namespace Flowchart_Editor.ViewModel
                 });
             }
         }
-        private int blockWidth;
 
-        public int BlockWidth
+        
+        public static FontFamily FontFamily
         {
-            get { return blockWidth; }
             set
             {
-                blockWidth = value;
-                DefaultPropertyForBlock.width = blockWidth;
-                ControlsScaling.ScaleWidth(Edblock.ListControlls, blockWidth);
+                FontFamilyTextField.SetFontFamily(value, Edblock.ListHighlightedBlock);
             }
         }
 
-        private int blockHeight;
-
-        public int BlockHeight
+        public static double FontSize
         {
-            get { return blockHeight; }
             set
             {
-                blockHeight = value;
-                DefaultPropertyForBlock.height = blockHeight;
-                ControlsScaling.ScaleHeight(Edblock.ListControlls, blockHeight);
+                FontSizeTextField.SetFontSize(value, Edblock.ListHighlightedBlock);
+            }
+        }
+
+        public static int BlockWidth
+        {
+            set
+            {
+                ControlsScaling.ScaleWidth(Edblock.ListControlls, value);
+            }
+        }
+
+        public static int BlockHeight
+        {
+            set
+            {
+                ControlsScaling.ScaleHeight(Edblock.ListControlls, value);
             }
         }
 
@@ -129,7 +125,6 @@ namespace Flowchart_Editor.ViewModel
         {
             get
             {
-
                 //TODO: разобраться с валидацией, неправильно работает
                 string errorAddCondition = "";
                 switch (columnName)
@@ -179,7 +174,9 @@ namespace Flowchart_Editor.ViewModel
                 });
             }
         }
+
         private RelayCommand? uploadProjectCommand;
+
         public RelayCommand UploadProjectCommand
         {
             get
