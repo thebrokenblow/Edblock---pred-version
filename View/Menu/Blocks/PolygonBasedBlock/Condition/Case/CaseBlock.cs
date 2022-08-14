@@ -67,7 +67,7 @@ namespace Flowchart_Editor.View.Condition.Case
         }
 
 
-        protected CaseBlock(Canvas destination) : base(destination)
+        protected CaseBlock(Canvas destination) : base()
         {
         }
     }

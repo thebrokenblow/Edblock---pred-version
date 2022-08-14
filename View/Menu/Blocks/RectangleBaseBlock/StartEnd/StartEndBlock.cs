@@ -10,13 +10,11 @@ namespace Flowchart_Editor.Models
     [BlockName("StartEndBlock")]
     public class StartEndBlock : Block, IRectangleBased
     {
-        private readonly Rectangle? startEndBlock = new();
         private const int radiusRectangle = 20;
         private const int valueOffsetTextField = 3;
 
-        public StartEndBlock(Canvas destination)
+        public StartEndBlock()
         {
-            EditField = destination;
             initialText = "Начало / Конец";
 
             SetPropertyRectangleBlock();
@@ -26,7 +24,7 @@ namespace Flowchart_Editor.Models
             SetPropertyTextField(sizeTextField, offsetTextField);
 
             SetCoordinatesConnectionPoints(offsetConnectionPoint);
-            InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            InitializingConnectionPoints();
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)

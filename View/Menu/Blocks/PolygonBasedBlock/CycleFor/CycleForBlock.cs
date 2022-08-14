@@ -13,9 +13,8 @@ namespace Flowchart_Editor.Models
     {
         private readonly List<Point> listPoints = new();
         private const int sideProjection = 10; 
-        public CycleForBlock(Canvas destination)
+        public CycleForBlock()
         {
-            EditField = destination;
             initialText = "Цикл for";
 
             SetPropertyFrameBlock();
@@ -26,7 +25,7 @@ namespace Flowchart_Editor.Models
             SetPropertyTextField(sizeTextField, offsetTextField);
 
             SetCoordinatesConnectionPoints(offsetConnectionPoint);
-            InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            InitializingConnectionPoints();
         }
 
         override public UIElement GetUIElement()

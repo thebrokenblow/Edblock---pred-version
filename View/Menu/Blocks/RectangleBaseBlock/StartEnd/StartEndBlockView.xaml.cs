@@ -13,7 +13,10 @@ namespace Flowchart_Editor.View
             InitializeComponent();
         }
 
-        public Block GetBlock(Canvas destination) => 
-            new StartEndBlock(destination);
+        public Block GetBlock()
+        {
+            StartEndBlock startEndBlock = new();
+            return startEndBlock;
+        }
     }
 }

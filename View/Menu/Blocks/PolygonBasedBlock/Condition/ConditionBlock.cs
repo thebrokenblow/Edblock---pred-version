@@ -12,9 +12,8 @@ namespace Flowchart_Editor.Models
     public class ConditionBlock : Block, IPolygonBased
     {
         private readonly List<Point> pointsConditionBlock = new();
-        public ConditionBlock(Canvas destination)
+        public ConditionBlock()
         {
-            EditField = destination;
             initialText = "Условие";
 
             SetPropertyFrameBlock();
@@ -25,7 +24,7 @@ namespace Flowchart_Editor.Models
             SetPropertyTextField(sizeTextField, offsetTextField);
 
             SetCoordinatesConnectionPoints(offsetConnectionPoint);
-            InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            InitializingConnectionPoints();
         }
 
         override public UIElement GetUIElement()

@@ -1,29 +1,31 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Controls;
 using Flowchart_Editor.Model;
-using Flowchart_Editor.View.Menu.Blocks.CanvasBasedBlock;
+using System.Windows.Controls;
 
 namespace Flowchart_Editor.Models
 {
     [BlockName("SubroutineBlock")]
-    public class SubroutineBlock : Block, ICanvasBased
+    public class SubroutineBlock : Block
     { 
         private const int offsetBorderLine = 20;
 
-        public SubroutineBlock(Canvas destination)
+        public SubroutineBlock()
         {
-            EditField = destination;
             initialText = "Подпрограмма";
 
-            SetPropertyCanvasBlock();
+            SetPropertyFrameBlock();
+            SetBorderLine();
+            string color = "#FFBA64C8";
+            Brush backgroundColor = GetBackgroundColor(color);
+            FrameBlock.Background = backgroundColor;
 
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints(offsetConnectionPoint);
-            InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            SetCoordinatesConnectionPoints();
+            InitializingConnectionPoints();
         }
 
         private void SetBorderLine()
@@ -67,15 +69,6 @@ namespace Flowchart_Editor.Models
         public override void SetHeight(int valueBlockHeight)
         {
 
-        }
-
-        public void SetPropertyCanvasBlock()
-        {
-            SetPropertyFrameBlock();
-            SetBorderLine();
-            string color = "#FFBA64C8";
-            Brush backgroundColor = GetBackgroundColor(color);
-            ICanvasBased.SetBackground(FrameBlock, backgroundColor);
         }
     }
 }

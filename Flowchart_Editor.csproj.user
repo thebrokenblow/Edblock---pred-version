@@ -69,10 +69,10 @@
     <Compile Update="View\Menu\ToolBar\FontSizeTextField\ListFontSize.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\ToolBar\ListHeightBlock.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\ToolBar\ListWidthBlock.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\ToolBar\FormatAlign.xaml.cs">
@@ -143,10 +143,10 @@
     <Page Update="View\Menu\ToolBar\FontSizeTextField\ListFontSize.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\ToolBar\ListHeightBlock.xaml">
+    <Page Update="View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\ToolBar\ListWidthBlock.xaml">
+    <Page Update="View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\ToolBar\FormatAlign.xaml">

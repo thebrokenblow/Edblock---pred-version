@@ -14,9 +14,8 @@ namespace Flowchart_Editor.Models
         private readonly List<Point> listPoints = new();
         private const int sideProjection = 20;
 
-        public InputOutputBlock(Canvas destination)
-        {
-            EditField = destination;       
+        public InputOutputBlock()
+        {       
             initialText = "Ввод/Вывод";
 
             SetPropertyFrameBlock();
@@ -26,8 +25,8 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints(offsetConnectionPoint, sideProjection);
-            InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            SetCoordinatesConnectionPoints(sideProjection);
+            InitializingConnectionPoints();
         }
 
         override public UIElement GetUIElement()

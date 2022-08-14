@@ -90,10 +90,6 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\Flowchart_Editor.dll.config
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\ListWidthBlock.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\ListWidthBlock.g.cs
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\ListHeightBlock.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\ListHeightBlock.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatText.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatText.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatAlign.baml
@@ -135,3 +131,7 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\СontrolStyle\СontrolsStyle.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.g.cs

@@ -142,8 +142,8 @@ namespace Flowchart_Editor.Models.Comment
 
                 SetPropertyLineOfComment();
                 TextBoxOfBlock.Text = textComment;
-                TextBoxOfBlock.MouseDoubleClick += SetTypeTextField;
-                TextBlockOfBlock.MouseDown += SetTypeTextField;
+                TextBoxOfBlock.MouseDoubleClick += ClickTextField;
+                TextBlockOfBlock.MouseDown += ClickTextField;
 
                 Canvas.SetLeft(TextBoxOfBlock, coordinatesX + gapBetweenCommentLines / 4);
                 Canvas.SetTop(TextBoxOfBlock, -gapBetweenCommentLines * 2);
@@ -154,7 +154,7 @@ namespace Flowchart_Editor.Models.Comment
                 TextBoxOfBlock.TextChanged += new TextChangedEventHandler((obj, args) =>
                 {
                     double heightTextBox = TextBoxOfBlock.ActualHeight;
-                    int valueFontSize = Convert.ToInt32(Edblock.StylyText.GetFontSize());
+                    int valueFontSize = 0;//Convert.ToInt32(Edblock.StylyText.GetFontSize());
                     FourthLine.Y1 = -heightTextBox / 2 - valueFontSize * 2;
                     FourthLine.Y2 = heightTextBox / 2 + valueFontSize * 2;
 

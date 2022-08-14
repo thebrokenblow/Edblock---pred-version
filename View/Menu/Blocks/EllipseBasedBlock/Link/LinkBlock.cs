@@ -11,9 +11,8 @@ namespace Flowchart_Editor.Models
     public class LinkBlock : Block, IEllipseBased
     {
         private const int valueOffsetTextField = 10;
-        public LinkBlock(Canvas destination)
+        public LinkBlock()
         {
-            EditField = destination;
             initialText = "Ссылка";
 
             SetPropertyEllipseBlock();
@@ -22,7 +21,7 @@ namespace Flowchart_Editor.Models
             SetPropertyTextField(sizeTextField, offsetTextField);
 
             SetCoordinatesConnectionPoints(offsetConnectionPoint);
-            InitializingConnectionPoints(listCoordinatesConnectionPoints);
+            InitializingConnectionPoints();
         }
 
         override public UIElement GetUIElement()

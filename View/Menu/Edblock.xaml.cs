@@ -6,10 +6,6 @@ using System.Collections.Generic;
 using Flowchart_Editor.ViewModel;
 using Flowchart_Editor.View;
 using Flowchart_Editor.Models;
-using Flowchart_Editor.Models.Comment;
-using Flowchart_Editor.View.Condition.Case;
-using Flowchart_Editor.View.ListControllsElement;
-using Flowchart_Editor.View.StylyTextField;
 using System.Configuration;
 using Flowchart_Editor.Model;
 using System;
@@ -20,21 +16,16 @@ namespace Flowchart_Editor
     {
         const int minHeight = 760;
         const int minWidth = 1380;
-        public static Canvas? EditField { get; private set; }
-        public static ListControlls ListControlls { get; private set; }
-        public static StylyText StylyText { get; private set; }
-        public static List<Block> ListHighlightedBlock { get; private set; } = new();
-        public static List<CommentControls> ListComment { get; private set; } = new();
-        public static List<Line> ListLineConnection { get; private set; } = new();
-        public static List<CaseBlock> ListCaseBlock { get; private set; } = new();
+        public List<Block> ListBlock { get; private set; } = new();
+        public List<Block> ListHighlightedBlock { get; private set; } = new();
+
         private readonly string connectionString;
         public Edblock()
         {
             InitializeComponent();
-            DataContext = new ApplicationViewModel();
-            Block.EditField = EditField;
-            EditField = editField;
-            ListControlls = new(ListHighlightedBlock, ListComment, ListCaseBlock);
+            DataContext = new ApplicationViewModel(editField, ListHighlightedBlock);
+            Block.EditField = editField;
+            Block.ListHighlightedBlock = ListHighlightedBlock;
             MinHeight = minHeight;
             MinWidth = minWidth;
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
@@ -44,19 +35,23 @@ namespace Flowchart_Editor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                RemoveFocusBlocks();
+                RemoveFocusBlocks(ListHighlightedBlock);
                 IBlockView blockView = (IBlockView)sender;
-                Block instanceBlock = blockView.GetBlock(editField);
+                Block instanceBlock = blockView.GetBlock();
+                ListBlock.Add(instanceBlock);
+                ListHighlightedBlock.Add(instanceBlock);
                 Type typeBlock = typeof(Block);
                 Block.DoDragDropControlElement(typeBlock, instanceBlock, sender);
             }
             e.Handled = true;
         }
 
-        private static void RemoveFocusBlocks()
+        private static void RemoveFocusBlocks(List<Block> listHighlightedBlock)
         {
-            for (int i = 0; i < ListHighlightedBlock.Count; i++)
-                ListHighlightedBlock[i].RemoveHighlightedBlock();
+            for (int i = 0; i < listHighlightedBlock.Count; i++)
+                listHighlightedBlock[i].RemoveHighlightedBlock();
+
+            listHighlightedBlock.Clear();
         }
 
         private void DropDestination(object sender, DragEventArgs e) //Отпускание блока
@@ -113,11 +108,11 @@ namespace Flowchart_Editor
         private void MouseDownEditField(object sender, MouseButtonEventArgs e)
         {
             Keyboard.ClearFocus();
-
             if (e.Source is not TextBlock)
             {
-                for (int i = 0; i < ListHighlightedBlock.Count; i++)
-                    ListHighlightedBlock[i].RemoveHighlightedBlock();
+                RemoveFocusBlocks(ListHighlightedBlock);
+                for (int i = 0; i < ListBlock.Count; i++)
+                    ListBlock[i].ChangeTextField();
             }
         }
     }

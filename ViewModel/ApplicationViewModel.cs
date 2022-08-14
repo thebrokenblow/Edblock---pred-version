@@ -2,21 +2,39 @@
 using Flowchart_Editor.Menu.Print;
 using Flowchart_Editor.Menu.SaveImg;
 using Flowchart_Editor.Menu.SaveProject;
-using Flowchart_Editor.View.ConditionCaseFirstOption;
-using Flowchart_Editor.View.ConditionCaseSecondOption;
+using Flowchart_Editor.Models;
 using Flowchart_Editor.View.Menu.ToolBar;
 using Flowchart_Editor.View.Menu.ToolBar.FontSizeTextField;
-using Flowchart_Editor.View.СontrolsScaling;
+using Flowchart_Editor.View.Menu.ToolBar.HeightBlock;
+using Flowchart_Editor.View.Menu.ToolBar.WidthBlock;
 using Flowchart_Editor.View.СontrolsStyle;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Flowchart_Editor.ViewModel
 {
     public class ApplicationViewModel : IDataErrorInfo
     {
-        public bool StyleTheme
+        private readonly List<Block> listHighlightedBlock;
+        private readonly Canvas editField;
+        public ApplicationViewModel(Canvas editField, List<Block> listHighlightedBlock)
+        {
+            this.editField = editField;
+            this.listHighlightedBlock = listHighlightedBlock;
+        }
+
+        public FormatAlign test
+        {
+            set
+            {
+                
+            }
+        }
+
+        public static bool StyleTheme
         {
             set
             {
@@ -31,8 +49,7 @@ namespace Flowchart_Editor.ViewModel
             {
                 return printCommand ??= new RelayCommand(obj =>
                 {
-                      if (Edblock.EditField != null)
-                        Print.DoPrint(Edblock.EditField);
+                    Print.DoPrint(editField);
                 });
             }
         }
@@ -44,8 +61,7 @@ namespace Flowchart_Editor.ViewModel
             {
                 return imgCommand ??= new RelayCommand(obj =>
                 {
-                    if (Edblock.EditField != null)
-                        SaveImg.Save(Edblock.EditField);
+                    ImgEditField.SaveImg(editField);
                 });
             }
         }
@@ -59,12 +75,12 @@ namespace Flowchart_Editor.ViewModel
             {
                 return addConditionFirst ??= new RelayCommand(obj =>
                 {
-                    if (!flagErrorConditionFirst && Edblock.EditField != null)
-                    {
-                        CaseFirstOption conditionCaseFirstOptionBlock = new(Edblock.EditField, Convert.ToInt32(CountLineConditionFirst));
-                        Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
-                        Edblock.ListCaseBlock.Add(conditionCaseFirstOptionBlock);
-                    }
+                    //if (!flagErrorConditionFirst && Edblock.EditField != null)
+                    //{
+                    //    CaseFirstOption conditionCaseFirstOptionBlock = new(Edblock.EditField, Convert.ToInt32(CountLineConditionFirst));
+                    //    Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
+                    //    Edblock.ListCaseBlock.Add(conditionCaseFirstOptionBlock);
+                    //}
                 });
             }
         }
@@ -78,46 +94,46 @@ namespace Flowchart_Editor.ViewModel
             {
                 return addConditionSecond ??= new RelayCommand(obj =>
                 {
-                    if (!flagErrorConditionSecond && Edblock.EditField != null)
-                    {
-                        CaseSecondOption conditionCaseFirstOptionBlock = new(Edblock.EditField, Convert.ToInt32(CountLineConditionSecond));
-                        Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
-                        Edblock.ListCaseBlock.Add(conditionCaseFirstOptionBlock);
-                    }
+                    //if (!flagErrorConditionSecond && Edblock.EditField != null)
+                    //{
+                    //    CaseSecondOption conditionCaseFirstOptionBlock = new(Edblock.EditField, Convert.ToInt32(CountLineConditionSecond));
+                    //    Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
+                    //    Edblock.ListCaseBlock.Add(conditionCaseFirstOptionBlock);
+                    //}
                 });
             }
         }
 
         
-        public static FontFamily FontFamily
+        public FontFamily FontFamily
         {
             set
             {
-                FontFamilyTextField.SetFontFamily(value, Edblock.ListHighlightedBlock);
+                FontFamilyTextField.SetFontFamily(listHighlightedBlock, value);
             }
         }
 
-        public static double FontSize
+        public double FontSize
         {
             set
             {
-                FontSizeTextField.SetFontSize(value, Edblock.ListHighlightedBlock);
+                FontSizeTextField.SetFontSize(listHighlightedBlock, value);
             }
         }
 
-        public static int BlockWidth
+        public int BlockWidth
         {
             set
             {
-                ControlsScaling.ScaleWidth(Edblock.ListControlls, value);
+                WidthBlock.SetWidth(listHighlightedBlock, value);
             }
         }
 
-        public static int BlockHeight
+        public int BlockHeight
         {
             set
             {
-                ControlsScaling.ScaleHeight(Edblock.ListControlls, value);
+                HeightBlock.SetHeight(listHighlightedBlock, value);
             }
         }
 
@@ -161,6 +177,7 @@ namespace Flowchart_Editor.ViewModel
 
         public string Error => throw new NotImplementedException();
 
+
         private RelayCommand? saveProjectCommand;
         public RelayCommand SaveProjectCommand
         {
@@ -168,12 +185,13 @@ namespace Flowchart_Editor.ViewModel
             {
                 return saveProjectCommand ??= new RelayCommand(obj =>
                 {
-                    string? fontFamily = Edblock.StylyText.GetFontFamily();
-                    string? fonSize = Edblock.StylyText.GetFontSize();
+                    string? fontFamily = "";//Edblock.StylyText.GetFontFamily();
+                    string? fonSize = "";// Edblock.StylyText.GetFontSize();
                     SaveProject.Save(fontFamily, fonSize);
                 });
             }
         }
+
 
         private RelayCommand? uploadProjectCommand;
 
