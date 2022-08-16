@@ -221,6 +221,9 @@
         </StackPanel>
 
         <Canvas
+            MouseMove="editField_MouseMove"
+            MouseLeave="editField_MouseLeave"
+            MouseUp="editField_MouseUp"
             AllowDrop="True" 
             DragOver="DragOverDestination" 
             Drop="DropDestination"

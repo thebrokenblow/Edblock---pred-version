@@ -64,7 +64,7 @@ namespace Flowchart_Editor.View.Menu.ToolBar {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Flowchart_Editor;component/view/menu/toolbar/formatalign.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Flowchart_Editor;V1.0.0.0;component/view/menu/toolbar/formatalign.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\View\Menu\ToolBar\FormatAlign.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

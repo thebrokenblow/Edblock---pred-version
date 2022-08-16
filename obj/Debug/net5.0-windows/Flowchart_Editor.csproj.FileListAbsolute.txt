@@ -126,12 +126,12 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.g.cs
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.g.cs
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\СontrolStyle\СontrolsStyle.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\Link\LinkBlockView.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\StartEnd\StartEndBlockView.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\Link\LinkBlockView.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\StartEnd\StartEndBlockView.g.cs

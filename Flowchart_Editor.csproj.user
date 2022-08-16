@@ -39,7 +39,7 @@
     <Compile Update="View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\Link\LinkBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\ToolBar\SidePanel\Print\Print.xaml.cs">
@@ -54,7 +54,7 @@
     <Compile Update="View\Menu\ToolBar\SidePanel\UploadProject\UploadProject.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\StartEnd\StartEndBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml.cs">
@@ -113,7 +113,7 @@
     <Page Update="View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\EllipseBasedBlock\Link\LinkBlockView.xaml">
+    <Page Update="View\Menu\Blocks\Link\LinkBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\ToolBar\SidePanel\Print\Print.xaml">
@@ -128,7 +128,7 @@
     <Page Update="View\Menu\ToolBar\SidePanel\UploadProject\UploadProject.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\RectangleBaseBlock\StartEnd\StartEndBlockView.xaml">
+    <Page Update="View\Menu\Blocks\StartEnd\StartEndBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml">

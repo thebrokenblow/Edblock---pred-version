@@ -17,7 +17,6 @@ namespace Flowchart_Editor.Models
         public TextBlock TextBlockOfBlock { get; set; } = new();
         private const int defaultWidth = 140;
         private const int defaulHeight = 60;
-        private const int radiusPoint = 6;
         protected const int offsetConnectionPoint = 3;
         protected string initialText = "";
         private readonly Border borderHighlightedLine = new();
@@ -110,7 +109,6 @@ namespace Flowchart_Editor.Models
         {
             if (!FrameBlock.Children.Contains(borderHighlightedLine))
             {
-                SetStyle(TextBlockOfBlock, "FormatAlignLeft");
                 borderHighlightedLine.BorderBrush = Brushes.Blue;
                 borderHighlightedLine.Width = ControlSize.Width;
                 borderHighlightedLine.Height = ControlSize.Height;
@@ -169,13 +167,18 @@ namespace Flowchart_Editor.Models
         {
             SetSize(FrameBlock, ControlSize);
             FrameBlock.MouseMove += MouseMoveBlockForMovements;
+
         }
 
         protected void ClickOnConnectionPoint(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.RightButton == MouseButtonState.Pressed)
             {
-                
+                if (Edblock.current != null)
+                {
+                    var lineCreation = new LineCreation(e.GetPosition(Edblock.current.editField), this);
+                    Edblock.current.StartLineCreation(lineCreation);
+                }
             }   
         }
 
@@ -212,15 +215,27 @@ namespace Flowchart_Editor.Models
             foreach (var itemCoordinatesPoint in coordinatesConnectionPoints)
             {
                 Ellipse connectionPoint = new();
-                ControlSize sizeConnectionPoints = new(radiusPoint, radiusPoint);
                 ControlOffset offsetConnectionPoints = new(itemCoordinatesPoint.Item1, itemCoordinatesPoint.Item2);
 
-                SetProperty(connectionPoint, nameStyle, offsetConnectionPoints, sizeConnectionPoints);
+                SetStyle(connectionPoint, nameStyle);
+                SetCoordinates(connectionPoint, offsetConnectionPoints);
 
                 connectionsPoints.Add(connectionPoint);
                 connectionPoint.MouseMove += ClickOnConnectionPoint;
+                connectionPoint.MouseEnter += ConnectionPoint_MouseEnter;
+                connectionPoint.MouseLeave += ConnectionPoint_MouseLeave;
                 FrameBlock.Children.Add(connectionPoint);
             }
+        }
+
+        private void ConnectionPoint_MouseLeave(object sender, MouseEventArgs e)
+        {
+            SetStyle((Ellipse)sender, "EllipseStyle");
+        }
+
+        private void ConnectionPoint_MouseEnter(object sender, MouseEventArgs e)
+        {
+            SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
         }
 
         protected void ChangeCoordinatesConnectionPoints()

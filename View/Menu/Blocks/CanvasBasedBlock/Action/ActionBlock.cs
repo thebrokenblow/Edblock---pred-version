@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using Flowchart_Editor.Model;
-using System.Windows.Controls;
 
 namespace Flowchart_Editor.Models
 {
