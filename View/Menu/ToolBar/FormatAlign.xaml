@@ -9,7 +9,6 @@
     <Grid>
         <ListBox SelectedIndex="1">
             <ListBoxItem
-                Name="FormatAlignLeft"
                 Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
             <ListBoxItem
                 Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />

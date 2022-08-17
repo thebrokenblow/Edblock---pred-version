@@ -11,6 +11,7 @@ namespace Flowchart_Editor.Models
     [BlockName("ConditionBlock")]
     public class ConditionBlock : Block, IPolygonBased
     {
+        private readonly Polygon conditionBlock = new();
         private readonly List<Point> pointsConditionBlock = new();
         public ConditionBlock()
         {
@@ -23,8 +24,10 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField(ControlSize);
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints(offsetConnectionPoint);
+            SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
+
+            DrawHighlightedBlock();
         }
 
         override public UIElement GetUIElement()
@@ -48,74 +51,66 @@ namespace Flowchart_Editor.Models
             return offsetTextField;
         }
 
-        private void SetPropertyControl(ControlSize blockSize)
+        private void SetPropertyControl()
         {
-            ControlSize textFieldSize = GetSizeTextField(blockSize);
-            ControlOffset textFieldOffset = GetOffsetTextField(blockSize);
-            SetCoordinatesPoints(blockSize);
-            IPolygonBased.SetPointPolygon(pointsConditionBlock);
-            SetSize(FrameBlock, blockSize);
+            ControlSize textFieldSize = GetSizeTextField(ControlSize);
+            ControlOffset textFieldOffset = GetOffsetTextField(ControlSize);
+            SetCoordinatesPoints(ControlSize);
+            IPolygonBased.SetPointPolygon(conditionBlock, pointsConditionBlock);
+            SetSize(FrameBlock, ControlSize);
             SetSize(TextBoxOfBlock, textFieldSize);
             SetSize(TextBlockOfBlock, textFieldSize);
             SetCoordinates(TextBoxOfBlock, textFieldOffset);
             SetCoordinates(TextBlockOfBlock, textFieldOffset);
+
+            SetCoordinatesConnectionPoints();
+            ChangeCoordinatesConnectionPoints();
+            ChangeHighlightedBlock();
         }
 
         public override void SetWidth(int valueBlockWidth)
         {
-            //ControlSize blockSize = new(valueBlockWidth, ControlSize.Height);
-            //SetPropertyControl(blockSize);
-
-            //int[] coordinatesConnectionPoints = new int[4];
-            //coordinatesConnectionPoints[0] = valueBlockWidth / 2 - offsetConnectionPoint;
-            //coordinatesConnectionPoints[2] = valueBlockWidth / 2 - offsetConnectionPoint;
-            //coordinatesConnectionPoints[3] = valueBlockWidth - offsetConnectionPoint * 2;
-            //SetLeftConnectionPoints(coordinatesConnectionPoints);
+            ControlSize.Width = valueBlockWidth;
+            SetPropertyControl();
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
-            //ControlSize blockSize = new(ControlSize.Width, valueBlockHeight);
-            //SetPropertyControl(blockSize);
-
-            //int[] coordinatesConnectionPoints = new int[4];
-            //coordinatesConnectionPoints[1] = valueBlockHeight / 2 - offsetConnectionPoint;
-            //coordinatesConnectionPoints[2] = valueBlockHeight - offsetConnectionPoint;
-            //coordinatesConnectionPoints[3] = valueBlockHeight / 2 - offsetConnectionPoint;
-            //SetTopConnectionPoints(coordinatesConnectionPoints);
+            ControlSize.Height = valueBlockHeight;
+            SetPropertyControl();
         }
 
         public void SetPropertyPolyginBlock()
         {
             SetCoordinatesPoints(ControlSize);
-            Polygon polygonBlock = IPolygonBased.SetPointPolygon(pointsConditionBlock);
-            IPolygonBased.AddPolygon(FrameBlock, polygonBlock);
+            IPolygonBased.SetPointPolygon(conditionBlock, pointsConditionBlock);
+            IPolygonBased.AddPolygon(FrameBlock, conditionBlock);
 
             string color = "#FF60B2D3";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(polygonBlock, backgroundColor);
+            IPolygonBased.SetFill(conditionBlock, backgroundColor);
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
         {
-            double defaulWidth = polygonSize.Width;
-            double defaulHeight = polygonSize.Height;
+            double width = polygonSize.Width;
+            double height = polygonSize.Height;
 
             pointsConditionBlock.Clear();
 
-            Point pointConditionBlock = new(0, defaulHeight / 2);
+            Point pointConditionBlock = new(0, height / 2);
             pointsConditionBlock.Add(pointConditionBlock);
 
-            pointConditionBlock = new(defaulWidth / 2, defaulHeight);
+            pointConditionBlock = new(width / 2, height);
             pointsConditionBlock.Add(pointConditionBlock);
 
-            pointConditionBlock = new(defaulWidth, defaulHeight / 2);
+            pointConditionBlock = new(width, height / 2);
             pointsConditionBlock.Add(pointConditionBlock);
 
-            pointConditionBlock = new(defaulWidth / 2, 0);
+            pointConditionBlock = new(width / 2, 0);
             pointsConditionBlock.Add(pointConditionBlock);
 
-            pointConditionBlock = new(0, defaulHeight / 2);
+            pointConditionBlock = new(0, height / 2);
             pointsConditionBlock.Add(pointConditionBlock);
         }
     }

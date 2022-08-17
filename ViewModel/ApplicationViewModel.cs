@@ -10,13 +10,15 @@ using Flowchart_Editor.View.Menu.ToolBar.WidthBlock;
 using Flowchart_Editor.View.СontrolsStyle;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Flowchart_Editor.ViewModel
 {
-    public class ApplicationViewModel : IDataErrorInfo
+    public class ApplicationViewModel : IDataErrorInfo, INotifyPropertyChanged
     {
         private readonly List<Block> listHighlightedBlock;
         private readonly Canvas editField;
@@ -26,13 +28,13 @@ namespace Flowchart_Editor.ViewModel
             this.listHighlightedBlock = listHighlightedBlock;
         }
 
-        public FormatAlign test
+        
+        public ApplicationViewModel()
         {
-            set
-            {
-                
-            }
+            
         }
+
+
 
         public static bool StyleTheme
         {
@@ -40,7 +42,7 @@ namespace Flowchart_Editor.ViewModel
             {
                 ThemeStyle.SetTheme(value);
             }
-        }
+        } 
 
         private RelayCommand? printCommand;
         public RelayCommand PrintCommand
@@ -194,6 +196,12 @@ namespace Flowchart_Editor.ViewModel
 
 
         private RelayCommand? uploadProjectCommand;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
 
         public RelayCommand UploadProjectCommand
         {

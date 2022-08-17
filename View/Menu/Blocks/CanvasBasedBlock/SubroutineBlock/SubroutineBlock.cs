@@ -9,7 +9,7 @@ namespace Flowchart_Editor.Models
     public class SubroutineBlock : Block
     { 
         private const int offsetBorderLine = 20;
-
+        private readonly Border borderLine = new();
         public SubroutineBlock()
         {
             initialText = "Подпрограмма";
@@ -26,18 +26,38 @@ namespace Flowchart_Editor.Models
 
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
+
+            DrawHighlightedBlock();
         }
 
         private void SetBorderLine()
         {
-            Border borderLine = new();
-            borderLine.BorderBrush = Brushes.Black;
+            if (FrameBlock.Children.Contains(borderLine))
+            {
+                SetSizeBorderLine();
+                SetOffsetBorderLine();
+
+            }
+            else
+            {
+                SetSizeBorderLine();
+                SetOffsetBorderLine();
+                borderLine.BorderBrush = Brushes.Black;
+                borderLine.BorderThickness = new Thickness(1);
+                FrameBlock.Children.Add(borderLine);
+            }
+
+        }
+
+        private void SetOffsetBorderLine()
+        {
+            Canvas.SetLeft(borderLine, offsetBorderLine);
+        }
+
+        private void SetSizeBorderLine()
+        {
             borderLine.Width = ControlSize.Width - offsetBorderLine * 2;
             borderLine.Height = ControlSize.Height;
-            borderLine.BorderThickness = new Thickness(1);
-            Canvas.SetLeft(borderLine, offsetBorderLine);
-            FrameBlock.Children.Add(borderLine);
-
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -61,14 +81,28 @@ namespace Flowchart_Editor.Models
             return FrameBlock;
         }
 
+        private void SetPropertyControl()
+        {
+            ControlSize textFieldSize = GetSizeTextField(ControlSize);
+            SetBorderLine();
+            SetSize(FrameBlock, ControlSize);
+            SetSize(TextBoxOfBlock, textFieldSize);
+            SetSize(TextBlockOfBlock, textFieldSize);
+            SetCoordinatesConnectionPoints();
+            ChangeCoordinatesConnectionPoints();
+            ChangeHighlightedBlock();
+        }
+
         public override void SetWidth(int valueBlockWidth)
         {
-
+            ControlSize.Width = valueBlockWidth;
+            SetPropertyControl();
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
-
+            ControlSize.Height = valueBlockHeight;
+            SetPropertyControl();
         }
     }
 }

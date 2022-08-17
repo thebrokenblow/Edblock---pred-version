@@ -6,6 +6,8 @@ using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Windows.Data;
+using Flowchart_Editor.ViewModel;
 
 namespace Flowchart_Editor.Models
 {
@@ -96,7 +98,16 @@ namespace Flowchart_Editor.Models
 
         private void SetPropertyTextBlock(ControlSize blockSize, ControlOffset controlOffset)
         {
-            
+            Binding myBinding = new();
+            myBinding.Source = new ApplicationViewModel();
+            myBinding.Path = new PropertyPath("HighlightedBlock");
+            myBinding.Mode = BindingMode.TwoWay;
+            myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            BindingOperations.SetBinding(TextBlockOfBlock, TextBlock.TextProperty, myBinding);
+
+
+
+
             TextBlockOfBlock.MouseDown += ClickTextField;
             TextBlockOfBlock.Text = initialText;
             string nameStyle = "TextBlockStyleForBlock";

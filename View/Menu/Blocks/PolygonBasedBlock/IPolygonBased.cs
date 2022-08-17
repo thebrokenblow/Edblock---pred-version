@@ -13,15 +13,13 @@ namespace Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock
 
         public void SetPropertyPolyginBlock();
 
-        protected static Polygon SetPointPolygon(List<Point> listPoints)
+        protected static void SetPointPolygon(Polygon polygonBlock, List<Point> listPoints)
         {
-            Polygon polygonBlock = new();
             PointCollection pointCollection = new();
             foreach (Point itemPoint in listPoints)
                 pointCollection.Add(itemPoint);
 
             polygonBlock.Points = pointCollection;
-            return polygonBlock;
         }
 
         protected static void SetFill(Polygon polygonBlock, Brush backgroundColor)

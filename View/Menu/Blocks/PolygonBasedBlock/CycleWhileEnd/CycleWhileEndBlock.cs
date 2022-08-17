@@ -11,6 +11,7 @@ namespace Flowchart_Editor.Models
     [BlockName("CycleWhileEndBlock")]
     public class CycleWhileEndBlock : Block, IPolygonBased
     {
+        private readonly Polygon cycleWhileEndBlock = new();
         private readonly List<Point> listPoints = new();
         private const int sideProjection = 10;
 
@@ -25,8 +26,10 @@ namespace Flowchart_Editor.Models
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
 
-            SetCoordinatesConnectionPoints(offsetConnectionPoint);
+            SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
+
+            DrawHighlightedBlock();
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -52,10 +55,31 @@ namespace Flowchart_Editor.Models
 
         public override void SetWidth(int valueBlockWidth)
         {
+            ControlSize.Width = valueBlockWidth;
+            SetPropertyControl();
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
+            ControlSize.Height = valueBlockHeight;
+            SetPropertyControl();
+        }
+
+        private void SetPropertyControl()
+        {
+            ControlSize textFieldSize = GetSizeTextField(ControlSize);
+            ControlOffset textFieldOffset = GetOffsetTextField();
+            SetCoordinatesPoints(ControlSize);
+            IPolygonBased.SetPointPolygon(cycleWhileEndBlock, listPoints);
+            SetSize(FrameBlock, ControlSize);
+            SetSize(TextBoxOfBlock, textFieldSize);
+            SetSize(TextBlockOfBlock, textFieldSize);
+            SetCoordinates(TextBoxOfBlock, textFieldOffset);
+            SetCoordinates(TextBlockOfBlock, textFieldOffset);
+
+            SetCoordinatesConnectionPoints();
+            ChangeCoordinatesConnectionPoints();
+            ChangeHighlightedBlock();
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
@@ -87,12 +111,12 @@ namespace Flowchart_Editor.Models
         public void SetPropertyPolyginBlock()
         {
             SetCoordinatesPoints(ControlSize);
-            Polygon polygonBlock = IPolygonBased.SetPointPolygon(listPoints);
-            IPolygonBased.AddPolygon(FrameBlock, polygonBlock);
+            IPolygonBased.SetPointPolygon(cycleWhileEndBlock, listPoints);
+            IPolygonBased.AddPolygon(FrameBlock, cycleWhileEndBlock);
 
             string color = "#FFCCCCFF";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(polygonBlock, backgroundColor);
+            IPolygonBased.SetFill(cycleWhileEndBlock, backgroundColor);
         }
     }
 }

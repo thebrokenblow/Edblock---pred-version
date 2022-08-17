@@ -1,16 +1,16 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using Flowchart_Editor.Model;
-using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
-using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
     [BlockName("InputOutputBlock")]
     public class InputOutputBlock : Block, IPolygonBased
     {
+        private readonly Polygon inputOutputBlock = new();
         private readonly List<Point> listPoints = new();
         private const int sideProjection = 20;
 
@@ -27,6 +27,8 @@ namespace Flowchart_Editor.Models
 
             SetCoordinatesConnectionPoints(sideProjection);
             InitializingConnectionPoints();
+
+            DrawHighlightedBlock();
         }
 
         override public UIElement GetUIElement()
@@ -72,16 +74,31 @@ namespace Flowchart_Editor.Models
 
         public override void SetWidth(int valueBlockWidth)
         {
-            //Canvas.SetLeft(firstPointConnect, valueBlockWidth / 2);
-            //Canvas.SetLeft(thirdPointConnect, valueBlockWidth / 2);
-            //Canvas.SetLeft(fourthPointConnect, valueBlockWidth - 13);
+            ControlSize.Width = valueBlockWidth;
+            SetPropertyControl();
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
-            //Canvas.SetTop(secondPointConnect, valueBlockHeight / 2 - 5);
-            //Canvas.SetTop(thirdPointConnect, valueBlockHeight - 3);
-            //Canvas.SetTop(fourthPointConnect, valueBlockHeight / 2 - 5);
+            ControlSize.Height = valueBlockHeight;
+            SetPropertyControl();
+        }
+
+        private void SetPropertyControl()
+        {
+            ControlSize textFieldSize = GetSizeTextField(ControlSize);
+            ControlOffset textFieldOffset = GetOffsetTextField();
+            SetCoordinatesPoints(ControlSize);
+            IPolygonBased.SetPointPolygon(inputOutputBlock, listPoints);
+            SetSize(FrameBlock, ControlSize);
+            SetSize(TextBoxOfBlock, textFieldSize);
+            SetSize(TextBlockOfBlock, textFieldSize);
+            SetCoordinates(TextBoxOfBlock, textFieldOffset);
+            SetCoordinates(TextBlockOfBlock, textFieldOffset);
+
+            SetCoordinatesConnectionPoints(sideProjection);
+            ChangeCoordinatesConnectionPoints();
+            ChangeHighlightedBlock();
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
@@ -107,12 +124,12 @@ namespace Flowchart_Editor.Models
         public void SetPropertyPolyginBlock()
         {
             SetCoordinatesCycleWhileEndBlock(ControlSize);
-            Polygon polygonBlock = IPolygonBased.SetPointPolygon(listPoints);
-            IPolygonBased.AddPolygon(FrameBlock, polygonBlock);
+            IPolygonBased.SetPointPolygon(inputOutputBlock, listPoints);
+            IPolygonBased.AddPolygon(FrameBlock, inputOutputBlock);
 
             string color = "#FF008080";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(polygonBlock, backgroundColor);
+            IPolygonBased.SetFill(inputOutputBlock, backgroundColor);
         }
     }
 }

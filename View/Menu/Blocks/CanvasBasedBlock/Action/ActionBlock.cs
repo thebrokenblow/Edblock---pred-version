@@ -29,11 +29,11 @@ namespace Flowchart_Editor.Models
             return FrameBlock;
         }
 
-        private void SetPropertyControl(ControlSize controlSize)
+        private void SetPropertyControl()
         {
-            SetSize(FrameBlock, controlSize);
-            SetSize(TextBoxOfBlock, controlSize);
-            SetSize(TextBlockOfBlock, controlSize);
+            SetSize(FrameBlock, ControlSize);
+            SetSize(TextBoxOfBlock, ControlSize);
+            SetSize(TextBlockOfBlock, ControlSize);
             SetCoordinatesConnectionPoints();
             ChangeCoordinatesConnectionPoints();
             ChangeHighlightedBlock();
@@ -42,13 +42,13 @@ namespace Flowchart_Editor.Models
         public override void SetWidth(int valueBlockWidth)
         {
             ControlSize.Width = valueBlockWidth;
-            SetPropertyControl(ControlSize);
+            SetPropertyControl();
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
             ControlSize.Height = valueBlockHeight;
-            SetPropertyControl(ControlSize);   
+            SetPropertyControl();   
         }
     }
 }

@@ -229,7 +229,6 @@ namespace Flowchart_Editor
         {
             var point = e.GetPosition(this.editField);
             lineCreation?.MouseMove(point,editField);
-            Text.Content = $"{point.X}, {point.Y}";
         }
 
         private void editField_MouseLeave(object sender, MouseEventArgs e)
