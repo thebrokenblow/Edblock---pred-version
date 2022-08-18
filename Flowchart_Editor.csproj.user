@@ -60,7 +60,7 @@
     <Compile Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\ToolBar\FormatText.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\FormatTextField\FormatText.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.xaml.cs">
@@ -75,7 +75,7 @@
     <Compile Update="View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\ToolBar\FormatAlign.xaml.cs">
+    <Compile Update="View\Menu\ToolBar\FormatAlignTextField\FormatAlign.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <Page Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\ToolBar\FormatText.xaml">
+    <Page Update="View\Menu\ToolBar\FormatTextField\FormatText.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.xaml">
@@ -149,7 +149,7 @@
     <Page Update="View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\ToolBar\FormatAlign.xaml">
+    <Page Update="View\Menu\ToolBar\FormatAlignTextField\FormatAlign.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\СontrolStyle\СontrolsStyle.xaml">

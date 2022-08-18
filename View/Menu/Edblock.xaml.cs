@@ -87,7 +87,7 @@ namespace Flowchart_Editor
 
         private List<BlockViewModel> ListBlockViewModel { get; set; } = new();
         private List<Block> ListBlock { get; set; } = new();
-        public List<Block> ListHighlightedBlock { get; private set; } = new();
+        private List<Block> ListHighlightedBlock { get; set; } = new();
 
         public void AddNewBlock(Block block)
         {

@@ -91,22 +91,19 @@ namespace Flowchart_Editor.Models
 
         private void SetPropertyTextBox(ControlSize blockSize, ControlOffset controlOffset)
         {
-            TextBoxOfBlock.MouseDoubleClick += ClickTextField; 
-            string nameStyle = "TextBoxStyleForBlock";
+            TextBoxOfBlock.MouseDoubleClick += ClickTextField;
+            string nameStyle = "";//"TextBoxStyleForBlock";
             SetProperty(TextBoxOfBlock, nameStyle, controlOffset, blockSize);
         }
 
         private void SetPropertyTextBlock(ControlSize blockSize, ControlOffset controlOffset)
         {
-            Binding myBinding = new();
-            myBinding.Source = new ApplicationViewModel();
-            myBinding.Path = new PropertyPath("HighlightedBlock");
-            myBinding.Mode = BindingMode.TwoWay;
-            myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            BindingOperations.SetBinding(TextBlockOfBlock, TextBlock.TextProperty, myBinding);
-
-
-
+            //Binding myBinding = new();
+            //myBinding.Source = new ApplicationViewModel();
+            //myBinding.Path = new PropertyPath("HighlightedBlock");
+            //myBinding.Mode = BindingMode.TwoWay;
+            //myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            //BindingOperations.SetBinding(TextBlockOfBlock, TextBlock.TextProperty, myBinding);
 
             TextBlockOfBlock.MouseDown += ClickTextField;
             TextBlockOfBlock.Text = initialText;
@@ -118,6 +115,7 @@ namespace Flowchart_Editor.Models
 
         protected void DrawHighlightedBlock()
         {
+            SetStyle(TextBoxOfBlock, "TextBoxStyleForHighlightedBlock");
             if (!FrameBlock.Children.Contains(borderHighlightedLine))
             {
                 borderHighlightedLine.BorderBrush = Brushes.Blue;
@@ -275,6 +273,68 @@ namespace Flowchart_Editor.Models
         {
             TextBlockOfBlock.FontSize = fontSize;
             TextBoxOfBlock.FontSize = fontSize;
+        }
+
+        public void SetFormatAlign(string formatAlign)
+        {
+            if (formatAlign == "FormatAlignLeft")
+            {
+                TextBlockOfBlock.TextAlignment = TextAlignment.Left;
+                TextBoxOfBlock.TextAlignment = TextAlignment.Left;
+            }
+            else if (formatAlign == "FormatAlignCentre")
+            {
+                TextBlockOfBlock.TextAlignment = TextAlignment.Center;
+                TextBoxOfBlock.TextAlignment = TextAlignment.Center;
+            }
+            else if (formatAlign == "FormatAlignRight")
+            {
+                TextBlockOfBlock.TextAlignment = TextAlignment.Right;
+                TextBoxOfBlock.TextAlignment = TextAlignment.Right;
+            }
+            else if (formatAlign == "FormatAlignJustify")
+            {
+                TextBlockOfBlock.TextAlignment = TextAlignment.Justify;
+                TextBoxOfBlock.TextAlignment = TextAlignment.Justify;
+            }
+        }
+
+        public void SetFormatTextField(string formatText)
+        {
+            if (formatText == "FormatBold")
+            {
+                TextBlockOfBlock.FontWeight = FontWeights.Bold;
+                TextBoxOfBlock.FontWeight = FontWeights.Bold;
+            }
+            else if (formatText == "FormatItalic")
+            {
+                TextBlockOfBlock.FontStyle = FontStyles.Italic;
+                TextBoxOfBlock.FontStyle = FontStyles.Italic;
+            }
+            else if (formatText == "FormatUnderline")
+            {
+                TextBlockOfBlock.TextDecorations = TextDecorations.Underline;
+                TextBoxOfBlock.TextDecorations = TextDecorations.Underline;
+            }
+        }
+
+        public void UnsetFormatTextField(string formatText)
+        {
+            if (formatText == "FormatBold")
+            {
+                TextBlockOfBlock.FontWeight = FontWeights.Normal;
+                TextBoxOfBlock.FontWeight = FontWeights.Normal;
+            }
+            else if (formatText == "FormatItalic")
+            {
+                TextBlockOfBlock.FontStyle = FontStyles.Italic;
+                TextBoxOfBlock.FontStyle = FontStyles.Italic;
+            }
+            else if (formatText == "FormatUnderline")
+            {
+                TextBlockOfBlock.TextDecorations = TextDecorations.Underline;
+                TextBoxOfBlock.TextDecorations = TextDecorations.Underline;
+            }
         }
     }
 }

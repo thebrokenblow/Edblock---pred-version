@@ -90,10 +90,6 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\Flowchart_Editor.dll.config
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatText.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatText.g.cs
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatAlign.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatAlign.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FontSizeTextField\ListFontSize.baml
@@ -135,3 +131,7 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\StartEnd\StartEndBlockView.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\Link\LinkBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\StartEnd\StartEndBlockView.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatAlignTextField\FormatAlign.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatAlignTextField\FormatAlign.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatTextField\FormatText.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatTextField\FormatText.baml
