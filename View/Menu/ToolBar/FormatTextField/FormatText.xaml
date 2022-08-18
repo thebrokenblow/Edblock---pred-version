@@ -4,15 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:viewmodel="clr-namespace:Flowchart_Editor.ViewModel" 
-             d:DataContext="{d:DesignInstance Type=viewmodel:ApplicationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox SelectionMode="Extended" SelectedValue="{Binding SelectedFormatText}">
-            <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}" Unselected="UnselectedFormatBold"/>
-            <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}" Unselected="UnselectedFormatItalic"/>
-            <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}" Unselected="UnselectedUnderline"/>
+        <ListBox SelectionMode="Extended">
+            <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="SelectedFormatBold" Unselected="UnselectedFormatBold"/>
+            <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="SelectedFormatItalic" Unselected="UnselectedFormatItalic"/>
+            <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="SelectedUnderline" Unselected="UnselectedUnderline"/>
         </ListBox>
     </Grid>
 </UserControl>

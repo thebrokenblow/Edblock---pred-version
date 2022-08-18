@@ -87,7 +87,7 @@ namespace Flowchart_Editor
 
         private List<BlockViewModel> ListBlockViewModel { get; set; } = new();
         private List<Block> ListBlock { get; set; } = new();
-        private List<Block> ListHighlightedBlock { get; set; } = new();
+        public static List<Block> ListHighlightedBlock { get; set; } = new();
 
         public void AddNewBlock(Block block)
         {
@@ -126,7 +126,7 @@ namespace Flowchart_Editor
             current = this;
             DataContext = new ApplicationViewModel(editField, ListHighlightedBlock);
             Block.EditField = editField;
-            Block.ListHighlightedBlock = ListHighlightedBlock;
+            Block.Edblock = this;
             MinHeight = minHeight;
             MinWidth = minWidth;
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
@@ -140,7 +140,7 @@ namespace Flowchart_Editor
                 IBlockView blockView = (IBlockView)sender;
                 Block instanceBlock = blockView.GetBlock();
                 AddNewBlock(instanceBlock);
-                //ListBlock.Add(instanceBlock);
+                ListBlock.Add(instanceBlock);
                 ListHighlightedBlock.Add(instanceBlock);
                 Type typeBlock = typeof(Block);
                 Block.DoDragDropControlElement(typeBlock, instanceBlock, sender);
@@ -245,6 +245,12 @@ namespace Flowchart_Editor
             {
                 blockViewModel.Left++;
             }
+        }
+
+        public void AddHighlightedBlock(Block block)
+        {
+            if (!ListHighlightedBlock.Contains(block))
+                ListHighlightedBlock.Add(block);
         }
     }
 }

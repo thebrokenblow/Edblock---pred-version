@@ -6,17 +6,14 @@ using Flowchart_Editor.Models;
 using Flowchart_Editor.View.Menu.ToolBar;
 using Flowchart_Editor.View.Menu.ToolBar.FontSizeTextField;
 using Flowchart_Editor.View.Menu.ToolBar.FormatAlignTextField;
-using Flowchart_Editor.View.Menu.ToolBar.FormatTextField;
 using Flowchart_Editor.View.Menu.ToolBar.HeightBlock;
 using Flowchart_Editor.View.Menu.ToolBar.WidthBlock;
 using Flowchart_Editor.View.СontrolsStyle;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -25,13 +22,17 @@ namespace Flowchart_Editor.ViewModel
     public class ApplicationViewModel : IDataErrorInfo, INotifyPropertyChanged
     {
         private readonly List<Block> listHighlightedBlock;
-        private readonly Canvas editField;
+        private readonly Canvas? editField;
+
         public ApplicationViewModel(Canvas editField, List<Block> listHighlightedBlock)
         {
             this.editField = editField;
             this.listHighlightedBlock = listHighlightedBlock;
+        }
 
-            
+        public ApplicationViewModel(List<Block> listHighlightedBlock)
+        {
+            this.listHighlightedBlock = listHighlightedBlock;
         }
 
         public ListBoxItem SelectedFormatAlign
@@ -48,18 +49,40 @@ namespace Flowchart_Editor.ViewModel
             }
         }
 
-        public ListBoxItem SelectedFormatText
+        public void SetFontWeight()
         {
-            set
-            {
-                if (value != null)
-                {
-                    object itemContent = value.Content;
-                    PackIcon packIconValue = (PackIcon)itemContent;
-                    string formatText = packIconValue.Kind.ToString();
-                    FormatTextField.SetFormat(listHighlightedBlock, formatText);
-                }
-            }
+            foreach (Block itemBlock in listHighlightedBlock)
+                itemBlock.SetFontWeight();
+        }
+
+        public void SetFontStyles()
+        {
+            foreach (Block itemBlock in listHighlightedBlock)
+                itemBlock.SetFontStyles();
+        }
+
+        public void SetTextDecorations()
+        {
+            foreach (Block itemBlock in listHighlightedBlock)
+                itemBlock.SetTextDecorations();
+        }
+
+        public void UnsetFontWeight()
+        {
+            foreach (Block itemBlock in listHighlightedBlock)
+                itemBlock.UnsetFontWeight();
+        }
+
+        public void UnsetFontStyles()
+        {
+            foreach (Block itemBlock in listHighlightedBlock)
+                itemBlock.UnsetFontStyles();
+        }
+
+        public void UnsetTextDecorations()
+        {
+            foreach (Block itemBlock in listHighlightedBlock)
+                itemBlock.UnsetTextDecorations();
         }
 
         public static bool StyleTheme

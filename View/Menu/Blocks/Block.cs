@@ -15,6 +15,7 @@ namespace Flowchart_Editor.Models
     {
         public Canvas FrameBlock { get; set; } = new();
         public static Canvas? EditField { get; set; }
+        public static Edblock? Edblock { get; set; }
         public TextBox TextBoxOfBlock { get; set; } = new();
         public TextBlock TextBlockOfBlock { get; set; } = new();
         private const int defaultWidth = 140;
@@ -26,7 +27,6 @@ namespace Flowchart_Editor.Models
         protected Tuple<double, double> coordinateConnectionPoint = new(0, 0);
         protected List<Tuple<double, double>> coordinatesConnectionPoints = new();
         protected List<Ellipse> connectionsPoints = new();
-        public static List<Block>? ListHighlightedBlock { get; set; }
         protected readonly Uri uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
 
         abstract public UIElement GetUIElement();
@@ -124,9 +124,8 @@ namespace Flowchart_Editor.Models
                 borderHighlightedLine.BorderThickness = new Thickness(1);
                 FrameBlock.Children.Add(borderHighlightedLine);
             }
-
-            if (!ListHighlightedBlock.Contains(this))
-                ListHighlightedBlock.Add(this);
+            if (Edblock != null)
+                Edblock.AddHighlightedBlock(this);
         }
 
         protected void ChangeHighlightedBlock()
@@ -318,23 +317,40 @@ namespace Flowchart_Editor.Models
             }
         }
 
-        public void UnsetFormatTextField(string formatText)
+        public void SetFontWeight()
         {
-            if (formatText == "FormatBold")
-            {
-                TextBlockOfBlock.FontWeight = FontWeights.Normal;
-                TextBoxOfBlock.FontWeight = FontWeights.Normal;
-            }
-            else if (formatText == "FormatItalic")
-            {
-                TextBlockOfBlock.FontStyle = FontStyles.Italic;
-                TextBoxOfBlock.FontStyle = FontStyles.Italic;
-            }
-            else if (formatText == "FormatUnderline")
-            {
-                TextBlockOfBlock.TextDecorations = TextDecorations.Underline;
-                TextBoxOfBlock.TextDecorations = TextDecorations.Underline;
-            }
+            TextBlockOfBlock.FontWeight = FontWeights.Bold;
+            TextBoxOfBlock.FontWeight = FontWeights.Bold;
+        }
+
+        public void SetFontStyles()
+        {
+            TextBlockOfBlock.FontStyle = FontStyles.Italic;
+            TextBoxOfBlock.FontStyle = FontStyles.Italic;
+        }
+
+        public void SetTextDecorations()
+        {
+            TextBlockOfBlock.TextDecorations = TextDecorations.Underline;
+            TextBoxOfBlock.TextDecorations = TextDecorations.Underline;
+        }
+
+        public void UnsetFontWeight()
+        {
+            TextBlockOfBlock.FontWeight = FontWeights.Normal;
+            TextBoxOfBlock.FontWeight = FontWeights.Normal;
+        }
+
+        public void UnsetFontStyles()
+        {
+            TextBlockOfBlock.FontStyle = FontStyles.Normal;
+            TextBoxOfBlock.FontStyle = FontStyles.Normal;
+        }
+
+        public void UnsetTextDecorations()
+        {
+            TextBlockOfBlock.TextDecorations = TextDecorations.OverLine;
+            TextBoxOfBlock.TextDecorations = TextDecorations.OverLine;
         }
     }
 }
