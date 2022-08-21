@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:block="clr-namespace:Flowchart_Editor.View"
-        xmlns:toolBar="clr-namespace:Flowchart_Editor.View.Menu.ToolBar"
+        xmlns:toolBar="clr-namespace:Flowchart_Editor.View.Menu.ToolBar" 
+        xmlns:viewmodel="clr-namespace:Flowchart_Editor.ViewModel"
+        d:DataContext="{d:DesignInstance Type=viewmodel:ApplicationViewModel}"
         mc:Ignorable="d"
         Title="Flowchart Editor" 
         Height="1200" 
         Width="1820">
     <Window.Resources>
+        
         <Style x:Key="StyleStackPanel" TargetType="StackPanel">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
@@ -21,6 +24,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="StyleGridMenu" TargetType="Grid">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
@@ -31,6 +35,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="StyleCanvasEditField" TargetType="Canvas">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
@@ -41,6 +46,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames 
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" 
@@ -100,6 +106,8 @@
                 <toolBar:ListHeightBlock/>
                 <Separator />
 
+                <TextBox Name="Test" Width="150"/>
+
                 <materialDesign:PopupBox 
                     StaysOpen="True">
                     <Grid Margin="10">
@@ -117,24 +125,21 @@
                             Text="Светлая"/>
 
                         <ToggleButton
-                            Name="styleTheme"
                             IsChecked="{Binding StyleTheme}"
+                            Name="styleTheme"
                             HorizontalAlignment="Center"/>
 
                         <TextBlock
-                                Text="Тёмная"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right"/>
+                            Text="Тёмная"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"/>
 
                         <StackPanel 
                             Orientation="Horizontal" 
                             Grid.Row="1">
-                            
-                            <materialDesign:PackIcon 
+                            <materialDesign:PackIcon
+                                Style="{StaticResource PackIconStyle}"
                                 Kind="ContentSave" 
-                                Width="25" 
-                                Height="25" 
-                                VerticalAlignment="Center" 
                                 Margin="0 5"/>
                             
                             <Button 
@@ -145,14 +150,11 @@
                         <StackPanel 
                             Orientation="Horizontal"
                             Grid.Row="2">
-                            
-                            <materialDesign:PackIcon 
+                            <materialDesign:PackIcon
+                                Style="{StaticResource PackIconStyle}"
                                 Kind="upload" 
-                                Width="25" 
-                                Height="25"
-                                VerticalAlignment="Center" 
                                 Margin="0 5"/>
-                            
+
                             <Button 
                                 Content="Загрузить проект" 
                                 Command="{Binding UploadProjectCommand}"/>
@@ -162,10 +164,8 @@
                             Orientation="Horizontal"
                             Grid.Row="3">
                             <materialDesign:PackIcon 
+                                Style="{StaticResource PackIconStyle}"
                                 Kind="Image" 
-                                Width="25" 
-                                Height="25"
-                                VerticalAlignment="Center" 
                                 Margin="0 5"/>
                             <Button 
                                 Content="Сохранить изображение" 
@@ -176,10 +176,8 @@
                             Orientation="Horizontal"
                             Grid.Row="4">
                             <materialDesign:PackIcon 
+                                Style="{StaticResource PackIconStyle}"
                                 Kind="Printer" 
-                                Width="25"
-                                Height="25"
-                                VerticalAlignment="Center"
                                 Margin="0 5"/>
                             <Button 
                                 Content="Печать"
@@ -195,13 +193,8 @@
             Grid.Row="1" 
             Style="{StaticResource StyleStackPanel}">
             <Button 
-                x:Name="ButtonOpen" 
-                HorizontalAlignment="Center" 
-                Background="{x:Null}" 
-                BorderBrush="{x:Null}"
-                Width="40"
-                Height="40" 
-                Padding="0">
+                Style="{StaticResource ButtonOpenCloseStyle}"
+                x:Name="ButtonOpen">
                 <materialDesign:PackIcon 
                     Kind="FlowchartOutline"
                     Width="25" 
@@ -271,18 +264,16 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <block:ActionBlockView 
+                    <block:ActionBlockView
                         Grid.Row="0"
                         Grid.Column="0" 
                         MouseMove="MouseMoveBlock"/>
 
                     <Label 
-                        Content="Действие (1)" 
-                        FontSize="10" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Row="0"
-                        Grid.Column="1"/>
+                        Grid.Column="1"
+                        Content="Действие (1)" />
 
                     <block:ConditionBlockView
                         Grid.Row="1"
@@ -290,14 +281,11 @@
                         Margin="10 0"
                         MouseMove="MouseMoveBlock"/>
 
-                    <Label 
-                        Content="Условие (2)" 
-                        FontSize="10" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"
+                    <Label
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Row="1"
-                        Grid.Column="1"/>
-
+                        Grid.Column="1"
+                        Content="Условие (2)" />
 
                     <block:CaseFirstOptionView
                         Grid.Row="2"
@@ -313,13 +301,11 @@
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
-                            
+
                             <Label 
-                                Content="Условие (3)" 
-                                FontSize="10"
+                                Style="{StaticResource LabelBlockStyle}"
                                 Grid.Row="0"
-                                VerticalAlignment="Center" 
-                                HorizontalAlignment="Center"/>
+                                Content="Условие (3)" />
 
                             <TextBox 
                                 Grid.Row="1" 
@@ -344,10 +330,9 @@
                             </TextBox>
 
                             <Button 
+                                Style="{StaticResource ButtonAddCondition}"
                                 Grid.Row="2"
-                                Width="120"
                                 Content="Добавить" 
-                                Foreground="White"
                                 Command="{Binding AddConditionFirst}"/>
                         </Grid>
                     </StackPanel>
@@ -367,13 +352,11 @@
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
-                            
+
                             <Label 
-                                Content="Условие (4)" 
-                                FontSize="10"
+                                Style="{StaticResource LabelBlockStyle}"
                                 Grid.Row="0"
-                                VerticalAlignment="Center" 
-                                HorizontalAlignment="Center"/>
+                                Content="Условие (4)" />
                             <TextBox 
                                 Grid.Row="1" 
                                 materialDesign:HintAssist.Hint="Количесво линий">
@@ -396,9 +379,8 @@
                                 </TextBox.Text>
                             </TextBox>
                             <Button 
+                                Style="{StaticResource ButtonAddCondition}"
                                 Grid.Row="2"
-                                Width="120"
-                                Foreground="White"
                                 Content="Добавить"
                                 Command="{Binding AddConditionSecond}"/>
                         </Grid>
@@ -411,12 +393,10 @@
                         Margin="10 5"/>
 
                     <Label
-                        Content="Начало / Конец (5)" 
-                        FontSize="10" 
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
                         Grid.Row="4" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Content="Начало / Конец (5)" />
 
                     <block:InputOutputBlockView
                         Grid.Row="5"
@@ -424,27 +404,23 @@
                         MouseMove="MouseMoveBlock"
                         Margin="10 0"/>
 
-                    <Label 
-                        Content="Ввод / Вывод (6)" 
-                        FontSize="10" 
+                    <Label
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
-                        Grid.Row="5" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Grid.Row="5"
+                        Content="Ввод / Вывод (6)" />
 
                     <block:SubroutineBlockView
                         Grid.Row="6"
                         Grid.Column="0"
                         MouseMove="MouseMoveBlock"
-                        Margin="10 0"/>
+                        Margin="10 0" />
 
                     <Label
-                        Content="Подпрограмма (7)" 
-                        FontSize="10" 
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="2" 
-                        Grid.Row="6" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Grid.Row="6"
+                        Content="Подпрограмма (7)" />
 
                     <block:CycleBlockForView
                         Grid.Row="7"
@@ -453,12 +429,10 @@
                         Margin="5 0"/>
 
                     <Label
-                        Content="Цикл (8) for" 
-                        FontSize="10" 
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
                         Grid.Row="7" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Content="Цикл (8) for" />
 
                     <block:CycleBlockWhileBeginView
                         Grid.Row="8"
@@ -466,13 +440,11 @@
                         Margin="5 0"
                         MouseMove="MouseMoveBlock"/>
 
-                    <Label 
-                        Content="Цикл (9) do while, while (Начало)" 
-                        FontSize="10" 
+                    <Label
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
-                        Grid.Row="8" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Grid.Row="8"
+                        Content="Цикл (9) do while, while (Начало)" />
 
                     <block:CycleBlockWhileEndView
                         Grid.Row="9"
@@ -481,12 +453,10 @@
                         MouseMove="MouseMoveBlock"/>
 
                     <Label 
-                        Content="Цикл (10) do while, while (Конец)" 
-                        FontSize="10" 
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
                         Grid.Row="9" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Content="Цикл (10) do while, while (Конец)" />
 
                     <block:LinkBlockView
                         Grid.Column="0"
@@ -494,13 +464,11 @@
                         Margin="5 0"
                         MouseMove="MouseMoveBlock"/>
 
-                    <Label 
-                        Content="Ссылка (11)" 
-                        FontSize="10" 
+                    <Label
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
                         Grid.Row="10" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Content="Ссылка (11)"/>
 
                     <block:CommentView
                         Grid.Column="0" 
@@ -509,27 +477,25 @@
                         Width="150"/>
 
                     <Label 
-                        Content="Комментарий(12)" 
-                        FontSize="10" 
+                        Style="{StaticResource LabelBlockStyle}"
                         Grid.Column="1" 
-                        Grid.Row="11" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center"/>
+                        Grid.Row="11"
+                        Content="Комментарий(12)" />
                 </Grid>
             </ScrollViewer>
+
             <Button 
+                Style="{StaticResource ButtonOpenCloseStyle}"
                 x:Name="ButtonClose" 
                 Margin="10 0" 
                 HorizontalAlignment="Right" 
-                VerticalAlignment="Top"
-                Background="{x:Null}"
-                BorderBrush="{x:Null}" 
-                Width="30"
-                Height="30" 
-                Padding="0">
-                <materialDesign:PackIcon Kind="Close"/>
+                VerticalAlignment="Top">
+                <materialDesign:PackIcon 
+                    Width="15" 
+                    Height="15"
+                    Kind="Close" />
             </Button>
+            
         </Grid>
-
     </Grid>
 </Window>

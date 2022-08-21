@@ -3,23 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:flowchart_editor="clr-namespace:Flowchart_Editor" 
+             d:DataContext="{d:DesignInstance Type=flowchart_editor:BlockViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Canvas>
+        <Canvas 
+            Style="{StaticResource CanvasStyle}">
             <Polygon 
                 Fill="#CCCCFF" 
-                Points="0 0 0 50 10 60 130 60 140 50 140 0" 
-                Margin="5"/>
+                Points="0 0 0 50 10 60 130 60 140 50 140 0"/>
+
             <TextBlock 
-                Text="Конец цикла"
-                Canvas.Top="25"
-                FontSize="12"
-                Foreground="White"
-                TextAlignment="Center"  
-                HorizontalAlignment="Center"  
-                Width="150" 
-                Height="20"/>
+                Style="{StaticResource TextBlockStyle}"
+                Text="Конец цикла"/>
         </Canvas>
     </Grid>
 </UserControl>

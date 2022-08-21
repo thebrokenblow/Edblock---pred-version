@@ -49,7 +49,7 @@ namespace Flowchart_Editor.Models
             DragDrop.DoDragDrop(sender as DependencyObject, data, DragDropEffects.Copy);
         }
 
-        protected void SetStyle(FrameworkElement frameworkElement, string nameStyle)
+        public void SetStyle(FrameworkElement frameworkElement, string nameStyle)
         {
             if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
                 frameworkElement.Style = resourceDict[nameStyle] as Style;
@@ -59,6 +59,7 @@ namespace Flowchart_Editor.Models
         {
             double width = blockSize.Width;
             double height = blockSize.Height;
+
             if (width != 0)
                 frameworkElement.Width = width;
             if (height != 0)
@@ -92,22 +93,16 @@ namespace Flowchart_Editor.Models
         private void SetPropertyTextBox(ControlSize blockSize, ControlOffset controlOffset)
         {
             TextBoxOfBlock.MouseDoubleClick += ClickTextField;
-            string nameStyle = "";//"TextBoxStyleForBlock";
+            string nameStyle = "TextBoxStyle";
             SetProperty(TextBoxOfBlock, nameStyle, controlOffset, blockSize);
         }
 
         private void SetPropertyTextBlock(ControlSize blockSize, ControlOffset controlOffset)
         {
-            //Binding myBinding = new();
-            //myBinding.Source = new ApplicationViewModel();
-            //myBinding.Path = new PropertyPath("HighlightedBlock");
-            //myBinding.Mode = BindingMode.TwoWay;
-            //myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            //BindingOperations.SetBinding(TextBlockOfBlock, TextBlock.TextProperty, myBinding);
-
             TextBlockOfBlock.MouseDown += ClickTextField;
             TextBlockOfBlock.Text = initialText;
-            string nameStyle = "TextBlockStyleForBlock";
+            
+            string nameStyle = "TextBlockStyle";
             SetProperty(TextBlockOfBlock, nameStyle, controlOffset, blockSize);
             if (FrameBlock != null)
                 FrameBlock.Children.Add(TextBlockOfBlock);
@@ -115,7 +110,6 @@ namespace Flowchart_Editor.Models
 
         protected void DrawHighlightedBlock()
         {
-            SetStyle(TextBoxOfBlock, "TextBoxStyleForHighlightedBlock");
             if (!FrameBlock.Children.Contains(borderHighlightedLine))
             {
                 borderHighlightedLine.BorderBrush = Brushes.Blue;

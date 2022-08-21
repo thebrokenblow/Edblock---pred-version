@@ -118,10 +118,6 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Settings\Settings.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Settings\Settings.g.cs
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.baml
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.g.cs
-C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\СontrolStyle\СontrolsStyle.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.baml
@@ -135,3 +131,7 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatAlignTextField\FormatAlign.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatTextField\FormatText.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\ToolBar\FormatTextField\FormatText.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\Action\ActionBlockView.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.g.cs
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\Action\ActionBlockView.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.baml

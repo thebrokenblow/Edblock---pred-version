@@ -53,7 +53,7 @@ namespace Flowchart_Editor.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Flowchart_Editor;component/view/menu/blocks/comment/commentview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Flowchart_Editor;V1.0.0.0;component/view/menu/blocks/comment/commentview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\..\View\Menu\Blocks\Comment\CommentView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

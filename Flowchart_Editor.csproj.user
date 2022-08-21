@@ -12,7 +12,7 @@
     <Compile Update="View\Menu\ToolBar\Settings\Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\Action\ActionBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\Blocks\Comment\CommentView.xaml.cs">
@@ -57,7 +57,7 @@
     <Compile Update="View\Menu\Blocks\StartEnd\StartEndBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml.cs">
+    <Compile Update="View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Menu\ToolBar\FormatTextField\FormatText.xaml.cs">
@@ -86,7 +86,7 @@
     <Page Update="View\Menu\ToolBar\Settings\Settings.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\CanvasBasedBlock\Action\ActionBlockView.xaml">
+    <Page Update="View\Menu\Blocks\Action\ActionBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\Blocks\Comment\CommentView.xaml">
@@ -131,7 +131,7 @@
     <Page Update="View\Menu\Blocks\StartEnd\StartEndBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Menu\Blocks\CanvasBasedBlock\SubroutineBlock\SubroutineBlockView.xaml">
+    <Page Update="View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Menu\ToolBar\FormatTextField\FormatText.xaml">
