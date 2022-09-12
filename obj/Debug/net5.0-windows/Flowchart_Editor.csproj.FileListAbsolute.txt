@@ -135,3 +135,15 @@ C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Edi
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.g.cs
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\Action\ActionBlockView.baml
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\obj\Debug\net5.0-windows\View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.baml
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\CommonServiceLocator.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\Microsoft.CodeAnalysis.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\debian-x64\native\libuv.so
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\fedora-x64\native\libuv.so
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\opensuse-x64\native\libuv.so
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\osx\native\libuv.dylib
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\rhel-x64\native\libuv.so
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\win7-arm\native\libuv.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\win7-x64\native\libuv.dll
+C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\bin\Debug\net5.0-windows\runtimes\win7-x86\native\libuv.dll

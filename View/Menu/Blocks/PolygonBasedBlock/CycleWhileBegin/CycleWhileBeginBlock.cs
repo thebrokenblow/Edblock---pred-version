@@ -10,13 +10,12 @@ namespace Flowchart_Editor.Models
     [BlockName("CycleWhileBeginBlock")]
     public class CycleWhileBeginBlock : Block, IPolygonBased
     {
-        private readonly Polygon cycleWhileBeginBlock = new();
-        private readonly List<Point> listPoints = new();
+        private readonly PolygonBased cycleWhileBeginBlock;
         private const int sideProjection = 10;
         public CycleWhileBeginBlock()
         {
             initialText = "Цикл while начало";
-
+            cycleWhileBeginBlock = new();
             SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
 
@@ -56,7 +55,7 @@ namespace Flowchart_Editor.Models
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(cycleWhileBeginBlock, listPoints);
+            cycleWhileBeginBlock.SetPointPolygon();
             SetSize(FrameBlock, ControlSize);
             SetSize(TextBoxOfBlock, textFieldSize);
             SetSize(TextBlockOfBlock, textFieldSize);
@@ -82,39 +81,40 @@ namespace Flowchart_Editor.Models
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
         {
+            List<Point> pointsCycleWhileBeginBlock = cycleWhileBeginBlock.PointsPolygon;
             double height = polygonSize.Height;
             double width = polygonSize.Width;
 
-            listPoints.Clear();
+            pointsCycleWhileBeginBlock.Clear();
 
             Point poinCycleForBlock = new(0, height);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileBeginBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(0, sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileBeginBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(sideProjection, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileBeginBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width - sideProjection, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileBeginBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileBeginBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, height);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileBeginBlock.Add(poinCycleForBlock);
         }
 
         public void SetPropertyPolyginBlock()
         {
+            Polygon polygonCycleWhileBegin = cycleWhileBeginBlock.FramePolygon;
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(cycleWhileBeginBlock, listPoints);
-            IPolygonBased.AddPolygon(FrameBlock, cycleWhileBeginBlock);
-
+            cycleWhileBeginBlock.SetPointPolygon();
             string color = "#FFCCCCFF";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(cycleWhileBeginBlock, backgroundColor);
+            polygonCycleWhileBegin.Fill = backgroundColor;
+            FrameBlock.Children.Add(polygonCycleWhileBegin);
         }
     }
 }

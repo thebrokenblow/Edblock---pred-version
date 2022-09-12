@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox SelectionMode="Multiple">
+        <ListBox SelectionMode="Multiple" Background="#ffffff">
             <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="SelectedFormatBold" Unselected="UnselectedFormatBold"/>
             <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="SelectedFormatItalic" Unselected="UnselectedFormatItalic"/>
             <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="SelectedUnderline" Unselected="UnselectedUnderline"/>

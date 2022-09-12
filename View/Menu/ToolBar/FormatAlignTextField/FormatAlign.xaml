@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox Name="test" SelectedIndex="1" SelectedValue="{Binding SelectedFormatAlign}">
+        <ListBox SelectedIndex="1" SelectedValue="{Binding SelectedFormatAlign}" Background="White">
             <ListBoxItem
                 Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
             <ListBoxItem

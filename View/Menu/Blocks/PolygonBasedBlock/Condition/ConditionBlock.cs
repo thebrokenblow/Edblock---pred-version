@@ -1,32 +1,27 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using Flowchart_Editor.Model;
-using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
-using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
     [BlockName("ConditionBlock")]
     public class ConditionBlock : Block, IPolygonBased
     {
-        private readonly Polygon conditionBlock = new();
-        private readonly List<Point> pointsConditionBlock = new();
+        private readonly PolygonBased conditionBlock;
         public ConditionBlock()
         {
             initialText = "Условие";
-
+            conditionBlock = new();
             SetPropertyFrameBlock();
+            SetCoordinatesPoints(ControlSize);
             SetPropertyPolyginBlock();
-
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField(ControlSize);
             SetPropertyTextField(sizeTextField, offsetTextField);
-
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
-
             DrawHighlightedBlock();
         }
 
@@ -56,7 +51,7 @@ namespace Flowchart_Editor.Models
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField(ControlSize);
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(conditionBlock, pointsConditionBlock);
+            conditionBlock.SetPointPolygon();
             SetSize(FrameBlock, ControlSize);
             SetSize(TextBoxOfBlock, textFieldSize);
             SetSize(TextBlockOfBlock, textFieldSize);
@@ -83,16 +78,16 @@ namespace Flowchart_Editor.Models
         public void SetPropertyPolyginBlock()
         {
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(conditionBlock, pointsConditionBlock);
-            IPolygonBased.AddPolygon(FrameBlock, conditionBlock);
-
+            conditionBlock.SetPointPolygon();
             string color = "#FF60B2D3";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(conditionBlock, backgroundColor);
+            conditionBlock.FramePolygon.Fill = backgroundColor;
+            FrameBlock.Children.Add(conditionBlock.FramePolygon);
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
         {
+            List<Point> pointsConditionBlock = conditionBlock.PointsPolygon;
             double width = polygonSize.Width;
             double height = polygonSize.Height;
 

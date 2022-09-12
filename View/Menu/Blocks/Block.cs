@@ -6,28 +6,40 @@ using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using System.Windows.Data;
-using Flowchart_Editor.ViewModel;
+using System.Windows.Markup;
 
 namespace Flowchart_Editor.Models
 {
     public abstract class Block
     {
-        public Canvas FrameBlock { get; set; } = new();
+        public Canvas FrameBlock { get; set; }
         public static Canvas? EditField { get; set; }
         public static Edblock? Edblock { get; set; }
-        public TextBox TextBoxOfBlock { get; set; } = new();
-        public TextBlock TextBlockOfBlock { get; set; } = new();
+        public TextBox TextBoxOfBlock { get; set; }
+        public TextBlock TextBlockOfBlock { get; set; }
         private const int defaultWidth = 140;
         private const int defaulHeight = 60;
         protected const int offsetConnectionPoint = 3;
         protected string initialText = "";
-        private readonly Border borderHighlightedLine = new();
-        protected ControlSize ControlSize { get; set; } = new(defaultWidth, defaulHeight);
-        protected Tuple<double, double> coordinateConnectionPoint = new(0, 0);
-        protected List<Tuple<double, double>> coordinatesConnectionPoints = new();
-        protected List<Ellipse> connectionsPoints = new();
-        protected readonly Uri uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
+        private readonly Border borderHighlightedLine;
+        protected ControlSize ControlSize { get; set; }
+        protected Tuple<double, double> coordinateConnectionPoint;
+        protected List<Tuple<double, double>> coordinatesConnectionPoints;
+        protected List<Ellipse> connectionsPoints;
+        protected readonly Uri uri;
+
+        public Block()
+        {
+            FrameBlock = new();
+            TextBoxOfBlock = new();
+            TextBlockOfBlock = new();
+            borderHighlightedLine = new();
+            ControlSize = new(defaultWidth, defaulHeight);
+            coordinateConnectionPoint = new(0, 0);
+            coordinatesConnectionPoints = new();
+            connectionsPoints = new();
+            uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
+        }
 
         abstract public UIElement GetUIElement();
         abstract public void SetWidth(int valueBlockWidth);
@@ -151,7 +163,9 @@ namespace Flowchart_Editor.Models
             if (e.Source is TextBlock)
             {
                 if (e.ClickCount == 1)
+                {
                     DrawHighlightedBlock();
+                }
                 else if (e.ClickCount == 2)
                 {
                     FrameBlock.Children.Remove(TextBlockOfBlock);
@@ -159,9 +173,11 @@ namespace Flowchart_Editor.Models
                     FrameBlock.Children.Add(TextBoxOfBlock);
                 }
             }
-            else
+            else if (e.Source is TextBox)
             {
-                ChangeTextField();
+                FrameBlock.Children.Remove(TextBoxOfBlock);
+                TextBlockOfBlock.Text = TextBoxOfBlock.Text;
+                FrameBlock.Children.Add(TextBlockOfBlock);
             }
         }
 

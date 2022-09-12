@@ -129,18 +129,6 @@ namespace Flowchart_Editor
             Block.Edblock = this;
             MinHeight = minHeight;
             MinWidth = minWidth;
-
-
-            TextBox textBox = new TextBox();
-            textBox.Text = "TEST";
-            textBox.Name = "TEST";
-
-            Binding binding = new();
-            binding.ElementName = textBox.Text;
-            binding.Path = new PropertyPath("Text");  // свойство элемента-источника
-            Test.SetBinding(TextBox.TextProperty, binding);
-
-
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
         }
 

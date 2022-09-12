@@ -17,7 +17,7 @@ namespace Flowchart_Editor.View.ConditionCaseSecondOption
         int countOfHeight = DefaultPropertyForBlock.height;
         public readonly Line firstLine = new();
         public readonly Line secondLine = new();
-        public CaseSecondOption(Canvas destination, int countLine) : base(destination)
+        public CaseSecondOption(Canvas destination, int countLine)
         {
             EditField = destination;
             this.countLine = --countLine;

@@ -6,23 +6,62 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Flowchart_Editor.View.Condition.Case;
+using Flowchart_Editor.Model;
+using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
 
 namespace Flowchart_Editor.View.ConditionCaseFirstOption
 {
     public class CaseFirstOption : CaseBlock
     {
-        private Style styleLine;
-        private Style styleTextBox;
-        private readonly int defaultWidth = DefaultPropertyForBlock.width;
-        private readonly int defaulHeight = DefaultPropertyForBlock.height;
-        private readonly Line firstLine = new();
-
-
-        public CaseFirstOption(Canvas destination, int countLine) : base(destination)
+        public CaseFirstOption(int countLine)
         {
-            EditField = destination;
             this.countLine = countLine;
             initialText = "Условие";
+
+            SetPropertyFrameBlock();
+            //SetPropertyPolyginBlock();
+
+            ControlSize sizeTextField = GetSizeTextField(ControlSize);
+            ControlOffset offsetTextField = GetOffsetTextField(ControlSize);
+            SetPropertyTextField(sizeTextField, offsetTextField);
+
+            SetCoordinatesConnectionPoints();
+            InitializingConnectionPoints();
+
+            DrawHighlightedBlock();
+        }
+
+        private static ControlSize GetSizeTextField(ControlSize controlSize)
+        {
+            double width = controlSize.Width / 2;
+            double height = controlSize.Height / 2;
+            ControlSize sizeTextField = new(width, height);
+            return sizeTextField;
+        }
+
+        private static ControlOffset GetOffsetTextField(ControlSize controlSize)
+        {
+            double offsetLeft = controlSize.Width / 2 - controlSize.Width / 4;
+            double offsetTop = controlSize.Height / 4;
+            ControlOffset offsetTextField = new(offsetLeft, offsetTop);
+            return offsetTextField;
+        }
+
+        private void SetPropertyControl()
+        {
+            ControlSize textFieldSize = GetSizeTextField(ControlSize);
+            ControlOffset textFieldOffset = GetOffsetTextField(ControlSize);
+            SetCoordinatesPoints(ControlSize);
+            //SetPointPolygon(conditionBlock, pointsConditionBlock);
+            SetSize(FrameBlock, ControlSize);
+            SetSize(TextBoxOfBlock, textFieldSize);
+            SetSize(TextBlockOfBlock, textFieldSize);
+            SetCoordinates(TextBoxOfBlock, textFieldOffset);
+            SetCoordinates(TextBlockOfBlock, textFieldOffset);
+
+            SetCoordinatesConnectionPoints();
+            ChangeCoordinatesConnectionPoints();
+            ChangeHighlightedBlock();
         }
 
         override public UIElement GetUIElement()
@@ -35,29 +74,29 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 TextBlockOfBlock = new TextBlock();
                 
 
-                FrameBlock.Width = defaultWidth;
-                FrameBlock.Height = defaulHeight;
+                //FrameBlock.Width = defaultWidth;
+                //FrameBlock.Height = defaulHeight;
 
                 BrushConverter brushConverter = new();
                 Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF60B2D3");
 
                 //polygonBlock.Fill = backgroundColor;
-                Point Point1 = new(0, defaulHeight / 2);
-                Point Point2 = new(defaultWidth / 2, defaulHeight);
-                Point Point3 = new(defaultWidth, defaulHeight / 2);
-                Point Point4 = new(defaultWidth / 2, 0);
-                Point Point5 = new(0, defaulHeight / 2);
+                //Point Point1 = new(0, defaulHeight / 2);
+                //Point Point2 = new(defaultWidth / 2, defaulHeight);
+                //Point Point3 = new(defaultWidth, defaulHeight / 2);
+                //Point Point4 = new(defaultWidth / 2, 0);
+                //Point Point5 = new(0, defaulHeight / 2);
 
                 PointCollection myPointCollection = new();
-                myPointCollection.Add(Point1);
-                myPointCollection.Add(Point2);
-                myPointCollection.Add(Point3);
-                myPointCollection.Add(Point4);
-                myPointCollection.Add(Point5);
+                //myPointCollection.Add(Point1);
+                //myPointCollection.Add(Point2);
+                //myPointCollection.Add(Point3);
+                //myPointCollection.Add(Point4);
+                //myPointCollection.Add(Point5);
                 //polygonBlock.Points = myPointCollection;
 
-                double valueForSetLeftTextBoxAndTextBlock = defaultWidth / 2 - defaultWidth / 4;
-                double valueForSetTopTextBoxAndTextBlock = defaulHeight / 4;
+                //double valueForSetLeftTextBoxAndTextBlock = defaultWidth / 2 - defaultWidth / 4;
+                //double valueForSetTopTextBoxAndTextBlock = defaulHeight / 4;
 
                 //SetPropertyForTextBox(defaultWidth / 2, defaulHeight / 2, initialText, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
                 //SetPropertyForTextBlock(defaultWidth / 2, defaulHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
@@ -82,12 +121,12 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 listLine = new List<Line>();
                 listTextBox = new List<TextBox>();
 
-                firstLine.X1 = DefaultPropertyForBlock.width / 2;
-                firstLine.Y1 = DefaultPropertyForBlock.height;
-                firstLine.X2 = DefaultPropertyForBlock.width / 2;
-                firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
-                firstLine.Style = styleLine;
-                FrameBlock.Children.Add(firstLine);
+                //firstLine.X1 = DefaultPropertyForBlock.width / 2;
+                //firstLine.Y1 = DefaultPropertyForBlock.height;
+                //firstLine.X2 = DefaultPropertyForBlock.width / 2;
+                //firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
+                //firstLine.Style = styleLine;
+                //FrameBlock.Children.Add(firstLine);
 
                 for (int i = 1; i <= countLine; i++)
                 {
@@ -136,8 +175,8 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 //Canvas.SetLeft(thirdPointConnect, valueBlockWidth / 2 - 3);
                 //Canvas.SetLeft(fourthPointConnect, valueBlockWidth - 6);
 
-                firstLine.X1 = DefaultPropertyForBlock.width / 2;
-                firstLine.X2 = DefaultPropertyForBlock.width / 2;
+                //firstLine.X1 = DefaultPropertyForBlock.width / 2;
+                //firstLine.X2 = DefaultPropertyForBlock.width / 2;
                 if (listLine != null)
                 {
                     for (int i = 0; i < listLine.Count; i++)
@@ -172,8 +211,8 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
                 //Canvas.SetTop(thirdPointConnect, valueBlockHeight - 3);
                 //Canvas.SetTop(fourthPointConnect, valueBlockHeight / 2 - 3);
 
-                firstLine.Y1 = DefaultPropertyForBlock.height;
-                firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
+                //firstLine.Y1 = DefaultPropertyForBlock.height;
+                //firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
 
                 if (listLine != null)
                 {

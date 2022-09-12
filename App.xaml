@@ -11,14 +11,12 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#b87afa" />
-            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#edaaff" />
-            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#835cc7" />
-            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#b87afa" />
-            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#edaaff" />
-            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#835cc7" />
-            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#aeea00" />
-            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#e4ff54" />
+            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#9f5ffe" />
+            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#9f5ffe" />
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#9f5ffe" />
+            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#9f5ffe" />
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#9f5ffe" />
+            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#9f5ffe" />
 
             <Style x:Key="CanvasStyle" TargetType="Canvas">
                 <Setter Property="Width" Value="140"/>
@@ -58,7 +56,44 @@
                 <Setter Property="Height" Value="40"/>
                 <Setter Property="Padding" Value="0"/>
             </Style>
-            
+
+            <Style x:Key="StyleStackPanel" TargetType="StackPanel">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
+                        <Setter Property="Background" Value="#212121" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="False">
+                        <Setter Property="Background" Value="#ffffff" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="StyleGridMenu" TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
+                        <Setter Property="Background" Value="#212121" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="False">
+                        <Setter Property="Background" Value="#ffffff" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="StyleCanvasEditField" TargetType="Canvas">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="True">
+                        <Setter Property="Background" Value="#1c1c1c" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ElementName=styleTheme, Path=IsChecked}" Value="False">
+                        <Setter Property="Background" Value="#f7f8fc" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ToolBarStyle" TargetType="ToolBar">
+                <Setter Property="Background" Value="#ffffff"/>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

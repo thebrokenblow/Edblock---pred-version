@@ -1,7 +1,4 @@
-﻿using Flowchart_Editor.Model;
-using Flowchart_Editor.Models;
-using Flowchart_Editor.View.ConditionCaseFirstOption;
-using Flowchart_Editor.View.ConditionCaseSecondOption;
+﻿using Flowchart_Editor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,11 +61,6 @@ namespace Flowchart_Editor.View.Condition.Case
                     FrameBlock.Children.Add(caseBlock.GetUIElement());
                 dictionaryLineAndBlock.Add(line, caseBlock);
             }
-        }
-
-
-        protected CaseBlock(Canvas destination) : base()
-        {
-        }
+        }      
     }
 }

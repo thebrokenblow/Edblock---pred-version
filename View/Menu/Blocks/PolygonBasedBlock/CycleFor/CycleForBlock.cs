@@ -1,33 +1,28 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Controls;
-using System.Collections.Generic;
 using Flowchart_Editor.Model;
+using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
-using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
     [BlockName("CycleForBlock")]
     public class CycleForBlock : Block, IPolygonBased
     {
-        private readonly Polygon cycleForBlock = new();
-        private readonly List<Point> listPoints = new();
+        private readonly PolygonBased cycleForBlock;
         private const int sideProjection = 10; 
+
         public CycleForBlock()
         {
             initialText = "Цикл for";
-
+            cycleForBlock = new();
             SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
-
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
-
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
-
             DrawHighlightedBlock();
         }
 
@@ -57,13 +52,12 @@ namespace Flowchart_Editor.Models
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(cycleForBlock, listPoints);
+            cycleForBlock.SetPointPolygon();
             SetSize(FrameBlock, ControlSize);
             SetSize(TextBoxOfBlock, textFieldSize);
             SetSize(TextBlockOfBlock, textFieldSize);
             SetCoordinates(TextBoxOfBlock, textFieldOffset);
             SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
             SetCoordinatesConnectionPoints();
             ChangeCoordinatesConnectionPoints();
             ChangeHighlightedBlock();
@@ -83,47 +77,48 @@ namespace Flowchart_Editor.Models
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
         {
+            List<Point> pointsCycleForBlock = cycleForBlock.PointsPolygon;
             double height = polygonSize.Height;
             double width = polygonSize.Width;
 
-            listPoints.Clear();
+            pointsCycleForBlock.Clear();
 
             Point poinCycleForBlock = new(sideProjection, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(sideProjection, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(0, sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(0, height - sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(sideProjection, height);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width - sideProjection, height);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, height - sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width - sideProjection, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleForBlock.Add(poinCycleForBlock);
         }
 
         public void SetPropertyPolyginBlock()
         {
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(cycleForBlock, listPoints);
-            IPolygonBased.AddPolygon(FrameBlock, cycleForBlock);
+            cycleForBlock.SetPointPolygon();
             string color = "#FFFFC618";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(cycleForBlock, backgroundColor);
+            cycleForBlock.FramePolygon.Fill = backgroundColor;
+            FrameBlock.Children.Add(cycleForBlock.FramePolygon);
         }
     }
 }

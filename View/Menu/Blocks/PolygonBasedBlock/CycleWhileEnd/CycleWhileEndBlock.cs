@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using Flowchart_Editor.Model;
-using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
 using System.Windows.Shapes;
@@ -11,24 +10,20 @@ namespace Flowchart_Editor.Models
     [BlockName("CycleWhileEndBlock")]
     public class CycleWhileEndBlock : Block, IPolygonBased
     {
-        private readonly Polygon cycleWhileEndBlock = new();
-        private readonly List<Point> listPoints = new();
+        private readonly PolygonBased cycleWhileEndBlock;
         private const int sideProjection = 10;
 
         public CycleWhileEndBlock()
         {
             initialText = "Цикл while конец";
-
+            cycleWhileEndBlock = new();
             SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
-
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
-
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
-
             DrawHighlightedBlock();
         }
 
@@ -70,13 +65,12 @@ namespace Flowchart_Editor.Models
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(cycleWhileEndBlock, listPoints);
+            cycleWhileEndBlock.SetPointPolygon();
             SetSize(FrameBlock, ControlSize);
             SetSize(TextBoxOfBlock, textFieldSize);
             SetSize(TextBlockOfBlock, textFieldSize);
             SetCoordinates(TextBoxOfBlock, textFieldOffset);
             SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
             SetCoordinatesConnectionPoints();
             ChangeCoordinatesConnectionPoints();
             ChangeHighlightedBlock();
@@ -84,39 +78,40 @@ namespace Flowchart_Editor.Models
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
         {
+            List<Point> pointsCycleWhileEndBlock = cycleWhileEndBlock.PointsPolygon;
             double height = polygonSize.Height;
             double width = polygonSize.Width;
 
-            listPoints.Clear();
+            pointsCycleWhileEndBlock.Clear();
 
             Point poinCycleForBlock = new(0, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileEndBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(0, height - sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileEndBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(sideProjection, height);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileEndBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width - sideProjection, height);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileEndBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, height - sideProjection);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileEndBlock.Add(poinCycleForBlock);
 
             poinCycleForBlock = new(width, 0);
-            listPoints.Add(poinCycleForBlock);
+            pointsCycleWhileEndBlock.Add(poinCycleForBlock);
         }
 
         public void SetPropertyPolyginBlock()
         {
+            Polygon polygonCycleWhileEnd = cycleWhileEndBlock.FramePolygon;
             SetCoordinatesPoints(ControlSize);
-            IPolygonBased.SetPointPolygon(cycleWhileEndBlock, listPoints);
-            IPolygonBased.AddPolygon(FrameBlock, cycleWhileEndBlock);
-
+            cycleWhileEndBlock.SetPointPolygon();
             string color = "#FFCCCCFF";
             Brush backgroundColor = GetBackgroundColor(color);
-            IPolygonBased.SetFill(cycleWhileEndBlock, backgroundColor);
+            polygonCycleWhileEnd.Fill = backgroundColor;
+            FrameBlock.Children.Add(polygonCycleWhileEnd);
         }
     }
 }

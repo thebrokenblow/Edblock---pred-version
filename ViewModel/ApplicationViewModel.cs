@@ -132,7 +132,7 @@ namespace Flowchart_Editor.ViewModel
                 {
                     if (!errorConditionFirst && editField != null)
                     {
-                        CaseFirstOption conditionCaseFirstOptionBlock = new(editField, Convert.ToInt32(CountLineConditionFirst));
+                        //CaseFirstOption conditionCaseFirstOptionBlock = new(editField, Convert.ToInt32(CountLineConditionFirst));
                         //Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
                     }
                 });
