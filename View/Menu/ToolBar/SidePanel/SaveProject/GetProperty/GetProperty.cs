@@ -44,59 +44,59 @@ namespace Flowchart_Editor.Menu.SaveProject.GetProperty
 
         //public static int i = 0;
         //public static int countX2 = 0;
-        public static CaseModel CaseModel(CaseBlock caseBlock)
-        {
-            UIElement? itemBlockUIElement = caseBlock.GetUIElement();
-            int height = 0;
-            int width = 0;
-            if (itemBlockUIElement != null)
-            {
-                height = DefaultPropertyForBlock.height;
-                width = DefaultPropertyForBlock.width;
-            }
-            string textOfBlock = "";
-            if (caseBlock.TextBoxOfBlock != null)
-                textOfBlock = caseBlock.TextBoxOfBlock.Text;
-            double topСoordinates = Canvas.GetTop(itemBlockUIElement);
-            double leftСoordinates = Canvas.GetLeft(itemBlockUIElement);
+        //public static CaseModel CaseModel(CaseBlock caseBlock)
+        //{
+        //    UIElement? itemBlockUIElement = caseBlock.GetUIElement();
+        //    int height = 0;
+        //    int width = 0;
+        //    if (itemBlockUIElement != null)
+        //    {
+        //        height = DefaultPropertyForBlock.height;
+        //        width = DefaultPropertyForBlock.width;
+        //    }
+        //    string textOfBlock = "";
+        //    if (caseBlock.TextBoxOfBlock != null)
+        //        textOfBlock = caseBlock.TextBoxOfBlock.Text;
+        //    double topСoordinates = Canvas.GetTop(itemBlockUIElement);
+        //    double leftСoordinates = Canvas.GetLeft(itemBlockUIElement);
 
-            if (Double.IsNaN(topСoordinates))
-                topСoordinates = 0;
+        //    if (Double.IsNaN(topСoordinates))
+        //        topСoordinates = 0;
 
-            if (Double.IsNaN(leftСoordinates))
-                leftСoordinates = 0;
+        //    if (Double.IsNaN(leftСoordinates))
+        //        leftСoordinates = 0;
 
-            bool flagPresenceСomment = false;
-            string textOfComment = "";
+        //    bool flagPresenceСomment = false;
+        //    string textOfComment = "";
             
 
-            List<LineOfCase> listLineOfCase = new();
+        //    List<LineOfCase> listLineOfCase = new();
 
-            foreach (KeyValuePair<Line, Block> itemLineAndBlock in caseBlock.dictionaryLineAndBlock)
-            {
-                LineModel lineModel = LineModel(itemLineAndBlock.Key);
+        //    //foreach (KeyValuePair<Line, Block> itemLineAndBlock in caseBlock.dictionaryLineAndBlock)
+        //    //{
+        //    //    LineModel lineModel = LineModel(itemLineAndBlock.Key);
                 
-                Type typeOfBlock = itemLineAndBlock.Value.GetType();
-                CaseModel? caseModel = null;
-                BlockModel? blockModel = null;
-                if (itemLineAndBlock.Value is CaseBlock)
-                    caseModel = CaseModel((CaseBlock)itemLineAndBlock.Value);
-                else 
-                    blockModel = BlockModel(itemLineAndBlock.Value, typeOfBlock.Name);
-                listLineOfCase.Add(new(/*Canvas.GetTop(itemLineAndBlock.Key), Canvas.GetLeft(itemLineAndBlock.Key)*/ lineModel, caseModel, blockModel));
-            }
-            List<string> listTextOfLine = new();
-            foreach (TextBox textBox in caseBlock.listTextBox)
-                listTextOfLine.Add(textBox.Text);
-            string nameOfBlock = "";
-            if (caseBlock is CaseFirstOption)
-                nameOfBlock = "CaseFirstOption";
-            if (caseBlock is CaseSecondOption)
-                nameOfBlock = "CaseSecondOption";
+        //    //    Type typeOfBlock = itemLineAndBlock.Value.GetType();
+        //    //    CaseModel? caseModel = null;
+        //    //    BlockModel? blockModel = null;
+        //    //    if (itemLineAndBlock.Value is CaseBlock)
+        //    //        caseModel = CaseModel((CaseBlock)itemLineAndBlock.Value);
+        //    //    else 
+        //    //        blockModel = BlockModel(itemLineAndBlock.Value, typeOfBlock.Name);
+        //    //    listLineOfCase.Add(new(/*Canvas.GetTop(itemLineAndBlock.Key), Canvas.GetLeft(itemLineAndBlock.Key)*/ lineModel, caseModel, blockModel));
+        //    //}
+        //    List<string> listTextOfLine = new();
+        //    //foreach (TextBox textBox in caseBlock.listTextBox)
+        //    //    listTextOfLine.Add(textBox.Text);
+        //    string nameOfBlock = "";
+        //    if (caseBlock is CaseFirstOption)
+        //        nameOfBlock = "CaseFirstOption";
+        //    if (caseBlock is CaseSecondOption)
+        //        nameOfBlock = "CaseSecondOption";
 
-            return new(nameOfBlock, height, width, textOfBlock, topСoordinates, leftСoordinates, flagPresenceСomment,
-                textOfComment, caseBlock.listLine.Count, listLineOfCase, listTextOfLine);
-        }
+        //    return new(nameOfBlock, height, width, textOfBlock, topСoordinates, leftСoordinates, flagPresenceСomment,
+        //        textOfComment, caseBlock.listLine.Count, listLineOfCase, listTextOfLine);
+        //}
 
         public static Dictionary<string, Type> GetBlockDictionary()
         {

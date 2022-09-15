@@ -141,7 +141,7 @@ namespace Flowchart_Editor.Menu.UploadProject
                 if (compliteCase.Item1.nameOfBlock != "CaseFirstOption" && compliteCase.Item1.nameOfBlock != "CaseSecondOption")
                     block = SetProperty.SetBlock(blockDictionary[compliteCase.Item1.nameOfBlock], compliteCase.Item2.blockModel);
                 newCaseBlock = SetProperty.SetCaseBlock(compliteCase.Item1);
-                caseBlock.PindingBlock(newCaseBlock, block, line);
+                //caseBlock.PindingBlock(newCaseBlock, block, line);
             }
 
 

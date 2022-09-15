@@ -46,7 +46,7 @@ namespace Flowchart_Editor.Models
             return offsetTextField;
         }
 
-        private void SetPropertyControl()
+        protected void SetPropertyControl()
         {
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField(ControlSize);
@@ -57,7 +57,6 @@ namespace Flowchart_Editor.Models
             SetSize(TextBlockOfBlock, textFieldSize);
             SetCoordinates(TextBoxOfBlock, textFieldOffset);
             SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
             SetCoordinatesConnectionPoints();
             ChangeCoordinatesConnectionPoints();
             ChangeHighlightedBlock();

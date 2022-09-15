@@ -8,7 +8,6 @@ using Flowchart_Editor.Command;
 using System.Collections.Generic;
 using Flowchart_Editor.Menu.Print;
 using Flowchart_Editor.Menu.SaveImg;
-using System.Runtime.CompilerServices;
 using Flowchart_Editor.Menu.SaveProject;
 using Flowchart_Editor.View.Menu.ToolBar;
 using Flowchart_Editor.View.СontrolsStyle;
@@ -132,8 +131,8 @@ namespace Flowchart_Editor.ViewModel
                 {
                     if (!errorConditionFirst && editField != null)
                     {
-                        //CaseFirstOption conditionCaseFirstOptionBlock = new(editField, Convert.ToInt32(CountLineConditionFirst));
-                        //Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
+                        CaseFirstOption conditionCaseFirstOptionBlock = new(Convert.ToInt32(CountLineConditionFirst));
+                        editField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
                     }
                 });
             }
@@ -150,8 +149,8 @@ namespace Flowchart_Editor.ViewModel
                 {
                     if (!errorConditionSecond && editField != null)
                     {
-                        CaseSecondOption conditionCaseFirstOptionBlock = new(editField, Convert.ToInt32(CountLineConditionSecond));
-                        //Edblock.EditField.Children.Add(conditionCaseFirstOptionBlock.GetUIElement());
+                        CaseSecondOption conditionCaseSecondOptionBlock = new(Convert.ToInt32(CountLineConditionSecond));
+                        editField.Children.Add(conditionCaseSecondOptionBlock.GetUIElement());
                     }
                 });
             }

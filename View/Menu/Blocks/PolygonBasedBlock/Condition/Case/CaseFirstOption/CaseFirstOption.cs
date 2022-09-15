@@ -1,275 +1,105 @@
-﻿using System.Windows;
+﻿using Flowchart_Editor.Model;
+using Flowchart_Editor.Models;
+using Flowchart_Editor.View.Condition.Case;
+using Flowchart_Editor.View.Menu.ToolBar.HeightBlock;
+using Flowchart_Editor.View.Menu.ToolBar.WidthBlock;
+using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Flowchart_Editor.Models;
-using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Windows.Input;
-using Flowchart_Editor.View.Condition.Case;
-using Flowchart_Editor.Model;
-using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
 
 namespace Flowchart_Editor.View.ConditionCaseFirstOption
 {
     public class CaseFirstOption : CaseBlock
     {
-        public CaseFirstOption(int countLine)
+        private int lineIndent = 10;
+        public CaseFirstOption(int countLineCase)
         {
-            this.countLine = countLine;
+            this.countLineCase = countLineCase;
             initialText = "Условие";
-
-            SetPropertyFrameBlock();
-            //SetPropertyPolyginBlock();
-
-            ControlSize sizeTextField = GetSizeTextField(ControlSize);
-            ControlOffset offsetTextField = GetOffsetTextField(ControlSize);
-            SetPropertyTextField(sizeTextField, offsetTextField);
-
-            SetCoordinatesConnectionPoints();
-            InitializingConnectionPoints();
-
-            DrawHighlightedBlock();
-        }
-
-        private static ControlSize GetSizeTextField(ControlSize controlSize)
-        {
-            double width = controlSize.Width / 2;
-            double height = controlSize.Height / 2;
-            ControlSize sizeTextField = new(width, height);
-            return sizeTextField;
-        }
-
-        private static ControlOffset GetOffsetTextField(ControlSize controlSize)
-        {
-            double offsetLeft = controlSize.Width / 2 - controlSize.Width / 4;
-            double offsetTop = controlSize.Height / 4;
-            ControlOffset offsetTextField = new(offsetLeft, offsetTop);
-            return offsetTextField;
-        }
-
-        private void SetPropertyControl()
-        {
-            ControlSize textFieldSize = GetSizeTextField(ControlSize);
-            ControlOffset textFieldOffset = GetOffsetTextField(ControlSize);
-            SetCoordinatesPoints(ControlSize);
-            //SetPointPolygon(conditionBlock, pointsConditionBlock);
-            SetSize(FrameBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
-            SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            DrawLine();
         }
 
         override public UIElement GetUIElement()
         {
-            if (FrameBlock == null)
-            {
-                FrameBlock = new Canvas();
-                //polygonBlock = new Polygon();
-                TextBoxOfBlock = new TextBox();
-                TextBlockOfBlock = new TextBlock();
-                
-
-                //FrameBlock.Width = defaultWidth;
-                //FrameBlock.Height = defaulHeight;
-
-                BrushConverter brushConverter = new();
-                Brush backgroundColor = (Brush)brushConverter.ConvertFrom("#FF60B2D3");
-
-                //polygonBlock.Fill = backgroundColor;
-                //Point Point1 = new(0, defaulHeight / 2);
-                //Point Point2 = new(defaultWidth / 2, defaulHeight);
-                //Point Point3 = new(defaultWidth, defaulHeight / 2);
-                //Point Point4 = new(defaultWidth / 2, 0);
-                //Point Point5 = new(0, defaulHeight / 2);
-
-                PointCollection myPointCollection = new();
-                //myPointCollection.Add(Point1);
-                //myPointCollection.Add(Point2);
-                //myPointCollection.Add(Point3);
-                //myPointCollection.Add(Point4);
-                //myPointCollection.Add(Point5);
-                //polygonBlock.Points = myPointCollection;
-
-                //double valueForSetLeftTextBoxAndTextBlock = defaultWidth / 2 - defaultWidth / 4;
-                //double valueForSetTopTextBoxAndTextBlock = defaulHeight / 4;
-
-                //SetPropertyForTextBox(defaultWidth / 2, defaulHeight / 2, initialText, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
-                //SetPropertyForTextBlock(defaultWidth / 2, defaulHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
-
-                //SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - 3, -2);
-                //firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
-
-                //SetPropertyPointConnect(secondPointToConnect, 0, defaulHeight / 2 - 3);
-                //secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
-
-                //SetPropertyPointConnect(thirdPointToConnect, defaultWidth / 2 - 3, defaulHeight - 3);
-
-                //SetPropertyPointConnect(fourthPointToConnect, defaultWidth - 6, defaulHeight / 2 - 3);
-                //fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
-
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                {
-                    styleLine = resourceDict["LineStyle"] as Style;
-                    styleTextBox = resourceDict["TextBoxStyleForCase"] as Style;
-                }
-                    
-                listLine = new List<Line>();
-                listTextBox = new List<TextBox>();
-
-                //firstLine.X1 = DefaultPropertyForBlock.width / 2;
-                //firstLine.Y1 = DefaultPropertyForBlock.height;
-                //firstLine.X2 = DefaultPropertyForBlock.width / 2;
-                //firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
-                //firstLine.Style = styleLine;
-                //FrameBlock.Children.Add(firstLine);
-
-                for (int i = 1; i <= countLine; i++)
-                {
-                    Line line = new();
-                    line.X1 = DefaultPropertyForBlock.width / 2;
-                    line.Y1 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
-                    line.X2 = DefaultPropertyForBlock.width;
-                    line.Y2 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
-                    line.Style = styleLine;
-                    line.MouseDown += MouseDown;
-
-                    TextBox textBox = new();
-                    textBox.Text = initialText;
-                    textBox.Style = styleTextBox;
-                    Canvas.SetTop(textBox, (DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10)) - 25);
-                    Canvas.SetLeft(textBox, DefaultPropertyForBlock.width / 2);
-                    
-                    listLine.Add(line);
-                    FrameBlock.Children.Add(line);
-                    FrameBlock.Children.Add(textBox);
-                    listTextBox.Add(textBox);
-                }
-
-                //FrameBlock.Children.Add(polygonBlock);
-                
-                
-                
-            }
             return FrameBlock;
         }
 
-        public override void SetWidth(int valueBlockWidth)
+        public override void SetWidth(int widthBlock)
         {
-            //if (polygonBlock != null)
+            ControlSize.Width = widthBlock;
+            SetPropertyControl();
+           
+            baseLine.X1 = widthBlock / 2;
+            baseLine.X2 = widthBlock / 2;
+
+            for (int i = 1; i <= linesCase.Count; i++)
             {
-                
+                linesCase[i - 1].Item1.X1 = widthBlock / 2;
+                linesCase[i - 1].Item1.X2 = widthBlock;
 
-                double valueForSetLeftTextBoxAndTextBlock = valueBlockWidth / 2 - valueBlockWidth / 4;
-                double valueForSetTopTextBoxAndTextBlock = DefaultPropertyForBlock.height / 4;
-
-                //SetPropertyForTextBox(valueBlockWidth / 2, DefaultPropertyForBlock.height / 2, valueForSetLeft: valueForSetLeftTextBoxAndTextBlock, valueForSetTop: valueForSetTopTextBoxAndTextBlock);
-                //SetPropertyForTextBlock(valueBlockWidth / 2, DefaultPropertyForBlock.height / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
-
-                //Canvas.SetLeft(firstPointConnect, valueBlockWidth / 2 - 3);
-                //Canvas.SetLeft(secondPointConnect, 0);
-                //Canvas.SetLeft(thirdPointConnect, valueBlockWidth / 2 - 3);
-                //Canvas.SetLeft(fourthPointConnect, valueBlockWidth - 6);
-
-                //firstLine.X1 = DefaultPropertyForBlock.width / 2;
-                //firstLine.X2 = DefaultPropertyForBlock.width / 2;
-                if (listLine != null)
-                {
-                    for (int i = 0; i < listLine.Count; i++)
-                    {
-                        listLine[i].X1 = DefaultPropertyForBlock.width / 2;
-                        listLine[i].X2 = DefaultPropertyForBlock.width;
-                    }
-                }
-
-                if (listTextBox != null)
-                    foreach (TextBox textBox in listTextBox)
-                        Canvas.SetLeft(textBox, DefaultPropertyForBlock.width / 2);
-
-                
+                int offSetTopTextBox = widthBlock / 2;
+                Canvas.SetLeft(linesCase[i - 1].Item2, offSetTopTextBox);
             }
         }
 
-        public override void SetHeight(int valueBlockHeight)
+        public override void SetHeight(int heightBlock)
         {
-            //if (polygonBlock != null)
+            ControlSize.Height = heightBlock;
+            SetPropertyControl();
+
+            baseLine.Y1 = heightBlock;
+            baseLine.Y2 = heightBlock / 2 + (heightBlock + lineIndent) * countLineCase;
+
+            for (int i = 1; i <= linesCase.Count; i++)
             {
-                
+                linesCase[i - 1].Item1.Y1 = heightBlock / 2 + i * (heightBlock + lineIndent);
+                linesCase[i - 1].Item1.Y2 = heightBlock / 2 + i * (heightBlock + lineIndent);
 
-                double valueForSetLeftTextBoxAndTextBlock = DefaultPropertyForBlock.width / 2 - DefaultPropertyForBlock.width / 4;
-                double valueForSetTopTextBoxAndTextBlock = valueBlockHeight / 4;
-
-                //SetPropertyForTextBox(DefaultPropertyForBlock.width / 2, valueBlockHeight / 2, valueForSetLeft: valueForSetLeftTextBoxAndTextBlock, valueForSetTop: valueForSetTopTextBoxAndTextBlock);
-                //SetPropertyForTextBlock(DefaultPropertyForBlock.width / 2, valueBlockHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
-
-                //Canvas.SetTop(firstPointConnect, -2);
-                //Canvas.SetTop(secondPointConnect, valueBlockHeight / 2 - 3);
-                //Canvas.SetTop(thirdPointConnect, valueBlockHeight - 3);
-                //Canvas.SetTop(fourthPointConnect, valueBlockHeight / 2 - 3);
-
-                //firstLine.Y1 = DefaultPropertyForBlock.height;
-                //firstLine.Y2 = DefaultPropertyForBlock.height / 2 + (DefaultPropertyForBlock.height + 10) * countLine;
-
-                if (listLine != null)
-                {
-                    for (int i = 1; i <= listLine.Count; i++)
-                    {
-                        listLine[i - 1].Y1 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
-                        listLine[i - 1].Y2 = DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10);
-                    }
-                }
-
-                if (listTextBox != null)
-                    for (int i = 1; i <= listTextBox.Count; i++)
-                        Canvas.SetTop(listTextBox[i - 1], (DefaultPropertyForBlock.height / 2 + i * (DefaultPropertyForBlock.height + 10)) - 25);
-
-                
-            }
-        }
-        private void MouseDown(object sender, RoutedEventArgs e)
-        {
-            //if (StaticBlock.Block != null && FrameBlock != null)
-            {
-                //TODO: Неправильно соединятеся с блоком ссылка
-                double coordinateLeft = ((Line)sender).X2;
-                double coordinateTop = ((Line)sender).Y2;
-                try
-                {
-                    //if (StaticBlock.block is CaseFirstOption option)
-                    //    Edblock.RemoveItemFromListCaseBlock(option);
-                    //dictionaryLineAndBlock.Add((Line)sender, StaticBlock.Block);
-                    //UIElement uIElementBlock = StaticBlock.Block.GetUIElement();
-                    
-                    
-                    //MainWindow.RemoveBlockFormList(StaticBlock.block);
-                    //StaticBlock.Block.GetUIElement().MouseRightButtonDown += ClickRightButtonOnBlock;
-                    
-                    //if (EditField != null)
-                    //    EditField.Children.Remove(uIElementBlock);
-
-                    //FrameBlock.Children.Remove(uIElementBlock);
-                    //FrameBlock.Children.Add(uIElementBlock);
-                    //MainWindow.WriteSecondNameOfBlockToConect(initialText);
-                    //StaticBlock.Block = null;
-                }
-                catch
-                {
-                    //MainWindow.MessageThisLineIsAlreadyOccupied();
-                }
+                int offSetTopTextBox = heightBlock / 2 + i * (heightBlock + lineIndent) - (lineIndent * 2 + lineIndent / 2);
+                Canvas.SetTop(linesCase[i - 1].Item2, offSetTopTextBox);
             }
         }
 
-        private void ClickRightButtonOnBlock(object sender, MouseEventArgs e)
+        protected override void DrawLine()
         {
-            if (MessageBox.Show("Вы действиетельно хотите удалить фигуру", "Удаление блока", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            double widthBlock = ControlSize.Width;
+            double heightBlock = ControlSize.Height;
+
+            baseLine.X1 = widthBlock / 2;
+            baseLine.Y1 = heightBlock;
+            baseLine.X2 = widthBlock / 2;
+            baseLine.Y2 = heightBlock / 2 + (heightBlock + lineIndent) * countLineCase;
+            baseLine.Stroke = Brushes.Black;
+            FrameBlock.Children.Add(baseLine);
+
+            for (int i = 1; i <= countLineCase; i++)
             {
-                if (FrameBlock != null)
-                    FrameBlock.Children.Remove((UIElement)sender);
-                //StaticBlock.FlagDeleteBlockOfCase = false;
+                Line lineCase = new()
+                {
+                    X1 = widthBlock / 2,
+                    Y1 = heightBlock / 2 + i * (heightBlock + lineIndent),
+                    X2 = widthBlock,
+                    Y2 = heightBlock / 2 + i * (heightBlock + lineIndent),
+                    Stroke = Brushes.Black
+                };
+
+                TextBox textBoxCase = new()
+                {
+                    Text = initialText
+                };
+
+                double offsetLeft = widthBlock / 2;
+                double offsetTop = heightBlock / 2 + i * (heightBlock + lineIndent) - (lineIndent * 2 + lineIndent / 2);
+                ControlOffset offsetTextField = new(offsetLeft, offsetTop);
+                SetCoordinates(textBoxCase, offsetTextField);
+
+                Tuple<Line, TextBox> itemLineCase = new(lineCase, textBoxCase);
+
+                linesCase.Add(itemLineCase);
+                FrameBlock.Children.Add(lineCase);
+                FrameBlock.Children.Add(textBoxCase);
             }
         }
     }

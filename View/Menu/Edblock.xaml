@@ -178,18 +178,24 @@
             </Button>
         </StackPanel>
 
-        <Canvas
-            MouseMove="editField_MouseMove"
-            MouseLeave="editField_MouseLeave"
-            MouseUp="editField_MouseUp"
-            AllowDrop="True" 
-            DragOver="DragOverDestination" 
-            Drop="DropDestination"
-            MouseDown="MouseDownEditField"
-            Name="editField" 
+
+        <ScrollViewer
             Grid.Row="1" 
             Grid.Column="1"
-            Style="{StaticResource StyleCanvasEditField}"/>
+            HorizontalScrollBarVisibility="Auto">
+            <Canvas
+                Width="10000"
+                Height="10000"
+                MouseMove="editField_MouseMove"
+                MouseLeave="editField_MouseLeave"
+                MouseUp="editField_MouseUp"
+                AllowDrop="True" 
+                DragOver="DragOverDestination" 
+                Drop="DropDestination"
+                MouseDown="MouseDownEditField"
+                Name="editField" 
+                Style="{StaticResource StyleCanvasEditField}"/>
+        </ScrollViewer>
 
         <Grid 
             x:Name="GridMenu" 

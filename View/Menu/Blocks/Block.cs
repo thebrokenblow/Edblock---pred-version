@@ -6,7 +6,6 @@ using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using System.Windows.Markup;
 
 namespace Flowchart_Editor.Models
 {
