@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 
@@ -13,31 +12,17 @@ namespace Flowchart_Editor.Models
         public LinkBlock()
         {
             initialText = "Ссылка";
-
             ControlSize.Width = ControlSize.Height;
-            SetPropertyFrameBlock();
-            
-
-            string color = "#FF5761A8";
-            Brush backgroundColor = GetBackgroundColor(color);
-            linkBlock.Fill = backgroundColor;
-
             SetSize(linkBlock, ControlSize);
             FrameBlock.Children.Add(linkBlock);
-
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
-
+            SetPropertyLinkBlock();
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
-
             DrawHighlightedBlock();
-        }
-
-        override public UIElement GetUIElement()
-        {
-            return FrameBlock;
+           
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -56,35 +41,38 @@ namespace Flowchart_Editor.Models
             return offsetTextField;
         }
 
-        private void SetPropertyControl()
+        private void SetPropertyLinkBlock()
         {
-            ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField();
-
             SetSize(linkBlock, ControlSize);
-            SetSize(FrameBlock, ControlSize);
-
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
             SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(ControlSize, textFieldOffset);
         }
 
         public override void SetWidth(int valueBlockWidth)
         {
-
+            ControlSize.Height = valueBlockWidth;
+            ControlSize.Width = valueBlockWidth;
+            SetPropertyLinkBlock();
         }
 
         public override void SetHeight(int valueBlockHeight)
         {
             ControlSize.Height = valueBlockHeight;
             ControlSize.Width = valueBlockHeight;
-            SetPropertyControl();
+            SetPropertyLinkBlock();
+        }
+
+        protected override void SetBackground()
+        {
+            string color = "#FF5761A8";
+            Brush backgroundColor = GetBackgroundColor(color);
+            linkBlock.Fill = backgroundColor;
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

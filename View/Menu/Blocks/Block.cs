@@ -6,6 +6,7 @@ using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using Flowchart_Editor.View.Menu.ConnectionLine;
 
 namespace Flowchart_Editor.Models
 {
@@ -25,6 +26,7 @@ namespace Flowchart_Editor.Models
         protected Tuple<double, double> coordinateConnectionPoint;
         protected List<Tuple<double, double>> coordinatesConnectionPoints;
         protected List<Ellipse> connectionsPoints;
+        private LineCreation lineCreation;
         protected readonly Uri uri;
 
         public Block()
@@ -38,11 +40,20 @@ namespace Flowchart_Editor.Models
             coordinatesConnectionPoints = new();
             connectionsPoints = new();
             uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
+            SetPropertyFrameBlock();
+            SetBackground();
         }
 
-        abstract public UIElement GetUIElement();
+        public UIElement GetUIElement()
+        {
+            return FrameBlock;
+        }
+
         abstract public void SetWidth(int valueBlockWidth);
         abstract public void SetHeight(int valueBlockHeight);
+        abstract protected void SetBackground();
+        abstract public Block GetCopyBlock();
+
 
         private void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
@@ -129,8 +140,25 @@ namespace Flowchart_Editor.Models
                 borderHighlightedLine.BorderThickness = new Thickness(1);
                 FrameBlock.Children.Add(borderHighlightedLine);
             }
-            if (Edblock != null)
-                Edblock.AddHighlightedBlock(this);
+            Edblock.AddHighlightedBlock(this);
+        }
+
+        protected void DrawHighlightedBlock1()
+        {
+            if (!FrameBlock.Children.Contains(borderHighlightedLine))
+            {
+                borderHighlightedLine.BorderBrush = Brushes.Blue;
+                borderHighlightedLine.Width = ControlSize.Width;
+                borderHighlightedLine.Height = ControlSize.Height;
+                borderHighlightedLine.BorderThickness = new Thickness(1);
+                FrameBlock.Children.Add(borderHighlightedLine);
+            }
+        }
+
+        protected void SetTextTextField(string text)
+        {
+            TextBlockOfBlock.Text = text;
+            TextBoxOfBlock.Text = text;
         }
 
         protected void ChangeHighlightedBlock()
@@ -184,7 +212,6 @@ namespace Flowchart_Editor.Models
         {
             SetSize(FrameBlock, ControlSize);
             FrameBlock.MouseMove += MouseMoveBlockForMovements;
-
         }
 
         protected void ClickOnConnectionPoint(object sender, MouseEventArgs e)
@@ -193,11 +220,16 @@ namespace Flowchart_Editor.Models
             {
                 if (Edblock.current != null)
                 {
-                    var lineCreation = new LineCreation(e.GetPosition(Edblock.current.editField), this);
-                    Edblock.current.StartLineCreation(lineCreation);
+                    if (lineCreation == null)
+                    {
+                        lineCreation = new LineCreation(this, (Ellipse)sender);
+                        Edblock.current.StartLineCreation(lineCreation);
+                    }
                 }
             }   
         }
+
+
 
         public void SetCoordinatesConnectionPoints(int sideProjection = 0)
         {
@@ -253,6 +285,10 @@ namespace Flowchart_Editor.Models
         private void ConnectionPoint_MouseEnter(object sender, MouseEventArgs e)
         {
             SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
+            if (lineCreation != null)
+            {
+                lineCreation = null;
+            }
         }
 
         protected void ChangeCoordinatesConnectionPoints()
@@ -358,8 +394,23 @@ namespace Flowchart_Editor.Models
 
         public void UnsetTextDecorations()
         {
-            TextBlockOfBlock.TextDecorations = TextDecorations.OverLine;
-            TextBoxOfBlock.TextDecorations = TextDecorations.OverLine;
+            TextBlockOfBlock.TextDecorations = null;
+            TextBoxOfBlock.TextDecorations = null;
+        }
+
+        protected void SetPropertyControl(ControlSize textFieldSize, ControlOffset? textFieldOffset = null)
+        {
+            SetSize(FrameBlock, ControlSize);
+            SetSize(TextBoxOfBlock, textFieldSize);
+            SetSize(TextBlockOfBlock, textFieldSize);
+            if (textFieldOffset != null)
+            {
+                SetCoordinates(TextBoxOfBlock, textFieldOffset);
+                SetCoordinates(TextBlockOfBlock, textFieldOffset);
+            }
+            
+            ChangeCoordinatesConnectionPoints();
+            ChangeHighlightedBlock();
         }
     }
 }

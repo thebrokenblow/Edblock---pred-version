@@ -1,10 +1,6 @@
 ﻿using Flowchart_Editor.Model;
-using Flowchart_Editor.Models;
 using Flowchart_Editor.View.Condition.Case;
-using Flowchart_Editor.View.Menu.ToolBar.HeightBlock;
-using Flowchart_Editor.View.Menu.ToolBar.WidthBlock;
 using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -13,17 +9,12 @@ namespace Flowchart_Editor.View.ConditionCaseFirstOption
 {
     public class CaseFirstOption : CaseBlock
     {
-        private int lineIndent = 10;
+        private readonly Line baseLine;
         public CaseFirstOption(int countLineCase)
         {
             this.countLineCase = countLineCase;
-            initialText = "Условие";
+            baseLine = new();
             DrawLine();
-        }
-
-        override public UIElement GetUIElement()
-        {
-            return FrameBlock;
         }
 
         public override void SetWidth(int widthBlock)

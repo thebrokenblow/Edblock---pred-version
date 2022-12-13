@@ -15,28 +15,21 @@ namespace Flowchart_Editor.Models
         public StartEndBlock()
         {
             initialText = "Начало / Конец";
-
-            SetPropertyFrameBlock();
-            
-            string color = "#FFF25252";
-            Brush backgroundColor = GetBackgroundColor(color);
-
             SetSize(startEndBlock, ControlSize);
-            startEndBlock.Fill = backgroundColor;
-
-            startEndBlock.RadiusX = radiusStartEndBlock;
-            startEndBlock.RadiusY = radiusStartEndBlock;
-
+            SetRadius();
             FrameBlock.Children.Add(startEndBlock);
-
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
-
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
-
             DrawHighlightedBlock();
+        }
+
+        private void SetRadius()
+        {
+            startEndBlock.RadiusX = radiusStartEndBlock;
+            startEndBlock.RadiusY = radiusStartEndBlock;
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -55,26 +48,13 @@ namespace Flowchart_Editor.Models
             return offsetTextField;
         }
 
-        override public UIElement GetUIElement()
-        {
-            return FrameBlock;
-        }
-
         private void SetPropertyControl()
         {
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField();
-
-            SetSize(FrameBlock, ControlSize);
             SetSize(startEndBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
             SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(textFieldSize, textFieldOffset);
         }
 
         public override void SetWidth(int valueBlockWidth)
@@ -87,6 +67,18 @@ namespace Flowchart_Editor.Models
         {
             ControlSize.Height = valueBlockHeight;
             SetPropertyControl();
+        }
+
+        protected override void SetBackground()
+        {
+            string color = "#FFF25252";
+            Brush backgroundColor = GetBackgroundColor(color);
+            startEndBlock.Fill = backgroundColor;
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

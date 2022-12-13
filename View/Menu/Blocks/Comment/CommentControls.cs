@@ -9,8 +9,8 @@ namespace Flowchart_Editor.Models.Comment
     {
         private const int gapBetweenCommentLines = 15;
         private int coordinatesX = 0;
-        private readonly int minimumHeightOfAllBlocks = DefaultPropertyForBlock.height;
-        private readonly int minimumWidthOfAllBlocks = DefaultPropertyForBlock.width;
+        private readonly int minimumHeightOfAllBlocks = 0; //DefaultPropertyForBlock.height;
+        private readonly int minimumWidthOfAllBlocks = 0; //DefaultPropertyForBlock.width;
         private const string textComment = "Комментарий";
         private static readonly int valueDottedPartOfTheComment = 3;
         private Style? styleLine;
@@ -123,78 +123,78 @@ namespace Flowchart_Editor.Models.Comment
             }
         }
 
-        public override UIElement GetUIElement()
-        {
-            if (FrameBlock == null)
-            {
-                FrameBlock = new();
-                TextBoxOfBlock = new();
-                TextBlockOfBlock = new();
-                FourthLine = new();
-                FifthLine = new();
-                SixthtLine = new();
+        //public override UIElement GetUIElement()
+        //{
+            //if (FrameBlock == null)
+            //{
+            //    FrameBlock = new();
+            //    TextBoxOfBlock = new();
+            //    TextBlockOfBlock = new();
+            //    FourthLine = new();
+            //    FifthLine = new();
+            //    SixthtLine = new();
 
-                if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-                {
-                    styleLine = resourceDict["LineStyle"] as Style;
-                    TextBoxOfBlock.Style = resourceDict["TextBoxStyleForComment"] as Style;
-                }
+            //    if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
+            //    {
+            //        styleLine = resourceDict["LineStyle"] as Style;
+            //        TextBoxOfBlock.Style = resourceDict["TextBoxStyleForComment"] as Style;
+            //    }
 
-                SetPropertyLineOfComment();
-                TextBoxOfBlock.Text = textComment;
-                TextBoxOfBlock.MouseDoubleClick += ClickTextField;
-                TextBlockOfBlock.MouseDown += ClickTextField;
+            //    SetPropertyLineOfComment();
+            //    TextBoxOfBlock.Text = textComment;
+            //    TextBoxOfBlock.MouseDoubleClick += ClickTextField;
+            //    TextBlockOfBlock.MouseDown += ClickTextField;
 
-                Canvas.SetLeft(TextBoxOfBlock, coordinatesX + gapBetweenCommentLines / 4);
-                Canvas.SetTop(TextBoxOfBlock, -gapBetweenCommentLines * 2);
+            //    Canvas.SetLeft(TextBoxOfBlock, coordinatesX + gapBetweenCommentLines / 4);
+            //    Canvas.SetTop(TextBoxOfBlock, -gapBetweenCommentLines * 2);
 
-                Canvas.SetLeft(TextBlockOfBlock, coordinatesX + gapBetweenCommentLines / 4 + 5);
-                Canvas.SetTop(TextBlockOfBlock, -gapBetweenCommentLines * 2 + 5);
+            //    Canvas.SetLeft(TextBlockOfBlock, coordinatesX + gapBetweenCommentLines / 4 + 5);
+            //    Canvas.SetTop(TextBlockOfBlock, -gapBetweenCommentLines * 2 + 5);
 
-                TextBoxOfBlock.TextChanged += new TextChangedEventHandler((obj, args) =>
-                {
-                    double heightTextBox = TextBoxOfBlock.ActualHeight;
-                    int valueFontSize = 0;//Convert.ToInt32(Edblock.StylyText.GetFontSize());
-                    FourthLine.Y1 = -heightTextBox / 2 - valueFontSize * 2;
-                    FourthLine.Y2 = heightTextBox / 2 + valueFontSize * 2;
+            //    TextBoxOfBlock.TextChanged += new TextChangedEventHandler((obj, args) =>
+            //    {
+            //        double heightTextBox = TextBoxOfBlock.ActualHeight;
+            //        int valueFontSize = 0;//Convert.ToInt32(Edblock.StylyText.GetFontSize());
+            //        FourthLine.Y1 = -heightTextBox / 2 - valueFontSize * 2;
+            //        FourthLine.Y2 = heightTextBox / 2 + valueFontSize * 2;
 
-                    FifthLine.Y1 = -heightTextBox / 2 - valueFontSize * 2;
-                    FifthLine.Y2 = -heightTextBox / 2 - (valueFontSize * 2);
+            //        FifthLine.Y1 = -heightTextBox / 2 - valueFontSize * 2;
+            //        FifthLine.Y2 = -heightTextBox / 2 - (valueFontSize * 2);
 
-                    SixthtLine.Y1 = heightTextBox / 2 + valueFontSize * 2;
-                    SixthtLine.Y2 = heightTextBox / 2 + valueFontSize * 2;
+            //        SixthtLine.Y1 = heightTextBox / 2 + valueFontSize * 2;
+            //        SixthtLine.Y2 = heightTextBox / 2 + valueFontSize * 2;
 
-                    Canvas.SetTop(TextBlockOfBlock, -TextBoxOfBlock.ActualHeight / 2);
-                    Canvas.SetTop(TextBoxOfBlock, -TextBoxOfBlock.ActualHeight / 2);
-                });
+            //        Canvas.SetTop(TextBlockOfBlock, -TextBoxOfBlock.ActualHeight / 2);
+            //        Canvas.SetTop(TextBoxOfBlock, -TextBoxOfBlock.ActualHeight / 2);
+            //    });
 
-                TextBoxOfBlock.LostFocus += new RoutedEventHandler((obj, args) =>
-                {
-                    double heightTextBox = TextBoxOfBlock.ActualHeight;
+            //    TextBoxOfBlock.LostFocus += new RoutedEventHandler((obj, args) =>
+            //    {
+            //        double heightTextBox = TextBoxOfBlock.ActualHeight;
 
-                    Canvas.SetTop(TextBoxOfBlock, 0);
-                    FourthLine.Y1 = -heightTextBox / 2;
-                    FourthLine.Y2 = heightTextBox / 2;
+            //        Canvas.SetTop(TextBoxOfBlock, 0);
+            //        FourthLine.Y1 = -heightTextBox / 2;
+            //        FourthLine.Y2 = heightTextBox / 2;
 
-                    FifthLine.Y1 = -heightTextBox / 2;
-                    FifthLine.Y2 = -heightTextBox / 2;
+            //        FifthLine.Y1 = -heightTextBox / 2;
+            //        FifthLine.Y2 = -heightTextBox / 2;
 
-                    SixthtLine.Y1 = heightTextBox / 2;
-                    SixthtLine.Y2 = heightTextBox / 2;
+            //        SixthtLine.Y1 = heightTextBox / 2;
+            //        SixthtLine.Y2 = heightTextBox / 2;
 
-                    Canvas.SetTop(TextBlockOfBlock, -TextBoxOfBlock.ActualHeight / 2);
-                    Canvas.SetTop(TextBoxOfBlock, -TextBoxOfBlock.ActualHeight / 2);
+            //        Canvas.SetTop(TextBlockOfBlock, -TextBoxOfBlock.ActualHeight / 2);
+            //        Canvas.SetTop(TextBoxOfBlock, -TextBoxOfBlock.ActualHeight / 2);
 
-                });
-                coordinatesX = 0;
+            //    });
+            //    coordinatesX = 0;
 
-                FrameBlock.Children.Add(FourthLine);
-                FrameBlock.Children.Add(FifthLine);
-                FrameBlock.Children.Add(SixthtLine);
-                FrameBlock.Children.Add(TextBoxOfBlock);
-            }
-            return FrameBlock;
-        }
+            //    FrameBlock.Children.Add(FourthLine);
+            //    FrameBlock.Children.Add(FifthLine);
+            //    FrameBlock.Children.Add(SixthtLine);
+            //    FrameBlock.Children.Add(TextBoxOfBlock);
+            //}
+            //return FrameBlock;
+        //}
 
         private void SetPropertyLineOfComment()
         {
@@ -241,6 +241,16 @@ namespace Flowchart_Editor.Models.Comment
                 SixthtLine.Y1 = gapBetweenCommentLines * 2;
                 SixthtLine.Style = styleLine;
             }
+        }
+
+        protected override void SetBackground()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new NotImplementedException();
         }
     }
 }

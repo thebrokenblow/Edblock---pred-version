@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using Flowchart_Editor.Model;
+using System.Windows.Controls;
 using Flowchart_Editor.View.Condition.Case;
 
 namespace Flowchart_Editor.View.ConditionCaseSecondOption
@@ -6,201 +10,159 @@ namespace Flowchart_Editor.View.ConditionCaseSecondOption
     [BlockName("ConditionCaseSecondOptionBlock")]
     public class CaseSecondOption : CaseBlock
     {
+        private const int baselineLength = 20;
+        private const int textBoxOffset = 5;
+        private double displacementCoefficient = 0;
+        private readonly Line firstBaseLine;
+        private readonly Line secondBaseLine;
+        private readonly Line lineCase;
         public CaseSecondOption(int countLineCase)
         {
             this.countLineCase = --countLineCase;
-            initialText = "Условие";
+            firstBaseLine = new();
+            secondBaseLine = new();
+            lineCase = new();
+            DrawLine();
         }
 
-        override public UIElement GetUIElement()
-        {               
-            return FrameBlock;
-        }
-
-        private void ChangeLine()
+        public override void SetWidth(int widthBlock)
         {
-            //double count = (DefaultPropertyForBlock.width + 10) * countLine;
-            //int i = 1;
+            ControlSize.Width = widthBlock;
+            SetPropertyControl();
+            displacementCoefficient = (widthBlock + lineIndent) * countLineCase / 2;
 
-            //firstLine.X1 = DefaultPropertyForBlock.width / 2;
-            //firstLine.X2 = DefaultPropertyForBlock.width / 2;
+            firstBaseLine.X1 = widthBlock / 2;
+            firstBaseLine.X2 = widthBlock / 2;
 
-            //secondLine.X1 = -count / 2;
-            //secondLine.X2 = count / 2;
+            secondBaseLine.X1 = -displacementCoefficient;
+            secondBaseLine.X2 = displacementCoefficient;
+            Canvas.SetLeft(secondBaseLine, widthBlock / 2);
 
-            //Canvas.SetLeft(secondLine, DefaultPropertyForBlock.width / 2);
-            //if (listLine != null)
-            //{
-            //    foreach (Line line in listLine)
-            //    {
-            //        if (i == 1)
-            //        {
-            //            line.X1 = -count / 2;
-            //            line.X2 = -count / 2;
-            //            Canvas.SetLeft(line, DefaultPropertyForBlock.width / 2);
-            //        }
-            //        else
-            //        {
-            //            int j = i - 1;
-            //            line.X1 = -count / 2 + (DefaultPropertyForBlock.width + 10) * j;
-            //            line.X2 = -count / 2 + (DefaultPropertyForBlock.width + 10) * j;
-            //            Canvas.SetLeft(line, DefaultPropertyForBlock.width / 2);
-            //        }
-            //        i++;
-            //    }
-            //}
-            //if (listTextBox != null)
-            //{
-            //    int j = 0;
-            //    foreach (TextBox textBox in listTextBox)
-            //    {
-            //        Canvas.SetLeft(textBox, (-count / 2 + (DefaultPropertyForBlock.width + 10) * j) + DefaultPropertyForBlock.width / 2);
-            //        j++;
-            //    }
-            //}
+            lineCase.X1 = -displacementCoefficient;
+            lineCase.X2 = -displacementCoefficient;
+
+            for (int i = 0; i < linesCase.Count; i++)
+            {
+                linesCase[i].Item1.X1 = -displacementCoefficient + (widthBlock + lineIndent) * i;
+                linesCase[i].Item1.X2 = -displacementCoefficient + (widthBlock + lineIndent) * i;
+                Canvas.SetLeft(linesCase[i].Item1, widthBlock / 2);
+                double offsetLeft = (-displacementCoefficient + (widthBlock + lineIndent) * i) + widthBlock / 2;
+                Canvas.SetLeft(linesCase[i].Item2, offsetLeft);
+            }
         }
 
-        public override void SetWidth(int valueBlockWidth)
+        public override void SetHeight(int heightBlock)
         {
-            ControlSize.Width = valueBlockWidth;
+            ControlSize.Height = heightBlock;
             SetPropertyControl();
 
-            //double valueForSetLeftTextBoxAndTextBlock = valueBlockWidth / 2 - valueBlockWidth / 4;
-            //double valueForSetTopTextBoxAndTextBlock = DefaultPropertyForBlock.height / 4;
+            firstBaseLine.Y1 = heightBlock;
+            firstBaseLine.Y2 = heightBlock + baselineLength;
 
-            //SetPropertyForTextBox(valueBlockWidth / 2, DefaultPropertyForBlock.height / 2, valueForSetLeft: valueForSetLeftTextBoxAndTextBlock, valueForSetTop: valueForSetTopTextBoxAndTextBlock);
-            //SetPropertyForTextBlock(valueBlockWidth / 2, DefaultPropertyForBlock.height / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
+            secondBaseLine.Y1 = heightBlock + baselineLength;
+            secondBaseLine.Y2 = heightBlock + baselineLength;
 
-            //Canvas.SetLeft(firstPointConnect, valueBlockWidth / 2 - 3);
-            //Canvas.SetLeft(secondPointConnect, 0);
-            //Canvas.SetLeft(thirdPointConnect, valueBlockWidth / 2 - 3);
-            //Canvas.SetLeft(fourthPointConnect, valueBlockWidth - 6);
+            foreach (var itemLineCase in linesCase)
+            {
+                itemLineCase.Item1.Y1 = heightBlock + baselineLength;
+                itemLineCase.Item1.Y2 = heightBlock + baselineLength * 2;
+                Canvas.SetTop(itemLineCase.Item2, heightBlock + baselineLength - textBoxOffset);
+            }
         }
 
-        public override void SetHeight(int valueBlockHeight)
+        private void DrawFirstBaseLine(double widthBlock, double heightBlock)
         {
-            ControlSize.Height = valueBlockHeight;
-            SetPropertyControl();
-
-            //polygonBlock.Points = myPointCollection;
-
-            //double valueForSetLeftTextBoxAndTextBlock = DefaultPropertyForBlock.width / 2 - DefaultPropertyForBlock.width / 4;
-            //double valueForSetTopTextBoxAndTextBlock = valueBlockHeight / 4;
-
-            //SetPropertyForTextBox(DefaultPropertyForBlock.width / 2, valueBlockHeight / 2, valueForSetLeft: valueForSetLeftTextBoxAndTextBlock, valueForSetTop: valueForSetTopTextBoxAndTextBlock);
-            //SetPropertyForTextBlock(DefaultPropertyForBlock.width / 2, valueBlockHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
-
-            //Canvas.SetTop(firstPointConnect, -2);
-            //Canvas.SetTop(secondPointConnect, valueBlockHeight / 2 - 3);
-            //Canvas.SetTop(thirdPointConnect, valueBlockHeight - 3);
-            //Canvas.SetTop(fourthPointConnect, valueBlockHeight / 2 - 3);
-
-            //Canvas.SetTop(firstLine, DefaultPropertyForBlock.height - defaulHeight);
-            //Canvas.SetTop(secondLine, DefaultPropertyForBlock.height - defaulHeight);
-
-            //if (listLine != null)
-            //{
-            //    foreach (Line line in listLine)
-            //    {
-            //        line.Y1 += DefaultPropertyForBlock.height - countOfHeight;
-            //        line.Y2 += DefaultPropertyForBlock.height - countOfHeight;
-
-            //    }
-            //}
-            //countOfHeight = DefaultPropertyForBlock.height;
-
-            //if (listTextBox != null)
-            //    foreach (TextBox textBox in listTextBox)
-            //        Canvas.SetTop(textBox, DefaultPropertyForBlock.height + 20);
-
-            //foreach (KeyValuePair<Line, Block> itemLineAndBlock in dictionaryLineAndBlock)
-            //{
-            //    itemLineAndBlock.Value.SetHeight(valueBlockHeight);
-            //    Canvas.SetTop(itemLineAndBlock.Value.GetUIElement(), itemLineAndBlock.Key.Y2);
-            //}
+            firstBaseLine.X1 = widthBlock / 2;
+            firstBaseLine.Y1 = heightBlock;
+            firstBaseLine.X2 = widthBlock / 2;
+            firstBaseLine.Y2 = heightBlock + baselineLength;
+            firstBaseLine.Stroke = Brushes.Black;
+            FrameBlock.Children.Add(firstBaseLine);
         }
 
+        private void DrawSecondBaseLine(double widthBlock, double heightBlock, double displacementCoefficient)
+        {
+            secondBaseLine.X1 = -displacementCoefficient;
+            secondBaseLine.Y1 = heightBlock + baselineLength;
+            secondBaseLine.X2 = displacementCoefficient;
+            secondBaseLine.Y2 = heightBlock + baselineLength;
+            Canvas.SetLeft(secondBaseLine, widthBlock / 2);
+            secondBaseLine.Stroke = Brushes.Black;
+            FrameBlock.Children.Add(secondBaseLine);
+        }
+
+        private void DrawFirstLineCase(double widthBlock, double heightBlock, double displacementCoefficient)
+        {
+            lineCase.X1 = -displacementCoefficient;
+            lineCase.Y1 = heightBlock + baselineLength;
+            lineCase.X2 = -displacementCoefficient;
+            lineCase.Y2 = heightBlock + baselineLength * 2;
+            Canvas.SetLeft(lineCase, widthBlock / 2);
+            lineCase.Stroke = Brushes.Black;
+            FrameBlock.Children.Add(lineCase);
+        }
+
+        private void DrawFirstTextCase(double widthBlock, double heightBlock, double displacementCoefficient)
+        {
+            TextBox textBoxCase = new();
+
+            double offsetLeft = -displacementCoefficient + widthBlock / 2;
+            double offsetTop = heightBlock + baselineLength - textBoxOffset;
+
+            ControlOffset offsetTextField = new(offsetLeft, offsetTop);
+
+            SetCoordinates(textBoxCase, offsetTextField);
+
+            textBoxCase.Text = initialText;
+
+            FrameBlock.Children.Add(textBoxCase);
+
+            Tuple<Line, TextBox> itemLineCase = new(lineCase, textBoxCase);
+            linesCase.Add(itemLineCase);
+        }
+
+        private void DrawCases(double xCoordinate, double widthBlock, double heightBlock)
+        {
+            Line lineCase = new();
+            TextBox textBoxCase = new();
+
+            lineCase.X1 = xCoordinate;
+            lineCase.Y1 = heightBlock + baselineLength;
+            lineCase.X2 = xCoordinate;
+            lineCase.Y2 = heightBlock + baselineLength * 2;
+
+            Canvas.SetLeft(lineCase, widthBlock / 2);
+            lineCase.Stroke = Brushes.Black;
+
+            double offsetLeft = xCoordinate + widthBlock / 2;
+            double offsetTop = heightBlock + baselineLength - textBoxOffset;
+            ControlOffset offsetTextField = new(offsetLeft, offsetTop);
+            SetCoordinates(textBoxCase, offsetTextField);
+
+            textBoxCase.Text = initialText;
+
+            Tuple<Line, TextBox> itemLineCase = new(lineCase, textBoxCase);
+            linesCase.Add(itemLineCase);
+
+            FrameBlock.Children.Add(lineCase);
+            FrameBlock.Children.Add(textBoxCase);
+        }
         protected override void DrawLine()
         {
-            //SetPropertyForTextBox(defaultWidth / 2, defaulHeight / 2, initialText, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
+            double widthBlock = ControlSize.Width;
+            double heightBlock = ControlSize.Height;
+            displacementCoefficient = (widthBlock + lineIndent) * countLineCase / 2;
 
-            //SetPropertyForTextBlock(defaultWidth / 2, defaulHeight / 2, valueForSetLeftTextBoxAndTextBlock, valueForSetTopTextBoxAndTextBlock);
+            DrawFirstBaseLine(widthBlock, heightBlock);
+            DrawSecondBaseLine(widthBlock, heightBlock, displacementCoefficient);
+            DrawFirstLineCase(widthBlock, heightBlock, displacementCoefficient);
+            DrawFirstTextCase(widthBlock, heightBlock, displacementCoefficient);
 
-            //SetPropertyPointConnect(firstPointToConnect, defaultWidth / 2 - 3, -2);
-            //firstPointToConnect.MouseDown += ClickOnFirstConnectionPoint;
-
-            //SetPropertyPointConnect(secondPointToConnect, 0, defaulHeight / 2 - 3);
-            //secondPointToConnect.MouseDown += ClickOnSecondConnectionPoint;
-
-            //SetPropertyPointConnect(thirdPointToConnect, defaultWidth / 2 - 3, defaulHeight - 3);
-
-            //SetPropertyPointConnect(fourthPointToConnect, defaultWidth - 6, defaulHeight / 2 - 3);
-            //fourthPointToConnect.MouseDown += ClickOnFourthConnectionPoint;
-
-            //listLine = new List<Line>();
-            //listTextBox = new List<TextBox>();
-
-            //if (Application.LoadComponent(uri) is ResourceDictionary resourceDict)
-            //{
-            //    styleLine = resourceDict["LineStyle"] as Style;
-            //    styleTextBox = resourceDict["TextBoxStyleForCase"] as Style;
-            //}
-
-            //firstLine.X1 = DefaultPropertyForBlock.width / 2;
-            //firstLine.Y1 = DefaultPropertyForBlock.height;
-            //firstLine.X2 = DefaultPropertyForBlock.width / 2;
-            //firstLine.Y2 = firstLine.Y1 + 20;
-            //firstLine.Style = styleLine;
-            //FrameBlock.Children.Add(firstLine);
-
-            //double displacementCoefficient = (DefaultPropertyForBlock.width + 10) * countLine;
-
-            //secondLine.X1 = -displacementCoefficient / 2;
-            //secondLine.Y1 = firstLine.Y2;
-            //secondLine.X2 = displacementCoefficient / 2;
-            //secondLine.Y2 = secondLine.Y1;
-            //secondLine.Style = styleLine;
-            //Canvas.SetLeft(secondLine, DefaultPropertyForBlock.width / 2); 
-            //FrameBlock.Children.Add(secondLine);
-
-            //for (int i = 1; i <= countLine + 1; i++)
-            //{
-            //    Line line = new();
-            //    TextBox textBox = new();
-            //    int j = i;
-            //    if (i == 1)
-            //    {
-            //        textBox.Text = initialText;
-            //        Canvas.SetLeft(textBox, -displacementCoefficient / 2 + DefaultPropertyForBlock.width / 2);
-            //        Canvas.SetTop(textBox, DefaultPropertyForBlock.height + 20);
-
-            //        line.X1 = -displacementCoefficient / 2;
-            //        line.Y1 = secondLine.Y2;
-            //        line.X2 = -displacementCoefficient / 2;
-            //        line.Y2 = line.Y1 + 20;
-            //        Canvas.SetLeft(line, defaultWidth / 2);
-            //    }
-            //    else
-            //    {
-            //        line.X1 = -displacementCoefficient / 2 + (DefaultPropertyForBlock.width + 10) * --j;
-            //        line.Y1 = secondLine.Y2;
-            //        line.X2 = -displacementCoefficient / 2 + (DefaultPropertyForBlock.width + 10) * j;
-            //        line.Y2 = line.Y1 + 20;
-            //        Canvas.SetLeft(line, DefaultPropertyForBlock.width / 2);
-
-            //        textBox.Text = initialText;
-            //        Canvas.SetLeft(textBox, (-displacementCoefficient / 2 + (DefaultPropertyForBlock.width + 10) * j) + DefaultPropertyForBlock.width / 2);
-            //        Canvas.SetTop(textBox, DefaultPropertyForBlock.height + 20);
-            //    }
-            //    line.MouseDown += MouseDown;
-            //    line.Style = styleLine;
-            //    textBox.Style = styleTextBox;
-
-            //    listLine.Add(line);
-            //    FrameBlock.Children.Add(line);
-            //    listTextBox.Add(textBox);
-            //    FrameBlock.Children.Add(textBox);
-            //}
+            for (int i = 1; i <= countLineCase; i++)
+            {
+                double xCoordinate = -displacementCoefficient + (widthBlock + lineIndent) * i;
+                DrawCases(xCoordinate, widthBlock, heightBlock);
+            }
         }
     }
 }

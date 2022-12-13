@@ -28,7 +28,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
-    
+
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
             <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
@@ -37,6 +37,16 @@
             <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
         </EventTrigger>
     </Window.Triggers>
+
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control"
+                    Key="C"
+                    Command="{Binding CopyBlock}" />
+
+        <KeyBinding Modifiers="Control"
+                    Key="V"
+                    Command="{Binding InsertBlock}" />
+    </Window.InputBindings>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -49,11 +59,11 @@
         </Grid.RowDefinitions>
 
         <ToolBarTray
-            Background="White"
+           
             Grid.ColumnSpan="2" 
             Grid.Row="0">
             <ToolBar
-                Background="White"
+                
                 ClipToBounds="False">
                 <toolBar:ListFontFamily/>
                 <Separator/>
@@ -106,7 +116,7 @@
                                 Style="{StaticResource PackIconStyle}"
                                 Kind="ContentSave" 
                                 Margin="0 5"/>
-                            
+
                             <Button 
                                 Content="Сохранить проект" 
                                 Command="{Binding SaveProjectCommand}" />
@@ -178,23 +188,22 @@
             </Button>
         </StackPanel>
 
-
+        
         <ScrollViewer
             Grid.Row="1" 
             Grid.Column="1"
             HorizontalScrollBarVisibility="Auto">
             <Canvas
-                Width="10000"
-                Height="10000"
-                MouseMove="editField_MouseMove"
-                MouseLeave="editField_MouseLeave"
                 MouseUp="editField_MouseUp"
+                MouseMove="editField_MouseMove"
                 AllowDrop="True" 
                 DragOver="DragOverDestination" 
                 Drop="DropDestination"
                 MouseDown="MouseDownEditField"
                 Name="editField" 
-                Style="{StaticResource StyleCanvasEditField}"/>
+                
+                Style="{StaticResource StyleCanvasEditField}">
+            </Canvas>
         </ScrollViewer>
 
         <Grid 

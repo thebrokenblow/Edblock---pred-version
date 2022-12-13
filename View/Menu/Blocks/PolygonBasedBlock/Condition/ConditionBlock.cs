@@ -9,13 +9,10 @@ namespace Flowchart_Editor.Models
     [BlockName("ConditionBlock")]
     public class ConditionBlock : Block, IPolygonBased
     {
-        private readonly PolygonBased conditionBlock;
+        private readonly PolygonBased conditionBlock = new();
         public ConditionBlock()
         {
             initialText = "Условие";
-            conditionBlock = new();
-            SetPropertyFrameBlock();
-            SetCoordinatesPoints(ControlSize);
             SetPropertyPolyginBlock();
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField(ControlSize);
@@ -25,9 +22,11 @@ namespace Flowchart_Editor.Models
             DrawHighlightedBlock();
         }
 
-        override public UIElement GetUIElement()
+        protected override void SetBackground()
         {
-            return FrameBlock;
+            string color = "#FF60B2D3";
+            Brush backgroundColor = GetBackgroundColor(color);
+            conditionBlock.FramePolygon.Fill = backgroundColor;
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -52,14 +51,8 @@ namespace Flowchart_Editor.Models
             ControlOffset textFieldOffset = GetOffsetTextField(ControlSize);
             SetCoordinatesPoints(ControlSize);
             conditionBlock.SetPointPolygon();
-            SetSize(FrameBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
             SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(textFieldSize, textFieldOffset);
         }
 
         public override void SetWidth(int valueBlockWidth)
@@ -78,9 +71,6 @@ namespace Flowchart_Editor.Models
         {
             SetCoordinatesPoints(ControlSize);
             conditionBlock.SetPointPolygon();
-            string color = "#FF60B2D3";
-            Brush backgroundColor = GetBackgroundColor(color);
-            conditionBlock.FramePolygon.Fill = backgroundColor;
             FrameBlock.Children.Add(conditionBlock.FramePolygon);
         }
 
@@ -106,6 +96,11 @@ namespace Flowchart_Editor.Models
 
             pointConditionBlock = new(0, height / 2);
             pointsConditionBlock.Add(pointConditionBlock);
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

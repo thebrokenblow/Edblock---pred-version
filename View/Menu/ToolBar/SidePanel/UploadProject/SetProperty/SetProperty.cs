@@ -27,8 +27,8 @@ namespace Flowchart_Editor.Menu.UploadProject
                 block.SetWidth(blockModel.width);
                 block.SetHeight(blockModel.height);
 
-                DefaultPropertyForBlock.width = blockModel.width;
-                DefaultPropertyForBlock.height = blockModel.height;
+                //DefaultPropertyForBlock.width = blockModel.width;
+                //DefaultPropertyForBlock.height = blockModel.height;
 
                 Canvas.SetTop(uIElementOfBlock, blockModel.topCoordinates);
                 Canvas.SetLeft(uIElementOfBlock, blockModel.leftCoordinates);
@@ -52,8 +52,8 @@ namespace Flowchart_Editor.Menu.UploadProject
 
         public static CaseBlock? SetCaseBlock(CaseModel caseModel)
         {
-            DefaultPropertyForBlock.width = caseModel.width;
-            DefaultPropertyForBlock.height = caseModel.height;
+            //DefaultPropertyForBlock.width = caseModel.width;
+            //DefaultPropertyForBlock.height = caseModel.height;
 
             CaseBlock? caseBlock = null;
             //if (caseModel.nameOfBlock == "CaseFirstOption")

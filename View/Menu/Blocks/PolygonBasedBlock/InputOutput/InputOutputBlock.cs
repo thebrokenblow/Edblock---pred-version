@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
@@ -10,14 +9,12 @@ namespace Flowchart_Editor.Models
     [BlockName("InputOutputBlock")]
     public class InputOutputBlock : Block, IPolygonBased
     {
-        private readonly PolygonBased inputOutputBlock;
+        private readonly PolygonBased inputOutputBlock = new();
         private const int sideProjection = 20;
 
         public InputOutputBlock()
         {       
             initialText = "Ввод/Вывод";
-            inputOutputBlock = new();
-            SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
@@ -25,11 +22,6 @@ namespace Flowchart_Editor.Models
             SetCoordinatesConnectionPoints(sideProjection);
             InitializingConnectionPoints();
             DrawHighlightedBlock();
-        }
-
-        override public UIElement GetUIElement()
-        {
-            return FrameBlock;
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -66,25 +58,15 @@ namespace Flowchart_Editor.Models
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
             inputOutputBlock.SetPointPolygon();
-            SetSize(FrameBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
             SetCoordinatesConnectionPoints(sideProjection);
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(textFieldSize, textFieldOffset);
         }
 
         public void SetPropertyPolyginBlock()
         {
-            Polygon polygonInputOutputBlock = inputOutputBlock.FramePolygon;
             SetCoordinatesPoints(ControlSize);
-            inputOutputBlock.SetPointPolygon();
-            string color = "#FF008080";
-            Brush backgroundColor = GetBackgroundColor(color);
-            polygonInputOutputBlock.Fill = backgroundColor;
-            FrameBlock.Children.Add(polygonInputOutputBlock);
+            inputOutputBlock.SetPointPolygon();   
+            FrameBlock.Children.Add(inputOutputBlock.FramePolygon);
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
@@ -106,6 +88,18 @@ namespace Flowchart_Editor.Models
 
             poinCycleForBlock = new(width, 0);
             pointsInputOutputBlock.Add(poinCycleForBlock);
+        }
+
+        protected override void SetBackground()
+        {
+            string color = "#FF008080";
+            Brush backgroundColor = GetBackgroundColor(color);
+            inputOutputBlock.FramePolygon.Fill = backgroundColor;
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

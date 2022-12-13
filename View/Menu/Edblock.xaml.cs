@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.ViewModel;
@@ -9,76 +8,40 @@ using Flowchart_Editor.Models;
 using System.Configuration;
 using Flowchart_Editor.Model;
 using System;
-using System.Windows.Media;
 using System.ComponentModel;
 using System.Windows.Data;
+using Flowchart_Editor.View.Menu.ConnectionLine;
 
 namespace Flowchart_Editor
 {
-    public class LineCreation
-    {
-        private Point startPoint;
-        private Block startBlock;
-
-        public LineCreation(Point startPoint, Block startBlock)
-        {
-            this.startPoint = startPoint;
-            this.startBlock = startBlock;
-        }
-
-        private Line? line;
-
-        public void MouseMove(Point currentPoint, Canvas canvas)
-        {
-            if (line == null)
-            {
-                line = new Line();
-                line.X1 = startPoint.X;
-                line.Y1 = startPoint.Y;
-                line.Stroke = Brushes.Black;
-                canvas.Children.Add(line);
-            }
-            if (line != null)
-            {
-                line.X2 = currentPoint.X;
-                line.Y2 = currentPoint.Y;
-            }
-
-        }
-
-        public void Cancel(Canvas canvas)
-        {
-            canvas.Children.Remove(line);
-        }
-
-    }
-
     public class BlockViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private double left,top;
 
-        public double Left { get=>left; set
+        public double Left 
+        { 
+            get => left; 
+            set
             {
                 left = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Left)));
 
             }
-            }
+        }
 
         public double Top
         {
-            get => top; set
+            get => top; 
+            set
             {
                 top = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Top)));
 
             }
         }
-
     }
-
 
     public partial class Edblock : Window
     {
@@ -88,19 +51,17 @@ namespace Flowchart_Editor
         private List<BlockViewModel> ListBlockViewModel { get; set; } = new();
         private List<Block> ListBlock { get; set; } = new();
         public static List<Block> ListHighlightedBlock { get; set; } = new();
+        public static RoutedCommand MyCommand = new();
+
 
         public void AddNewBlock(Block block)
         {
-            //ListBlock.Add(block);
-            //AddNewBlock(block);
             var blockViewModel = new BlockViewModel();
-            ListBlockViewModel.Add(blockViewModel);
             {
-
                 var binding = new Binding();
-                binding.Source = blockViewModel;
                 blockViewModel.Left = Canvas.GetLeft(block.FrameBlock);
                 binding.Path = new PropertyPath("Left");
+                binding.Source = blockViewModel;
                 binding.Mode = BindingMode.OneWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 BindingOperations.SetBinding(block.FrameBlock, Canvas.LeftProperty, binding);
@@ -114,12 +75,12 @@ namespace Flowchart_Editor
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 BindingOperations.SetBinding(block.FrameBlock, Canvas.TopProperty, binding);
             }
+            ListBlockViewModel.Add(blockViewModel);
         }
 
         private readonly string connectionString;
-
         public static Edblock? current;
-       
+        
         public Edblock()
         {
             InitializeComponent();
@@ -139,9 +100,7 @@ namespace Flowchart_Editor
                 RemoveFocusBlocks(ListHighlightedBlock);
                 IBlockView blockView = (IBlockView)sender;
                 Block instanceBlock = blockView.GetBlock();
-                AddNewBlock(instanceBlock);
                 ListBlock.Add(instanceBlock);
-                ListHighlightedBlock.Add(instanceBlock);
                 Type typeBlock = typeof(Block);
                 Block.DoDragDropControlElement(typeBlock, instanceBlock, sender);
             }
@@ -160,6 +119,7 @@ namespace Flowchart_Editor
         {
             if (e.Data.GetDataPresent(typeof(Block)))
             {
+                AddNewBlock((Block)e.Data.GetData(typeof(Block)));
                 Point point = e.GetPosition(editField);
                 UIElement uIElementBlock = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
                 ControlOffset controlOffset = new(point.X, point.Y);
@@ -171,32 +131,34 @@ namespace Flowchart_Editor
 
         private void DragOverDestination(object sender, DragEventArgs e) //Перемещение блока
         {
+            e.Effects = DragDropEffects.Copy;
+            UIElement? uIElementBlock = null; 
             if (e.Data.GetDataPresent(typeof(Block)))
             {
-                e.Effects = DragDropEffects.Copy;
-                Point point = e.GetPosition(editField);
                 Block block = (Block)e.Data.GetData(typeof(Block));
-                UIElement uIElementBlock = CreateUIElement(block, e);
-                ControlOffset controlOffset = new(point.X + 1, point.Y + 1);
-                Block.SetCoordinates(uIElementBlock, controlOffset);
+                uIElementBlock = CreateUIElement(block, e);
             }
-            else if (e.Data.GetDataPresent(typeof(Canvas)))
-            {
-                e.Effects = DragDropEffects.Copy;
-                Point point = e.GetPosition(editField);
-                UIElement uIElementBlock = (Canvas)e.Data.GetData(typeof(Canvas));
-                ControlOffset controlOffset = new(point.X + 1, point.Y + 1);
-                Block.SetCoordinates(uIElementBlock, controlOffset);
-            }
+            else if (e.Data.GetDataPresent(typeof(Canvas))) 
+                uIElementBlock = (Canvas)e.Data.GetData(typeof(Canvas));
             else
                 e.Effects = DragDropEffects.None;
+
+            if (uIElementBlock != null)
+                SetData(uIElementBlock, e);
+
             e.Handled = true;
+        }
+
+        private void SetData(UIElement uIElementBlock, DragEventArgs e)
+        {
+            Point point = e.GetPosition(editField);
+            ControlOffset controlOffset = new(point.X + 1, point.Y + 1);
+            Block.SetCoordinates(uIElementBlock, controlOffset);
         }
 
         private UIElement CreateUIElement(Block block, DragEventArgs e) //Создание и добавление блока 
         {
-            UIElement uIElement;
-            uIElement = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
+            UIElement uIElement = ((Block)e.Data.GetData(typeof(Block))).GetUIElement();
             bool containsUIElement = editField.Children.Contains(uIElement);
 
             if (containsUIElement)
@@ -227,30 +189,21 @@ namespace Flowchart_Editor
 
         private void editField_MouseMove(object sender, MouseEventArgs e)
         {
-            var point = e.GetPosition(this.editField);
-            lineCreation?.MouseMove(point,editField);
+            Point point = e.GetPosition(editField);
+            lineCreation?.MouseMove(point, editField);
         }
 
-        private void editField_MouseLeave(object sender, MouseEventArgs e)
+        public static void AddHighlightedBlock(Block block)
         {
-            lineCreation?.Cancel(editField);
-            lineCreation = null;
-
+            if (!ListHighlightedBlock.Contains(block))
+            {
+                ListHighlightedBlock.Add(block);
+            }
         }
 
         private void editField_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            lineCreation = null;
-            foreach (var blockViewModel in ListBlockViewModel)
-            {
-                blockViewModel.Left++;
-            }
-        }
-
-        public void AddHighlightedBlock(Block block)
-        {
-            if (!ListHighlightedBlock.Contains(block))
-                ListHighlightedBlock.Add(block);
+            lineCreation?.Cancel(editField);
         }
     }
 }

@@ -24,16 +24,20 @@ namespace Flowchart_Editor.ViewModel
     {
         private readonly List<Block> listHighlightedBlock;
         private readonly Canvas? editField;
+        private readonly List<Block> listCopyBlock;
 
         public ApplicationViewModel(Canvas editField, List<Block> listHighlightedBlock)
         {
             this.editField = editField;
             this.listHighlightedBlock = listHighlightedBlock;
+            listCopyBlock = new();
         }
 
         public ApplicationViewModel(List<Block> listHighlightedBlock)
         {
             this.listHighlightedBlock = listHighlightedBlock;
+            listCopyBlock = new();
+
         }
 
         public ListBoxItem SelectedFormatAlign
@@ -49,6 +53,8 @@ namespace Flowchart_Editor.ViewModel
                 }
             }
         }
+
+        
 
         public void SetFontWeight()
         {
@@ -92,7 +98,47 @@ namespace Flowchart_Editor.ViewModel
             {
                 ThemeStyle.SetTheme(value);
             }
-        } 
+        }
+
+        private RelayCommand? copyBlock;
+        public RelayCommand CopyBlock
+        {
+            get
+            {
+                return copyBlock ??= new RelayCommand(obj =>
+                {
+                    foreach (Block itemBlock in listHighlightedBlock)
+                    {
+                        Block copyBlock = itemBlock.GetCopyBlock();
+                        listCopyBlock.Add(copyBlock);
+                    }
+                    foreach (Block blockItem in listCopyBlock)
+                    {
+                        listHighlightedBlock.Add(blockItem);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand? insertBlock;
+        public RelayCommand InsertBlock
+        {
+            get
+            {
+                return insertBlock ??= new RelayCommand(obj =>
+                {
+                    if (editField != null)
+                    {
+                        foreach (Block itemBlock in listCopyBlock)
+                        {
+                            editField.Children.Add(itemBlock.GetUIElement());
+
+                        }
+                        listCopyBlock.Clear();
+                    }
+                });
+            }
+        }
 
         private RelayCommand? printCommand;
         public RelayCommand PrintCommand

@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using Flowchart_Editor.Model;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
@@ -10,22 +9,17 @@ namespace Flowchart_Editor.Models
     [BlockName("CycleWhileBeginBlock")]
     public class CycleWhileBeginBlock : Block, IPolygonBased
     {
-        private readonly PolygonBased cycleWhileBeginBlock;
+        private readonly PolygonBased cycleWhileBeginBlock = new();
         private const int sideProjection = 10;
         public CycleWhileBeginBlock()
         {
             initialText = "Цикл while начало";
-            cycleWhileBeginBlock = new();
-            SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
-
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
             SetPropertyTextField(sizeTextField, offsetTextField);
-
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
-
             DrawHighlightedBlock();
         }
 
@@ -45,26 +39,14 @@ namespace Flowchart_Editor.Models
             return offsetTextField;
         }
 
-        override public UIElement GetUIElement()
-        {
-            return FrameBlock;
-        }
-
         private void SetPropertyControl()
         {
             ControlSize textFieldSize = GetSizeTextField(ControlSize);
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
             cycleWhileBeginBlock.SetPointPolygon();
-            SetSize(FrameBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
-
             SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(textFieldSize, textFieldOffset);
         }
 
         public override void SetWidth(int valueBlockWidth)
@@ -108,13 +90,21 @@ namespace Flowchart_Editor.Models
 
         public void SetPropertyPolyginBlock()
         {
-            Polygon polygonCycleWhileBegin = cycleWhileBeginBlock.FramePolygon;
             SetCoordinatesPoints(ControlSize);
-            cycleWhileBeginBlock.SetPointPolygon();
+            cycleWhileBeginBlock.SetPointPolygon();   
+            FrameBlock.Children.Add(cycleWhileBeginBlock.FramePolygon);
+        }
+
+        protected override void SetBackground()
+        {
             string color = "#FFCCCCFF";
             Brush backgroundColor = GetBackgroundColor(color);
-            polygonCycleWhileBegin.Fill = backgroundColor;
-            FrameBlock.Children.Add(polygonCycleWhileBegin);
+            cycleWhileBeginBlock.FramePolygon.Fill = backgroundColor;
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

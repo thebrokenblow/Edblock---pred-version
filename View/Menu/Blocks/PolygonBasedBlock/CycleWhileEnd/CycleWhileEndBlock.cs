@@ -3,21 +3,18 @@ using System.Windows.Media;
 using Flowchart_Editor.Model;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.Blocks.PolygonBasedBlock;
-using System.Windows.Shapes;
 
 namespace Flowchart_Editor.Models
 {
     [BlockName("CycleWhileEndBlock")]
     public class CycleWhileEndBlock : Block, IPolygonBased
     {
-        private readonly PolygonBased cycleWhileEndBlock;
+        private readonly PolygonBased cycleWhileEndBlock = new();
         private const int sideProjection = 10;
 
         public CycleWhileEndBlock()
         {
             initialText = "Цикл while конец";
-            cycleWhileEndBlock = new();
-            SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
@@ -43,11 +40,6 @@ namespace Flowchart_Editor.Models
             return offsetTextField;
         }
 
-        override public UIElement GetUIElement()
-        {
-            return FrameBlock;
-        }
-
         public override void SetWidth(int valueBlockWidth)
         {
             ControlSize.Width = valueBlockWidth;
@@ -66,14 +58,8 @@ namespace Flowchart_Editor.Models
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
             cycleWhileEndBlock.SetPointPolygon();
-            SetSize(FrameBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
             SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(textFieldSize, textFieldOffset);
         }
 
         public void SetCoordinatesPoints(ControlSize polygonSize)
@@ -105,13 +91,21 @@ namespace Flowchart_Editor.Models
 
         public void SetPropertyPolyginBlock()
         {
-            Polygon polygonCycleWhileEnd = cycleWhileEndBlock.FramePolygon;
             SetCoordinatesPoints(ControlSize);
-            cycleWhileEndBlock.SetPointPolygon();
+            cycleWhileEndBlock.SetPointPolygon();   
+            FrameBlock.Children.Add(cycleWhileEndBlock.FramePolygon);
+        }
+
+        protected override void SetBackground()
+        {
             string color = "#FFCCCCFF";
             Brush backgroundColor = GetBackgroundColor(color);
-            polygonCycleWhileEnd.Fill = backgroundColor;
-            FrameBlock.Children.Add(polygonCycleWhileEnd);
+            cycleWhileEndBlock.FramePolygon.Fill = backgroundColor;
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

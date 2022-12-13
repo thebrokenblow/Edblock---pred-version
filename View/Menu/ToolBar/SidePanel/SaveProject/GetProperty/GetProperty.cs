@@ -21,8 +21,8 @@ namespace Flowchart_Editor.Menu.SaveProject.GetProperty
             int width = 0;
             if (itemBlockUIElement != null)
             {
-                height = DefaultPropertyForBlock.height;
-                width = DefaultPropertyForBlock.width;
+                //height = DefaultPropertyForBlock.height;
+                //width = DefaultPropertyForBlock.width;
             }
             string textOfBlock = "";
             if (itemBlock.TextBoxOfBlock != null)

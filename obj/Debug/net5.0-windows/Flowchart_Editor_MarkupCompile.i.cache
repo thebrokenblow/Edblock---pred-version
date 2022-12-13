@@ -12,7 +12,7 @@ TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\Users\Artem\Documents\AProgramming\C#_Projects\Flowchart_Editor\Flowchart_Editor\App.xaml
 251118085686
 
-75-1114239074
+77-538353187
 210-1372734633
 View\Menu\Blocks\Action\ActionBlockView.xaml;View\Menu\Blocks\Comment\CommentView.xaml;View\Menu\Blocks\Link\LinkBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseFirstOption\CaseFirstOptionView.xaml;View\Menu\Blocks\PolygonBasedBlock\Condition\Case\CaseSecondOption\CaseSecondOptionView.xaml;View\Menu\Blocks\PolygonBasedBlock\Condition\ConditionBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\CycleFor\CycleForViewBlock.xaml;View\Menu\Blocks\PolygonBasedBlock\CycleWhileBegin\CycleWhileBeginBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\CycleWhileEnd\CycleWhileEndBlockView.xaml;View\Menu\Blocks\PolygonBasedBlock\InputOutput\InputOutputBlockView.xaml;View\Menu\Blocks\StartEnd\StartEndBlockView.xaml;View\Menu\Blocks\SubroutineBlock\SubroutineBlockView.xaml;View\Menu\Edblock.xaml;View\Menu\ToolBar\FontFamilyTextField\ListFontFamily.xaml;View\Menu\ToolBar\FontSizeTextField\ListFontSize.xaml;View\Menu\ToolBar\FormatAlignTextField\FormatAlign.xaml;View\Menu\ToolBar\FormatTextField\FormatText.xaml;View\Menu\ToolBar\Scaling\HeightBlock\HeightBlockDesign.xaml;View\Menu\ToolBar\Scaling\WidthBlock\WidthBlockDesign.xaml;View\Menu\ToolBar\Settings\Settings.xaml;View\Menu\ToolBar\SidePanel\Print\Print.xaml;View\Menu\ToolBar\SidePanel\SaveImg\SaveImg.xaml;View\Menu\ToolBar\SidePanel\SaveProject\SaveProject.xaml;View\Menu\ToolBar\SidePanel\UploadProject\UploadProject.xaml;View\СontrolStyle\СontrolsStyle.xaml;
 

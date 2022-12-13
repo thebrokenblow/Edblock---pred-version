@@ -9,14 +9,12 @@ namespace Flowchart_Editor.Models
     [BlockName("CycleForBlock")]
     public class CycleForBlock : Block, IPolygonBased
     {
-        private readonly PolygonBased cycleForBlock;
+        private readonly PolygonBased cycleForBlock = new();
         private const int sideProjection = 10; 
 
         public CycleForBlock()
         {
             initialText = "Цикл for";
-            cycleForBlock = new();
-            SetPropertyFrameBlock();
             SetPropertyPolyginBlock();
             ControlSize sizeTextField = GetSizeTextField(ControlSize);
             ControlOffset offsetTextField = GetOffsetTextField();
@@ -24,11 +22,6 @@ namespace Flowchart_Editor.Models
             SetCoordinatesConnectionPoints();
             InitializingConnectionPoints();
             DrawHighlightedBlock();
-        }
-
-        override public UIElement GetUIElement()
-        {            
-            return FrameBlock;
         }
 
         private static ControlSize GetSizeTextField(ControlSize controlSize)
@@ -53,14 +46,8 @@ namespace Flowchart_Editor.Models
             ControlOffset textFieldOffset = GetOffsetTextField();
             SetCoordinatesPoints(ControlSize);
             cycleForBlock.SetPointPolygon();
-            SetSize(FrameBlock, ControlSize);
-            SetSize(TextBoxOfBlock, textFieldSize);
-            SetSize(TextBlockOfBlock, textFieldSize);
-            SetCoordinates(TextBoxOfBlock, textFieldOffset);
-            SetCoordinates(TextBlockOfBlock, textFieldOffset);
             SetCoordinatesConnectionPoints();
-            ChangeCoordinatesConnectionPoints();
-            ChangeHighlightedBlock();
+            SetPropertyControl(textFieldSize, textFieldOffset);
         }
 
         public override void SetWidth(int valueBlockWidth)
@@ -115,10 +102,19 @@ namespace Flowchart_Editor.Models
         {
             SetCoordinatesPoints(ControlSize);
             cycleForBlock.SetPointPolygon();
+            FrameBlock.Children.Add(cycleForBlock.FramePolygon);
+        }
+
+        protected override void SetBackground()
+        {
             string color = "#FFFFC618";
             Brush backgroundColor = GetBackgroundColor(color);
             cycleForBlock.FramePolygon.Fill = backgroundColor;
-            FrameBlock.Children.Add(cycleForBlock.FramePolygon);
+        }
+
+        public override Block GetCopyBlock()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
