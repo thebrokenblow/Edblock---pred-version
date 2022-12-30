@@ -1,6 +1,4 @@
 ﻿using Flowchart_Editor.Model;
-using Flowchart_Editor.Models;
-using Flowchart_Editor.View.Condition.Case;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;

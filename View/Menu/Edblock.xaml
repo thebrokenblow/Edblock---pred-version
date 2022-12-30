@@ -46,6 +46,9 @@
         <KeyBinding Modifiers="Control"
                     Key="V"
                     Command="{Binding InsertBlock}" />
+
+        <KeyBinding Key="Esc"
+                    Command="{Binding PressEsc}" />
     </Window.InputBindings>
 
     <Grid>
@@ -247,7 +250,8 @@
                     <block:ActionBlockView
                         Grid.Row="0"
                         Grid.Column="0" 
-                        MouseMove="MouseMoveBlock"/>
+                        MouseMove="MouseMoveBlock">
+                    </block:ActionBlockView>
 
                     <Label 
                         Style="{StaticResource LabelBlockStyle}"

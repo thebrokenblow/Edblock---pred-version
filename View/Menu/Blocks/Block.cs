@@ -7,6 +7,7 @@ using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.ConnectionLine;
+using Flowchart_Editor.View.ConnectionPoint;
 
 namespace Flowchart_Editor.Models
 {
@@ -26,7 +27,7 @@ namespace Flowchart_Editor.Models
         protected Tuple<double, double> coordinateConnectionPoint;
         protected List<Tuple<double, double>> coordinatesConnectionPoints;
         protected List<Ellipse> connectionsPoints;
-        private LineCreation lineCreation;
+        public static LineCreation lineCreation;
         protected readonly Uri uri;
 
         public Block()
@@ -57,12 +58,15 @@ namespace Flowchart_Editor.Models
 
         private void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && e.Source is not TextBox)
+            if (lineCreation == null)
             {
-                Type typeBlock = typeof(Canvas);
-                DoDragDropControlElement(typeBlock, sender, sender);
+                if (e.LeftButton == MouseButtonState.Pressed && e.Source is not TextBox)
+                {
+                    Type typeBlock = typeof(Canvas);
+                    DoDragDropControlElement(typeBlock, sender, sender);
+                }
+                e.Handled = true;
             }
-            e.Handled = true;
         }
 
         public static void DoDragDropControlElement(Type typeControlElement, object controlElement, object sender)
@@ -140,19 +144,6 @@ namespace Flowchart_Editor.Models
                 borderHighlightedLine.BorderThickness = new Thickness(1);
                 FrameBlock.Children.Add(borderHighlightedLine);
             }
-            Edblock.AddHighlightedBlock(this);
-        }
-
-        protected void DrawHighlightedBlock1()
-        {
-            if (!FrameBlock.Children.Contains(borderHighlightedLine))
-            {
-                borderHighlightedLine.BorderBrush = Brushes.Blue;
-                borderHighlightedLine.Width = ControlSize.Width;
-                borderHighlightedLine.Height = ControlSize.Height;
-                borderHighlightedLine.BorderThickness = new Thickness(1);
-                FrameBlock.Children.Add(borderHighlightedLine);
-            }
         }
 
         protected void SetTextTextField(string text)
@@ -192,6 +183,7 @@ namespace Flowchart_Editor.Models
                 if (e.ClickCount == 1)
                 {
                     DrawHighlightedBlock();
+                    Edblock.AddHighlightedBlock(this);
                 }
                 else if (e.ClickCount == 2)
                 {
@@ -223,13 +215,11 @@ namespace Flowchart_Editor.Models
                     if (lineCreation == null)
                     {
                         lineCreation = new LineCreation(this, (Ellipse)sender);
-                        Edblock.current.StartLineCreation(lineCreation);
+                        Edblock.current.StartLineCreation(lineCreation);  
                     }
                 }
             }   
         }
-
-
 
         public void SetCoordinatesConnectionPoints(int sideProjection = 0)
         {
@@ -284,10 +274,9 @@ namespace Flowchart_Editor.Models
 
         private void ConnectionPoint_MouseEnter(object sender, MouseEventArgs e)
         {
-            SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
-            if (lineCreation != null)
+            if (lineCreation == null)
             {
-                lineCreation = null;
+                SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
             }
         }
 

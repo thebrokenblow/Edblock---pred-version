@@ -11,6 +11,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using Flowchart_Editor.View.Menu.ConnectionLine;
+using Flowchart_Editor.View.Menu.Blocks;
 
 namespace Flowchart_Editor
 {
@@ -85,12 +86,19 @@ namespace Flowchart_Editor
         {
             InitializeComponent();
             current = this;
-            DataContext = new ApplicationViewModel(editField, ListHighlightedBlock);
+            DataContext = new ApplicationViewModel(editField, ListBlock, ListHighlightedBlock);
+            PreviewKeyDown += new KeyEventHandler(HandleEsc);
             Block.EditField = editField;
             Block.Edblock = this;
             MinHeight = minHeight;
             MinWidth = minWidth;
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
+        }
+
+        private void HandleEsc(object sender, KeyEventArgs e) //Чото не работает
+        {
+            if (e.Key == Key.Escape)
+                lineCreation?.Cancel(editField);
         }
 
         public void MouseMoveBlock(object sender, MouseEventArgs e) //Обработка нахождения курсора на блоке
@@ -201,9 +209,11 @@ namespace Flowchart_Editor
             }
         }
 
-        private void editField_MouseUp(object sender, MouseButtonEventArgs e)
+        private void editField_MouseUp(object sender, MouseButtonEventArgs e) //Поднял курсор
         {
             lineCreation?.Cancel(editField);
+            lineCreation = null;
+            Block.lineCreation = null;
         }
     }
 }

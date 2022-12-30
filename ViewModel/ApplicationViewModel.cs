@@ -17,18 +17,23 @@ using Flowchart_Editor.View.Menu.ToolBar.HeightBlock;
 using Flowchart_Editor.View.Menu.ToolBar.WidthBlock;
 using Flowchart_Editor.View.ConditionCaseSecondOption;
 using Flowchart_Editor.View.ConditionCaseFirstOption;
+using Flowchart_Editor.View.Menu.Blocks;
+using System.Windows.Shapes;
+using Flowchart_Editor.View.Menu.ConnectionLine;
 
 namespace Flowchart_Editor.ViewModel
 {
     public class ApplicationViewModel : IDataErrorInfo
     {
+        private readonly List<Block>? listBlock;
         private readonly List<Block> listHighlightedBlock;
         private readonly Canvas? editField;
         private readonly List<Block> listCopyBlock;
 
-        public ApplicationViewModel(Canvas editField, List<Block> listHighlightedBlock)
+        public ApplicationViewModel(Canvas editField, List<Block> listBlock, List<Block> listHighlightedBlock)
         {
             this.editField = editField;
+            this.listBlock = listBlock;
             this.listHighlightedBlock = listHighlightedBlock;
             listCopyBlock = new();
         }
@@ -37,8 +42,9 @@ namespace Flowchart_Editor.ViewModel
         {
             this.listHighlightedBlock = listHighlightedBlock;
             listCopyBlock = new();
-
         }
+
+        
 
         public ListBoxItem SelectedFormatAlign
         {
@@ -136,6 +142,31 @@ namespace Flowchart_Editor.ViewModel
                         }
                         listCopyBlock.Clear();
                     }
+                });
+            }
+        }
+
+        private RelayCommand? pressEsc;
+        public RelayCommand PressEsc //Это пока в разработке
+        {
+            get
+            {
+                return pressEsc ??= new RelayCommand(obj =>
+                {
+                    Print.DoPrint(editField);
+                });
+            }
+        }
+
+        private RelayCommand? mouseMoveBlock;
+        public RelayCommand MouseMoveBlock
+        {
+            get
+            {
+                return mouseMoveBlock ??= new RelayCommand(obj =>
+                {
+                    if (editField != null)
+                        Print.DoPrint(editField);
                 });
             }
         }
