@@ -7,7 +7,7 @@ using Flowchart_Editor.Model;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.ConnectionLine;
-using Flowchart_Editor.View.ConnectionPoint;
+using Flowchart_Editor.View.Menu;
 
 namespace Flowchart_Editor.Models
 {
@@ -26,7 +26,7 @@ namespace Flowchart_Editor.Models
         protected ControlSize ControlSize { get; set; }
         protected Tuple<double, double> coordinateConnectionPoint;
         protected List<Tuple<double, double>> coordinatesConnectionPoints;
-        protected List<Ellipse> connectionsPoints;
+        protected List<ConnectionPoint> connectionsPoints;
         public static LineCreation lineCreation;
         protected readonly Uri uri;
 
@@ -214,7 +214,16 @@ namespace Flowchart_Editor.Models
                 {
                     if (lineCreation == null)
                     {
-                        lineCreation = new LineCreation(this, (Ellipse)sender);
+                        ConnectionPoint connectionPoint1 = null;
+                        foreach (var item in connectionsPoints)
+                        {
+                            if ((Ellipse)sender == item.EllipseConnectionPoint)
+                            {
+                                connectionPoint1 = item;
+                            }
+                        }
+
+                        lineCreation = new LineCreation(this, connectionPoint1);
                         Edblock.current.StartLineCreation(lineCreation);  
                     }
                 }
@@ -251,19 +260,29 @@ namespace Flowchart_Editor.Models
         protected void InitializingConnectionPoints()
         {
             string nameStyle = "EllipseStyle";
+            int i = 0;
             foreach (var itemCoordinatesPoint in coordinatesConnectionPoints)
             {
-                Ellipse connectionPoint = new();
+                ConnectionPoint connectionPoint;
+                if (i % 2 == 0)
+                {
+                    connectionPoint = new(OrientationConnectionPoint.Vertical);
+                }
+                else
+                {
+                    connectionPoint = new(OrientationConnectionPoint.Horizontal);
+                }
+                i++;
                 ControlOffset offsetConnectionPoints = new(itemCoordinatesPoint.Item1, itemCoordinatesPoint.Item2);
 
-                SetStyle(connectionPoint, nameStyle);
-                SetCoordinates(connectionPoint, offsetConnectionPoints);
-
+                SetStyle(connectionPoint.EllipseConnectionPoint, nameStyle);
+                SetCoordinates(connectionPoint.EllipseConnectionPoint, offsetConnectionPoints);
+                  
                 connectionsPoints.Add(connectionPoint);
-                connectionPoint.MouseMove += ClickOnConnectionPoint;
-                connectionPoint.MouseEnter += ConnectionPoint_MouseEnter;
-                connectionPoint.MouseLeave += ConnectionPoint_MouseLeave;
-                FrameBlock.Children.Add(connectionPoint);
+                connectionPoint.EllipseConnectionPoint.MouseMove += ClickOnConnectionPoint;
+                connectionPoint.EllipseConnectionPoint.MouseEnter += ConnectionPoint_MouseEnter;
+                connectionPoint.EllipseConnectionPoint.MouseLeave += ConnectionPoint_MouseLeave;
+                FrameBlock.Children.Add(connectionPoint.EllipseConnectionPoint);
             }
         }
 
@@ -285,7 +304,7 @@ namespace Flowchart_Editor.Models
             for (int i = 0; i < coordinatesConnectionPoints.Count; i++)
             {
                 ControlOffset offsetConnectionPoints = new(coordinatesConnectionPoints[i].Item1, coordinatesConnectionPoints[i].Item2);
-                SetCoordinates(connectionsPoints[i], offsetConnectionPoints);
+                SetCoordinates(connectionsPoints[i].EllipseConnectionPoint, offsetConnectionPoints);
             }
         }
 

@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using Flowchart_Editor.View.Menu.ConnectionLine;
 using Flowchart_Editor.View.Menu.Blocks;
+using Flowchart_Editor.View.Menu;
 
 namespace Flowchart_Editor
 {
@@ -198,7 +199,15 @@ namespace Flowchart_Editor
         private void editField_MouseMove(object sender, MouseEventArgs e)
         {
             Point point = e.GetPosition(editField);
-            lineCreation?.MouseMove(point, editField);
+            if (lineCreation?.connectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Horizontal)
+            {
+                lineCreation?.MouseMoveHorizontal(point, editField);
+            }
+            else if (lineCreation?.connectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Vertical)
+            {
+                lineCreation?.MouseMoveVertical(point, editField);
+            }
+            
         }
 
         public static void AddHighlightedBlock(Block block)
