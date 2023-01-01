@@ -222,7 +222,7 @@ namespace Flowchart_Editor.Models
                                 connectionPoint1 = item;
                             }
                         }
-
+                        Edblock.block = this;
                         lineCreation = new LineCreation(this, connectionPoint1);
                         Edblock.current.StartLineCreation(lineCreation);  
                     }

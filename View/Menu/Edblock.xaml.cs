@@ -11,7 +11,6 @@ using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using Flowchart_Editor.View.Menu.ConnectionLine;
-using Flowchart_Editor.View.Menu.Blocks;
 using Flowchart_Editor.View.Menu;
 
 namespace Flowchart_Editor
@@ -52,6 +51,7 @@ namespace Flowchart_Editor
 
         private List<BlockViewModel> ListBlockViewModel { get; set; } = new();
         private List<Block> ListBlock { get; set; } = new();
+        public static Block block;
         public static List<Block> ListHighlightedBlock { get; set; } = new();
         public static RoutedCommand MyCommand = new();
 
@@ -88,18 +88,11 @@ namespace Flowchart_Editor
             InitializeComponent();
             current = this;
             DataContext = new ApplicationViewModel(editField, ListBlock, ListHighlightedBlock);
-            PreviewKeyDown += new KeyEventHandler(HandleEsc);
             Block.EditField = editField;
             Block.Edblock = this;
             MinHeight = minHeight;
             MinWidth = minWidth;
             connectionString = ConfigurationManager.ConnectionStrings["Edblock"].ConnectionString;
-        }
-
-        private void HandleEsc(object sender, KeyEventArgs e) //Чото не работает
-        {
-            if (e.Key == Key.Escape)
-                lineCreation?.Cancel(editField);
         }
 
         public void MouseMoveBlock(object sender, MouseEventArgs e) //Обработка нахождения курсора на блоке
@@ -180,12 +173,24 @@ namespace Flowchart_Editor
 
         private void MouseDownEditField(object sender, MouseButtonEventArgs e)
         {
-            Keyboard.ClearFocus();
-            if (e.Source is not TextBlock)
+            if (lineCreation != null)
             {
-                RemoveFocusBlocks(ListHighlightedBlock);
-                for (int i = 0; i < ListBlock.Count; i++)
-                    ListBlock[i].ChangeTextField();
+                Point point = new Point(lineCreation.lineSecond.X2, lineCreation.lineSecond.Y2);
+                editField.Children.Remove(lineCreation.polygon);
+                LineCreation lineCreation1 = new(block, point);
+                lineCreation1.connectionPoint = new(lineCreation.connectionPoint.OrientationConnectionPoint);
+                lineCreation = lineCreation1;
+
+            }
+            else
+            {
+                Keyboard.ClearFocus();
+                if (e.Source is not TextBlock)
+                {
+                    RemoveFocusBlocks(ListHighlightedBlock);
+                    for (int i = 0; i < ListBlock.Count; i++)
+                        ListBlock[i].ChangeTextField();
+                }
             }
         }
 
@@ -220,9 +225,9 @@ namespace Flowchart_Editor
 
         private void editField_MouseUp(object sender, MouseButtonEventArgs e) //Поднял курсор
         {
-            lineCreation?.Cancel(editField);
-            lineCreation = null;
-            Block.lineCreation = null;
+            //lineCreation?.Cancel(editField);
+            //lineCreation = null;
+            //Block.lineCreation = null;
         }
     }
 }
