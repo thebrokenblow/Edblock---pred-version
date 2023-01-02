@@ -180,7 +180,6 @@ namespace Flowchart_Editor
                 LineCreation lineCreation1 = new(block, point);
                 lineCreation1.connectionPoint = new(lineCreation.connectionPoint.OrientationConnectionPoint);
                 lineCreation = lineCreation1;
-
             }
             else
             {
@@ -194,13 +193,15 @@ namespace Flowchart_Editor
             }
         }
 
-        public void StartLineCreation(LineCreation lineCreation)
+
+        public static LineCreation? lineCreation;
+
+        public static void SetFocus(Canvas editField)
         {
-            this.lineCreation = lineCreation;
+            editField.Focusable = true;
+            Keyboard.Focus(editField);
         }
-
-        private LineCreation? lineCreation;
-
+         
         private void editField_MouseMove(object sender, MouseEventArgs e)
         {
             Point point = e.GetPosition(editField);
@@ -211,8 +212,7 @@ namespace Flowchart_Editor
             else if (lineCreation?.connectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Vertical)
             {
                 lineCreation?.MouseMoveVertical(point, editField);
-            }
-            
+            }   
         }
 
         public static void AddHighlightedBlock(Block block)
@@ -221,13 +221,6 @@ namespace Flowchart_Editor
             {
                 ListHighlightedBlock.Add(block);
             }
-        }
-
-        private void editField_MouseUp(object sender, MouseButtonEventArgs e) //Поднял курсор
-        {
-            //lineCreation?.Cancel(editField);
-            //lineCreation = null;
-            //Block.lineCreation = null;
         }
     }
 }

@@ -223,11 +223,23 @@ namespace Flowchart_Editor.Models
                             }
                         }
                         Edblock.block = this;
+                        Edblock.SetFocus(EditField);
                         lineCreation = new LineCreation(this, connectionPoint1);
-                        Edblock.current.StartLineCreation(lineCreation);  
+                        
+                        Edblock.lineCreation = lineCreation;  
                     }
                 }
             }   
+        }
+
+
+        protected void Click(object sender, MouseEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed && lineCreation != null)
+            {
+                Edblock.lineCreation = null;
+                lineCreation = null;
+            }
         }
 
         public void SetCoordinatesConnectionPoints(int sideProjection = 0)
@@ -279,6 +291,7 @@ namespace Flowchart_Editor.Models
                 SetCoordinates(connectionPoint.EllipseConnectionPoint, offsetConnectionPoints);
                   
                 connectionsPoints.Add(connectionPoint);
+                connectionPoint.EllipseConnectionPoint.MouseDown += Click;
                 connectionPoint.EllipseConnectionPoint.MouseMove += ClickOnConnectionPoint;
                 connectionPoint.EllipseConnectionPoint.MouseEnter += ConnectionPoint_MouseEnter;
                 connectionPoint.EllipseConnectionPoint.MouseLeave += ConnectionPoint_MouseLeave;
@@ -293,10 +306,13 @@ namespace Flowchart_Editor.Models
 
         private void ConnectionPoint_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (lineCreation == null)
+           
+            if (lineCreation != null)
             {
-                SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
+                //lineCreation?.Cancel(Edblock.editField);
+                
             }
+            SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
         }
 
         protected void ChangeCoordinatesConnectionPoints()

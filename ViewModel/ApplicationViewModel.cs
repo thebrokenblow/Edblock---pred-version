@@ -147,13 +147,15 @@ namespace Flowchart_Editor.ViewModel
         }
 
         private RelayCommand? pressEsc;
-        public RelayCommand PressEsc //Это пока в разработке
+        public RelayCommand PressEsc 
         {
             get
             {
                 return pressEsc ??= new RelayCommand(obj =>
                 {
-                    Print.DoPrint(editField);
+                    Edblock.lineCreation?.Cancel(editField);
+                    Edblock.lineCreation = null;
+                    Block.lineCreation = null;
                 });
             }
         }

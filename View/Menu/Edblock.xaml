@@ -197,7 +197,6 @@
             Grid.Column="1"
             HorizontalScrollBarVisibility="Auto">
             <Canvas
-                MouseUp="editField_MouseUp"
                 MouseMove="editField_MouseMove"
                 AllowDrop="True" 
                 DragOver="DragOverDestination" 
