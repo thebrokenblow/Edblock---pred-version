@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using Flowchart_Editor.View.Menu.ConnectionLine;
 using Flowchart_Editor.View.Menu;
+using System.Runtime.CompilerServices;
 
 namespace Flowchart_Editor
 {
@@ -19,7 +20,13 @@ namespace Flowchart_Editor
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private double left,top;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private double left;
+        private double top;
 
         public double Left 
         { 
@@ -27,7 +34,7 @@ namespace Flowchart_Editor
             set
             {
                 left = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Left)));
+                OnPropertyChanged(nameof(Left));
 
             }
         }
@@ -38,8 +45,7 @@ namespace Flowchart_Editor
             set
             {
                 top = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Top)));
-
+                OnPropertyChanged(nameof(Top));
             }
         }
     }
@@ -60,10 +66,11 @@ namespace Flowchart_Editor
         {
             var blockViewModel = new BlockViewModel();
             {
-                var binding = new Binding();
                 blockViewModel.Left = Canvas.GetLeft(block.FrameBlock);
-                binding.Path = new PropertyPath("Left");
+
+                var binding = new Binding();
                 binding.Source = blockViewModel;
+                binding.Path = new PropertyPath("Left");
                 binding.Mode = BindingMode.OneWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 BindingOperations.SetBinding(block.FrameBlock, Canvas.LeftProperty, binding);
@@ -82,12 +89,16 @@ namespace Flowchart_Editor
 
         private readonly string connectionString;
         public static Edblock? current;
+
+
+        
         
         public Edblock()
         {
             InitializeComponent();
             current = this;
             DataContext = new ApplicationViewModel(editField, ListBlock, ListHighlightedBlock);
+            //DataContext = new BlockViewModel();
             Block.EditField = editField;
             Block.Edblock = this;
             MinHeight = minHeight;
@@ -105,6 +116,11 @@ namespace Flowchart_Editor
                 ListBlock.Add(instanceBlock);
                 Type typeBlock = typeof(Block);
                 Block.DoDragDropControlElement(typeBlock, instanceBlock, sender);
+
+                var blockViewModel = new BlockViewModel();
+                {
+                    blockViewModel.Left = Canvas.GetLeft(instanceBlock.FrameBlock);
+                }
             }
             e.Handled = true;
         }
@@ -129,6 +145,13 @@ namespace Flowchart_Editor
             }
             else
                 e.Handled = true;
+        }
+
+        public void SetCoordinate(Block block, double left, double top)
+        {
+            ListBlockViewModel[0].Left = left;
+            ListBlockViewModel[0].Top = top;
+            //Coordinate.Text = left.ToString();
         }
 
         private void DragOverDestination(object sender, DragEventArgs e) //Перемещение блока
@@ -178,7 +201,7 @@ namespace Flowchart_Editor
                 Point point = new Point(lineCreation.lineSecond.X2, lineCreation.lineSecond.Y2);
                 editField.Children.Remove(lineCreation.polygon);
                 LineCreation lineCreation1 = new(block, point);
-                lineCreation1.connectionPoint = new(lineCreation.connectionPoint.OrientationConnectionPoint);
+                lineCreation1.ConnectionPoint = new(lineCreation.ConnectionPoint.OrientationConnectionPoint);
                 lineCreation = lineCreation1;
             }
             else
@@ -205,11 +228,11 @@ namespace Flowchart_Editor
         private void editField_MouseMove(object sender, MouseEventArgs e)
         {
             Point point = e.GetPosition(editField);
-            if (lineCreation?.connectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Horizontal)
+            if (lineCreation?.ConnectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Horizontal)
             {
                 lineCreation?.MouseMoveHorizontal(point, editField);
             }
-            else if (lineCreation?.connectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Vertical)
+            else if (lineCreation?.ConnectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Vertical)
             {
                 lineCreation?.MouseMoveVertical(point, editField);
             }   

@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using Flowchart_Editor.View.Menu.ConnectionLine;
 using Flowchart_Editor.View.Menu;
+using System.Threading.Tasks.Dataflow;
+using Flowchart_Editor.View.Menu.Blocks;
 
 namespace Flowchart_Editor.Models
 {
@@ -27,6 +29,7 @@ namespace Flowchart_Editor.Models
         protected Tuple<double, double> coordinateConnectionPoint;
         protected List<Tuple<double, double>> coordinatesConnectionPoints;
         protected List<ConnectionPoint> connectionsPoints;
+        private List<Line> firstLineConnection;
         public static LineCreation lineCreation;
         protected readonly Uri uri;
 
@@ -39,6 +42,7 @@ namespace Flowchart_Editor.Models
             ControlSize = new(defaultWidth, defaulHeight);
             coordinateConnectionPoint = new(0, 0);
             coordinatesConnectionPoints = new();
+            firstLineConnection = new();
             connectionsPoints = new();
             uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
             SetPropertyFrameBlock();
@@ -63,7 +67,13 @@ namespace Flowchart_Editor.Models
                 if (e.LeftButton == MouseButtonState.Pressed && e.Source is not TextBox)
                 {
                     Type typeBlock = typeof(Canvas);
+                    double left = Canvas.GetLeft(FrameBlock);
+                    double top = Canvas.GetTop(FrameBlock);
+                    Edblock.SetCoordinate(this, left, top);
+                    Canvas.GetTop(FrameBlock);
+                    BlockForMovements blockForMovements = new(FrameBlock);
                     DoDragDropControlElement(typeBlock, sender, sender);
+                    
                 }
                 e.Handled = true;
             }
