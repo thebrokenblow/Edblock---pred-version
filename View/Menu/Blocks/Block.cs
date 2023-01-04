@@ -242,11 +242,65 @@ namespace Flowchart_Editor.Models
             }   
         }
 
-
         protected void Click(object sender, MouseEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed && lineCreation != null)
             {
+                Ellipse connectionPoint = (Ellipse)sender;
+                double xCoordinate = Canvas.GetLeft(connectionPoint)
+                                                + Canvas.GetLeft(FrameBlock)
+                                                + (connectionPoint).Width / 2;
+
+                double yCoordinate = Canvas.GetTop(connectionPoint) + Canvas.GetTop(FrameBlock) + 3;
+
+                if (lineCreation.StateArrow == StateArrow.Right)
+                {
+                    lineCreation.line.Y2 = yCoordinate;
+                    lineCreation.lineSecond.X2 = xCoordinate + LineArrow.widthArrow;
+
+                    lineCreation.lineSecond.Y1 = yCoordinate;
+                    lineCreation.lineSecond.Y2 = yCoordinate;
+
+                    Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate + LineArrow.widthArrow);
+                    Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate);
+
+                }
+                else if (lineCreation.StateArrow == StateArrow.Left)
+                {
+                    lineCreation.line.Y2 = yCoordinate;
+                    lineCreation.lineSecond.X2 = xCoordinate - LineArrow.widthArrow;
+
+                    lineCreation.lineSecond.Y1 = yCoordinate;
+                    lineCreation.lineSecond.Y2 = yCoordinate;
+
+                    Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate - LineArrow.widthArrow);
+
+                    Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate);
+
+                }
+                else if (lineCreation.StateArrow == StateArrow.Bottom)
+                {
+                    lineCreation.line.X2 = xCoordinate;
+                    lineCreation.lineSecond.X2 = xCoordinate;
+                    lineCreation.lineSecond.X1 = xCoordinate;
+
+                    lineCreation.lineSecond.Y2 = yCoordinate - LineArrow.heightArrow;
+
+                    Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate - LineArrow.heightArrow);
+                    Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate);
+                }
+                else if (lineCreation.StateArrow == StateArrow.Upper)
+                {
+                    lineCreation.line.X2 = xCoordinate;
+                    lineCreation.lineSecond.X2 = xCoordinate;
+                    lineCreation.lineSecond.X1 = xCoordinate;
+
+                    lineCreation.lineSecond.Y2 = yCoordinate;
+
+                    Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate);
+                    Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate);
+                }
+
                 Edblock.lineCreation = null;
                 lineCreation = null;
             }
@@ -316,12 +370,6 @@ namespace Flowchart_Editor.Models
 
         private void ConnectionPoint_MouseEnter(object sender, MouseEventArgs e)
         {
-           
-            if (lineCreation != null)
-            {
-                //lineCreation?.Cancel(Edblock.editField);
-                
-            }
             SetStyle((Ellipse)sender, "HighlightedEllipseStyle");
         }
 

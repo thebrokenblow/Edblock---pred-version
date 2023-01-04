@@ -86,8 +86,6 @@
                 <toolBar:ListHeightBlock/>
                 <Separator />
 
-                <TextBlock Width="150" Height="30" Text="{Binding Left}" Name="Coordinate"/>
-
                 <materialDesign:PopupBox 
                     StaysOpen="True">
                     <Grid Margin="10">

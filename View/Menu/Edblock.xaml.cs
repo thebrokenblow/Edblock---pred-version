@@ -113,6 +113,7 @@ namespace Flowchart_Editor
                 RemoveFocusBlocks(ListHighlightedBlock);
                 IBlockView blockView = (IBlockView)sender;
                 Block instanceBlock = blockView.GetBlock();
+                ListHighlightedBlock.Add(instanceBlock);
                 ListBlock.Add(instanceBlock);
                 Type typeBlock = typeof(Block);
                 Block.DoDragDropControlElement(typeBlock, instanceBlock, sender);
@@ -151,7 +152,6 @@ namespace Flowchart_Editor
         {
             ListBlockViewModel[0].Left = left;
             ListBlockViewModel[0].Top = top;
-            //Coordinate.Text = left.ToString();
         }
 
         private void DragOverDestination(object sender, DragEventArgs e) //Перемещение блока
@@ -199,7 +199,7 @@ namespace Flowchart_Editor
             if (lineCreation != null)
             {
                 Point point = new Point(lineCreation.lineSecond.X2, lineCreation.lineSecond.Y2);
-                editField.Children.Remove(lineCreation.polygon);
+                editField.Children.Remove(lineCreation.LineArrow.Arrow);
                 LineCreation lineCreation1 = new(block, point);
                 lineCreation1.ConnectionPoint = new(lineCreation.ConnectionPoint.OrientationConnectionPoint);
                 lineCreation = lineCreation1;
