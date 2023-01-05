@@ -13,6 +13,7 @@ using System.Windows.Data;
 using Flowchart_Editor.View.Menu.ConnectionLine;
 using Flowchart_Editor.View.Menu;
 using System.Runtime.CompilerServices;
+using System.Windows.Shapes;
 
 namespace Flowchart_Editor
 {
@@ -90,15 +91,11 @@ namespace Flowchart_Editor
         private readonly string connectionString;
         public static Edblock? current;
 
-
-        
-        
         public Edblock()
         {
             InitializeComponent();
             current = this;
             DataContext = new ApplicationViewModel(editField, ListBlock, ListHighlightedBlock);
-            //DataContext = new BlockViewModel();
             Block.EditField = editField;
             Block.Edblock = this;
             MinHeight = minHeight;
@@ -196,13 +193,16 @@ namespace Flowchart_Editor
 
         private void MouseDownEditField(object sender, MouseButtonEventArgs e)
         {
-            if (lineCreation != null)
+            if (listLineCreation != null && listLineCreation.Count > 0)
             {
-                Point point = new Point(lineCreation.lineSecond.X2, lineCreation.lineSecond.Y2);
-                editField.Children.Remove(lineCreation.LineArrow.Arrow);
-                LineCreation lineCreation1 = new(block, point);
-                lineCreation1.ConnectionPoint = new(lineCreation.ConnectionPoint.OrientationConnectionPoint);
-                lineCreation = lineCreation1;
+                LineCreation lineCreation = listLineCreation[listLineCreation.Count - 1];
+                Line? SecondLine = lineCreation.SecondLine;
+                if (SecondLine != null)
+                {
+                    lineCreation.DeleteArrow();
+                    Point point = new(SecondLine.X2, SecondLine.Y2);
+                    listLineCreation.Add(new(point, listLineCreation[listLineCreation.Count - 1].OrientationConnectionPoint, editField));
+                }
             }
             else
             {
@@ -217,7 +217,7 @@ namespace Flowchart_Editor
         }
 
 
-        public static LineCreation? lineCreation;
+        public static List<LineCreation>? listLineCreation;
 
         public static void SetFocus(Canvas editField)
         {
@@ -227,15 +227,11 @@ namespace Flowchart_Editor
          
         private void editField_MouseMove(object sender, MouseEventArgs e)
         {
-            Point point = e.GetPosition(editField);
-            if (lineCreation?.ConnectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Horizontal)
+            if (listLineCreation != null && listLineCreation.Count > 0)
             {
-                lineCreation?.MouseMoveHorizontal(point, editField);
+                Point cursorPoint = e.GetPosition(editField);
+                listLineCreation[listLineCreation.Count - 1].DrawLine(cursorPoint);
             }
-            else if (lineCreation?.ConnectionPoint.OrientationConnectionPoint == OrientationConnectionPoint.Vertical)
-            {
-                lineCreation?.MouseMoveVertical(point, editField);
-            }   
         }
 
         public static void AddHighlightedBlock(Block block)

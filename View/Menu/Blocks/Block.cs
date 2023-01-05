@@ -28,8 +28,8 @@ namespace Flowchart_Editor.Models
         protected ControlSize ControlSize { get; set; }
         protected Tuple<double, double> coordinateConnectionPoint;
         protected List<Tuple<double, double>> coordinatesConnectionPoints;
-        protected List<ConnectionPoint> connectionsPoints;
         private List<Line> firstLineConnection;
+        private Dictionary<Ellipse, OrientationConnectionPoint> dictionaryConnectionPoint;
         public static LineCreation lineCreation;
         protected readonly Uri uri;
 
@@ -43,7 +43,7 @@ namespace Flowchart_Editor.Models
             coordinateConnectionPoint = new(0, 0);
             coordinatesConnectionPoints = new();
             firstLineConnection = new();
-            connectionsPoints = new();
+            dictionaryConnectionPoint = new();
             uri = new("View/СontrolStyle/СontrolsStyle.xaml", UriKind.Relative);
             SetPropertyFrameBlock();
             SetBackground();
@@ -62,21 +62,17 @@ namespace Flowchart_Editor.Models
 
         private void MouseMoveBlockForMovements(object sender, MouseEventArgs e)
         {
-            if (lineCreation == null)
+            if (e.LeftButton == MouseButtonState.Pressed && e.Source is not TextBox)
             {
-                if (e.LeftButton == MouseButtonState.Pressed && e.Source is not TextBox)
-                {
-                    Type typeBlock = typeof(Canvas);
-                    double left = Canvas.GetLeft(FrameBlock);
-                    double top = Canvas.GetTop(FrameBlock);
-                    Edblock.SetCoordinate(this, left, top);
-                    Canvas.GetTop(FrameBlock);
-                    BlockForMovements blockForMovements = new(FrameBlock);
-                    DoDragDropControlElement(typeBlock, sender, sender);
-                    
-                }
-                e.Handled = true;
+                Type typeBlock = typeof(Canvas);
+                double left = Canvas.GetLeft(FrameBlock);
+                double top = Canvas.GetTop(FrameBlock);
+                Edblock.SetCoordinate(this, left, top);
+                Canvas.GetTop(FrameBlock);
+                BlockForMovements blockForMovements = new(FrameBlock);
+                DoDragDropControlElement(typeBlock, sender, sender);
             }
+            e.Handled = true;
         }
 
         public static void DoDragDropControlElement(Type typeControlElement, object controlElement, object sender)
@@ -222,22 +218,21 @@ namespace Flowchart_Editor.Models
             {
                 if (Edblock.current != null)
                 {
-                    if (lineCreation == null)
+                    if (Edblock.listLineCreation == null)
                     {
-                        ConnectionPoint connectionPoint1 = null;
-                        foreach (var item in connectionsPoints)
-                        {
-                            if ((Ellipse)sender == item.EllipseConnectionPoint)
-                            {
-                                connectionPoint1 = item;
-                            }
-                        }
-                        Edblock.block = this;
-                        Edblock.SetFocus(EditField);
-                        lineCreation = new LineCreation(this, connectionPoint1);
-                        
-                        Edblock.lineCreation = lineCreation;  
+                        Edblock.listLineCreation = new();
                     }
+                    Edblock.block = this;
+                    Edblock.SetFocus(EditField);
+
+                    Ellipse connectionPoint = (Ellipse)sender;
+                    OrientationConnectionPoint orientationConnectionPoint = dictionaryConnectionPoint[connectionPoint];
+                    double xCoordinateConnectionPoint = Canvas.GetLeft(connectionPoint) + Canvas.GetLeft(FrameBlock) + connectionPoint.Width / 2;
+                    double yCoordinateConnectionPoint = Canvas.GetTop(connectionPoint) + Canvas.GetTop(FrameBlock) + connectionPoint.Width / 2;
+                    Point point = new(xCoordinateConnectionPoint, yCoordinateConnectionPoint);
+
+                    lineCreation = new LineCreation(point, orientationConnectionPoint, EditField);
+                    Edblock.listLineCreation.Add(lineCreation);
                 }
             }   
         }
@@ -255,11 +250,11 @@ namespace Flowchart_Editor.Models
 
                 if (lineCreation.StateArrow == StateArrow.Right)
                 {
-                    lineCreation.line.Y2 = yCoordinate;
-                    lineCreation.lineSecond.X2 = xCoordinate + LineArrow.widthArrow;
+                    lineCreation.FirstLine.Y2 = yCoordinate;
+                    lineCreation.SecondLine.X2 = xCoordinate + LineArrow.widthArrow;
 
-                    lineCreation.lineSecond.Y1 = yCoordinate;
-                    lineCreation.lineSecond.Y2 = yCoordinate;
+                    lineCreation.SecondLine.Y1 = yCoordinate;
+                    lineCreation.SecondLine.Y2 = yCoordinate;
 
                     Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate + LineArrow.widthArrow);
                     Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate);
@@ -267,11 +262,11 @@ namespace Flowchart_Editor.Models
                 }
                 else if (lineCreation.StateArrow == StateArrow.Left)
                 {
-                    lineCreation.line.Y2 = yCoordinate;
-                    lineCreation.lineSecond.X2 = xCoordinate - LineArrow.widthArrow;
+                    lineCreation.FirstLine.Y2 = yCoordinate;
+                    lineCreation.SecondLine.X2 = xCoordinate - LineArrow.widthArrow;
 
-                    lineCreation.lineSecond.Y1 = yCoordinate;
-                    lineCreation.lineSecond.Y2 = yCoordinate;
+                    lineCreation.SecondLine.Y1 = yCoordinate;
+                    lineCreation.SecondLine.Y2 = yCoordinate;
 
                     Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate - LineArrow.widthArrow);
 
@@ -280,55 +275,54 @@ namespace Flowchart_Editor.Models
                 }
                 else if (lineCreation.StateArrow == StateArrow.Bottom)
                 {
-                    lineCreation.line.X2 = xCoordinate;
-                    lineCreation.lineSecond.X2 = xCoordinate;
-                    lineCreation.lineSecond.X1 = xCoordinate;
+                    lineCreation.FirstLine.X2 = xCoordinate;
+                    lineCreation.SecondLine.X2 = xCoordinate;
+                    lineCreation.SecondLine.X1 = xCoordinate;
 
-                    lineCreation.lineSecond.Y2 = yCoordinate - LineArrow.heightArrow;
+                    lineCreation.SecondLine.Y2 = yCoordinate - LineArrow.heightArrow;
 
                     Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate - LineArrow.heightArrow);
                     Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate);
                 }
                 else if (lineCreation.StateArrow == StateArrow.Upper)
                 {
-                    lineCreation.line.X2 = xCoordinate;
-                    lineCreation.lineSecond.X2 = xCoordinate;
-                    lineCreation.lineSecond.X1 = xCoordinate;
+                    lineCreation.FirstLine.X2 = xCoordinate;
+                    lineCreation.SecondLine.X2 = xCoordinate;
+                    lineCreation.SecondLine.X1 = xCoordinate;
 
-                    lineCreation.lineSecond.Y2 = yCoordinate;
+                    lineCreation.SecondLine.Y2 = yCoordinate;
 
                     Canvas.SetTop(lineCreation.LineArrow.Arrow, yCoordinate);
                     Canvas.SetLeft(lineCreation.LineArrow.Arrow, xCoordinate);
                 }
 
-                Edblock.lineCreation = null;
-                lineCreation = null;
+                Edblock.listLineCreation.Clear();
             }
         }
 
-        public void SetCoordinatesConnectionPoints(int sideProjection = 0)
+        public void SetCoordinatesConnectionPoints(int sideProjection = 0) //Установление координат для точек соединения
         {
             double width = ControlSize.Width;
             double height = ControlSize.Height;
             coordinatesConnectionPoints.Clear();
 
-            double connectionPointsX = width / 2 - offsetConnectionPoint;
-            double connectionPointsY = -offsetConnectionPoint;
+            double connectionPointsX = sideProjection / 2 - offsetConnectionPoint; //Координаты левой точки соединения 
+            double connectionPointsY = height / 2 - offsetConnectionPoint;
             coordinateConnectionPoint = new(connectionPointsX, connectionPointsY);
             coordinatesConnectionPoints.Add(coordinateConnectionPoint);
 
-            connectionPointsX = sideProjection / 2 - offsetConnectionPoint;
+            connectionPointsX = width - sideProjection / 2 - offsetConnectionPoint; //Координаты правой точки соединения 
             connectionPointsY = height / 2 - offsetConnectionPoint;
             coordinateConnectionPoint = new(connectionPointsX, connectionPointsY);
             coordinatesConnectionPoints.Add(coordinateConnectionPoint);
 
-            connectionPointsX = width / 2 - offsetConnectionPoint;
+            connectionPointsX = width / 2 - offsetConnectionPoint; //Координаты верхней точки соединения 
+            connectionPointsY = -offsetConnectionPoint;
+            coordinateConnectionPoint = new(connectionPointsX, connectionPointsY);
+            coordinatesConnectionPoints.Add(coordinateConnectionPoint);
+
+            connectionPointsX = width / 2 - offsetConnectionPoint; //Координаты нижней точки соединения 
             connectionPointsY = height - offsetConnectionPoint;
-            coordinateConnectionPoint = new(connectionPointsX, connectionPointsY);
-            coordinatesConnectionPoints.Add(coordinateConnectionPoint);
-
-            connectionPointsX = width - sideProjection / 2 - offsetConnectionPoint;
-            connectionPointsY = height / 2 - offsetConnectionPoint;
             coordinateConnectionPoint = new(connectionPointsX, connectionPointsY);
             coordinatesConnectionPoints.Add(coordinateConnectionPoint);
         }
@@ -336,31 +330,41 @@ namespace Flowchart_Editor.Models
         protected void InitializingConnectionPoints()
         {
             string nameStyle = "EllipseStyle";
-            int i = 0;
-            foreach (var itemCoordinatesPoint in coordinatesConnectionPoints)
+           
+            for (int i = 0; i < 2; i++)
             {
-                ConnectionPoint connectionPoint;
-                if (i % 2 == 0)
-                {
-                    connectionPoint = new(OrientationConnectionPoint.Vertical);
-                }
-                else
-                {
-                    connectionPoint = new(OrientationConnectionPoint.Horizontal);
-                }
-                i++;
-                ControlOffset offsetConnectionPoints = new(itemCoordinatesPoint.Item1, itemCoordinatesPoint.Item2);
+                Ellipse ellipse = new();
+                dictionaryConnectionPoint.Add(ellipse, OrientationConnectionPoint.Vertical);
 
-                SetStyle(connectionPoint.EllipseConnectionPoint, nameStyle);
-                SetCoordinates(connectionPoint.EllipseConnectionPoint, offsetConnectionPoints);
-                  
-                connectionsPoints.Add(connectionPoint);
-                connectionPoint.EllipseConnectionPoint.MouseDown += Click;
-                connectionPoint.EllipseConnectionPoint.MouseMove += ClickOnConnectionPoint;
-                connectionPoint.EllipseConnectionPoint.MouseEnter += ConnectionPoint_MouseEnter;
-                connectionPoint.EllipseConnectionPoint.MouseLeave += ConnectionPoint_MouseLeave;
-                FrameBlock.Children.Add(connectionPoint.EllipseConnectionPoint);
+                ControlOffset offsetConnectionPoints = new(coordinatesConnectionPoints[i].Item1, coordinatesConnectionPoints[i].Item2);
+
+                SetStyle(ellipse, nameStyle);
+                SetCoordinates(ellipse, offsetConnectionPoints);
+
+                ellipse.MouseDown += Click;
+                ellipse.MouseMove += ClickOnConnectionPoint;
+                ellipse.MouseEnter += ConnectionPoint_MouseEnter;
+                ellipse.MouseLeave += ConnectionPoint_MouseLeave;
+                FrameBlock.Children.Add(ellipse);
             }
+
+            for (int i = 2; i < 4; i++)
+            {
+                Ellipse ellipse = new();
+                dictionaryConnectionPoint.Add(ellipse, OrientationConnectionPoint.Horizontal);
+
+                ControlOffset offsetConnectionPoints = new(coordinatesConnectionPoints[i].Item1, coordinatesConnectionPoints[i].Item2);
+
+                SetStyle(ellipse, nameStyle);
+                SetCoordinates(ellipse, offsetConnectionPoints);
+
+                ellipse.MouseDown += Click;
+                ellipse.MouseMove += ClickOnConnectionPoint;
+                ellipse.MouseEnter += ConnectionPoint_MouseEnter;
+                ellipse.MouseLeave += ConnectionPoint_MouseLeave;
+                FrameBlock.Children.Add(ellipse);
+            }
+
         }
 
         private void ConnectionPoint_MouseLeave(object sender, MouseEventArgs e)
@@ -375,10 +379,12 @@ namespace Flowchart_Editor.Models
 
         protected void ChangeCoordinatesConnectionPoints()
         {
-            for (int i = 0; i < coordinatesConnectionPoints.Count; i++)
+            int i = 0;
+            foreach (var itemEllipse in dictionaryConnectionPoint)
             {
                 ControlOffset offsetConnectionPoints = new(coordinatesConnectionPoints[i].Item1, coordinatesConnectionPoints[i].Item2);
-                SetCoordinates(connectionsPoints[i].EllipseConnectionPoint, offsetConnectionPoints);
+                SetCoordinates(itemEllipse.Key, offsetConnectionPoints);
+                i++;
             }
         }
 

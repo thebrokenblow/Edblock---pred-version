@@ -153,9 +153,11 @@ namespace Flowchart_Editor.ViewModel
             {
                 return pressEsc ??= new RelayCommand(obj =>
                 {
-                    Edblock.lineCreation?.Cancel(editField);
-                    Edblock.lineCreation = null;
-                    Block.lineCreation = null;
+                    foreach (var itemLineCreation in Edblock.listLineCreation)
+                    {
+                        itemLineCreation.Delete();   
+                    }
+                    Edblock.listLineCreation.Clear();
                 });
             }
         }
